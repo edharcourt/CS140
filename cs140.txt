@@ -11,24 +11,43 @@ Preface
 
 I have been teaching the Introduction to Computer Programming course at St. Lawrence Univeristy for many years. The course at St. Lawrence is designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, students from across campus in a variety of majors take this course. 
 
-One goal of the course is for students to understand the complexity of of the software systems that they encounter every day. Most of them will not go on to be professional software developers but the emphasis on problem solving using a computer programming language often works their brain in a way they have never before seen.
+Goals of the course include:
+
+* Appreciate the complexity of the software systems we encounter every day
+* Emphasize problem soving in a precise, logical framework 
+* Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, [and more] 
 
 == Introduction
 
-Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, but there are many hundreds still in active use. About a dozen or so dominate the modern software development landscape. For exameple the Javascript programming language (not to be confised with the Java programming language) is in every web browser. Most computer games are written in C or C++. Native iPhone apps are wrriten in Objective-C or Swift, while Android aps use Java. 
+
+Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, but there are many hundreds still in active use. About a dozen or so dominate the modern software development landscape. For example the Javascript programming language (not to be confised with the Java programming language) is in every web browser. Most computer games are written in C or C++. Native iPhone apps are wrriten in Objective-C or Swift, while Android aps use Java. 
 
 The Python programming language is one language that is in common use and popular to use in an introductory course because it is easy to use and easy to get started with.  So lets get started.
 
-It is almost obligatory that _Hello World_ be the first program one write's in any programming language. Here is our first python program:
+It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[ Hello World] be the first program one write's in any programming language. Here is our first python program:
 
 [source,python]
 print("Hello world")
+
+////
+.This will have a link next to it
+----
+* always displayed
+* always displayed 2
+----
+
+[.result]
+====
+* hidden till clicked
+* hidden till clicked 2
+====
+////
 
 That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the console. But there is a lot going on in that one line, so lets break it down. 
 
 The python _builtin function_ `print` prints, to the console, the value between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
-The print statement can take multiple values to print.
+The print function can take multiple values.
 
 [source,python]
 print("The value of pi squared is", 3.14159 * 3.14159)
@@ -49,16 +68,65 @@ Numbers without decimal points are called _integers_ or _ints_ for short.
 
 === Integer and floating-point literals
 
-Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative ineter -1, -2, ...
+Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative integers -1, -2, ...
 
 IMPORTANT: don't start integer literals with a leading 0, such as 09. This is an error in Python.
 
 Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159.
 
-
 === Variables
 
-Let's return to 
+Let's return to our simple python program
+
+[source,python]
+print("The value of pi squared is", 3.14159 * 3.14159)
+
+It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Pythonusing an _assignment statement_.
+
+[source,python]
+pi = 3.14159
+
+And we can rewrite our program as 
+
+[source,python]
+pi = 3.14159
+print("The value of pi squared is", pi * pi)
+
+To the left of the `=` sign is a _variable name_ and we read the assignment statement above as `pi` _gets the value of_ the value on the right of `=`, in this case `3.14159`.
+
+Variable names in Python are should be meaningful, they must start with either an alphabetic character (a - z, A - Z) or underscore, and may also contain digits. Variable names are also _case sensitive_, so `pi`, `Pi`, and `PI` are all different variable names.
+
+The value of on the of `=` can also be an _expression_.
+
+IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. This is not valid in Python.
+
+[source,python]
+pi = 3.14159
+pi_squared = pi * pi
+print("The value of pi squared is", pi_squared)
+
+IMPORTANT: Variables mst be defined before they are used.
+
+The Python program 
+
+[source,python]
+print(x)
+
+would produce an error becuse the variable `x` does not have a value.
+
+IMPORTANT: Variable names are not string literals.
+
+.There is a big difference between thw two statements...
+----
+print("The value of pi squared is", pi_squared)
+print("The value of pi squared is", "pi_squared")
+----
+
+[.result]
+The second statement would print +
+`The value of pi squared is pi_squared` +
+instead of +
+`The value of pi squared is 9.869587728099999`.
 
 === Mathematical Expressions
 
@@ -76,7 +144,7 @@ Or single quotes.
 [source,python]
 'and so is this'
 
-IMPORTANT: the starting and ending quotes must match
+IMPORTANT: the opening and closing quotes in a string literal must match
 
 [source,python]
 "but this string literal has an error, why?'
@@ -84,12 +152,12 @@ IMPORTANT: the starting and ending quotes must match
 [source,python]
 'and so does this, why?"
 
-But what if you want to include a single quote in your string literal? Here is one way to do it.
+But what if we want to include a single quote as one of the characters in our string literal? One way to do it is to use double quotes for the string literal.
 
 [source,python]
 "This isn't an error"
 
-This worksbecuase the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
+This works becuase the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
 
 The following is incorrect.
 
@@ -117,14 +185,88 @@ He said "don't"
 
 === A note about spaces
 
-Pygame Intro
-------------
+Spaces, like in writing, are used to separate words in python, and are often used to make code more readable. For example, in a print statement you can put a space after the comma that is separating values to print.
 
-Functions
----------
+[source,python]
+print(a, b, c, d) 
 
-Repetition - The While Loop
----------------------------
+which might look slightly less cramped than
+ 
+[source,python]
+print(a,b,c,d) 
+
+Of course spaces can makecode less readable,
+
+[source,python]
+print(a      ,           b,c,                       d) 
+
+is also valid.
+
+=== A note about indentation
+
+We will see later on that indentation plays an important role in Python. For now you should just note that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. What that means if the following program is in error because the seond statement is indented one space.
+
+[source,python]
+x = 4
+ print(x*x)
+
+TIP: Python is unique in the way that it treats indentation. Most other programming languages are not sensitive to the way that indentation is handled.
+
+=== Syntax Errors
+
+We've already run into ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. Find the error in each of the following:
+
+.1
+----
+print("Hello)
+----
+
+[.result]
+====
+Missing double quote closing the string lteral `"Hello"`.
+====
+
+.2
+----
+print("Hello')
+----
+
+[.result]
+====
+Mismatched quotes.
+====
+
+.3
+----
+print("Hello"
+----
+
+[.result]
+====
+Missing closing parentheses.
+====
+
+.4
+----
+print("Hello" 77)
+----
+
+[.result]
+====
+Missing comma between `Hello` and `77`.
+====
+
+== Pygame Intro
+
+== Functions
+
+=== Calling Functions
+
+=== Defining Functions
+
+
+
+== Repetition - The While Loop
 
 [source,python]
 while (condition):
