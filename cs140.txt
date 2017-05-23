@@ -4,6 +4,8 @@ Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
 :icons: font
+:source-highlighter: pygments
+:stem:
 
 [preface]
 Preface
@@ -76,7 +78,7 @@ Floating-point literals include a decimal place, and include numbers such as 0.3
 
 === Variables
 
-Let's return to our simple python program
+Let's return to our simple python program ...
 
 [source,python]
 print("The value of pi squared is", 3.14159 * 3.14159)
@@ -116,19 +118,125 @@ would produce an error becuse the variable `x` does not have a value.
 
 IMPORTANT: Variable names are not string literals.
 
-.There is a big difference between thw two statements...
+.There is a big difference between the two statements...
+[source,python]
 ----
-print("The value of pi squared is", pi_squared)
-print("The value of pi squared is", "pi_squared")
+print("The value of pi squared is", pi_squared) # <1>
+print("The value of pi squared is", "pi_squared") # <2>
 ----
 
 [.result]
-The second statement would print +
-`The value of pi squared is pi_squared` +
-instead of +
-`The value of pi squared is 9.869587728099999`.
+<1> prints `The value of pi squared is 9.869587728099999`
+<2> prints `The value of pi squared is pi_squared` +
+Almost certainly not what was intended.
 
 === Mathematical Expressions
+
+The arithmetic operators we will be using most are:
+
+[cols="1,8", width="50%", options="header"]
+.Mathematical Operators
+|===
+|Operator | operation
+|`+`
+|addition
+|`-`
+|subtraction
+|`*`
+|multiplication
+|`/`
+|floating-point division
+|`//`
+|integer division
+|`%`
+|remainder (modulus)
+|`**`
+|exponentiation
+|===
+
+Python has many more operators, but this is all we will need for now.  You can combine these operations in complicated ways including using parentheses. The _normal 
+order of operations_ you learned in grade school apply.
+
+. parentheses
+. exponention
+. multiplication, division (include remainder)
+. addition and subtraction
+
+==== Examples
+
+What is the output of each of the examples below?
+
+.Example 1
+[source,python]
+----
+x = 3 + 5 * 9
+print(x)
+----
+
+[.result]
+====
+`48`
+====
+
+.Example 2
+[source,python]
+----
+x = 1/2 <1>
+print(x)
+----
+
+[.result]
+====
+`0.5`
+====
+<1> Recall that the single slash is _floating-point division_ meaning the result is 
+a floating-point number.
+
+Contrast this with _integer division_ using the double slash operator `//`. 
+In integer division the result is always an integer.
+
+.Example 3
+[source,python]
+----
+w = 1 // 2
+x = 3 // 7
+y = 3 // 2
+z = 77 // 5
+print(w,x,y,z)
+----
+
+[.result]
+====
+`0 0 1 15`
+====
+ 
+Integer division will play an a key role in many applications throughout these notes.
+
+.Example 4
+[source,python]
+----
+x = 7
+y = 9
+z = x + y // 4 * x - 2 ** 3
+print(z)
+----
+
+[.result]
+====
+`13`
+====
+
+Expressions always produce a value,and something must be done with that value such as assign it to a variable or print it.  Consider the following Python program.
+
+[source,python]
+----
+two_pi = 3.14159 * 2 <1>
+two_pi * two_pi <2>
+print(two_pi) <3>
+----
+<1> compute 2&pi; and store the result in the variable `two_pi`
+<2> multiply `two_pi` times `two_pi` _and do nothing with the result_ so Python just throws the value away. *This line is pointless*, it has no effect, but it is legal.
+<3> print `two_pi`
 
 === More on String Literals
 
@@ -161,17 +269,23 @@ This works becuase the outer double quotes demarcate the string literal and the 
 
 The following is incorrect.
 
-[source,python]
+[source]
 'It isn't easy to see that this is an error, why?'
 
-The second single quote in `isn't` doesn't know that it is part of the contraction but thinks it is the closing quote of the string literal.
+Python can't tell that the second single quote in `isn't` is part of the word but recognizes it as the closing quote matching the open quote.
 
-What would get printed by the following print statement?
-
+.What would get printed by the following print statement?
 [source,python]
+----
 print('He said "Do it!"') 
+----
 
-Things can get pretty crazy. How about if we wanted to print the string _He said "Don't do it!"_.  The issue here is that the string we are printing contains a mix of double and single quotes. The trick is that we need to escape one of the quote characters. For example, if we need a single quote to be the single quote character and not the start or end of a string we can put a backslash character in front of it. 
+[.result]
+====
+`He said "Do it!"`
+====
+
+Things can get pretty crazy. How about if we wanted to print the string _He said "Don't do it!"_.  The issue here is that the string we are printing contains a mix of double and single quotes. The trick is that we need to _escape_ one of the quote characters. For example, if we need a single quote to be the single quote character and not the start or end of a string literal we can put a backslash character in front of it. 
 
 The statement
 
@@ -183,9 +297,10 @@ produces the output
 [source]
 He said "don't"
 
+
 === A note about spaces
 
-Spaces, like in writing, are used to separate words in python, and are often used to make code more readable. For example, in a print statement you can put a space after the comma that is separating values to print.
+Spaces, like in writing, are used to separate words in Python, and are often used to make code more readable. For example, in a `print` statement you can put a space after the comma that is separating values to print.
 
 [source,python]
 print(a, b, c, d) 
@@ -195,16 +310,20 @@ which might look slightly less cramped than
 [source,python]
 print(a,b,c,d) 
 
-Of course spaces can makecode less readable,
+Spaces can also make code less readable,
 
 [source,python]
 print(a      ,           b,c,                       d) 
 
-is also valid.
+is also valid -- but ugly.
+
+WARNING: Spacing at the start of a line that changes indentation can cause problems. See the next section.
 
 === A note about indentation
 
-We will see later on that indentation plays an important role in Python. For now you should just note that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. What that means if the following program is in error because the seond statement is indented one space.
+We will see later on that indentation plays an important role in Python. For now you should just note that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
+
+Here is an example. The following program is in error because the second statement is indented one space.
 
 [source,python]
 x = 4
@@ -214,9 +333,9 @@ TIP: Python is unique in the way that it treats indentation. Most other programm
 
 === Syntax Errors
 
-We've already run into ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. Find the error in each of the following:
+We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. Find the error in each of the following:
 
-.1
+.Example 1
 ----
 print("Hello)
 ----
@@ -226,7 +345,7 @@ print("Hello)
 Missing double quote closing the string lteral `"Hello"`.
 ====
 
-.2
+.Example 2
 ----
 print("Hello')
 ----
@@ -236,7 +355,7 @@ print("Hello')
 Mismatched quotes.
 ====
 
-.3
+.Example 3
 ----
 print("Hello"
 ----
@@ -246,7 +365,7 @@ print("Hello"
 Missing closing parentheses.
 ====
 
-.4
+.Example 4
 ----
 print("Hello" 77)
 ----
@@ -255,6 +374,129 @@ print("Hello" 77)
 ====
 Missing comma between `Hello` and `77`.
 ====
+
+.Example 5
+----
+print(x)
+----
+
+[.result]
+====
+Variable `x` is not defined.
+====
+
+.Example 6
+----
+ x = 5
+print(x)
+----
+
+[.result]
+====
+Indentation error
+====
+
+.Example 7
+----
+x = 5 9
+print(x)
+----
+
+[.result]
+====
+Python expects there to be something _between_ the `5` and the `9` such as a mathematical operator `+` or `*`.
+====
+
+Some syntax errors are just nasty and difficult to find. The following one line program looks non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
+
+.Example 8
+----
+print
+----
+
+[.result]
+====
+<built-in function print>
+====
+
+As you gain practice you will be able to quickly find syntax errors.
+
+=== Keyboard Input
+
+Python's `input` function allows the user to enter input from the keyboard. It takes a string as an argument and uses it as a prompt. The `input` function is a different kind of function than the `print` function. The `print` puts values on the Python console window whereas the `input` function produces a string value of the characters that the user typed.
+
+[source,python]
+name = input('Enter your name: ')
+print("Hello", name)
+
+ Enter your name: Hermione <1>
+ Hello Hermione
+ 
+<1> `Hermione` is what the user typed and then hit _enter_ on the keyboard.
+ 
+It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in fahrenheit to celsius is 
+latexmath:[5/9(f-32)]
+
+[source,python]
+f = input('Enter a temperature (F): ')
+c = 5/9*(f - 32)
+print(f, "fahrenheit is", c, "celsius")
+
+Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. You need to first convert `f` to either 
+an integer or a floating-point number using either the `int` or `float` function.
+
+WARNING: The `input` function returns a string value, even if the user entered a number. YOu must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
+
+[source,python]
+f = float(input('Enter a temperature (F): ')) <1>
+c = 5/9*(f - 32)
+print(f, "degrees fahrenheit is", c, "degrees celsius")
+
+<1> Notice the use of the function `float` to convert the string to a floating-point number. 
+
+Here is a sample run of the Fahrenheit to Celsius conversion program.
+
+ Enter a temperature (F): 83.5 <1>
+ 83.5 degrees fahrenheit is 28.61111111111111 degrees celsius
+
+<1> The user entered `83.5`
+
+Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks rediculous. Python has a builtin function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
+
+[source,python]
+f = float(input('Enter a temperature (F): '))
+c = 5/9*(f - 32)
+print(f, "degrees fahrenheit is", round(c,1), "degrees celsius") <1>
+
+<1> Notice the use of the function `round` to round th value `c` to one decimal places.
+
+Here is a sample run of the Fahrenheit to Celsius conversion program.
+
+ Enter a temperature (F): 83.5
+ 83.5 degrees fahrenheit is 28.6 degrees celsius
+
+=== The `math` module
+ 
+=== Exercises
+
+. C2F
+
+. Windchill
+
+. Area of circle
+
+. volume of a cone
+
+. population example
+
+. compound interest
+
+. change making 
+
+. Distance of a point (x,y) from the origin
+
+. Distance between two points (x~1~,y~1~) and (x~2~,y~2~) 
+
 
 == Pygame Intro
 
