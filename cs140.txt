@@ -445,7 +445,7 @@ print(f, "fahrenheit is", c, "celsius")
 Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. You need to first convert `f` to either 
 an integer or a floating-point number using either the `int` or `float` function.
 
-WARNING: The `input` function returns a string value, even if the user entered a number. YOu must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
+WARNING: The `input` function returns a string value, even if the user entered a number. You must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
 
 [source,python]
 f = float(input('Enter a temperature (F): ')) <1>
