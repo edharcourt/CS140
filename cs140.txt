@@ -5,13 +5,14 @@ v0.1, May 2017:
 :toc: right
 :icons: font
 :source-highlighter: pygments
-:stem:
+:stem: latexmath
+:imagesdir: ./images
 
 [preface]
 Preface
 -------
 
-I have been teaching the Introduction to Computer Programming course at St. Lawrence Univeristy for many years. The course at St. Lawrence is designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, students from across campus in a variety of majors take this course. 
+I have been teaching the Introduction to Computer Programming course at St. Lawrence University for many years. The course at St. Lawrence is designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, students from across campus in a variety of majors take this course. 
 
 Goals of the course include:
 
@@ -20,7 +21,6 @@ Goals of the course include:
 * Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, [and more] 
 
 == Introduction
-
 
 Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, but there are many hundreds still in active use. About a dozen or so dominate the modern software development landscape. For example the Javascript programming language (not to be confised with the Java programming language) is in every web browser. Most computer games are written in C or C++. Native iPhone apps are wrriten in Objective-C or Swift, while Android aps use Java. 
 
@@ -49,7 +49,9 @@ That is it, just the one line. And it does as you might expect, it prints the me
 
 The python _builtin function_ `print` prints, to the console, the value between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
-The print function can take multiple values.
+TIP: In programming, a string literal is also called _string constant_
+
+The `print` function can take multiple values separated by commas.
 
 [source,python]
 print("The value of pi squared is", 3.14159 * 3.14159)
@@ -58,6 +60,10 @@ produces the output
 
 [source]
 The value of pi squared is 9.869587728099999
+
+NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
+
+image::function-fx.png[align="center"]
 
 Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming lananguage the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now in computer science and programming we call them _floating-point_ numbers, or _floats_ for short.
 
@@ -74,16 +80,22 @@ Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative 
 
 IMPORTANT: don't start integer literals with a leading 0, such as 09. This is an error in Python.
 
-Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159.
+Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159. 
+
+Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can write `6.022140857e23`.
+
+We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is silly. We can simply say `9.10938356e-31`.
+
+TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
 
 === Variables
 
-Let's return to our simple python program ...
+Let's return to our simple program ...
 
 [source,python]
 print("The value of pi squared is", 3.14159 * 3.14159)
 
-It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Pythonusing an _assignment statement_.
+It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python using an _assignment statement_.
 
 [source,python]
 pi = 3.14159
@@ -226,7 +238,32 @@ print(z)
 `13`
 ====
 
-Expressions always produce a value,and something must be done with that value such as assign it to a variable or print it.  Consider the following Python program.
+=== Modular Arithmetic
+
+_Modular arithmetic_ is important in computer science.  Modular arithmetic is just arithmetic that uses the remainder after finding a quotient. For example, `7 // 3` is `2` with a remainder of `1`. The remainder operator is `%`. In this case `7 % 3` is `1`.
+
+.Example
+[source,python]
+----
+w = 1 % 2
+x = 3 % 7
+y = 3 % 2
+z = 77 % 5
+print(w,x,y,z)
+----
+
+[.result]
+====
+`1 3 1 2`
+====
+
+A couple of important properties to remember. If we are computing `n % m` and we know that `n` is less than `m` and they are both positive, then the result is always `n`. For example `278 % 455` is `278`.
+
+TIP: In mathematics we sometimes refer to modular arithmetic as _clock arithmetic_. You perform modular arithmetic all the time, you just don't know it. For example, if it is 2PM and we wanted to fogure out what time it will be 14 hours from now, we can compute `(2 + 14) % 12`, which is 4. So it would be 4AM.  
+
+
+
+Expressions always produce a value, and something must be done with that value such as assign it to a variable or use it as an argument in a function call (such as `print`).  Consider the following Python program.
 
 [source,python]
 ----
@@ -474,29 +511,159 @@ Here is a sample run of the Fahrenheit to Celsius conversion program.
 
  Enter a temperature (F): 83.5
  83.5 degrees fahrenheit is 28.6 degrees celsius
+ 
+NOTE: There are two different kinds of functions in Python, those that _return_ values, and those that do not return a value but peform some other side effect. `print` is an example of a function that does not return a value but has the the side effect of printing to the console window. Contrast this to the `round` function which returns a rounded result.
+ 
+==== Program Flow
+
+Python programs execute line-by-line top-to-bottom. Variables must be defined and assigned 
+values before those values can be used. Consider the previous celsius-to-fahrenheit conversion program. 
+
+. The first assignment statement +
+`f = float(input('Enter a temperature (F): '))` +
+that executes defines the variable `f`. +
+. The second statement +
+`c = 5/9*(f - 32)` +
+defines `c` _by using_ the variable `f`
+. The third statement +
+`print(f, "degrees fahrenheit is", round(c,1), "degrees celsius")` <1> +
+prints the result using both `c` and `f`
 
 === The `math` module
  
+Python has lots of support libraries that we can use to get our work done. Think of 
+a support library is predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument _x_ (where _x_ is in radians).   
+
+To use the functions and definitions in the math module your program first needs to telll Python that we need it sing an _import statement_
+
+[source,python]
+import math
+
+One way to compute the square root of a number would be just to raise to the 1/2 power. 
+
+[source,pyhon]
+print(2**.5)
+
+Another way would be to use the math module's square root function.
+
+[source,python]
+print(math.sqrt(2))
+
+TIP: `import` is a Python _keyword_. A keyword is a word reserved for use by Python. 
+As such you should never use a keyword as a variable name (in fact that is an error). 
+
+A constant defined in the math module is `math.pi`
+
+[source,python]
+print(math.pi)
+
+If we needed to compute stem:[sin(\sqrt{\pi/4})].
+
+[source,python]
+result = math.sin(math.sqrt(math.pi/4))
+print(result)
+
+https://docs.python.org/3/library/math.html[Python math module documentation]
+ 
 === Exercises
 
-. C2F
+.C2F 
+Write a program that converts a temperature in celsius to fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output 
+neat and descriptive.
 
-. Windchill
+.Windchill
+Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem[v]. The current temperature and the wind velocity should be entered by the user from the keyboard. +
+The https://www.weather.gov/media/epz/wxcalc/windChill.pdf[formula the National Weather Service uses] to calculate wind chill temperature is: +
+stem:[W = 35.74 + 0.6215t + (0.4275t - 35.75)v^{0.16}]
 
-. Area of circle
+ Enter temperature (F): 32.0
+ Enter wind velocity (MPH): 10.0
 
-. volume of a cone
+ The wind chill for 32.0 degrees with a
+ wind velocity of 10.0 MPH is 23.7 degrees.
 
-. population example
+Print the result rounded to one decimal place, like the `23.7` above.
 
-. compound interest
+.Area of circle
+The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a program that prompts the user for a radius and computes and computes and prints the area of the circle rounded to 3 decimal places.
 
-. change making 
+.Volume of a Cone
+The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Pythonprogram that will read the radius and the height from the user and computes and prints the volume of the cone.
 
-. Distance of a point (x,y) from the origin
+.Population Growth
+In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will take a number of years as input and print the estimated population that many years from now.
 
-. Distance between two points (x~1~,y~1~) and (x~2~,y~2~) 
+.Compound Interest
+Assume that *_C_* is an initial amount of an investment, *_r_* is the yearly rate of interest (e.g., .02 is 2%), *_t_* is the number of years until maturation, *_n_* is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads *_C_*, *_r_*, *_n_*, and *_t_* from the user and computes and then prints the final value of the investment to the nearest penny.
 
+.Change Making 
+Write a prgram that reads an amount of money that we need to make change for, and dispenses
+the correct amount of change (in U.S. currency). Assume that the 20 dollar bill is the largest denomination.
+
+----
+Enter an amount to make change for: 78.98
+
+Your change is...
+
+3 twenties
+1 ten
+1 five
+3 ones
+3 quarters
+2 dimes
+0 nickels
+3 pennies
+
+---- 
+
+.Distance from origin
+The distance of a point _(x,y)_ from the origin, by the Pythagorean theorem is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an _x_ and a _y_ from the user and computes the distance of the point from the origin.
+
+.Distance between two points
+The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived usingthe Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
+
+'''
+
+=== Terminology
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* string literal (constant)
+* integer literal (constant)
+* floating-point literal (constant)
+* builtin function
+* function call
+* variable
+* Hello World program
+* scientific notation
+
+a|
+* argument
+* expression
+* value
+* syntax error
+* keyword
+* module
+* escape character
+* assignment statement
+
+|===
+
+.Functions
+
+We have encountered several functions this chapter.
+
+* `print(arg1, arg2, ...)` -> `None` +
+`print` does not produce a value but has the side effect of printing the values `arg1`, `arg2`, ... to the console.
+* `round(v:float, n:int)` -> `float`
+* `math.sqrt(v:float)` -> `float` +
+`math.sqrt` in the math computes and returns the square root of v
+* `int`
+* `float`
+* `input`
 
 == Pygame Intro
 
