@@ -12,21 +12,25 @@ v0.1, May 2017:
 Preface
 -------
 
-I have been teaching the Introduction to Computer Programming course at St. Lawrence University for many years. The course at St. Lawrence is designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, students from across campus in a variety of majors take this course. 
+I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course.
 
 Goals of the course include:
 
 * Appreciate the complexity of the software systems we encounter every day
 * Emphasize problem soving in a precise, logical framework 
-* Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, [and more] 
+* Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, and much more.
+
+=== Software is taking over 
 
 == Introduction
 
-Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, but there are many hundreds still in active use. About a dozen or so dominate the modern software development landscape. For example the Javascript programming language (not to be confised with the Java programming language) is in every web browser. Most computer games are written in C or C++. Native iPhone apps are wrriten in Objective-C or Swift, while Android aps use Java. 
+Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use]. About a dozen or so dominate the modern software development landscape. For example the https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Many scientists and engineer's are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for artists and visual designers. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electrnic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
-The Python programming language is one language that is in common use and popular to use in an introductory course because it is easy to use and easy to get started with.  So lets get started.
+NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). 
 
-It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[ Hello World] be the first program one write's in any programming language. Here is our first python program:
+https://www.python.org/[Python] is a popular programming language used widely in industry. It is also used in introductory courses because it is relatively easy to use and get started with.  So lets get started.
+
+It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one write's in any programming language. Here is our first python program:
 
 [source,python]
 print("Hello world")
@@ -63,11 +67,13 @@ The value of pi squared is 9.869587728099999
 
 NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
 
+Pictorially we often think of a function as a black box (we don't know how it works) where values come in (represented by the arrow coming in on the left) and the function produces values (the return results represented by the arrow coming out of the box on the right).  
+
 image::function-fx.png[align="center"]
 
 Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming lananguage the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now in computer science and programming we call them _floating-point_ numbers, or _floats_ for short.
 
-There is a big difference between the string literal `"3.0`" and the floating-point literal `3.0`. To see this what would get printed by the following print statement?
+There is a big difference between the string literal `"3.0`" and the floating-point literal `3.0`. To see this, what would get printed by the following print statement?
 
 [source,python]
 print("3.0 * 3.0", 3.0 * 3.0)
@@ -82,7 +88,7 @@ IMPORTANT: don't start integer literals with a leading 0, such as 09. This is an
 
 Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159. 
 
-Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can write `6.022140857e23`.
+Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write `6.022140857e23`.
 
 We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is silly. We can simply say `9.10938356e-31`.
 
@@ -112,14 +118,14 @@ Variable names in Python are should be meaningful, they must start with either a
 
 The value of on the of `=` can also be an _expression_.
 
-IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. This is not valid in Python.
+IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. This former is not valid Python.
 
 [source,python]
 pi = 3.14159
 pi_squared = pi * pi
 print("The value of pi squared is", pi_squared)
 
-IMPORTANT: Variables mst be defined before they are used.
+IMPORTANT: Variables must be defined before they are used.
 
 The Python program 
 
@@ -141,6 +147,24 @@ print("The value of pi squared is", "pi_squared") # <2>
 <1> prints `The value of pi squared is 9.869587728099999`
 <2> prints `The value of pi squared is pi_squared` +
 Almost certainly not what was intended.
+
+=== Comments
+
+We can add notes to our program using a _comment_. In Python a one line comment starts 
+with a hashtag and continue to the end of the line.
+
+[source,python]
+----
+# define a variable pi
+pi = 3.14159
+----
+
+You can also use a comment to finish a line.
+
+[source,python]
+----
+pi = 3.14159   # define a variable pi
+----
 
 === Mathematical Expressions
 
@@ -222,7 +246,7 @@ print(w,x,y,z)
 `0 0 1 15`
 ====
  
-Integer division will play an a key role in many applications throughout these notes.
+Integer division will play a key role in many applications throughout these notes.
 
 .Example 4
 [source,python]
@@ -237,6 +261,18 @@ print(z)
 ====
 `13`
 ====
+
+Expressions produce a value. Something must be done with that value such as assign it to a variable or use it as an argument in a function call (such as `print`).  Consider the following Python program.
+
+[source,python]
+----
+two_pi = 3.14159 * 2 <1>
+two_pi * two_pi <2>  
+print(two_pi) <3>
+----
+<1> compute 2&pi; and store the result in the variable `two_pi`
+<2> multiply `two_pi` times `two_pi` _and do nothing with the result_ so Python just throws the value away. *This line is pointless*, it has no effect, but it is legal.
+<3> print `two_pi`
 
 === Modular Arithmetic
 
@@ -259,21 +295,7 @@ print(w,x,y,z)
 
 A couple of important properties to remember. If we are computing `n % m` and we know that `n` is less than `m` and they are both positive, then the result is always `n`. For example `278 % 455` is `278`.
 
-TIP: In mathematics we sometimes refer to modular arithmetic as _clock arithmetic_. You perform modular arithmetic all the time, you just don't know it. For example, if it is 2PM and we wanted to fogure out what time it will be 14 hours from now, we can compute `(2 + 14) % 12`, which is 4. So it would be 4AM.  
-
-
-
-Expressions always produce a value, and something must be done with that value such as assign it to a variable or use it as an argument in a function call (such as `print`).  Consider the following Python program.
-
-[source,python]
-----
-two_pi = 3.14159 * 2 <1>
-two_pi * two_pi <2>
-print(two_pi) <3>
-----
-<1> compute 2&pi; and store the result in the variable `two_pi`
-<2> multiply `two_pi` times `two_pi` _and do nothing with the result_ so Python just throws the value away. *This line is pointless*, it has no effect, but it is legal.
-<3> print `two_pi`
+TIP: In mathematics we sometimes refer to modular arithmetic as _clock arithmetic_. You perform modular arithmetic all the time, you just don't know it. For example, if it is 2PM and we wanted to figure out what time it will be 14 hours from now, we can compute `(2 + 14) % 12`, which is 4. So it would be 4AM.  
 
 === More on String Literals
 
@@ -370,7 +392,12 @@ TIP: Python is unique in the way that it treats indentation. Most other programm
 
 === Syntax Errors
 
-We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. Find the error in each of the following:
+We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. 
+
+INFO: A _syntax error_ is an error that violates the rules of the language. Syntax errors
+can be detected _before_ the program executes. 
+
+Find the error in each of the following:
 
 .Example 1
 ----
@@ -444,7 +471,29 @@ print(x)
 Python expects there to be something _between_ the `5` and the `9` such as a mathematical operator `+` or `*`.
 ====
 
-Some syntax errors are just nasty and difficult to find. The following one line program looks non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
+.Example 8
+----
+5 = x
+print(x)
+----
+
+[.result]
+====
+Python expects there to be something a variable to the left of `=`.
+====
+
+.Example 9
+----
+x = 8 @ 7
+print(x)
+----
+
+[.result]
+====
+Python does not have an operator named `@`.
+====
+
+Some syntax errors are just nasty and difficult to find. The following one line program looks like it should be a syntax error non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
 
 .Example 8
 ----
@@ -484,6 +533,18 @@ an integer or a floating-point number using either the `int` or `float` function
 
 WARNING: The `input` function returns a string value, even if the user entered a number. You must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
 
+.The `int` function
+
+The function `int` takes a string argument and attempts to convert it to an integer and return the resulting integer. For example `int("-36")` would return the integer `-36`. The `int` function is also used to convert a floating-point number to an integer by truncating the decimal point. For example `int(3.14159)` would return `3`. Sometimes `int` can result in a _run-time error_. For example `int("3.14159")` causes an error because the string cannot converted to an integer. What about `int('hello')`?
+
+INFO: A _run time error_ is an error that canonly be detected when the program executes and not before.
+
+.The `float` function
+NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
+
+
+Here is our modified 
+
 [source,python]
 f = float(input('Enter a temperature (F): ')) <1>
 c = 5/9*(f - 32)
@@ -513,7 +574,9 @@ Here is a sample run of the Fahrenheit to Celsius conversion program.
  83.5 degrees fahrenheit is 28.6 degrees celsius
  
 NOTE: There are two different kinds of functions in Python, those that _return_ values, and those that do not return a value but peform some other side effect. `print` is an example of a function that does not return a value but has the the side effect of printing to the console window. Contrast this to the `round` function which returns a rounded result.
- 
+
+image::round.png[align="center"]
+
 ==== Program Flow
 
 Python programs execute line-by-line top-to-bottom. Variables must be defined and assigned 
@@ -532,9 +595,11 @@ prints the result using both `c` and `f`
 === The `math` module
  
 Python has lots of support libraries that we can use to get our work done. Think of 
-a support library is predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument _x_ (where _x_ is in radians).   
+a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument _x_ (where _x_ is in radians).   
 
-To use the functions and definitions in the math module your program first needs to telll Python that we need it sing an _import statement_
+INFO: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where yo can have folders inside folders to organize your documents.
+
+To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
 [source,python]
 import math
@@ -559,12 +624,18 @@ print(math.pi)
 
 If we needed to compute stem:[sin(\sqrt{\pi/4})].
 
+NOTE: Functions and definitions that are referenced in a module uses a _dot notation_. For example, `math.pi`, `math.sqrt(x)`.
+
 [source,python]
 result = math.sin(math.sqrt(math.pi/4))
 print(result)
 
 https://docs.python.org/3/library/math.html[Python math module documentation]
  
+=== CPUs, Interpreters, and Compilers
+
+Place holder to talk about computers, ...
+
 === Exercises
 
 .C2F 
@@ -573,7 +644,8 @@ neat and descriptive.
 
 .Windchill
 Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem[v]. The current temperature and the wind velocity should be entered by the user from the keyboard. +
-The https://www.weather.gov/media/epz/wxcalc/windChill.pdf[formula the National Weather Service uses] to calculate wind chill temperature is: +
+The https://www.weather.gov/media/epz/wxcalc/windChill.pdf[formula the National Weather Service uses] to calculate wind chill temperature is:
+
 stem:[W = 35.74 + 0.6215t + (0.4275t - 35.75)v^{0.16}]
 
  Enter temperature (F): 32.0
@@ -588,17 +660,17 @@ Print the result rounded to one decimal place, like the `23.7` above.
 The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a program that prompts the user for a radius and computes and computes and prints the area of the circle rounded to 3 decimal places.
 
 .Volume of a Cone
-The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Pythonprogram that will read the radius and the height from the user and computes and prints the volume of the cone.
+The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Python program that will read the radius and the height from the user and computes and prints the volume of the cone.
 
 .Population Growth
-In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will take a number of years as input and print the estimated population that many years from now.
+In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will promt the user for a number of years and print the estimated population that many years from now.
 
 .Compound Interest
 Assume that *_C_* is an initial amount of an investment, *_r_* is the yearly rate of interest (e.g., .02 is 2%), *_t_* is the number of years until maturation, *_n_* is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads *_C_*, *_r_*, *_n_*, and *_t_* from the user and computes and then prints the final value of the investment to the nearest penny.
 
 .Change Making 
 Write a prgram that reads an amount of money that we need to make change for, and dispenses
-the correct amount of change (in U.S. currency). Assume that the 20 dollar bill is the largest denomination.
+the correct amount of change (in U.S. currency). Assume that the 20 dollar bill is the largest denomination.  Here is an example execution of the program ...
 
 ----
 Enter an amount to make change for: 78.98
@@ -637,14 +709,17 @@ a|
 * builtin function
 * function call
 * variable
-* Hello World program
+* _Hello World_ program
 * scientific notation
+* programming language
+* comment
 
 a|
 * argument
 * expression
 * value
 * syntax error
+* run-time error
 * keyword
 * module
 * escape character
@@ -656,16 +731,131 @@ a|
 
 We have encountered several functions this chapter.
 
-* `print(arg1, arg2, ...)` -> `None` +
+* `print(arg1, arg2, ...)` +
++
 `print` does not produce a value but has the side effect of printing the values `arg1`, `arg2`, ... to the console.
-* `round(v:float, n:int)` -> `float`
-* `math.sqrt(v:float)` -> `float` +
-`math.sqrt` in the math computes and returns the square root of v
-* `int`
-* `float`
-* `input`
++
+* `round(v, n)` -> `float` 
++
+`round` expects a float to that will be rounded to `n` decimal places. The rounded float is returned.
++
+* `math.sqrt(v : float)` +
++
+`math.sqrt` in the math module computes and returns the square root of `v`.
++
+* `int(x)`
++
+If `x` is a float then return the integer part of `x` by truncating the decimal part. If `x` is a string then attempt to convert the string to an integer. If it can't then error.
+* `float(x)`
+If `x` is an integer then convert it to a float. If `x` is a string then attempt to convert it to a float. If it can't then error.
+* `input(prompt)` + 
++
+print the string `prompt` to the console and wait for keyboard input. Return the string the user entered. No type conversion takes place. For example if the user types 3.14 then the string "3.14" is returned.
 
 == Pygame Intro
+
+A fun way to learn to program is through graphics, images, and animation, by drawing shapes on window.  https://www.pygame.org/news[Pygame] is a popular python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
+
+To use pygame there is some standard code we need at the start of every program (but only in programs that use pygame).
+
+.hello_pygame.py
+[source,python]
+----
+import pygame <1>
+pygame.init() <2>
+win = pygame.display.set_mode((600,600)) <3>
+----
+
+<1> import the pygame module
+<2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
+<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window.
+
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into one value. For example the tuple `(200,300)` represents a single value with two integer components.
+
+NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be 1024 X 768 (1024 pixels wide by 768 pixels high) or 1472 X 1193. 
+
+NOTE: Most of the variables we have encountered so far have held integers, floats, or strings. The variable `win` above represent a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.   
+
+When we run the program above a window will display on our monitor and then quickly vanish. The window disappears because the program finished. We probably don't want the window to disappear right away.
+
+.Waiting
+Can you think of a way we might be able to pause the program to keep the window from disappearing until the user hits a key on the keyboard?
+
+[.result]
+====
+The `input` function waits for the user to type something on the keyboard and hit enter.
+
+.hello_pygame.py
+[source,python]
+----
+import pygame 
+pygame.init() 
+win = pygame.display.set_mode((600,600)) 
+dummy = input("Hit <enter> to quit.") <1>
+----
+<1> We don't need the `dummy` variable since we aren't going to use what the user typed. We could have just said ...
+
+[source,python]
+----
+input("Hit <enter> to quit.")
+----
+====
+
+=== Colors
+
+Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
+
+NOTE: There are many online tools to help determine the RGB values for varios colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.
+
+One common thing many of our pygame programs will do is to define common colors. 
+
+.color.py
+[source,python]
+----
+red    = (255,0,0)
+green  = (0,255,0)
+blue   = (0,0,255)
+yellow = (255,255,0)
+white  = (255,255,255)
+black  = (0,0,0)
+aqua   = (0,255,255)
+burntsienna = (138,54,15)
+----	
+
+We will soon get tired of retyping these definitions in our pygame programs. SO, one thing we can do is to place these color definitions in their own file and name is `color.py`.
+We can then import `color.py` into our pygame program and voila! we have created our own python module named `color` and we can reuse our color definitions without having to always retype them.
+
+.hello_pygame.py
+[source,python]
+----
+import color   # this the color.py file we just wrote above
+import pygame
+
+pygame.init() 
+win = pygame.display.set_mode((600,600)) 
+win.fill(color.burntsienna) <1>
+pygame.display.update() <2>
+input("Hit <enter> to quit.")
+----
+<1> Our first pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
+
+<2> When pygame functions draw on the display the window is not actally updated until we call the pygame function `pygame.display.update()`. 
+
+=== Terminology
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* pixel
+* reference
+
+a|
+* tuple
+
+|===
+
 
 == Functions
 
