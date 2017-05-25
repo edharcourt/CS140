@@ -620,15 +620,58 @@ As such you should never use a keyword as a variable name (in fact that is an er
 A constant defined in the math module is `math.pi`
 
 [source,python]
+----
 print(math.pi)
+----
 
-If we needed to compute stem:[sin(\sqrt{\pi/4})].
+[source,console]
+----
+3.141592653589793
+----
 
-NOTE: Functions and definitions that are referenced in a module uses a _dot notation_. For example, `math.pi`, `math.sqrt(x)`.
+NOTE: To reference functions and definitions in a module use _dot notation_. For example, `math.pi`, `math.sqrt(x)`.
 
+==== Function Composition
+
+A powerful programming technique is to call a function and use its return result as an argument in another function call. This is called _function composition_. Mathematically if stem:[f] and stem:[g] are functions that return a result we can _compose_ them as stem:[f(g(x))]. 
+
+For example, if we needed to compute stem:[sin(\sqrt{\pi/4})] ...
+
+image::function-composition.png[align="center"]
+
+.Version 1
 [source,python]
-result = math.sin(math.sqrt(math.pi/4))
+result = math.sin(math.sqrt(math.pi/4)) <1>
+print(round(result, 2)) <2>
+
+<1> This is the function composition of `math.sin` and `math.sqrt`.
+<2> Here we are composing `print` and `round`
+
+We could have done all this in one (albeit less readable) line ...
+
+.Version 2
+[source,python]
+print(round(math.sin(math.sqrt(math.pi/4)), 2))
+
+Or we could have also broken it up into more statements ...
+
+.Version 3
+[source,python]
+result1 = math.sqrt(math.pi/4)
+result2 = math.sin(result1)
+result3 = round(result2, 2) 
+print(result3)
+
+These are all equivalent and one is not necessarily better than the other. There is in fact a fourth version where we just reuse the `result` variable in each statement and not define a new variables.
+
+.Version 4
+[source,python]
+result = math.sqrt(math.pi/4)
+result = math.sin(result)
+result = round(result, 2) 
 print(result)
+
+We will see over and over that there are many ways to express the same computation, some may be better than others because they are more readable or more efficient.
 
 https://docs.python.org/3/library/math.html[Python math module documentation]
  
@@ -643,7 +686,7 @@ Write a program that converts a temperature in celsius to fahrenheit. Prompt the
 neat and descriptive.
 
 .Windchill
-Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem[v]. The current temperature and the wind velocity should be entered by the user from the keyboard. +
+Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem:[v] (in MPH). The current temperature and the wind velocity should be entered by the user from the keyboard. +
 The https://www.weather.gov/media/epz/wxcalc/windChill.pdf[formula the National Weather Service uses] to calculate wind chill temperature is:
 
 stem:[W = 35.74 + 0.6215t + (0.4275t - 35.75)v^{0.16}]
@@ -724,6 +767,7 @@ a|
 * module
 * escape character
 * assignment statement
+* function composition
 
 |===
 
@@ -754,7 +798,7 @@ print the string `prompt` to the console and wait for keyboard input. Return the
 
 == Pygame Intro
 
-A fun way to learn to program is through graphics, images, and animation, by drawing shapes on window.  https://www.pygame.org/news[Pygame] is a popular python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
+A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
 
 To use pygame there is some standard code we need at the start of every program (but only in programs that use pygame).
 
