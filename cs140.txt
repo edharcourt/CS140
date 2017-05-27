@@ -3,14 +3,15 @@ Introduction to Computer Programming with Python and Pygame
 Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
+:numbered:
 :icons: font
 :source-highlighter: pygments
 :stem: latexmath
 :imagesdir: ./images
+:includedir: .
 
 [preface]
-Preface
--------
+== Preface
 
 I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course.
 
@@ -24,9 +25,9 @@ Goals of the course include:
 
 == Introduction
 
-Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use]. About a dozen or so dominate the modern software development landscape. For example the https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Many scientists and engineer's are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for artists and visual designers. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electrnic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
+Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use]. About a dozen or so dominate the modern software development landscape. For example the https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Many scientists and engineer's are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
-NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). 
+NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has words, grammar (a.k.a syntax), and meaning (semantics).
 
 https://www.python.org/[Python] is a popular programming language used widely in industry. It is also used in introductory courses because it is relatively easy to use and get started with.  So lets get started.
 
@@ -53,7 +54,7 @@ That is it, just the one line. And it does as you might expect, it prints the me
 
 The python _builtin function_ `print` prints, to the console, the value between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
-TIP: In programming, a string literal is also called _string constant_
+NOTE: In programming, a string literal is also called _string constant_
 
 The `print` function can take multiple values separated by commas.
 
@@ -93,6 +94,14 @@ Python (as do most programming languages) supports specifying numbers using _sci
 We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is silly. We can simply say `9.10938356e-31`.
 
 TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
+
+.Example
+The radius of an electron is 0.00000000000000281792 meters. Express this number using Python's scientific notation.
+
+[.result]
+====
+`2.81792e-15`  # meters
+====
 
 === Variables
 
@@ -225,7 +234,7 @@ print(x)
 ====
 `0.5`
 ====
-<1> Recall that the single slash is _floating-point division_ meaning the result is 
+<1> Recall that the single slash `/` is _floating-point division_, meaning the result is 
 a floating-point number.
 
 Contrast this with _integer division_ using the double slash operator `//`. 
@@ -246,7 +255,7 @@ print(w,x,y,z)
 `0 0 1 15`
 ====
  
-Integer division will play a key role in many applications throughout these notes.
+Integer division will plays a key role in many applications incomputer science.
 
 .Example 4
 [source,python]
@@ -394,7 +403,7 @@ TIP: Python is unique in the way that it treats indentation. Most other programm
 
 We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. 
 
-INFO: A _syntax error_ is an error that violates the rules of the language. Syntax errors
+NOTE: A _syntax error_ is an error that violates the rules of the language. Syntax errors
 can be detected _before_ the program executes. 
 
 Find the error in each of the following:
@@ -537,7 +546,7 @@ WARNING: The `input` function returns a string value, even if the user entered a
 
 The function `int` takes a string argument and attempts to convert it to an integer and return the resulting integer. For example `int("-36")` would return the integer `-36`. The `int` function is also used to convert a floating-point number to an integer by truncating the decimal point. For example `int(3.14159)` would return `3`. Sometimes `int` can result in a _run-time error_. For example `int("3.14159")` causes an error because the string cannot converted to an integer. What about `int('hello')`?
 
-INFO: A _run time error_ is an error that canonly be detected when the program executes and not before.
+NOTE: A _run time error_ is an error that can only be detected when the program executes and not before. A run-time error is often called a _crash_. You'll often hear programmers say "The programming is crashing" or "the program crashes on this line of code".
 
 .The `float` function
 NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
@@ -597,7 +606,7 @@ prints the result using both `c` and `f`
 Python has lots of support libraries that we can use to get our work done. Think of 
 a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument _x_ (where _x_ is in radians).   
 
-INFO: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where yo can have folders inside folders to organize your documents.
+NOTE: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where yo can have folders inside folders to organize your documents.
 
 To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
@@ -662,7 +671,7 @@ result2 = math.sin(result1)
 result3 = round(result2, 2) 
 print(result3)
 
-These are all equivalent and one is not necessarily better than the other. There is in fact a fourth version where we just reuse the `result` variable in each statement and not define a new variables.
+These are all equivalent and one is not necessarily better than the other. A fourth version reuses the `result` variable in each statement and does not define new variables.
 
 .Version 4
 [source,python]
@@ -675,7 +684,39 @@ We will see over and over that there are many ways to express the same computati
 
 https://docs.python.org/3/library/math.html[Python math module documentation]
  
-=== CPUs, Interpreters, and Compilers
+=== Kinds of Program Errors
+
+We have already discussed _syntax errors_ and _run time errors_. 
+
+Recall that a syntax error is an error in how you string together the words and characters of your program. For example, a missing parentheses, or quote in a string literal, etc.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
+
+A _run-time_ error are errors that cannot be detected before program execution and only occur while your program is executing. Common run-time errors include divding by zero, or using a variable before it is defined. For example, consider the following simple (and silly) program:
+
+[source,python]
+----
+s = int(input("Enter a number: "))
+print("1000 divided by", s, "is", 1000/s) 
+----
+
+What would happen if the user entered a 0 at the input prompt? There is no way for python to know what the user is going to type and if they enter a 0 then the program will _crash_.
+
+==== Logic Errors
+There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error python will tell you exactly which line caused the crash. 
+
+Lets revisit our celsius to fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
+
+.Logic error
+[source,python]
+f = float(input('Enter a temperature (F): '))
+c = 5/9 * f-32
+print(f, "degrees fahrenheit is", round(c,1), "degrees celsius")
+
+[.result]
+====
+There are parentheses missing around the `f-32`. This program executes just fine and produces a result, it is just the wrong result. This kind of error is a _logic error_. A logic error is an error where the program produces an incorrect result when it executes. 
+====
+
+=== Bits, CPUs, Interpreters, and Compilers
 
 Place holder to talk about computers, ...
 
@@ -756,6 +797,10 @@ a|
 * scientific notation
 * programming language
 * comment
+* crash
+* prompt
+* CPU
+* interpreter
 
 a|
 * argument
@@ -768,6 +813,9 @@ a|
 * escape character
 * assignment statement
 * function composition
+* logic error
+* bit
+* compiler
 
 |===
 
@@ -812,9 +860,9 @@ win = pygame.display.set_mode((600,600)) <3>
 
 <1> import the pygame module
 <2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
-<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window.
+<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surfce_.
 
-NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into one value. For example the tuple `(200,300)` represents a single value with two integer components.
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be 1024 X 768 (1024 pixels wide by 768 pixels high) or 1472 X 1193. 
 
@@ -849,13 +897,14 @@ input("Hit <enter> to quit.")
 
 Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
 
-NOTE: There are many online tools to help determine the RGB values for varios colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.
+NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a builtin Color Picker. There is a free Ecommunity Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
 
-One common thing many of our pygame programs will do is to define common colors. 
+One common thing many of our pygame programs will do is to define some colors. 
 
 .color.py
 [source,python]
 ----
+# file color.py
 red    = (255,0,0)
 green  = (0,255,0)
 blue   = (0,0,255)
@@ -864,26 +913,150 @@ white  = (255,255,255)
 black  = (0,0,0)
 aqua   = (0,255,255)
 burntsienna = (138,54,15)
+lightgray = (200,200,200)
 ----	
 
-We will soon get tired of retyping these definitions in our pygame programs. SO, one thing we can do is to place these color definitions in their own file and name is `color.py`.
-We can then import `color.py` into our pygame program and voila! we have created our own python module named `color` and we can reuse our color definitions without having to always retype them.
+We will soon get tired of retyping these definitions in our pygame programs. One thing we can do is to place these color definitions in their own file and name is `color.py`.
+We can then import `color.py` into our pygame program and voila! we have created our own python module named `color` and we can reuse our color definitions without having to retype them every time.
+
+TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to reuse code rather than duplicate it. 
 
 .hello_pygame.py
 [source,python]
 ----
-import color   # this the color.py file we just wrote above
+import color   # this is the color.py file we just wrote above
 import pygame
 
 pygame.init() 
-win = pygame.display.set_mode((600,600)) 
-win.fill(color.burntsienna) <1>
-pygame.display.update() <2>
-input("Hit <enter> to quit.")
+width = 600
+height = 500
+win = pygame.display.set_mode((width,height)) <1> 
+win.fill(color.burntsienna) <2>
+pygame.display.update() <3>
+input("Hit <enter> to quit.") <4>
 ----
-<1> Our first pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
+<1> `win` (short for window) is a _display surface_ in pygame. We did not have to call it `win`. We could have called it any legal variable name.
 
-<2> When pygame functions draw on the display the window is not actally updated until we call the pygame function `pygame.display.update()`. 
+<2> Our first pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
+
+<3> When pygame functions draw on the display the window is not actally updated until we call the pygame function `pygame.display.update()`. 
+
+<4> Wait for the user to hit enter so the window doesn't disappear right away.
+
+=== Shapes
+
+In this section we are going to introduce how to draw a circle, ellipse, rectangel, line, and a single pixel on a surface.
+
+==== Rectangle 
+
+The pygame function `pygame.draw.rect` draws a rectangle on a surface and takes either three or four arguments.
+
+NOTE: Pygame programs only ever have one display surface. We will se later on that our pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
+
++++
+<code class="listingblock">
+pygame.draw.rect(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the rectangle on. For now we will just use the display surface `win` that was constructed using the `set_mode` function.
+
+_color_:: An RGB triple such as (0, 255, 255) or color.yellow (from our color module)
+
+_xywh_:: A four tuple (quadruple) that represents the _x_ and _y_ coordinate of the upper left hand corner of the rectangle and the width _w_ and the height _h_ of the rectangle. All units are in pixels.
+
+_optional-line-width_:: If this argment is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
+
+CAUTION: The upper left coordinate of the surface is the origin (0,0). 
+
+.Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Draw a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
+
+[.result]
+====
+[source,python]
+----
+import pygame, color
+
+pygame.init()
+width = 600   # display surface 600 pixels wide
+height = 400  # display surface is 400 pixels high
+win = pygame.display.set_mode((width,height))
+
+win.fill(color.lightgray)
+
+# set up some variable for the rectangle
+r_width = width//3
+r_height = height//3
+r_x = width//2 - r_width//2
+r_y = height//2 - r_height//2
+pygame.draw.rect(win, color.yellow, (r_x,r_y,r_width,r_height))
+pygame.display.update()
+
+input("Hit <enter> when done")
+----
+====
+
+image::pygame-rect-window.png[width=533,height=367,align="center"]
+
+Assume we have a 600 X 400 pygame display.
+
+.Top Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top left pixel in the pygame window?
+
+[.result]
+====
+(0,0)
+====
+
+.Top Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top right pixel in the pygame window?
+
+[.result]
+====
+(599,0)
+
+Now,most likely what you said was (600,0). This is a common mistake, Remember
+the window is 600 pixels wide and we are starting conting at 0. So the 600th pixel
+is column 599. This mistake of being off by one, computer scientists quite literally call an _off by one error_.
+====
+
+.Bottom Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top right pixel in the pygame window?
+
+[.result]
+====
+(0,399)
+====
+
+.Bottom Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top right pixel in the pygame window?
+
+[.result]
+====
+(599,399)
+====
+
+==== Circle
+
+The pygame function `pygame.draw.circle` draws a circle on a surface and takes either four or five arguments.
+
++++
+<code class="listingblock">
+pygame.draw.circle(<i>surface</i>, <i>color</i>, <i>xy</i>, radius, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the rectangle on. 
+
+_color_:: An RGB triple
+
+_xy_:: A tuple that represents the _x_ and _y_ coordinate of the center of the circle.
+
+_optional-line-width_:: If this argment is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle. 
+
+
+
 
 === Terminology
 
@@ -894,20 +1067,32 @@ input("Hit <enter> to quit.")
 a| 
 * pixel
 * reference
+* display surface
+* off-by-one error
 
 a|
 * tuple
+* Integrated Development Environment (IDE)
+* surface
 
 |===
 
 
 == Functions
 
+* `pygame.init`
+* `pygame.display.set_mode`
+* `surface.fill`
+* `pygame.display.update`
+* `pygame.draw.rect`
+* `pygame.draw.circle`
+* `pygame.draw.ellipse`
+* `pygame.draw.line`
+* `pygame.draw.arc`
+
 === Calling Functions
 
 === Defining Functions
-
-
 
 == Repetition - The While Loop
 
@@ -915,12 +1100,12 @@ a|
 while (condition):
     stmt
 
-More Loop Exercises
-~~~~~~~~~~~~~~~~~~~
+[appendix]
+== Installing Python, Pygame, and Pycharm
 
-1+2+3+...
+=== Installing Python
 
-Yet More Loop Exercises
-~~~~~~~~~~~~~~~~~~~~~~~
+=== Installing Pygame
 
-some more loopity loop
+=== Installing Pycharm
+
