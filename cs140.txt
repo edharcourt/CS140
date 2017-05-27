@@ -999,6 +999,10 @@ input("Hit <enter> when done")
 
 image::pygame-rect-window.png[width=533,height=367,align="center"]
 
+Notice the use of _integer division_ `//`. All of the pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't mak sense to do this in fractions of a pixel. 
+
+.Self Check
+
 Assume we have a 600 X 400 pygame display.
 
 .Top Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -1017,7 +1021,7 @@ What is the coordinate of the top right pixel in the pygame window?
 (599,0)
 
 Now,most likely what you said was (600,0). This is a common mistake, Remember
-the window is 600 pixels wide and we are starting conting at 0. So the 600th pixel
+the window is 600 pixels wide and we are starting counting at 0. So the 600th pixel
 is column 599. This mistake of being off by one, computer scientists quite literally call an _off by one error_.
 ====
 
@@ -1037,6 +1041,20 @@ What is the coordinate of the top right pixel in the pygame window?
 (599,399)
 ====
 
+.Proportional Graphics
+Notice that our yellow square is _proportional_ and relative to the size of the main pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
+
+TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example an eye would be drawn relative to a head, and a pupil would be drawn relative to the eye. 
+
+Constrast this with using absolute pixel coordinates and dimensions. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 and a height of 200
+
+[source,python]
+pygame.draw.rect(win, color.yellow, (100,200,300,200))
+
+then this woould draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
+
+Graphics using individual pixels only called _raster graphics_.
+
 ==== Circle
 
 The pygame function `pygame.draw.circle` draws a circle on a surface and takes either four or five arguments.
@@ -1051,11 +1069,147 @@ _surface_:: The surface we are going to draw the rectangle on.
 
 _color_:: An RGB triple
 
-_xy_:: A tuple that represents the _x_ and _y_ coordinate of the center of the circle.
+_xy_:: A tuple that represents the _x_ and _y_ coordinate of the _center_ of the circle.
 
-_optional-line-width_:: If this argment is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle. 
+_optional-line-width_:: If this argment is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.
 
+Lets draw a dark gray circle centered in the upper left quadrant of the yellow sqaure. We will do this proportionally, making the diameter of the sircle 1/3 width of the quandrant. Calculating the `x` and `y` coordinates of the circle can be a little tricky. The width of the quadrant is `r_width//2`
 
+The x coordinate of the circle is relative to `r_x`, the x coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
+ 
+[source,python]
+ul_c_x = r_x + r_width//4   # ul_c_x is short for upper left circle x coordinate
+
+Similarly the y coordinate is 
+
+[source,python]
+ul_c_y = r_y + r_height // 4
+
+Remember that the circle fcuntion requires the radius but the problem stated that the 
+diameter of the circle is 1/3 the width of the quadrant. We know the width f the quadrant is `r_width//2` and 1/3 od that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
+
+[source,python]
+ul_c_radius = r_width// 2 // 3 // 2 # or r_width // 12 
+
+Defining a new color `darkgray = (100,100,100)` in our color module and putting it all together we have 
+
+[source,python]
+ul_c_x = r_x + r_width // 4
+ul_c_y = r_y + r_height // 4
+ul_c_radius = r_width//2//3//2  # width of quadrant is r_width//2 then 1/3 of that
+pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
+
+And we should get something that looks like
+
+image::upper-left-circle.png[width=300,height=200,align="center"]
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Draw another dark gray circle with the same radius centered in the upper right quadrant of the yellow rectangle.
+
+[.result]
+====
+The only thing that changes is the x coordinate. The y coordinate and the radius
+of the upper right circle are the same as the y coordinate and readius f the upper left circle. One way to think about the x coordinate is that is 3/4 of the width of the rectangle. 
+
+[source,python]
+----
+ur_c_x = r_x + 3*r_width//4
+ur_c_y = r_y + r_height // 4    # same as upper left circle
+ur_c_radius = r_width//2//3//2  # same as upper left circle
+pygame.draw.circle(win, color.darkgray, (ur_c_x, ur_c_y), ur_c_radius)
+----
+
+image::upper-right-circle.png[width=300,height=200,align="center"]
+
+====
+ 
+.Complete program +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Here is the complete program so far with the two circles in the rectangle.
+
+[.result]
+====
+[source, python]
+----
+pygame.init()
+width = 600   # display surface 600 pixels wide
+height = 400  # display surface is 400 pixels high
+win = pygame.display.set_mode((width,height))
+
+win.fill(color.lightgray)
+
+# set up some variable for the rectangle
+r_width = width//3
+r_height = height//3
+r_x = width//2 - r_width//2
+r_y = height//2 - r_height//2
+pygame.draw.rect(win, color.yellow, (r_x,r_y,r_width,r_height))
+
+ul_c_x = r_x + r_width // 4
+ul_c_y = r_y + r_height // 4
+
+# width of quadrant is r_width//2 then 1/3 of that is
+# the diameter, then 1/2 of that for the radius
+ul_c_radius = r_width//2//3//2  
+pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
+
+ur_c_x = r_x + 3 * r_width // 4
+ur_c_y = r_y + r_height // 4
+ur_c_radius = r_width//2//3//2  # width of quadrant is r_width//2 then 1/3 of that
+pygame.draw.circle(win, color.darkgray, (ur_c_x,ur_c_y), ur_c_radius)
+
+pygame.display.update()
+
+input("Hit <enter> when done")
+----
+====
+ 
+[WARNING]
+====
+Notice the line for calculatig the x-coordinate of the upper right circle
+
+ ur_c_x = r_x + 3 * r_width // 4
+
+where we specified that it three-fourths thw width of the rectangle. You might be tempted to write
+
+ ur_c_x = r_x + 3 // 4 * r_width
+
+Why is the incorrect? Because `3//4` is 0!
+====
+ 
+ 
+==== Ellipse
+
+An ellipse is an oval shape with a width and a height. In graphics an ellipse is very similar to a rectangle. In fact the function to draw an ellipse is almost execatly the same as the function to draw a rectangle.  The one part of drawing an ellipse that takes
+some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)` coordinate of the rectangle (or _bounding box_) that surrounds the ellipse.
+
+image::ellipse.png[align="center"]
+
++++
+<code class="listingblock">
+pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the ellipse on.
+
+_color_:: An RGB triple
+
+_xywh_:: A four tuple (quadruple) that represents the _x_ and _y_ coordinate of the upper left hand corner _bounding box_, abd the width _w_ and the height _h_ of the ellipse.
+
+_optional-line-width_:: same as rectangle and circle functions.
+
+These are, in fact, the same arguments for drawing a rectangle.
+
+Continuing our program from before lets draw a black ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle.
+
+[source,python]
+----
+e_width = r_width // 2
+e_height = r_height // 4
+e_x = r_x + r_width // 2 - e_width // 2
+e_y = r_y + 2 * r_height // 3
+pygame.draw.ellipse(win, color.lightgray, (e_x,e_y,e_width,e_height))
+----
 
 
 === Terminology
@@ -1069,11 +1223,14 @@ a|
 * reference
 * display surface
 * off-by-one error
+* vector graphics
 
 a|
 * tuple
 * Integrated Development Environment (IDE)
 * surface
+* proportional graphics
+* raster graphics
 
 |===
 
