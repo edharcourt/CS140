@@ -1,5 +1,5 @@
 An Introduction to Computer Science and Programming with Python
-===========================================================
+===============================================================
 Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
@@ -1295,6 +1295,67 @@ pygame.draw.line(win, color.white,
 ----
 ====
 
+There are other pygam drawing functions, but that is all we'll need for now. You can make an astonishing nmber of drawing from rectangles, circles, ellipses, and lines. 
+
+.Exercise
+Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional. 
+
+==== Sample Blockheads
+
+Here are some of the blockheads that have been turned in pver the years as assignments.
+
+.Example 1 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::sbh.png[width=300,height=200,align="center"]
+====
+
+.Example 2 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::minion.png[width=300,height=200,align="center"]
+====
+
+.Example 3 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::pumpkin.png[width=300,height=200,align="center"]
+====
+
+.Example 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::spongebob.png[width=300,height=200,align="center"]
+====
+
+.Example 5 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::harrypotter.png[width=300,height=200,align="center"]
+====
+
+.Example 6 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::grumpy.png[width=300,height=200,align="center"]
+====
+
+
+
+
+
 === Terminology
 
 
@@ -1342,6 +1403,7 @@ while (condition):
     stmt
 
 [appendix]
+
 == Installing Python, Pygame, and Pycharm
 
 === Installing Python
