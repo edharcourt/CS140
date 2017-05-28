@@ -1216,8 +1216,83 @@ Adding this code to our running example we should get something like ...
 
 image::ellipse2.png[width=300,height=200,align="center"]
 
+You have probably guessed by now that what is taking shape is a face, a Mr. or Mrs. Blockhead.
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Use an ellipse to add a nose above the mouth. +
+image:nose.png[width=300,height=200,align="center"]
+
+[.result]
+====
+There are lots of ways to do this, but you need to make it relative to the head. 
+[source,python]
+----
+n_width = r_width // 10  # 1/10th width of head
+n_height = r_height // 4 # 1/4 height of head
+n_x = r_x + r_width // 2 - n_width // 2  # centered horizontally
+n_y = r_y + r_height // 2 - n_height//2  # centered vertically
+pygame.draw.ellipse(win, color.blue, (n_x,n_y,n_width,n_height))
+----
+====
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+You can give the Blockhead a smil by drawing an ellipse over the top of the mouth shifted up slightly, and make it the same color as the background head. +
+image:smile.png[width=300,height=200,align="center"]
+
+[.result]
+====
+This is one line, drawing an ellipse shifted up, say 20% of the width of the mouth.
+[source,python]
+----
+pygame.draw.ellipse(win, color.yellow, (e_x, e_y, e_width, e_height - .2*e_height))
+----
+====
+
+.Exercise
+Give the Blockhead pupils by drawing a circle or ellipse in each eye. Make sure it is proportional!
+
+TIP: You can always check to see if you are making your shapes proportional if you change the dimensions of the pygame display at the start of the program and make sure the image resizes appropriately.
+
+==== Lines
+
+You can draw a line in pyagme using the function `pygame.draw.line`.
+
++++
+<code class="listingblock">
+pygame.draw.line(<i>surface</i>, <i>color</i>, <i>start-xy</i>, <i>end-xy</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to drawing the line on.
+
+_color_:: An RGB triple
+
+_start-xy_:: The (x,y) coordinate of one endpoint of the line
+
+_end-xy_:: The (x,y) coordinate of the other endpoint of the line
+
+_optional-line-width_:: The width of the line in pixels
+
+.Exercise  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Draw a cross through the left eye. +
+image:eye-cross.png[width=300,height=200,align="center"]
+
+[.result]
+====
+[source,python]
+----
+pygame.draw.line(win, color.white,
+                 (ul_c_x, ul_c_y - ul_c_radius),
+                 (ul_c_x, ul_c_y + ul_c_radius))
+
+pygame.draw.line(win, color.white,
+                 (ul_c_x - ul_c_radius, ul_c_y),
+                 (ul_c_x + ul_c_radius, ul_c_y))
+----
+====
 
 === Terminology
+
 
 .Terminology
 [cols="2"]
