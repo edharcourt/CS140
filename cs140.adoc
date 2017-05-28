@@ -1200,7 +1200,8 @@ _optional-line-width_:: same as rectangle and circle functions.
 
 These are, in fact, the same arguments for drawing a rectangle.
 
-Continuing our program from before lets draw a black ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle.
+Continuing our program from before lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add `pink = (255, 20, 147)` to our `color.py` module.
+
 
 [source,python]
 ----
@@ -1208,8 +1209,12 @@ e_width = r_width // 2
 e_height = r_height // 4
 e_x = r_x + r_width // 2 - e_width // 2
 e_y = r_y + 2 * r_height // 3
-pygame.draw.ellipse(win, color.lightgray, (e_x,e_y,e_width,e_height))
+pygame.draw.ellipse(win, color.pink, (e_x,e_y,e_width,e_height))
 ----
+
+Adding this code to our running example we should get something like ...
+
+image::ellipse2.png[width=300,height=200,align="center"]
 
 
 === Terminology
