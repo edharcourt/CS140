@@ -21,21 +21,42 @@ Goals of the course include:
 * Emphasize problem soving in a precise, logical framework 
 * Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, and much more.
 
-=== Software is taking over 
-
 == Introduction
 
-Computer Science includes such diverse areas networking, cryptography, security, web development, Artitifical Intelligence, computer graphics, mobile computing ... another list that could continue for some time. What this has all enabled is astonishing; self driving cars, social media, voice and image recognition.  Computer programming abd software is the thread that knits all of these together. Naturally it is where we start.
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. It includes such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing ... another list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
 
-Software is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use]. About a dozen dominate the modern software development landscape, but many dozen more are actively used in niche areas sch as engineering and the visual arts.  
+A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use]. About a dozen dominate the modern software development landscape, but many dozen more are actively used in niche areas sch as engineering and the visual arts.  
 
 The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Many scientists and engineer's are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
-NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has words, grammar (a.k.a syntax), and meaning (semantics).
+NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has an alphabet, words, grammar (a.k.a syntax), and meaning (semantics).
+
+=== Software is taking over 
+Almost every aspect of our daily is impacted by software. Think about each of the following and what has changed and if there is software behind that change.
+
+* How often do you go into a bank and interact with a teller? 
+
+* What has hapened to book stores, from your local book store to large chain stores such as Barnes and Noble and Borders? 
+
+* When was the last time you used a travel agent to purchase an airline ticket?
+
+* What has happened to DVD stores such as Blockbuster?
+
+* What is disrupting the hotel and taxi industry?
+
+* What has happened to music stores where we used to purchase albums and CDs?
+
+* When was the last time you took a roll of film to get developed?
+
+* When was the last time you wrote a letter and mailed using the post office?
+
+* Your smart phone is a powerful computing device, how often do you look at in a day, and what do you use it for?
+
+=== Hello World
 
 https://www.python.org/[Python] is a popular programming language used widely in industry. It is also used in introductory courses because it is relatively easy to use and get started with.  So lets get started.
 
-It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one write's in any programming language. Here is our first python program:
+It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
 [source,python]
 print("Hello world")
@@ -70,6 +91,8 @@ produces the output
 [source]
 The value of pi squared is 9.869587728099999
 
+And we can see right here that `*` is a character in the alphabet, that two numbers are on both sides of the * (syntax), and that `*` must mean _multiplication_.
+
 NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
 
 Pictorially we often think of a function as a black box (we don't know how it works) where values come in (represented by the arrow coming in on the left) and the function produces values (the return results represented by the arrow coming out of the box on the right).  
@@ -99,7 +122,7 @@ We can also use scientific notation for very small numbers.  The mass of an elec
 
 TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
 
-.Example
+.Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 The radius of an electron is 0.00000000000000281792 meters. Express this number using Python's scientific notation.
 
 [.result]
@@ -556,7 +579,7 @@ NOTE: A _run time error_ is an error that can only be detected when the program 
 NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
 
 
-Here is our modified 
+Here is our modified program
 
 [source,python]
 f = float(input('Enter a temperature (F): ')) <1>
@@ -711,9 +734,11 @@ Lets revisit our celsius to fahrenheit conversion program.  The program below do
 
 .Logic error
 [source,python]
+----
 f = float(input('Enter a temperature (F): '))
 c = 5/9 * f-32
 print(f, "degrees fahrenheit is", round(c,1), "degrees celsius")
+----
 
 [.result]
 ====
@@ -786,11 +811,16 @@ The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily
 
 === Terminology
 
+Every discipline has its own terminology (or _nomenclature_). Terminology is what allows us to _communicate intelligently with accuracy and precision_ about a discipline both amongst other programmers and to the lay-person. 
+
+TIP: Master the terminology. Every term below is defined somewhere in this text. Just search for it in the browser.
+
 .Terminology
 [cols="2"]
 |===
 
 a| 
+* computer science
 * string literal (constant)
 * integer literal (constant)
 * floating-point literal (constant)
@@ -805,6 +835,7 @@ a|
 * prompt
 * CPU
 * interpreter
+* domain (of a function)
 
 a|
 * argument
@@ -812,6 +843,7 @@ a|
 * value
 * syntax error
 * run-time error
+* function
 * keyword
 * module
 * escape character
@@ -820,6 +852,7 @@ a|
 * logic error
 * bit
 * compiler
+* range (of a function)
 
 |===
 
@@ -866,15 +899,18 @@ win = pygame.display.set_mode((600,600)) <3>
 <2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
 <3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surfce_.
 
-NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
-
-NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be 1024 X 768 (1024 pixels wide by 768 pixels high) or 1472 X 1193. 
-
-NOTE: Most of the variables we have encountered so far have held integers, floats, or strings. The variable `win` above represent a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.   
-
 When we run the program above a window will display on our monitor and then quickly vanish. The window disappears because the program finished. We probably don't want the window to disappear right away.
 
-.Waiting
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
+
+NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (1024 pixels wide by 768 pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometims abbreviated _px_.
+
+NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represent a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
+.`x` is primitive and `win` is _reference_ +
+image:references.png[width=500,align="center"]
+
+
+.Waiting +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Can you think of a way we might be able to pause the program to keep the window from disappearing until the user hits a key on the keyboard?
 
 [.result]
@@ -1048,9 +1084,9 @@ What is the coordinate of the top right pixel in the pygame window?
 .Proportional Graphics
 Notice that our yellow square is _proportional_ and relative to the size of the main pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
 
-TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example an eye would be drawn relative to a head, and a pupil would be drawn relative to the eye. 
+TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example an eye would be drawn relative to a head, and a pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
 
-Constrast this with using absolute pixel coordinates and dimensions. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 and a height of 200
+Constrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.
 
 [source,python]
 pygame.draw.rect(win, color.yellow, (100,200,300,200))
@@ -1295,14 +1331,14 @@ pygame.draw.line(win, color.white,
 ----
 ====
 
-There are other pygam drawing functions, but that is all we'll need for now. You can make an astonishing nmber of drawing from rectangles, circles, ellipses, and lines. 
+There are other pygame drawing functions that we will introdce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
 
 .Exercise
 Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional. 
 
 ==== Sample Blockheads
 
-Here are some of the blockheads that have been turned in pver the years as assignments.
+Here are some of the blockheads that have been turned in over the years as assignments,footnote[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, and Jack Pattison for allowing me to use their Blockhead submissions.].
 
 .Example 1 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -1341,7 +1377,7 @@ image::spongebob.png[width=300,height=200,align="center"]
 
 [.result]
 ====
-image::harrypotter.png[width=300,height=200,align="center"]
+image::grumpy.png[width=300,height=200,align="center"]
 ====
 
 .Example 6 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -1349,12 +1385,8 @@ image::harrypotter.png[width=300,height=200,align="center"]
 
 [.result]
 ====
-image::grumpy.png[width=300,height=200,align="center"]
+image::doodlebug.png[width=300,height=200,align="center"]
 ====
-
-
-
-
 
 === Terminology
 
@@ -1380,7 +1412,7 @@ a|
 |===
 
 
-== Functions
+=== Functions
 
 * `pygame.init`
 * `pygame.display.set_mode`
@@ -1392,9 +1424,170 @@ a|
 * `pygame.draw.line`
 * `pygame.draw.arc`
 
+== Functions 
+
+Functions play a massively important role in programming. They encapsulate common computations and keep programmers from having to reinvent the wheel.
+
+Recall that in mathematics a _function_ maps values in a _domain_ to values in a _range_. In Python the `math.sqrt` function maps 4 to 2, 9 to 3, and 2 to 1.4142135...  
+
+.`math.sqrt` function
+image::sqrt-func.png[width=604,height=226,align="cener"]
+
+The round function maps `round(3.56,1)` to `3.6`. *_Functions return values_*. Always. But sometimes we don't care about the return value. In Python functions sometimes return the special value `None` which, which essentially means the function does not "really" return a value.footnote[In other programming languages such as C and and Java these are called _void_ functions.]. For example, the `print` function returns the value `None` but has the _side effect_ of printing its arguments on the console.
+
+.`print` function
+image::print-func.png[width=604,height=226,align="cener"]
+
+We saw earlier that 
+
+[source,python]
+----
+print("Hello World")
+----
+
+will print _Hello World_ on the console, but `print` also returned the `None` value.
+
+The following looks strange, but is legit, and almost certainly not what was intended.
+
+[source,python]
+---- 
+print(print("Hello World"))
+----
+
+.Self Check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What would get printed by the code above?
+
+[.result]
+====
+
+[source,python]
+----
+Hello World
+None
+----
+
+The inner `print` prints _Hello World_ to the console and returns `None` to the outer `print`, which it prints the console. Again, strange, and almost certainly not what was intended. 
+
+====
+
+TIP: `None` is an actual value in Python like `3` and `3,14` and `"Hello"`. It is the value that means _no value_. You will rarely every use it explicitly.
+
 === Calling Functions
 
+Lets get a little more formal about calling functions. Consider the statement
+
+[source,python]
+print("Hello World")
+
+We say that we are _calling_ the `print` function and _passing_ the argument `Hello World`. Passing an argument means we send the value to the function.
+
+Consider our previous program where we needed to compute stem:[sin(\sqrt{\pi/4})] ...
+
+[source,python]
+----
+result = math.sin(math.sqrt(math.pi/4))
+print(round(result, 2))
+----
+
+.Self Check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+How many function calls are there? Explain all of the arguments and return values.
+
+[.result]
+====
+The first line contains two function calls. First `math.sqrt` is called with the argument `math.pi/4`. Then `math.sin` is called and uses the _return value_ from the `math.sqrt` call as its arguments. The return value of `math.sin` is then assigned to the variable `result`. The second line contains two function calls as well. First `round` is called with _two_ arguments, `result` and `2`. `result` is the value being rounded and `2` is the number of places to round to. The return value from `round` is then used as the only argument to the `print` function. 
+
+In total there are four function calls and five arguments involved.
+====
+
 === Defining Functions
+
+The real power with functions is that we get to define our own. Functions allow us to encasulate of commonly occurring computation. Lets go back to our rather banal example of our formula to convert a fahrenheit temperature to celsius. Rather than having to keep remember the formula we can just define a function.
+
+.util.py
+[source,python]
+----
+def f2c(f): <1>
+    c = 5 / 9 * (f - 32) <2>
+    return c <3>
+----
+	
+<1> This is the _function header_. It tells Python we are defining our own function and it takes one _parameter_ `f`.
+<2> This is the main part of the function that does the computation in terms of the parameters. It defines a _local variable_ `c`.
+<3> This is the return statement that indicates that function `f2c` returns the value `c` to the _caller_ that was just computed.
+
+Lines 2 and 3 constitute the _function body_, which is indented under the function header.
+
+We now have our own function for converting fahrenheit to celsius and we can tuck it away in a file somewhere so we can reuse it later.
+
+image::f2c-func.png[align="center"]
+
+We can use `f2c` in a program by _calling_ it with an argument.
+
+[source,python]
+----
+print(f2c(32))
+----
+
+.Self check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Why is the following line incorrect? +
+`f2c(32)`
+
+[.result]
+====
+Because `f2c` returns a value, and this line does not do anything with that value. It doesn't print it or use it in another computation.
+====
+
+It is a common mistake for students to confuse a function returning a value and a function printing a value. Consider this version of `f2c`.
+
+[source,python]
+----
+def f2c(f):
+    c = 5 / 9 * (f - 32)
+    print(c)
+----
+
+This function returns the value `None` and, as a side effect, prints the value of the variable `c` on the console. This function is not technically wrong. It does not have a syntax error, nor a run-time error, or even a logic error. But it is in some way inferior to the first version of `f2c`. Consider the following program.
+
+[source,python]
+----
+t = float(intput("Enter a temperature: "))
+print(f2c(t) +  100)
+----
+
+This program reads a temperature from the user and puts it in the variable `t`. It then converts `t` to celsius and add 100 degrees celsius to the result and printing the final value. For the first version of `f2c` this works fine. But the second version crashes because it tries to add 100 to `None`.
+ 
+WARNING: A function that returns a value is not the same thing as the function printing a value. 
+
+==== Benefits of functions
+
+* Functions make code more readable 
+* Functions make code less buggy
+* Functions make programs more concise
+
+
+=== Terminology
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* function call
+* passing an argument
+* parameter
+* local variable
+* function body
+
+a|
+* return value
+* `None`
+* global variable
+* function header
+* scope
+
+|===
+
+
 
 == Repetition - The While Loop
 
