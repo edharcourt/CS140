@@ -1333,12 +1333,20 @@ pygame.draw.line(win, color.white,
 
 There are other pygame drawing functions that we will introdce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
 
+.Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Variables have been renamed to be more meaningful. FOr example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
+
+[.result]
+====
+include::python/blockhead.py[]
+====
+
 .Exercise
 Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional. 
 
 ==== Sample Blockheads
 
-Here are some of the blockheads that have been turned in over the years as assignments,footnote[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, and Jack Pattison for allowing me to use their Blockhead submissions.].
+To give you some ideas here are some of the blockheads that have been turned in over the years as assignments.footnote:[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, and Jack Pattison for allowing me to use their Blockhead submissions.]
 
 .Example 1 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -1528,6 +1536,9 @@ We can use `f2c` in a program by _calling_ it with an argument.
 print(f2c(32))
 ----
 
+We call this the _main program_. The main program is any code that exists outside of 
+a function.
+
 .Self check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Why is the following line incorrect? +
 `f2c(32)`
@@ -1537,7 +1548,7 @@ Why is the following line incorrect? +
 Because `f2c` returns a value, and this line does not do anything with that value. It doesn't print it or use it in another computation.
 ====
 
-It is a common mistake for students to confuse a function returning a value and a function printing a value. Consider this version of `f2c`.
+It is a common mistake for students to confuse a function _returning a value_ and a _function printing a value_. Consider this version of `f2c`.
 
 [source,python]
 ----
@@ -1558,12 +1569,196 @@ This program reads a temperature from the user and puts it in the variable `t`. 
  
 WARNING: A function that returns a value is not the same thing as the function printing a value. 
 
-==== Benefits of functions
+==== Putting function in a module
 
-* Functions make code more readable 
-* Functions make code less buggy
-* Functions make programs more concise
+Since we will be using the `f2c` function later in the text it is a good idea to place general functions in a module, such as `util.py`.
 
+[source,python]
+----
+import util 
+
+t = float(intput("Enter a temperature: "))
+print(util.f2c(t) +  100)
+----
+
+=== Functions for their side effect
+
+Functions return values. Some functions, such as `print`, return `None` but are used for their _side effect_.  
+ 
+Recall our complete blockhead program from before. 
+
+.Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+include::python/blockhead.py[]
+====
+
+What if we wanted to draw two or more blockheads on the display surface? One way is to make another copy of the code, and change lots of variable names etc. This is a perfect situation where we can write a function `blockhead` that we can call more than once. 
+
+In keeping with the way drawing rectangle works specifying the Blockhead's x and y coordinate along with its width and height makes sense:
+
+[source,python]
+----
+def draw_blockhead(head_x, head_y, head_w, head_h):
+    pass
+----
+	
+This is just the function header. Notice the use of the Python statement `pass`. This is the statement that does nothing. We are using it here as a placeholder for the function body.
+
+So what we'll do now is place all of the code used for the drawing inside the function and make sure that we use the parameters to initilize the 
+
+[source,python]
+----
+def draw_blockhead(head_x, head_y, head_w, head_h):
+
+    pygame.draw.rect(win, color.yellow, (head_x, head_y, head_width, head_height))
+
+    # left eye
+    left_eye_x = head_x + head_width // 4
+    left_eye_y = head_y + head_height // 4
+    left_eye_r = head_width // 12
+    pygame.draw.circle(win, color.darkgray, (left_eye_x, left_eye_y), left_eye_r)
+
+    # left eye cross
+    pygame.draw.line(win, color.white,
+                     (left_eye_x, left_eye_y - left_eye_r),
+                     (left_eye_x, left_eye_y + left_eye_r))
+
+    pygame.draw.line(win, color.white,
+                     (left_eye_x - left_eye_r, left_eye_y),
+                     (left_eye_x + left_eye_r, left_eye_y))
+
+    # right eye
+    right_eye_x = head_x + 3 * head_width // 4
+    right_eye_y = head_y + head_height // 4
+	
+	right_eye_r = head_width // 12  
+    pygame.draw.circle(win, color.darkgray, 
+	    (right_eye_x, right_eye_y), right_eye_r)
+
+    # mouth
+    mouth_width = head_width // 2
+    mouth_height = head_height // 4
+    mouth_x = head_x + head_width // 2 - mouth_width // 2
+    mouth_y = head_y + 2 * head_height // 3
+    pygame.draw.ellipse(win, color.pink, 
+	    (mouth_x, mouth_y, mouth_width, mouth_height))
+
+    # smile
+    pygame.draw.ellipse(win, color.yellow, 
+	    (mouth_x, mouth_y, mouth_width, mouth_height - .2 * mouth_height))
+
+    # add a nose
+    nose_width = head_width // 10  # 1/10th width of head
+    nose_height = head_height // 4 # 1/4 height of head
+    nose_x = head_x + head_width // 2 - nose_width // 2 
+    nose_y = head_y + head_height // 2 - nose_height // 2  
+    pygame.draw.ellipse(win, color.blue, 
+	    (nose_x, nose_y, nose_width, nose_height))
+----
+
+Now we can call the `draw_blockhead` function as many times as we like without having to 
+duplicate lots of code. The variables `head_x`, `head_y`, `head_w`, `head_h` are parameters and they can be used anywhere in the function body. That is their _scope_.
+
+NOTE: The _scope_ of a variable is the region of the progrsm where it can be used.
+
+All of the other variables that are defined in the function are _local variables_. A local variable's scope is from the point where where it is defined until the end of the function.
+
+NOTE: A _local variable_ is defined in the function. Its scope is th point from where it was defined until the end of the function.
+
+Noteice that the `draw_blockhead` function still uses the variable `win`, which is neither passed as a parameter nor is it defined with the function. The function assumes `win` is defined in the main program. We say that `win` is a _global variable_.
+
+NOTE: A _global variable_ is defined in the main program. Its scope is the point from where it was defined until the end of the program.
+
+[source,python]
+----
+# initial pygame stuff
+import pygame, color
+
+pygame.init()
+width = 600   # display surface 600 pixels wide
+height = 400  # display surface is 400 pixels high
+win = pygame.display.set_mode((width,height))
+
+# create the background
+win.fill(color.lightgray)
+
+blockhead(0,0,299,199)
+blockhead(300,0,299,199)
+blockhead(0,200,299,199)
+blockhead(300,200,299,199)
+pygame.display.update()
+
+input("Hit <enter> when done")
+----
+
+image::four-blockheads.png[width=300,height=100,align="center"]
+	
+We need to examine they way in which `draw_blockhead` uses variables. 
+
+=== Benefits of functions
+
+==== Functions make code more readable 
+
+If you look at the main program above it is clear that the program draws four figures. If we didn't use a function and duplicated the code to draw the figures then it would be far less clear what is going on. 
+
+==== Functions make code less buggy
+
+Imagine had we not used a function and we found an error in the code, we would then have to fix that error in every place where the code was duplicated. WHen we use a function we just fix it once.
+
+==== Functions make programs more concise
+
+This one is obvious. We don't have to copy and paste code, and the program is much shorter.
+
+==== Functions allow programmers to easily _reuse_ code.
+
+Consider our fahrenheit-to-celsius conversion function `f2c` that we placed in a file `util.py`. We can reuse that functionwhenever we want without having to reinvent the wheel every time.
+
+=== Exercises
+
+.Exercise 1
+Write a function `circ_area` that that takes the radius of a circle as a parameter and retrns the area of the circle.  Write a main program that reads the radius from the user (keyboard) and prints the area.
+
+.Exercise 2
+Answer questions about the program below. The lines are number 
+
+[source,python]
+----
+x = 5                   <1>
+y = 6                   <2>
+z = 33                  <3>
+
+def f(x):               <4>
+   y = 9                <5>
+   print(x + y + z)     <6>
+
+print(x + y + z)        <7>
+f(12)                   <8>
+print(x + y + z)        <9>   
+pass
+----
+
+. What is the output of the program?
+
+. Which line contains the function header?
+
+. Which line(s) constitute the main program?
+
+. Is there a local variable defined anywhere? If so what is its scope?
+
+. Does the function `f` return a value?
+
+. Does the function `f` reference any global variables?
+
+. Which lines constitute a function body?
+
+. Are there any arguments used in the program? If so what and where are they? (tricky)
+
+. Are there any parameters defined in the program? Explain.
+
+. What does the last line do? The line that is not numbered.
 
 === Terminology
 
@@ -1577,6 +1772,7 @@ a|
 * parameter
 * local variable
 * function body
+* main program
 
 a|
 * return value
@@ -1584,6 +1780,7 @@ a|
 * global variable
 * function header
 * scope
+* `pass`
 
 |===
 
