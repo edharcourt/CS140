@@ -91,7 +91,7 @@ produces the output
 [source]
 The value of pi squared is 9.869587728099999
 
-And we can see right here that `*` is a character in the alphabet, that two numbers are on both sides of the * (syntax), and that `*` must mean _multiplication_.
+And we can see right here that `*` is a character in the alphabet, that two values are on both sides of the `*` (syntax), and that `*` must mean _multiplication_ (semantics).
 
 NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
 
@@ -1519,8 +1519,8 @@ def f2c(f): <1>
     return c <3>
 ----
 	
-<1> This is the _function header_. It tells Python we are defining our own function and it takes one _parameter_ `f`.
-<2> This is the main part of the function that does the computation in terms of the parameters. It defines a _local variable_ `c`.
+<1> This is the _function header_. It tells Python we are defining our own function and it takes one _parameter_ `f`. The value of `f` is determined by the argment when `f2c` is called.
+<2> This is the main part of the function that does the computation. It defines a _local variable_ `c`.
 <3> This is the return statement that indicates that function `f2c` returns the value `c` to the _caller_ that was just computed.
 
 Lines 2 and 3 constitute the _function body_, which is indented under the function header.
@@ -1660,7 +1660,7 @@ def draw_blockhead(head_x, head_y, head_w, head_h):
 ----
 
 Now we can call the `draw_blockhead` function as many times as we like without having to 
-duplicate lots of code. The variables `head_x`, `head_y`, `head_w`, `head_h` are parameters and they can be used anywhere in the function body. That is their _scope_.
+duplicate lots of code. The variables `head_x`, `head_y`, `head_w`, `head_h` are _parameters_ and they can be used anywhere in the function body. That is their _scope_.
 
 NOTE: The _scope_ of a variable is the region of the progrsm where it can be used.
 
@@ -1696,7 +1696,6 @@ input("Hit <enter> when done")
 
 image::four-blockheads.png[width=300,height=100,align="center"]
 	
-We need to examine they way in which `draw_blockhead` uses variables. 
 
 === Benefits of functions
 
@@ -1742,7 +1741,7 @@ pass
 
 . What is the output of the program?
 
-. Which line contains the function header?
+. Which line contains a function header?
 
 . Which line(s) constitute the main program?
 
@@ -1788,9 +1787,74 @@ a|
 
 == Repetition - The While Loop
 
+Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey pick, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
+
+NOTE: We will often use the term _particle_ to represent any kind of moving object such as a baseball, a hockey puck, an electron, ...  
+
 [source,python]
-while (condition):
+----
+import color, pygame
+
+pygame.init()
+side = 500
+win = pygame.display.set_mode((side,side))
+
+# properties of the particle
+radius = side//20
+px = radius   # particle is all the way to the left
+py = side//2  # and halfway down display
+win.fill(color.white)
+
+# draw the particle
+pygame.draw.circle(win, color.blue, (px, py), radius)
+pygame.display.update()
+----
+
+What if we wanted to draw another particle right next to the first? The next particle's x coordinate will be 2 radii (plural of radius) past the first particle's x coordinate.
+
+[source,python]
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+
+How about a third particle?
+
+[source,python]
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+
+And a fourth? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. But this should _feel wrong_. And it is. What we want to do is repeat those two lines until the display is filled with particles.
+
+image::particles.png[align="center"]
+
+The _while loop_ in Python repeats a body of code as long as some condition is true. The syntax is ...
+
+[source,python,subs="quotes"]
+----
+while (*_condition_*):
     stmt
+----
+
+
+
+TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
+
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* particle
+* loop condition
+
+a|
+* loop body
+
+|===
+
+
 
 [appendix]
 
