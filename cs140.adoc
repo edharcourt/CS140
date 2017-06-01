@@ -1826,7 +1826,7 @@ And a fourth? ... well, you get the picture. We could keep copying and pasting u
 
 image::particles.png[align="center"]
 
-The _while loop_ in Python repeats a body of code as long as some condition is true. The syntax is ...
+The _while loop_ repeats a body of code (indented) as long as some condition is true. The syntax is ...
 
 [source,python,subs="quotes"]
 ----
@@ -1834,10 +1834,189 @@ while (*_condition_*):
     stmt
 ----
 
+We want to keep repeating the two lines of code 
 
+[source,python]
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+
+as long as some condition is true. As long as the particle's right edge is to the left of the right side of the display.
+
+[source,python]
+----
+while px + radius < side:
+    px = px + 2 * radius
+    pygame.draw.circle(win, color.blue, (px, py), radius)
+----
+
+Eventually `px + radius` will become greater than `side` and the loop condition becomes false and then the loop _terminates_.
+
+=== Animation 
+
+One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
+
+. Erase the background
+. Update the an object's position (for example, the particle's _x_ coordinate).
+. Redraw the object
+. introduce a slight delay to model the passage of time
+
+[source,python]
+----
+while px + radius < side:
+    win.fill(color.white)                                    <1>
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)                                     <2>
+    px = px + 1                                              <3>
+----
+<1> erase the screen, effectively erasing the particle
+<2> delay 5 milliseconds
+<3> moving 1 pixel at a time makes motion look smooth
+
+NOTE: A _sprite_ is a more general term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
+
+=== Relational Operators
+
+Python can compare two values using _relational operators_ such as _less than_ `<`. 
+
+[cols="1,8", width="50%", options="header"]
+.Relational Operators
+|===
+|Operator | operation
+|`<`
+|less than
+|`<=`
+|less than or equal to
+|`>`
+|greater than
+|`>=`
+|greater than or equal to
+|`==`
+|equal to
+|`!=`
+|not equal to
+|===
+
+.Exercise
+Animate moving the particle to the bottom of the screen.
+
+.Exercise
+Animate moving the particle from right to left.
+
+.Exercise
+Aniate moving the particle to the top of the screen.
 
 TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
 
+=== Counting Loops
+A common loop pattern is to repeat a body of code an exact number of times.
+
+.Example
+Lets say we wanted to print a table of of powers of two up to _2^10^_.
+
+[listing]
+----
+i   2^i
+==========
+0  | 1
+1  | 2
+2  | 4
+3  | 8
+...
+10 | 1024
+----
+
+[source,python]
+----
+# table header
+print("i     2^i")
+print("=========")
+
+i = 0                       <1>
+while i <= 10:              <2>
+    print(i, '\t|', 2**i)   <3>
+    i = i + 1               <4>
+----
+<1> In a counting loop we almost always initialize a variable to 0. It is a _convention_ to use `i`, `j`, and `k` as a name for a counting variable.
+<2> We want to include `10` in our table to se use `<=` here. Could we have also said `i < 11`? Yes.
+<3> `'\t'` represents the tab character. Without it the table columns would not be lined up neatly. Recall our discssion of _escape_ characters back in the section on string literals.
+<4> This increments the value of `i` by 1.  
+
+Lets be careful how we interpret the statement `i = i + 1`. This is an _assignment statement_, not a statement in mathematics (which would be nonsense). The way to read this is _the new value of `i` gets the old value of `i` plus one_. 
+
+.Think About
+What would happen if we forgot the line `i = i + 1`? 
+
+[.result]
+====
+Since `i` would never increment, the loop condition would never become false and the loop would never terminate. This is called an _infinite loop_. 
+====
+
+TIP: A _convention_ is something that is common practice. Stick with conventions as it makes code more readable.
+
+.Loop Exercise
+Print the integers from 1 to 10, one integer per line. 
+
+.Loop Exercise
+Print the integers counting down from 10 to 0. WHen you are done print "Blast off". Add a one second delay in between integers. Hint: use the `pygame.time.delay` function. How many milliseconds in a second?
+
+=== Accumulating Loops
+Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where _n_ is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
+
+[source,python]
+----
+n   = int(input("Enter n: "))   
+i   = 1                          <1>
+sum = 0                          <2>                        
+
+while i <= n:                    <3>
+    sum = sum + i                <4>
+    i = i + 1                    <5>
+
+print("The sum from 1 to", n, "is", sum)
+----
+<1> The loop counter. This could have started at 0 but including 0 in the sum doesn't change it.
+<2> Keep track of the running total in `sum`.
+<3> Make sure to include `n`
+<4> This adds the current value of `i` to the running total in `sum`. Again, interpret this as the assgnment statement _the new value of_ `sum` _gets the old value of_ `sum` _plus_ `i`.
+<5> Increment the loop counter
+
+
+.Exercise 
+Write a program that computes the average of non-negative numbers entered by the user. Quit reading numbers when the user has entered a negative number. Here is an example run of the program. Be careful, make sure you don't include the negative number in the average.
+----
+Enter a number: 3
+Enter a number: 9
+Enter a number: 7
+Enter a number: 8
+Enter a number: -1
+The average is  6.75
+----
+
+.Answer +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python]
+----
+n   = float(input("Enter a number: "))
+i   = 0
+sum = 0
+
+while n >= 0:
+    i = i + 1
+    sum = sum + n
+    n = float(input("Enter a number: "))
+
+average = sum / i
+print("The average is ", round(average, 2))
+----
+
+This is actually a little tricky. Notice the first line. We read our first number _before_ the loop. Once we get into the loop we know that we must have entered a non-negative number. 
+
+There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user typed in was negative?]
+====
 
 === Terminology 
 
@@ -1848,9 +2027,14 @@ TIP: Whenever you find yourself copying and pasting the same lines of code over 
 a| 
 * particle
 * loop condition
+* convention
+* counting loop
 
 a|
 * loop body
+* sprite
+* accumulating loop
+* infinite loop
 
 |===
 

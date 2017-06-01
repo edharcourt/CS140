@@ -8,6 +8,7 @@ px = radius
 py = 100//2
 win.fill(color.white)
 
+'''
 # move particle to the right
 while px+radius < side:
     pygame.draw.circle(win, color.blue, (px,py), radius)
@@ -16,7 +17,15 @@ while px+radius < side:
 pygame.display.update()
 pygame.image.save(win, "d:/Shared/images/particles.png")
 input("Enter")
+'''
 
+# move particle from left to right
+while px + radius < side:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    px = px + 1
 
 # move particle to bottom
 while py + radius < side:
