@@ -2028,7 +2028,7 @@ Plotting stem:[94^i] where _i_ is the number of characters in the password gives
 
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
-This is an example of _exponential growth_. NOtice how the graph explodes at around 8 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+This is an example of _exponential growth_. Notice how the graph explodes at around 8 characters (was it ever suggested that you make your passwords more than 8 characters long?)
 
 === Checksums; detecting network communication errors
 
