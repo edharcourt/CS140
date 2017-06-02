@@ -2020,7 +2020,7 @@ There is actually a subtle bug in this code that can sometimes lead to a crash. 
 
 === Exponential Growth
 
-Why are longer passwords better than shorter ones?  In the English alphabet lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibile alphabetic characters), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.  
+Why are longer passwords better than shorter passwords?  Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibile alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary 94 number, but it is probably close]  
 
 There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on so that if a password was ten characters long there are stem:[94^10 = 53861511409489970176] possible passwords or more than stem:[5 \times 10^19]. 
 
@@ -2029,7 +2029,21 @@ Plotting stem:[94^i] where _i_ is the number of characters in the password gives
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
 This is an example of _exponential growth_. Notice how the graph explodes at around 8 characters (was it ever suggested that you make your passwords more than 8 characters long?)
-So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. [formla goes here]
+So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
+
+[source,python]
+----
+i = 1
+sum = 0
+while i <= 10:
+    sum = sum + 94**i
+    i = i + 1
+
+print(sum)
+----
+
+which would print `54440667446151152650`.
+
 
 === Checksums; detecting network communication errors
 
