@@ -2018,6 +2018,22 @@ This is actually a little tricky. Notice the first line. We read our first numbe
 There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user typed in was negative?]
 ====
 
+=== Exponential Growth
+
+Why are longer passwords better than shorter ones?  In the English alphabet lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibile alphabetic characters), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.  
+
+There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on so that if a password was ten characters long there are stem:[94^10 = 53861511409489970176] possible passwords. 
+
+Plotting stem:[94^i] where _i_ is the number of characters in the password gives us the graph:
+
+image::94_to_the_i.png[width=480,height=360,align="center"]
+
+This is an example of _exponential growth_. NOtice how the graph explodes at around 8 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+
+=== Checksums; detecting network communication errors
+
+=== The Fibonacci Sequence
+
 === Terminology 
 
 .Terminology
@@ -2035,6 +2051,7 @@ a|
 * sprite
 * accumulating loop
 * infinite loop
+* exponential growth
 
 |===
 
