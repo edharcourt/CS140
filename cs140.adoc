@@ -2018,7 +2018,7 @@ This is actually a little tricky. Notice the first line. We read our first numbe
 There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user typed in was negative?]
 ====
 
-=== Exponential Growth
+=== Exponential Growth (password length)
 
 Why are longer passwords better than shorter passwords?  Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibile alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary 94 number, but it is probably close]  
 
@@ -2028,7 +2028,7 @@ Plotting stem:[94^i] where _i_ is the number of characters in the password gives
 
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
-This is an example of _exponential growth_. Notice how the graph explodes at around 8 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+This is an example of _exponential growth_. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
 So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
 
 [source,python]
@@ -2042,8 +2042,34 @@ while i <= 10:
 print(sum)
 ----
 
-which would print `54440667446151152650`.
+which would print `54440667446151152650`, which is also just bigger than stem:[5.4 \times 10^{19}]
 
+If a hacker was tryig to break into a system by trying all possible passwords how long might it take? Lets say we had a powerful computer that could try 1 million passwords per second that would be stem:[5.4 \times 10^{19}/10^6 = 5.4 \times 10^{13}] seconds, or stem:[10^{13}/60 = 1.67 \times 10^{11}] minutes, which is stem:[1.67 \times 10^{11} / 60 = 2.78 \times 10^9] hours, which is stem:[2.78 \times 10^9/24 = 1.16 \times 10^{8}] days, or 316 thousand years ... approximately.
+
+NOTE: a _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
+
+=== Exponential growth (populations)
+
+Exponential growth arises in more subtle ways. In the previous example we were raising, the base of the exponent, _94_, to a power.  What if the base were small? Lets take an exampe of world population growth, estimates to be _1.11_% per year in 2017. What does that mean?
+
+Let stem:[t] be the current year current population stem:[P] at thebeginning f year stem:[t] is stem:[P_t]. So stem:[P_{t+1} = P_t + 0.011P_t] or, factoring out the stem:[P_t] then stem:[P_{t+1} = P_t(1.011)]. 
+
+If we looks at plots of over a 10 year (top left), 100 year (top right), 1000 year (bottom left), and 5000 year (bottom right) time horizon the ten year plot looks nearly linear. But as we progress up to 5000 years we see a curve that definitely exponential.
+
+[cols="2"]
+|===
+| image:pop-10-year.png[width=300,height=300]
+| image:pop-100-year.png[width=300,height=300]
+
+| image:pop-1000-year.png[width=300,height=300]
+| image:pop-5000-year.png[width=300,height=300]
+|===
+
+One way of interpreting the formula stem:[P_{t+1} = P_t(1.011)] is to see that _the new value of stem:[P] is the old value of stem:[P] times 1.011_. We have seen thispattern many times before in programming. It is just an assignment statement:
+
+ P = P * 1.011
+
+Throwing this in a loop  
 
 === Checksums; detecting network communication errors
 
@@ -2060,6 +2086,7 @@ a|
 * loop condition
 * convention
 * counting loop
+* brute force attack
 
 a|
 * loop body

@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt, numpy
 
 points = []
-for i in range(1,11):
+i = 1
+while i <= 10:
     points.append(94**i)
+    i = i + .01
 
 plt.figure(1)
 plt.plot(points)
