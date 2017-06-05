@@ -9,6 +9,7 @@ v0.1, May 2017:
 :stem: latexmath
 :imagesdir: ./images
 :includedir: .
+:docinfo:
 
 [preface]
 == Preface
@@ -2020,15 +2021,15 @@ There is actually a subtle bug in this code that can sometimes lead to a crash. 
 
 === Exponential Growth (password length)
 
-Why are longer passwords better than shorter passwords?  Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibile alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary 94 number, but it is probably close]  
+Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But howmuch harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibble alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary number, 94, but it is probably close]  
 
-There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on so that if a password was ten characters long there are stem:[94^10 = 53861511409489970176] possible passwords or more than stem:[5 \times 10^19]. 
+There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
 
 Plotting stem:[94^i] where _i_ is the number of characters in the password gives us the graph:
 
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
-This is an example of _exponential growth_. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+This is an example of _exponential growth_ in the number of characters in the password. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
 So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
 
 [source,python]
@@ -2042,23 +2043,58 @@ while i <= 10:
 print(sum)
 ----
 
-which would print `54440667446151152650`, which is also just bigger than stem:[5.4 \times 10^{19}]
+which would print `54440667446151152650`, which is also just bigger than stem:[5.4 \times 10^{19}]. 
 
-To emphasize the difference between say a six character password and a ten character password, let's say a hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could try 1 billions passwords per second. 
+To emphasize the difference between say a six character password and a ten character password, let's say a hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could attempt 1 billion passwords per second. 
 
-For a six character password that's stem:[94^6/10^9/60 \approx 11.5] minutes. (there a 3600 seconds in
+For a six character password that's stem:[94^6/10^9/60 \approx 11.5] minutes. That's to try all possibilities. On average we'll search about half the passwords,so on average it would take about 6 minutes.
 
-that would be stem:[5.4 \times 10^{19}/10^6 = 5.4 \times 10^{13}] seconds, or stem:[10^{13}/60 = 1.67 \times 10^{11}] minutes, which is stem:[1.67 \times 10^{11} / 60 = 2.78 \times 10^9] hours, which is stem:[2.78 \times 10^9/24 = 1.16 \times 10^{8}] days, or 316 thousand years ... approximately.
+For a ten character password,
+we have stem:[94^{10}/10^9] seconds. Dividing by 60 to get minutes then another 60 to hours, then 24 to get days, then 365.25 to get years, we have stem:[94^{10}/10^9/60/60/24/365.25 = 1706] years! Again, this is to try them all, so on average we would find it after looking at half othe asswords, so it would only take about 850 years.
 
 NOTE: a _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
 
 === Exponential growth (populations)
 
-Exponential growth arises in more subtle ways. In the previous example we were raising, the base of the exponent, _94_, to a power.  What if the base were small? Lets take an exampe of world population growth, estimates to be _1.11_% per year in 2017. What does that mean?
+Exponential growth arises in more subtle ways. In the previous example we were raising the base of the exponent, _94_, to a fairly large power.  What if the base were small, but still greater than one? Lets use an example of world population growth rate, which is currently estimated to be _1.11_% (or .011) per year in 2017.footnote:[https://www.census.gov] 
 
-Let stem:[t] be the current year current population stem:[P] at thebeginning f year stem:[t] is stem:[P_t]. So stem:[P_{t+1} = P_t + 0.011P_t] or, factoring out the stem:[P_t] then stem:[P_{t+1} = P_t(1.011)]. 
+Let stem:[t] be the current year and stem:[P_t] be the current population  at the beginning of year stem:[t]. So stem:[P_{t+1} = P_t + 0.011P_t] or, factoring out the stem:[P_t] then stem:[P_{t+1} = P_t(1.011)]. 
 
-If we looks at plots of over a 10 year (top left), 100 year (top right), 1000 year (bottom left), and 5000 year (bottom right) time horizon the ten year plot looks nearly linear. But as we progress up to 5000 years we see a curve that definitely exponential.
+One way of interpreting the formula stem:[P_{t+1} = P_t(1.011)] is to see that _the new value of stem:[P] is the old value of stem:[P] times 1.011_. We have seen this pattern before in code. It is just an assignment statement:
+
+[source,pthon]
+----
+P = P * 1.011
+----
+
+We can just keep iterating this statement after we give it an initial population.
+
+[source,python]
+----
+P = 7.5e9      # initial population
+P = P * 1.011  # population after year 1
+P = P * 1.011  # population after year 2
+P = P * 1.011  # population after year 3
+# and so on
+----
+
+of course if we want to compute the population _P_ after _n_ years we should use a loop.
+
+[source,python]
+----
+P = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+n = int(input("Enter a number of years: "))
+
+while i < n:
+    P = P * (1 + r)
+    i = i + 1
+
+print("Final population: ", int(P))
+---- 
+
+Assume we have current population of roughly 7.5 billion.footnote:[https://www.census.gov] If we look at plots over a 10 year (top left), 100 year (top right), 1000 year (bottom left), and 5000 year (bottom right) time horizon then the year plot looks nearly _linear_. But as we progress up to 5000 years we see that this seemingly linear growth is a mirage and we have a curve that is definitely exponential.
 
 [cols="2"]
 |===
@@ -2069,15 +2105,118 @@ If we looks at plots of over a 10 year (top left), 100 year (top right), 1000 ye
 | image:pop-5000-year.png[width=300,height=300]
 |===
 
-One way of interpreting the formula stem:[P_{t+1} = P_t(1.011)] is to see that _the new value of stem:[P] is the old value of stem:[P] times 1.011_. We have seen thispattern many times before in programming. It is just an assignment statement:
+NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where _m_ is the slope and _b_ is the _y_-intercept.
 
- P = P * 1.011
+NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituing once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n]. And the exponential is obvious. 
 
-Throwing this in a loop  
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+When using a loop like this we can easily ask alternative questions such as _how many years will it take to reach a population of 10 billion_? This is just a simple matter of rephrasing the loop condition.
+
+[.result]
+====
+[source,python]
+----
+p = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+
+while p < 10e9:
+    p = p * (1 + r)
+    i = i + 1
+
+print(i, "years to 10 billion") 
+----
+====
+
+.Check Yourself 
+The population growth rate is not constant. It fluxuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is very easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximatel stem:[9.5 \times 10^9].
+
+image:pop-decreasing-growth.png[align"center"]
+
+If the growth rate decreases long enough it will eventually become negative. Correspondingly the population will start shrinking. 
+
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python]
+----
+p = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+n = int(input("Enter a number of years: "))
+
+while i < n:
+    p = p * (1 + r)
+    i = i + 1
+    r = r - .00025 <1>
+
+print("Final population: ", int(p))
+----
+<1> This is the only line that has changed from the original solution. The rate decreases by _.025%_ every year.
+====
 
 === Checksums; detecting network communication errors
 
-=== The Fibonacci Sequence
+A _checksum_ is an integer derived from a larger integer and is used to detect errors in network communication.  There are many different checksum techniques but one of the most common is to add up the digits in an integer number modulo ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits (music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, 
+0s and 1s, we'll use the more familiar base-ten digits 0-9.
+
+If a network was transmitting the number stem:[51623] we would compute the checksum by computing stem:[(5+1+6+2+3) % 10 = 7] and we would then transmit the number stem:[516237]. What would happen if there was an error in the transmission and the number transmitted was stem:[596237]. We take off the checksum digit which is 7, and compute 
+the checksum of stem:[59623] which is stem:[(5+9+6+2+3) % 10 = 5] and we see that stem:[7 \neq 5] so there must have been an error in the transmission.
+
+Why does this work? First this only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if there were two errors in the original communication such as stem:[526137] the checksum is still 7. If there is only single error it makes sense that a change in any single digit would change the final checksum mod 10.
+
+How do we write program to compute a checksum? If we have an integer such as stem:[51623] we can peel of the last digit using % 10, stem:[51623 % 10 = 3]. Then we need to the remaining digits stem:[5162]. We can get that using _integer division_ by 10, stem:[51623 // 10 = 3]. We just keep repeating this process adding up the remainder until the number has been reduced to 0.
+
+We can put this in a function that takes an integer to compute the checksum of and return the checksum.
+
+[source,python]
+----
+def checksum(n):               <1>
+    sum = 0                    <2>
+                             
+    while n > 0:               <3>
+        sum = sum + (n % 10)   <4>
+        n = n // 10            <5>
+    return sum % 10            <6>
+----
+
+.Review
+
+. Does the `checksum` function use any local variables?
+. `n` is a ________________ 
+. Line 1 is the  ________________ 
+. What is the value of `checksum(91242)`
+
+How can we append the checksum of an integer on the end (the _least significant digit_)? FOr example if the checkum of the integer stem:[51326] is stem:[7] how do we build th new integer stem:[513267]?
+
+[source,python]
+----
+ check = checksum(x) <1>
+ data = x * 10 + check <2>
+----
+<1> Compute the checksum of `x`, the integer we want to transmit
+<2> Multiply `x` by 10 shifting it left, and then add in the checksum digit `check`.
+
+=== Exercises
+
+.Exercise 1
+
+The Fibonacci Sequence
+
+.Exercise 2
+
+Sum of squares
+
+.Exercise 3
+
+_TBD: Turn some of the previous examples in to functions._
+
+.Exercise 4
+
+Write a function `num_digits` that will return the number of digits in an integer. For example,
+if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: similar to the `checksum` algorithm.
 
 === Terminology 
 
@@ -2091,6 +2230,7 @@ a|
 * convention
 * counting loop
 * brute force attack
+* linear growth
 
 a|
 * loop body
@@ -2098,8 +2238,71 @@ a|
 * accumulating loop
 * infinite loop
 * exponential growth
+* checksum
 
 |===
+
+== Conditionals
+
+Lets say we wanted to simulate tossing a coin and print `Heads` or `Tails`.
+
+The `random` module contains many functions for generating random numbers. The function `random.random()` returns a floating-point number between 0 and 1.
+
+[source,python]
+----
+import random
+print(random.random())
+----
+
+ 0.2840077963246783
+
+The function `random.randrange(n)` returns a random integer between 0 and `n`, but not including `n`.
+
+[source,python]
+----
+import random
+print(random.randrange(6))
+----
+
+ 5
+
+The if-statement executes one of two possible blocks of statements depending on a condition.
+
+[source,python,subs="quotes"]
+----
+if (*_condition_*):
+    true_stmts
+else:
+    false_stmts
+----
+
+If the condition is true then the block of statement labell `true_stmts` will be executed, otherwise the block of statements labelled `false_stmts` will be executed. The else part is optional.  Back to simulating a coin toss.
+
+Here is one way using `random.random()`
+
+[source,python]
+----
+import random
+x = random.random()
+
+if x < 0.5:
+    print("Heads")
+else:
+    print("Tails")
+----
+
+Here is another alternative using `random.randrange()`
+
+[source,python]
+----
+import random
+x = random.randrange(2)
+
+if x == 0:
+    print("Heads")
+else:
+    print("Tails")
+----
 
 
 
