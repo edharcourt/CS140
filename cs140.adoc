@@ -2287,7 +2287,7 @@ x = random.random()
 
 if x < 0.5:
     print("Heads")
-else:
+else:./run
     print("Tails")
 ----
 
