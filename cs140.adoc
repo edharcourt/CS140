@@ -1844,7 +1844,7 @@ How about a third particle?
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
 
-And a fourth? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. But this should _feel wrong_. And it is. What we want to do is repeat those two lines until the display is filled with particles.
+And a fourth? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. This should feel wrong. And it is. What we want to do is repeat those two lines until the display is filled with particles.
 
 image::particles.png[align="center"]
 
