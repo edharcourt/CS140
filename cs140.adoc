@@ -14,7 +14,7 @@ v0.1, May 2017:
 [preface]
 == Preface
 
-I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course.
+I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. It is also 
 
 Goals of the course include:
 
