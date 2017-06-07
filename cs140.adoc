@@ -2239,6 +2239,10 @@ _TBD: Turn some of the previous examples in to functions._
 Write a function `num_digits` that will return the number of digits in an integer. For example,
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: similar to the `checksum` algorithm.
 
+.Exercise 5
+
+Compute the average of numbers entered by the user.
+
 === Terminology 
 
 .Terminology
@@ -2329,7 +2333,7 @@ else:
 ----
 <1> Similar to the above, assigning heads to be 0 is arbitrary.
 
-.Check Yourself
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a program that reads an integer from the keyboard and prints `even`, if the number was even, or `odd` if the number was odd. A number is even if it is divisible by two. That is, the raminder after dividing by two is zero.
 
 [.result]
@@ -2456,7 +2460,9 @@ The logical operator `and` combines a logical value on the left and the right, _
 |`True` | `True` | `False`
 |=== 
 
-.Check Yourself
+NOTE: A _truth table_ enumerates all possible outcomes of a logical operator for all possible inputs.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write an if-statement that checks whether an integer `n` is between 0 and 100 inclusive. If it is then set a variable `x` to `0`. Write it two ways, one using a nested if-statement, and the second using the logical `and` operator.
 
 [.result]
@@ -2510,7 +2516,7 @@ if d1 == 1 or d2 == 1: <1>
 ----
 <1> `or` is a python keyword.
 
-The logical operator `or` combines a logical value on the left and the right, _X_ `or` _Y_. The entire logical expression is true if either of _X_ or _Y_ are true.  We often state this in terms of a _truth table_. 
+The logical operator `or` combines a logical value on the left and the right, _X_ `or` _Y_. The entire logical expression is true if either one of _X_ or _Y_ are true.  The truth table for logical `or` is: 
 
 [width="50%", options="header"]
 .Logical `or`
@@ -2525,7 +2531,7 @@ The logical operator `or` combines a logical value on the left and the right, _X
 
 When `and` and `or` are both used in an expression `and` has a higher precedence (much like `*` does over `+`).
 
-.Check Yourself
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a code fragment that will determine whether a user rolled exactly one 1. 
 Assume variable `d1` and `d2` have values.
 
@@ -2546,11 +2552,29 @@ The parentheses around the `or` are necessary.  Another solution is:
 if (d1 == 1 or d2 == 1) and (d1 != 1 or d2 != 1): <1>
     print("exactly one, 1")
 ----
-<1> Check the parentheses, they are necessary.
-
+<1> Note the parentheses, they are necessary.
 ====
 
+==== Logical `not`
 
+The remaining logical operator is `not`, the logical negation of `True` and `False`. The truth table is simply
+
+[width="25%", options="header", align="center"]
+.Logical `not`
+|===
+| X | `not` X
+
+|`False` | `True`
+|`True`  | `False`
+|===
+
+
+=== Exercises
+
+. logical operator exercises
+. larger smaller of two numbers
+. larger smaller of three numbers
+. median of three numbers
 
 === Terminology 
 
@@ -2561,13 +2585,57 @@ if (d1 == 1 or d2 == 1) and (d1 != 1 or d2 != 1): <1>
 a| 
 * uniform random number
 * code fragment
+* truth table
 
 a|
-* and
-* or
+* `and`
+* `or`
+* `not`
 
 |===
 
+== A Random Walk 
+
+The real power in programming comes from combining loops and conditional statements in (if-statements). Lets simulate tossing a coin _n_ times counting the number of times a head or tail appears. We will have _n_ be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+
+
+
+
+
+
+=== The Gambler's Ruin
+
+=== Brownian Motion (or the _Drunkard's Walk_)
+
+=== A Fractional Dimension Random Walk (or Fractal)
+
+=== The Monty Hall Problem
+
+Sometimes called the _chaos game_
+
+=== Exercises
+
+. prime
+. euler problem
+. count 7s
+. modifications to each random walk
+
+== Animation: Particles and Collision
+
+
+=== Pong
+
+== Image Processing
+
+== String and File Processing
+
+=== DNA Sequence Analysis
+
+=== Cryptography
+
+=== Web Access
+
+== Lists
 
 [appendix]
 
