@@ -2559,7 +2559,7 @@ if (d1 == 1 or d2 == 1) and (d1 != 1 or d2 != 1): <1>
 
 The remaining logical operator is `not`, the logical negation of `True` and `False`. The truth table is simply
 
-[width="25%", options="header", align="center"]
+[width="25%", options="header"]
 .Logical `not`
 |===
 | X | `not` X
