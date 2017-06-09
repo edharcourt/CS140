@@ -2598,16 +2598,150 @@ a|
 
 == A Random Walk 
 
-The real power in programming comes from how we can combine loops, conditional statements, and functions in creative ways to solve or explore a problem.  We will continue our investigations exploring the nature of _randomness_. Randomness plays an important role in many areads of computer science, including cryptography, networking, and simulation and modeling.
+The real power in programming comes from how we can combine loops, conditional statements, and functions in creative ways to solve or explore a problem.  We will continue our investigations in 
+programming by exploring the nature of _randomness_.footnote:[Randomness plays an important role in many areas of computer science, including cryptography, networking, and simulation and modeling.]
 
-Lets simulate tossing a coin _n_ times counting the number of times a head or tail appears. We will have _n_ be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+NOTE: A computer program is _deterministic_ if it produces the same exact results every time it executes.
 
+NOTE: "A random process models the progression of a system over time, where the evolution is random rather than deterministic."footnote:[https://reference.wolfram.com/language/guide/RandomProcesses.html]
 
+Lets simulate tossing a coin _n_ times counting the number of ooccurrences of a head or a tail. We will have _n_ be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
 
+[source,python]
+----
+toss = random.randrange(2)
 
+if toss == 0:
+    heads = heads + 1 <1>
+else:
+    tails = tails + 1 <2>
+----
+<1> This is actually a syntax error because `heads` is not yet defined.
+<2> Same comment. `tails` is not yet defined.
 
+This is the loop body, all we need to do now is to get _n_ from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the die _n_ times.
+
+TIP: Don't try and write the program all at once. Break into parts.
+
+[source,python]
+----
+import random
+
+n = int(input("Enter number of times to toss coin: "))
+
+i = 0       # loop counter
+heads = 0   # number of heads tossed
+tails = 0   # number of tails tossed
+
+while i < n:
+    toss = random.randrange(2) <1>
+
+    if toss == 0:
+        heads = heads + 1
+    else:
+        tails = tails + 1
+    i = i + 1
+
+print("Heads: ", heads)
+print("Tails: ", tails)
+----
+<1> A common mistake is to put this statement before the loop.
+
+One of the benefits of writing a program like this, a _simulation_, is that we can simulate tossing a coing thousands, millions, or even billions of times. Something that is not possible if we were to try and do this by hand with a real coin.
+
+TIP: If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
+
+INFO: A _computer simulation_ is a computer program that represents a simulation (or model) of some realy world process. 
+
+As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?
+
+.Check Yourself
+Modify the coint toss program to count the number of times we toss ten heads in a row. if we ever toss ten heads in a row. How big do you have to make _n_ in order to get ten heads in a row?
+
+[.result]
+====
+This is just one possible solution.
+
+[source,python]
+----
+import random
+
+n = int(input("Enter number of times to toss coin: "))
+
+i = 0
+heads = 0
+tails = 0
+in_a_row = 0         <1>
+in_a_row_count = 0   <2>
+
+while i < n:
+    toss = random.randrange(2)
+
+    if toss == 0:
+        heads = heads + 1
+        in_a_row = in_a_row + 1 <3>
+    else:
+        tails = tails + 1
+        in_a_row = 0            <4>
+
+    if in_a_row == 10:          <5>
+        in_a_row_count = in_a_row_count + 1
+
+    i = i + 1
+
+print("Heads: ", heads)
+print("Tails: ", tails)
+print("Number of ten in a row: ", in_a_row_count)
+----
+<1> A counter for keeping track of number of heads in a row.
+<2> Keep track of the number of times we roll heads ten in a row.
+<3> When we roll heads, increment the counter.
+<4> If we roll tails, reset the counter.
+<5> Check to see if we hit ten in a row.
+
+====
 
 === The Gambler's Ruin
+
+Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance each time (better odds than a real real casino.)
+
+How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as double your chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over long stretches. Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program just always chose heads (or tails) for the guess.
+
+[source,python]
+----
+import random
+chips = 1000
+while chips > 0 and chips < 2000:
+    toss = random.randrange(2)
+
+    if toss == 0:  
+        chips = chips + 1
+    else:
+        chips = chips - 1
+
+print(chips) <1>
+----
+<1> Will print either 0 or 2000.
+
+As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can't quit, even when they are ahead. What might the program look like now?  
+
+[source,python]
+----
+import random
+chips = 1000
+while chips > 0:  <1>
+    toss = random.randrange(2)
+
+    if toss == 0:  
+        chips = chips + 1
+    else:
+        chips = chips - 1
+print(chips) <2>
+----
+<1> Just remove the condition that we stop when we hit 2000.
+<2> What will always get printed?
+
+We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gamles long enough will always lose everything!
 
 === Brownian Motion (or the _Drunkard's Walk_)
 
@@ -2623,6 +2757,22 @@ Sometimes called the _chaos game_
 . euler problem
 . count 7s
 . modifications to each random walk
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* random process
+* determinstic
+
+a|
+* computer simulation
+
+|===
+
 
 == Animation: Particles and Collision
 
