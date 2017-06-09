@@ -2738,10 +2738,28 @@ while chips > 0:  <1>
         chips = chips - 1
 print(chips) <2>
 ----
-<1> Just remove the condition that we stop when we hit 2000.
+<1> The only change is to remove the condition that the loop terminate stop when `chips` reaches 2000.
 <2> What will always get printed?
 
-We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gamles long enough will always lose everything!
+We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gambles long enough will always lose everything!
+
+==== A One Dimensional Random Walk
+
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of width _w_ and height _h_, if let the center _y_ cordinate of the window represent 0 chips then `0 - chips` will be the _y_ coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+
+The pygame command 
+
+[source,python]
+----
+win.set_at( (x,y), RGB)
+----
+
+draws a pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
+
+
+
+
+The Gamler's Ruin is an example of a _random walk_.
 
 === Brownian Motion (or the _Drunkard's Walk_)
 
@@ -2770,6 +2788,7 @@ a|
 
 a|
 * computer simulation
+* random walk
 
 |===
 
