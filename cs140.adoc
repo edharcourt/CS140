@@ -2651,7 +2651,7 @@ One of the benefits of writing a program like this, a _simulation_, is that we c
 
 TIP: If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
 
-INFO: A _computer simulation_ is a computer program that represents a simulation (or model) of some realy world process. 
+NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some realy world process. 
 
 As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?
 
@@ -2738,14 +2738,14 @@ while chips > 0:  <1>
         chips = chips - 1
 print(chips) <2>
 ----
-<1> The only change is to remove the condition that the loop terminate stop when `chips` reaches 2000.
+<1> The only change is to remove the condition that the loop terminate when `chips` reaches 2000.
 <2> What will always get printed?
 
 We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gambles long enough will always lose everything!
 
 ==== A One Dimensional Random Walk
 
-Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of width _w_ and height _h_, if let the center _y_ cordinate of the window represent 0 chips then `0 - chips` will be the _y_ coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of width _w_ and height _h_, if we let the center _y_ coordinate of the window represent 0 chips then `0 - chips` will be the _y_ coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
 
 The pygame command 
 
@@ -2754,12 +2754,39 @@ The pygame command
 win.set_at( (x,y), RGB)
 ----
 
-draws a pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
+draws a single pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
 
+[source,python]
+----
+import random,pygame,color
+pygame.init()
+win = pygame.display.set_mode((600,600))
+win.fill(color.white)
 
+i = 0
+chips = 0
+scale = 100                       <1>
 
+while i < win.get_width()*scale:  <2>
+    n = random.randrange(2)
 
-The Gamler's Ruin is an example of a _random walk_.
+    if n % 2 == 0:
+        chips = chips + 1
+    else:
+        chips = chips - 1
+
+    win.set_at((i//scale, h//2 - chips), color.black) <3>
+
+    pygame.draw.line(win, color.red, (0,h//2), (h-1,h//2)) <4>
+    pygame.display.update()
+    i = i + 1
+----
+<1> Rather than drawing only one point for each x-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
+<2> Only draw until we fill the screen
+<3> Plot our current chip count. Notice the use of the scale variable to plot multiple points at each x-coordinate.
+<4> Keep redrawing a red line in the middle to represent 0 chips.
+
+The Gamler's Ruin is one example of a _random walk_. Random walks are used for builing models in many disciplines including economics and physics. In economics random walks are often to model fluxuations in random processes sch as the stock market. In physics, a random walk can model random motion such as _Brownian motion_. 
 
 === Brownian Motion (or the _Drunkard's Walk_)
 
