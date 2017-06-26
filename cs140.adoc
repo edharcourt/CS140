@@ -320,6 +320,7 @@ _Modular arithmetic_ is important in computer science.  Modular arithmetic is ju
 .Check Yourself
 [source,python]
 ----
+# What gets printed by the following?
 w = 1 % 2
 x = 3 % 7
 y = 3 % 2
@@ -343,6 +344,7 @@ Computing the modulus of a negative number is also important, for example `-1 % 
 .Check Yourself
 [source,python]
 ----
+# What gets printed by the following?
 w = -1 % 2
 x = -3 % 7
 y = -3 % 2
@@ -2783,18 +2785,59 @@ while i < win.get_width()*scale:  <2>
 ----
 <1> Rather than drawing only one point for each x-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
 <2> Only draw until we fill the screen
-<3> Plot our current chip count. Notice the use of the scale variable to plot multiple points at each x-coordinate.
-<4> Keep redrawing a red line in the middle to represent 0 chips.
+<3> Plot our current chip count. Notice the use of the `scale` variable to plot multiple points at each x-coordinate.
+<4> Keep redrawing a red line in the middle to represent zero chips. 
 
-The Gamler's Ruin is one example of a _random walk_. Random walks are used for builing models in many disciplines including economics and physics. In economics random walks are often to model fluxuations in random processes sch as the stock market. In physics, a random walk can model random motion such as _Brownian motion_. 
+The random walk on the left plots 10 points per x-coordinate `scale = 10`. The plot on the right
+plots 100 points per pixel `scale = 100`. 
+
+[cols="2"]
+|===
+| image:rand_walk1.png[width=300,height=300]
+| image:rand_walk2.png[width=300,height=300]
+
+|===
+
+Even though we have a 50-50 chance of increasing our decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. FOr a negative chip count plot a red pixel.
+
+[.result]
+====
+[source,python]
+----
+TBD
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low plot a red circle at the location.
+
+[.result]
+====
+[source,python]
+----
+TBD
+----
+====
+
+
+The Gambler's Ruin is an example of a _random walk_. Random walks are useful for builing models in many disciplines including economics.footnote:[One of the best know books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
+
+Random walks have a sophisticated and complex mathematical theory. Notice how simple it is to do some simple programming experiments and learn something about random processes without having to understanding the math.
 
 === Brownian Motion (or the _Drunkard's Walk_)
 
+Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles in a water. 
+
 === A Fractional Dimension Random Walk (or Fractal)
+
+Sometimes called the _chaos game_
+
 
 === The Monty Hall Problem
 
-Sometimes called the _chaos game_
 
 === Exercises
 
