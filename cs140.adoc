@@ -14,7 +14,7 @@ v0.1, May 2017:
 [preface]
 == Preface
 
-I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. It is also 
+I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. They probably do not hold together as a standalone resource for learning programming in Python. These notes are by no means complete with regards to the Python language, pygame, or reflect . But if you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
 Goals of the course include:
 
@@ -64,7 +64,6 @@ It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_p
 [source,python]
 print("Hello world")
 
-////
 .This will have a link next to it
 ----
 * always displayed
@@ -76,7 +75,6 @@ print("Hello world")
 * hidden till clicked
 * hidden till clicked 2
 ====
-////
 
 That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the console. But there is a lot going on in that one line, so lets break it down. 
 
@@ -126,7 +124,7 @@ We can also use scientific notation for very small numbers.  The mass of an elec
 TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
 
 .Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-The radius of an electron is 0.00000000000000281792 meters. Express this number using Python's scientific notation.
+The radius of an electron is _0.00000000000000281792_ meters. Express this number using Python's scientific notation.
 
 [.result]
 ====
@@ -138,18 +136,23 @@ The radius of an electron is 0.00000000000000281792 meters. Express this number 
 Let's return to our simple program ...
 
 [source,python]
+----
 print("The value of pi squared is", 3.14159 * 3.14159)
+----
 
 It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python using an _assignment statement_.
 
 [source,python]
+----
 pi = 3.14159
-
+----
 And we can rewrite our program as 
 
 [source,python]
+----
 pi = 3.14159
 print("The value of pi squared is", pi * pi)
+----
 
 To the left of the `=` sign is a _variable name_ and we read the assignment statement above as `pi` _gets the value of_ the value on the right of `=`, in this case `3.14159`.
 
@@ -160,16 +163,20 @@ The value of on the of `=` can also be an _expression_.
 IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. This former is not valid Python.
 
 [source,python]
+----
 pi = 3.14159
 pi_squared = pi * pi
 print("The value of pi squared is", pi_squared)
+----
 
 IMPORTANT: Variables must be defined before they are used.
 
 The Python program 
 
 [source,python]
+----
 print(x)
+----
 
 would produce an error becuse the variable `x` does not have a value.
 
@@ -183,9 +190,11 @@ print("The value of pi squared is", "pi_squared") # <2>
 ----
 
 [.result]
+====
 <1> prints `The value of pi squared is 9.869587728099999`
 <2> prints `The value of pi squared is pi_squared` +
 Almost certainly not what was intended.
+====
 
 === Comments
 
@@ -2828,38 +2837,40 @@ Random walks have a sophisticated and complex mathematical theory. However, noti
 
 The Gambler's Ruin is an example of a _one dimensional reandom walk. One dimensional becuase there is only one random variable.
 
-=== Brownian Motion (or the _Drunkard's Walk_)
+=== Brownian Motion
 
-Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles in a water. In this particular case the particle can move randomly in either the x or y direction.  In terms of a graphic display particle st coordinate _(x,y)_ has 
-eight possible neighboring locations that it can move to, forgetting, for the time being about a particle that is on an edge. 
+Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the _x_ or _y_ direction.  In terms of a graphic display, the particle's coordinate _(x,y)_ has 
+eight possible neighboring locations that it can move to )forgetting, for the time being, about a particle that is on an edge of the display). 
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have two random variables, one in the x direction and one in the y direction.  Assuming that `x` and `y` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` ad `y` accordingly.
+In this case we will have two random variables, one in the _x_ direction and one in the _y_ direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` correspnding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+
+INFO: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
 [source,python]
 ----
 dir = random.randrange(8)
 if dir == 0:     # top middle 
-	y = y - 1
+    y = y - 1
 elif dir == 1:   # top right
-	x = x + 1
-	y = y - 1
+    x = x + 1
+    y = y - 1
 elif dir == 2:   # right middle
-	x = x + 1
+    x = x + 1
 elif dir == 3:   # lower right
-	x = x + 1
-	y = y + 1
+    x = x + 1
+    y = y + 1
 elif dir == 4:   # botton middle
-	y = y + 1
+    y = y + 1
 elif dir == 5:   # bottom left
-	y = y + 1
-	x = x - 1
+    y = y + 1
+    x = x - 1
 elif dir == 6:   # left middle
-	x = x - 1
+    x = x - 1
 else:            # top left
-	x = x - 1
-	y = y - 1
+    x = x - 1
+    y = y - 1
 ----
 
 This is essentially the process we need to repeat overand over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` cordinate and returns its new `x` and `y`. Pictorially, 
@@ -2873,7 +2884,27 @@ def move(x,y):
     return (x,y)
 ----
 
-We can start a particle in the middle of the window (or at any random location for that matter) but what should we do when the particle is at an edge? We have several options, don't let the particle 
+This `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could
+
+- run for a certain number of iterations, 10, 100, 10000, etc.
+- run until we the particle moves off of the display
+
+The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, _while the particle is on the display_?
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a logical condition that is true of the particle as coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
+
+[.result]
+Well `x` must be between `0` and `w` (including 0, but exclusing `w`) and
+`y` must be between `0` and `h` (including 0, but excluding `h`).
+====
+[source,python]
+----
+(0 <= x and x < w) and (0 <= y and y < h) <1>
+----
+The parenthese are strictly not necessary but aid in clarity. 
+====
+
 
 === A Fractional Dimension Random Walk (or Fractal)
 
@@ -2899,10 +2930,14 @@ Sometimes called the _chaos game_
 a| 
 * random process
 * determinstic
+* Gambler's Ruin
+* Brownian Motion
 
 a|
 * computer simulation
-* random walk
+* one dimensional random walk
+* two dimensional random walk
+* The Drunkard's Walk
 
 |===
 
@@ -2936,12 +2971,12 @@ a|
 
 === Python functions
 
-* random.randrange(n)
-* random.random()
-* math.sqrt(n)
+* `random.randrange(n)`
+* `random.random()`
+* `math.sqrt(n)`
 
 === Pygame Functions
 
-* pygame.display.set_mode((w,h))
+* `pygame.display.set_mode((w,h))`
 
 
