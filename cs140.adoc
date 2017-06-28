@@ -64,6 +64,7 @@ It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_p
 [source,python]
 print("Hello world")
 
+////
 .This will have a link next to it
 ----
 * always displayed
@@ -75,6 +76,7 @@ print("Hello world")
 * hidden till clicked
 * hidden till clicked 2
 ====
+////
 
 That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the console. But there is a lot going on in that one line, so lets break it down. 
 
@@ -2892,19 +2894,27 @@ This `move` function is the heart of our loop body. We can start a particle in t
 The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, _while the particle is on the display_?
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a logical condition that is true of the particle as coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
+Write a logical condition that is true if the particle as coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
 
 [.result]
-Well `x` must be between `0` and `w` (including 0, but exclusing `w`) and
-`y` must be between `0` and `h` (including 0, but excluding `h`).
 ====
+Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
+`y` must be between `0` and `h` (including 0, but excluding `h`).
 [source,python]
 ----
-(0 <= x and x < w) and (0 <= y and y < h) <1>
+(0 <= x and x < w) and (0 <= y and y < h)
 ----
-The parenthese are strictly not necessary but aid in clarity. 
+
+The parenthese are not strictly necessary but aid in clarity. 
+
+Python allows for a more concise mathematical way to describe inequalitites. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
+[source,python]
+----
+(0 <= x < w) and (0 <= y < h)
+----
 ====
 
+Putting this altogether 
 
 === A Fractional Dimension Random Walk (or Fractal)
 
