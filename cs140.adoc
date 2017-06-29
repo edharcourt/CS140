@@ -2795,9 +2795,11 @@ while i < win.get_width()*scale:  <2>
     i = i + 1
 ----
 <1> Rather than drawing only one point for each x-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
-<2> Only draw until we fill the screen
+<2> Only draw until we fill the screen. This is also the first time we have seen this function call `win.get_width()`. See the note below.
 <3> Plot our current chip count. Notice the use of the `scale` variable to plot multiple points at each x-coordinate.
 <4> Keep redrawing a red line in the middle to represent zero chips. 
+
+NOTE: `win.get_width()`. Need to finish discussing
 
 The random walk on the left plots 10 points per x-coordinate `scale = 10`. The plot on the right
 plots 100 points per pixel `scale = 100`. 
@@ -2914,7 +2916,195 @@ Python allows for a more concise mathematical way to describe inequalitites. For
 ----
 ====
 
-Putting this altogether 
+==== The complete Brownian program
+
+Putting this altogether we have ...
+
+[source,python]
+----
+import pygame, random, color
+
+#
+# move a particle with coordinates (x,y) to
+# a new random location, one of its eight neighbors.
+#
+def move(x,y):
+    dir = random.randrange(8)
+    if dir == 0:
+        y = y - 1
+    elif dir == 1:
+        x = x + 1
+        y = y - 1
+    elif dir == 2:
+        x = x + 1
+    elif dir == 3:
+        x = x + 1
+        y = y + 1
+    elif dir == 4:
+        y = y + 1
+    elif dir == 5:
+        y = y + 1
+        x = x - 1
+    elif dir == 6:
+        x = x - 1
+    else:
+        x = x - 1
+        y = y - 1
+
+    return (x,y)
+
+# main program
+pygame.init()
+
+win = pygame.display.set_mode((600,600))
+w = win.get_width()
+h = win.get_height()
+x = w//2  <1>
+y = h//2  <2>
+
+win.fill(color.white)
+
+while (0 <= x < w) and (0 <= y < h):
+    win.set_at((x,y), color.blue)
+    (x,y) = move(x,y)
+    pygame.display.update()
+
+input("Hit enter")
+----
+<1> Start the particle in the middle of the x axis
+<2> Start the particle in the middle of the y axis
+
+Here is one sample run of the program
+
+image::brownian.png[width=190,height=133,align="center"]
+
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a second particle (use a different color) to the simulation. Stop the simulation when _both_ particle have gone off the window. 
+Hints: 
+* add properties for a second particle
+* Don't modify the `move` function or make a copy of the `move` function. Just _reuse_ it by calling it again with the properties of the second particle. (That is the whole point of using functions).
+* Modify the loop condition so the simulation terminates properly.
+
+[.result]
+====
+Like alaways, there are many solutions. Here is one.
+[source,python]
+----
+import pygame, random, color
+
+# same move function goes here.
+
+# main program
+pygame.init()
+
+win = pygame.display.set_mode((600,600))
+w = win.get_width()
+h = win.get_height()
+x1 = w//2  <1>
+y1 = h//2
+x2 = w//2  <2>
+y2 = h//2
+
+win.fill(color.white)
+
+while (0 <= x1 < w) and (0 <= y1 < h) or \  <3>
+      (0 <= x2 < w) and (0 <= y2 < h):
+    win.set_at((x1,y1), color.blue)
+    win.set_at((x2,y2), color.green) <4>
+    (x1,y1) = move(x1,y1)
+    (x2,y2) = move(x2,y2)   <5>
+    pygame.display.update()
+
+input("Enter")
+----
+<1> Coordinates of the first particle.
+<2> Coordinates of the second particle.
+<3> Why logical `or`?
+<4> Don't forget to draw the second particle.
+<5> Notice how we just call the `move` function a second time with different arguments?
+
+How hard is it to add a third particle? A fourth? As we progress we will learn more advanced techniques so we don't have to keep defining new variables for each particle.
+====
+
+A two particle system might look like
+
+image::brownian2.png[width=292,height=208,align="center"]
+
+==== Improvement's to the Brownian Program
+
+That big if-statement in the `move` function is rather clunky and error prone. If you misstype a `-` or `+` sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 tothe particle `x` and `y` coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
+
+A better and more concise `move` function.
+
+[source,python]
+----
+def move(x,y):
+
+    delta_x = random.randrange(-1,2) <1> <2>
+    x = x + delta_x
+
+    delta_y = random.randrange(-1,2)
+    y = y + delta_y
+
+    return (x,y)
+----
+<1> Why the `2` as opposued to `1` as the second argument to `randrange`?
+<2> The Greek letter stem:[\Delta] (pronounced _delta_) is often used to reprent a change in some quantity. In this case a change in the `x` coordinate. 
+
+TIP: Python (version 3) actually does allow Greek alphabeteic letters in identifier names.
+
+.A particle on a torus
+
+Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the boounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the Brownian particle simulation so that a particle stays within the bounds of the window.
+
+[.result]
+====
+TBD
+
+[source,python]
+----
+# python code
+----
+====
+
+Another more interesting solution migh be to pretent that the display _wraps around_. For example, if a particle goes off the right edge it come in  on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom. 
+
+An obvious way to do this is to use an if-statement to check if the particle has gone off an edge and reset its coordinate accordingly. 
+
+[source,python]
+----
+# wrap the x-coordinate around the x-axis.
+if x >= w:
+    x = 0
+elif x < 0:
+    x = w - 1 <1>
+---- 
+<1> Why `w - 1` and not `w`?
+
+Modifying the y-cooordinate is similar.
+
+Think of the display as a piece of paper where curl the paper around on the x-axis then we curl it again arond the y-axis. We end up with the topological shape of a _torus_, or a donut.
+
+image:brownian_on_torus.png[width=240,height=226,align="center"]
+
+The concept of a variable _wrapping around_ should be familiar. This is modular arithmetic. So rather than the if-statement above we can simply add or subtract 1 modulo the width or height of the window. In which case our `move` function becomes ... 
+
+[source,python]
+----
+def move(x,y):
+
+    delta_x = random.randrange(-1,2)
+    x = (x + delta_x) % w
+
+    delta_y = random.randrange(-1,2)
+    y = (y + delta_y) % h
+
+    return (x,y)
+----
 
 === A Fractional Dimension Random Walk (or Fractal)
 

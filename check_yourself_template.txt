@@ -1,0 +1,19 @@
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Problem text goes here
+
+[.result]
+====
+Problem solution goes here maybe with some additional python code
+
+[source,python]
+----
+# python code
+----
+
+and some more text and python code
+
+[source,python]
+----
+# more python
+----
+====
