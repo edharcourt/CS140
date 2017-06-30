@@ -3070,7 +3070,7 @@ The only thing you need to add is an if-statemtn that checks the bounds of the p
 # add this to the bottom of the move function.
 if x >= w:     <1> <2>
     x = w - 1  <3>
-elif x < 0:    <4> <5>
+elif x < 0:    <4>
     x = 0
 	
 if y >= h:
@@ -3081,8 +3081,7 @@ elif y < 0:
 <1> Why `>=`? 
 <2> Could we have also said `x > w - 1` or even `x == w`? Yes to both.
 <3> Why `w - 1`?
-<4> Could we have also said `x == 0`? Yes.
-<5> How about `x = 0`?  No, that is an assignment statement.
+<4> Could we have also said `x == -1`? Yes.
 ====
 
 Another more interesting solution migh be to pretend that the display _wraps around_ on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom. 
