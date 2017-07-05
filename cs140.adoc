@@ -3125,10 +3125,272 @@ Lets look at the left edge. When the particle `x` is on the left edge then `x` i
 
 === A Fractional Dimension Random Walk (or Fractal)
 
-Sometimes called the _chaos game_
+Imagine you are out for a hike and got lost. Off in the distance you see three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it on a stright line. Half way there he changes his mind, and marks the spot with a rock (a thumb tack in the image below). He then chooses another tower at random (maybe the same towser) and walks towards it, gets half way there and has a change of heart. He once again marks the spot with a rock, and chooses another cell tower. He continues this process until, well, ... forever. The image drawn bymarking the rocks is an interesting sort of random walk. 
 
+image::lost_hiker.png[width=711,height=400,align="center"]
+
+Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, and 
+`(x,y)` be the coordinates of the hiker. Lets right down the process described in the paragraph above in _pseudocode_.
+
+[source]
+----
+1) create a pygame display window
+2) Assign the coordinates of the towers to variables
+3) Assign the hiker random coordinates anywhere within the display
+4) Forever
+   a) choose a tower at random
+   b) compute the mid-point between the hiker and the chosen tower and 
+      update the hiker's coordinates with the midpoint.
+   c) plot a pixel at the hikers coordinate (similar to marking with a rock)
+
+----
+
+TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real python code, but in more informal text, what coputer scientists call _pseudocode_.
+
+NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
+the average of the _x_-coordinates and the average of the _y_-coordinates, or 
+stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})]
+
+[source,python]
+----
+import pygame, random, color
+side = 500
+win = pygame.display.set_mode((side,side))
+
+x0 = side // 2  # tower 0 coordinates
+y0 = 0
+
+x1 = side - 1   # tower 1 coordinates
+y1 = side - 1
+
+x2 = 0          # tower 2 coordinates
+y2 = side - 1
+
+x = random.randrange(side) # hiker coordinates
+y = random.randrange(side)
+
+win.fill(color.white)
+
+while True:
+
+    #choose a tower at random
+    t = random.randrange(3) <1>
+
+	# which tower is it?
+    if (t == 0):
+        x = (x + x0) // 2
+        y = (y + y0) // 2
+    elif (t == 1):
+        x = (x + x1) // 2
+        y = (y + y1) // 2
+    else:
+        x = (x + x2) // 2
+        y = (y + y2) // 2
+
+    win.set_at((x, y), color.blue)
+    pygame.display.update()
+----
+<1> It is important that the random number is in the loop body. We need
+to get a new random tower every iteration. If this were before the loop then we would always be choosing the same tower.
+
+The shape rendered by the code is called _Sierpinski's Triangle_.
+
+image::sierpinski.png[width=500,height=500,align="center"]
+
+This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (_e.g._ the midpoint) is informally called  the _chaos game_, named by the branch of mathematics called _chaos theory_.
+
+The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensaional random walk, but ore than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbot, W.H. Freeman and Company, 1982] 
+
+.Exercise
+Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
+
+.Exercise
+Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable `prev` that keeps track of the previous tower guessed . When chosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
 
 === The Monty Hall Problem
+
+The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant gets to choose a door, after which Monty Hall opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
+
+This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem. Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant came up with a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarassing for ... the mathematicians.footnote:[http://marilynvossavant.com/game-show-problem/] Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well know mathematicians, and to this day, many of us still fumble around when we try to explain it. 
+
+Probability is often counter intuitive, we saw this with the Gambler's Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.
+
+Lets lay out the process of playing the game outlined above:
+
+. The contestant is presented with three doors, two with goats, and one with a new car, randomly assigned.
+. The contestant chooses a door
+. The host shows a goat behind one of the other doors (not the contestants door). 
+. The contestant is given th choise whether to switch
+. The contestant's door is revealed.
+
+We'll tackle each of these in turn.
+
+We can assign goats and a car to doors in any order. The one thing we need to be careful though, is that we don't assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
+
+[source,python]
+----
+goat1 = random.randrange(1,4)
+----
+
+Easy. Now how about the second goat?
+
+[source,python]
+----
+goat2 = random.randrange(1,4)
+----
+
+This doesn't quit work because we might accidentally get the same random number. 
+Here is another attempt.
+
+[source,python]
+----
+goat2 = random.randrange(1,4)
+
+if goat1 == goat2:
+    goat2 = random.randrange(1,4) <1>
+----
+<1> Try again
+
+This is a common mistake. Why is it incorrect? Well, while it is less likely, we can still
+get the same random number twice in a row. We need to keep trying as long as they are the same.
+
+[source,python]
+----
+goat2 = random.randrange(1,4)
+
+while goat1 == goat2:
+    goat2 = random.randrange(1,4) <1>
+----
+<1> Keep trying as long as we keep getting the same random number as `goat1`. We know from the Gambler's Ruin that we can sometimes get the same number several times in a row.
+
+What must be the case when this loop terminates? That `goat1` is not equal to `goat2`.
+We have assigned the two goats to different doors. NOw we need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
+
+[source,python]
+----
+car = random.randrange(1,4)
+while car == goat1 or car == goat2:
+    car = random.randrange(1,4)
+----
+
+This is one way to do it. 
+ 
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Since there is only one door remaining for the car we should be able to calculate
+it without using a loop. Hint: Think of a simple expression involving th door numbers.
+
+[.result]
+====
+[source,python]
+----
+car = 6 - goat1 + goat2 <1>
+----
+<1> Try it for various values of `goat1` and `goat2`
+====
+
+We need to have the contestant choose a door. We can simply ask.
+
+[source,python]
+----
+choice = int(input("Choose a door: ")) <1>
+----
+<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking though this is an import part of writing reliable, robust computer programs.
+
+Now we need to show a goat being careful to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door number we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch. 
+
+Lets examine one case. If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
+
+[source,python]
+----
+if choice == goat1:    <1>
+    show = goat2
+    switch = car
+elif choice == goat2:  <2>
+    show = goat1
+    switch = car
+else:                  <3>
+    show = goat1
+    switch = goat2
+---- 
+<1> If the contestant chose the same door as `goat1` then we will show `goat2` and if they choose to switch it will be to the car.
+<2> Similar to <1>
+<3> Finally, if the contestant chose the car then it doesn't matter which goat to show. In this cae we pick `goat1` and we will show the `goat2`.
+
+Now, we haven't even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. 
+
+.Check Yourself
+Finish the Monty Hall Program. Here are some sample runs of what the program might look like.
+[source]
+----
+Choose a door: 1
+There is a goat in door 3
+Do you want to switch?(y/n): y
+You won a goat!
+
+Choose a door: 2
+There is a goat in door 1
+Do you want to switch?(y/n): y
+You won a car!
+----
+
+
+.Answer +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Below
+
+[.result]
+====
+[source,python]
+----
+import random
+
+# place a goat behind a door. Or assign
+# a door to goat 1
+goat1 = random.randrange(1,4)
+
+goat2 = random.randrange(1,4)
+
+while goat1 == goat2:
+    goat2 = random.randrange(1,4)
+
+# how did the loop terminate?
+
+# assign a car to the door that is not the
+# same a goat 1 or goat 2
+car = random.randrange(1,4)
+
+while car == goat1 or car == goat2:
+    car = random.randrange(1,4)
+
+# What is true?
+# car != goat1 != goat2
+# print(goat1,goat2,car)
+choice = int(input("Choose a door: "))
+
+# figure out how to show a goat
+# to the contestant
+if choice == goat1:
+    show = goat2
+    switch = car
+elif choice == goat2:
+    show = goat1
+    switch = car
+else:
+    show = goat1
+    switch = goat2
+
+print("There is a goat in door", show)
+
+switch_doors = input("Do you want to switch?(y/n): ")
+if switch_doors == 'y' or switch_doors == 'Y':
+    choice = switch
+
+# Did they win?
+if choice == car:
+    print("You won a car!")
+else:
+    print("You won a goat!")
+----
+====
 
 
 === Exercises
@@ -3150,6 +3412,7 @@ a|
 * Gambler's Ruin
 * Brownian Motion
 * torus
+* pseudocode
 
 a|
 * computer simulation
@@ -3157,6 +3420,7 @@ a|
 * two dimensional random walk
 * The Drunkard's Walk
 * fractal
+* midpoint of a line
 
 |===
 
@@ -3174,9 +3438,11 @@ a|
 
 === Cryptography
 
-=== Web Access
+=== Network Programming
 
 == Lists
+
+=== The Birthday Paradox
 
 [appendix]
 
