@@ -1826,7 +1826,7 @@ a|
 
 Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey pick, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
 
-NOTE: We will often use the term _particle_ to represent any kind of moving object such as a baseball, a hockey puck, an electron, ...  
+NOTE: We will often use the term _particle_ to represent any kind of moving object such as a baseball, a hockey puck, an electron, etc.
 
 [source,python]
 ----
@@ -1838,7 +1838,7 @@ win = pygame.display.set_mode((side,side))
 
 # properties of the particle
 radius = side//20
-px = radius   # particle is all the way to the left
+px = radius   # particle is all the way to the left <1>
 py = side//2  # and halfway down display
 win.fill(color.white)
 
@@ -1846,20 +1846,25 @@ win.fill(color.white)
 pygame.draw.circle(win, color.blue, (px, py), radius)
 pygame.display.update()
 ----
+<1> WHere would the particle display of we set `px = 0`
 
 What if we wanted to draw another particle right next to the first? The next particle's x coordinate will be 2 radii (plural of radius) past the first particle's x coordinate.
 
 [source,python]
+----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
+----
 
 How about a third particle?
 
 [source,python]
+----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
+----
 
-And a fourth? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. This should feel wrong. And it is. What we want to do is repeat those two lines until the display is filled with particles.
+And a fourth particle? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. This should feel wrong. And it is. What we want to do is repeat those two lines until the display is filled with particles.
 
 image::particles.png[align="center"]
 
@@ -1874,8 +1879,10 @@ while (*_condition_*):
 We want to keep repeating the two lines of code 
 
 [source,python]
+----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
+----
 
 as long as some condition is true. As long as the particle's right edge is to the left of the right side of the display.
 
@@ -3209,38 +3216,39 @@ Rather than using a triangle make use four cell towers, where each tower is plac
 
 === The Monty Hall Problem
 
-The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant gets to choose a door, after which Monty Hall opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
+The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
 
-This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem. Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant came up with a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarassing for ... the mathematicians.footnote:[http://marilynvossavant.com/game-show-problem/] Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well know mathematicians, and to this day, many of us still fumble around when we try to explain it. 
+This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem.footnote:[http://marilynvossavant.com/game-show-problem/] Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarassing for ... the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well know mathematicians, and to this day, many of us still fumble around when we try to explain it. 
 
 Probability is often counter intuitive, we saw this with the Gambler's Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.
 
 Lets lay out the process of playing the game outlined above:
 
-. The contestant is presented with three doors, two with goats, and one with a new car, randomly assigned.
-. The contestant chooses a door
-. The host shows a goat behind one of the other doors (not the contestants door). 
-. The contestant is given th choise whether to switch
+. The contestant is presented with three doors, two with goats, and one with a new car. The goats and car are randomly assigned.
+. The contestant chooses a door to be revealed later.
+. The host shows a goat behind one of the other doors (not the contestant's door). 
+. The contestant is given th choice whether to switch to the other unopened door.
 . The contestant's door is revealed.
 
 We'll tackle each of these in turn.
 
-We can assign goats and a car to doors in any order. The one thing we need to be careful though, is that we don't assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
+We can assign goats and a car to doors in any order. One thing we need to be careful about is that we do not assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
 
 [source,python]
 ----
-goat1 = random.randrange(1,4)
+goat1 = random.randrange(1,4) <1>
 ----
+<1> Assign goat 1 to a random door.
 
-Easy. Now how about the second goat?
+Now how about the second goat?
 
 [source,python]
 ----
 goat2 = random.randrange(1,4)
 ----
 
-This doesn't quit work because we might accidentally get the same random number. 
-Here is another attempt.
+This doesn't quit work because we might accidentally get the same 
+random number as `goat1`.  Here is another attempt.
 
 [source,python]
 ----
@@ -3249,7 +3257,7 @@ goat2 = random.randrange(1,4)
 if goat1 == goat2:
     goat2 = random.randrange(1,4) <1>
 ----
-<1> Try again
+<1> Try again if we generated the same random door as `goat1`.
 
 This is a common mistake. Why is it incorrect? Well, while it is less likely, we can still
 get the same random number twice in a row. We need to keep trying as long as they are the same.
@@ -3260,11 +3268,12 @@ goat2 = random.randrange(1,4)
 
 while goat1 == goat2:
     goat2 = random.randrange(1,4) <1>
+# What is true at this point after the loop terminates? <2>
 ----
 <1> Keep trying as long as we keep getting the same random number as `goat1`. We know from the Gambler's Ruin that we can sometimes get the same number several times in a row.
+<2>`goat1 != goat2`
 
-What must be the case when this loop terminates? That `goat1` is not equal to `goat2`.
-We have assigned the two goats to different doors. NOw we need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
+We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
 
 [source,python]
 ----
@@ -3288,17 +3297,24 @@ car = 6 - goat1 + goat2 <1>
 <1> Try it for various values of `goat1` and `goat2`
 ====
 
-We need to have the contestant choose a door. We can simply ask.
+In the second part of the game we need to have the contestant choose a door. We can simply ask them to input it from the keyboard.
 
 [source,python]
 ----
 choice = int(input("Choose a door: ")) <1>
 ----
-<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking though this is an import part of writing reliable, robust computer programs.
+<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking, though error checking is an import part of writing reliable, robust computer programs. Indeed many computer security vulnerabilities come from software developers not properly validating input data causing program to behave in unexpected and sometimes dangerous ways.
 
-Now we need to show a goat being careful to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door number we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch. 
+So now we have four variables set up:
 
-Lets examine one case. If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
+. `goat1` the location of the first goat
+. `goat2` the location of the second goat
+. `car` the location of the car
+. `choice` the dr the contestant chose
+
+In the third step of the game we reveal one of the two goats being careful not to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch at all. 
+
+If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
 
 [source,python]
 ----
@@ -3333,9 +3349,8 @@ Do you want to switch?(y/n): y
 You won a car!
 ----
 
-
 .Answer +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Below
+Below is just one version based on the code we've been developing.
 
 [.result]
 ====
@@ -3392,13 +3407,18 @@ else:
 ----
 ====
 
+What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch therby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random doo instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
+
+The gist. Proabability is often counterintuitive.
 
 === Exercises
 
 . prime
 . euler problem
 . count 7s
-. modifications to each random walk
+. modifications to gamblers ruineach
+. modify brownian 
+. modify fractal
 
 === Terminology 
 
@@ -3413,6 +3433,7 @@ a|
 * Brownian Motion
 * torus
 * pseudocode
+* The Monty Hall Problem
 
 a|
 * computer simulation
@@ -3423,7 +3444,6 @@ a|
 * midpoint of a line
 
 |===
-
 
 == Animation: Particles and Collision
 
