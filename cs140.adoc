@@ -3445,10 +3445,60 @@ a|
 
 |===
 
-== Animation: Particles and Collision
+== Case study: Particles and Collision
+
+Lets revisit modeling a particle moving in two dimensions at a constant velocity. 
+But lets use an image of particle (as a soccer ball) rather than a circle.
+
+image::ball.png[align="center"]
+
+Assume that the particle is in an image file `ball.png`. We can load that image into
+pygame with `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a pygame surface of the image.
+
+[source,python]
+----
+ball = pygame.image.load("ball.png") <1>
+----
+<1> The variable `ball` is a pygame _surface_.
+
+We've previously discussed pygame surfaces noting that the pygame display is a surface.
+Here we are constructing a new kind of surface. The variable `ball` refers to a pygame surface that is not the display surface, but a surface that that represent an image and can be drawn _onto_ the display surface.
+
+[course,python]
+----
+import pygame, color
+pygame.init()
+side = 600
+win = pygame.display.set_mode((side,side))
+ball = pygame.image.load("ball.png").convert_alpha()  <1>
+win.fill(color.white)
+win.blit(ball, (side//2, side//2)) <2>
+pygame.display.update()
+----
+<1> The `load` function returns a surface. We immediately call the function `convert_alpha` on the surface so we don't lose background transparency.
+<2> The function `blit` is used to place one surfaceon another.
+
+Images are rectangular, even if they are of a circle. So in order for the image to appear like a circle the pixels that are outside of the ball are _transparent_. Im graphics terminology we call this _alpha transparency_.  The `convert_alpha` function ensures that when we load the image we don't lose any of the transparency in the image pixels.
+
 
 
 === Pong
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * frame rate
+ * alpha transparency
+
+a|
+ * millisecond
+
+|===
+
 
 == Image Processing
 
