@@ -3487,15 +3487,52 @@ image:ball_velocity.png[width=455,height=261,align="center"]
 
 Unlike a pygame circle whose coordinate is measure from the center of the circle, the coordinates of an image in pyagme is the coordinate of the upper left corner of the image (remember, all images are rectangular).
 
-All that is left to do is to update the particle's coordinates by its velocity and do something sensible when it hits a wall. Lets define a move function like we did in the Brownian Motion example. This move function willbe a little more complicated because `dx` and `dy` will change when the particle hits a wall.
+All that is left to do is to update the particle's coordinates by its velocity and do something sensible if it hits a wall. Lets define a `move` function as we did in the Brownian Motion example. This `move` function will be a little more complicated because not only will the particle's coordinates change (`x` and `y`), but if the particle hits a wall its direction will change, that is, the velocity `dx` or `dy`.
+
+image::particle_move.png[align="center"]
+
+Hereis a rough draft of the move function.
 
 [source,python]
 ----
+def move(x, y, dx, dy):
 
+    x = x + dx
+    y = y + dy
+ 
+    # detect if particle hits wall and modify
+	# dx or dy
+
+    return (x,y,dx,dy)
 ----
 
-Lets define a `move` function much like we did with our Brownian Motion example.
+When a particle hits either the right or left wall its _x_ velocity needs to reverse direction. Its _y_ velocity will stay the same. For example, in the diagram below the particle is traveling from left to right and strikes the right wall.
 
+image::particle_bounce.png[align="center"]
+
+[source,python]
+----
+def move(x, y, dx, dy):
+
+    x = x + dx
+    y = y + dy
+
+    if x < 0:                   # left wall
+        x = 0
+        dx = -dx
+    elif x + ball_w >= width:   # right wall
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                   # top wall
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:  # bottom wall
+        y = height - ball_h
+        dy = -dy
+
+    return (x,y,dx,dy)
+----
 
 === Pong
 
