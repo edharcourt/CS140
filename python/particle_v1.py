@@ -10,8 +10,8 @@ ball_w = ball.get_width()
 ball_h = ball.get_height()
 ball_x = width//2 - ball_w//2
 ball_y = height//2 - ball_h//2
-ball_dx = .04
-ball_dy = .01
+ball_dx = 4
+ball_dy = 1
 
 win.fill(color.lightgray)
 win.blit(ball, (ball_x, ball_y))

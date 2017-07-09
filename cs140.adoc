@@ -14,7 +14,7 @@ v0.1, May 2017:
 [preface]
 == Preface
 
-I have been teaching the Introduction to Computer Programming course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _quantitaive and logical reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. They probably do not hold together as a standalone resource for learning programming in Python. These notes are by no means complete with regards to the Python language, pygame, or reflect . But if you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. They probably do not hold together as a standalone resource for learning programming in Python. These notes are by no means complete with regards to the Python language or pygame. But if you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
 Goals of the course include:
 
@@ -24,9 +24,9 @@ Goals of the course include:
 
 == Introduction
 
-_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. It includes such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing ... another list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. It includes such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
 
-A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. Most of these are dead in their original form. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
+A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
 
 The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
@@ -49,11 +49,11 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 * When was the last time you took a roll of film to get developed?
 
-* When was the last time you wrote a letter and mailed using the post office?
+* When was the last time you wrote a letter and mailed it using the post office?
 
 * Your smart phone is a powerful computing device, how often do you look at in a day, and what do you use it for?
 
-* Thinking further in to the future what could happen to the millions of people who drive for a living, from taxi drivers to truck drivers? 
+* Thinking a little further in to the future what could happen to the millions of people who drive for a living, from taxi drivers to truck drivers? 
 
 === Hello World
 
@@ -87,41 +87,55 @@ NOTE: In programming, a string literal is also called _string constant_
 The `print` function can take multiple values separated by commas.
 
 [source,python]
+----
 print("The value of pi squared is", 3.14159 * 3.14159)
-
+----
 produces the output 
 
 [source]
+----
 The value of pi squared is 9.869587728099999
+----
 
 And we can see right here that `*` is a character in the alphabet, that two values are on both sides of the `*` (syntax), and that `*` must mean _multiplication_ (semantics).
 
 NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
 
-Pictorially we often think of a function as a black box (we don't know how it works) where values come in (represented by the arrow coming in on the left) and the function produces values (the return results represented by the arrow coming out of the box on the right).  
+Pictorially we can think of a function as a black box (we may not know how it works) where values come in (represented by the arrow coming in on the left) and the function produces values (the return results represented by the arrow coming out of the box on the right).  
 
 image::function-fx.png[align="center"]
 
-Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming lananguage the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now in computer science and programming we call them _floating-point_ numbers, or _floats_ for short.
+Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming lananguage the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now, in computer science and programming we call them _floating-point_ numbers, or _floats_ for short.
 
-There is a big difference between the string literal `"3.0`" and the floating-point literal `3.0`. To see this, what would get printed by the following print statement?
+There is a big difference between the string literal `"3.0"` and the floating-point literal `3.0`. 
 
+.What would get printed by the following print statement?
 [source,python]
+----
 print("3.0 * 3.0", 3.0 * 3.0)
+----
+
+[.result]
+====
+[source]
+----
+3.0 * 3.0 9.0
+----
+====
 
 Numbers without decimal points are called _integers_ or _ints_ for short. 
 
 === Integer and floating-point literals
 
-Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative integers -1, -2, ...
+Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative integers -1, -2, -3, ...
 
-IMPORTANT: don't start integer literals with a leading 0, such as 09. This is an error in Python.
+IMPORTANT: Don't start an integer literal with a leading 0, such as 09. This is an error in Python.
 
 Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159. 
 
-Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write `6.022140857e23`.
+Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write Avagadro's number as `6.022140857e23`.
 
-We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is silly. We can simply say `9.10938356e-31`.
+We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is not helpful. We should instead write `9.10938356e-31`.
 
 TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
 
@@ -158,7 +172,17 @@ print("The value of pi squared is", pi * pi)
 
 To the left of the `=` sign is a _variable name_ and we read the assignment statement above as `pi` _gets the value of_ the value on the right of `=`, in this case `3.14159`.
 
-Variable names in Python are should be meaningful, they must start with either an alphabetic character (a - z, A - Z) or underscore, and may also contain digits. Variable names are also _case sensitive_, so `pi`, `Pi`, and `PI` are all different variable names.
+Variable names in Python should be meaningful. We could have said
+
+[source,python]
+----
+george = 3.14159
+print("The value of pi squared is", george * george)
+----
+
+bt this makes the code less understandable.
+
+Variable names must start with either an alphabetic character (a - z, A - Z) or underscore, and may also contain digits. Variable names are also _case sensitive_, so `pi`, `Pi`, and `PI` are all different variable names.footnote:[In reality Python 3 is much more flexible on what characters can be used in variables names including Greek characters such as `α`,`β`,`γ`,`δ`,`Γ`,`Δ`. Maybe a better variable name than `pi` is `π`.]
 
 The value of on the of `=` can also be an _expression_.
 
@@ -3510,10 +3534,16 @@ When a particle hits either the right or left wall its _x_ velocity needs to rev
 
 image::particle_bounce.png[align="center"]
 
+Here is the completed move function.
+
 [source,python]
 ----
 def move(x, y, dx, dy):
-
+'''
+x and y are the location of the particle
+dx and dy is the velocity of the particle
+return: new x, y, dx, and dy.
+'''
     x = x + dx
     y = y + dy
 
@@ -3533,6 +3563,49 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 ----
+
+Now all that is left is to write the main program and call the `move` function.
+
+We'll start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, les than 1. We'll expaplin that later.
+
+[source,python]
+----
+import pygame, color
+pygame.init()
+side = 600
+win = pygame.display.set_mode((side,side))
+width = win.get_width()
+height = win.get_height()
+
+ball = pygame.image.load("ball.png").convert_alpha()
+
+# properties of the particle (ball)
+ball_w = ball.get_width()        # ball width
+ball_h = ball.get_height()       # ball height
+ball_x = width//2 - ball_w//2    # center x coordinate
+ball_y = height//2 - ball_h//2   # center y coordinate
+ball_dx = .04                    # x velocity
+ball_dy = .01                    # y velocity
+
+while True:
+
+    # erase the old particle by redrawing the background
+    win.fill(color.lightgray)
+	
+	# move the particle capturing its new position and possibly new velocity
+    (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+	
+	# draw the aprticle on the screen
+    win.blit(ball, (ball_x, ball_y))
+	
+	# update the display
+    pygame.display.update()
+
+----
+
+You'll ntice that the velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the _x_ direction and one hundreth of a picxel in the _y_ direction? Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`, but for reasons that will be come clearer later we don't want to force the loop to execute more slowly, and we want a more general solution for different speed computers, say laptops vs desktops, etc. 
+
+=== Understnading the _Frame Rate_
 
 === Pong
 
