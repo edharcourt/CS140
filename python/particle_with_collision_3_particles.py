@@ -20,6 +20,11 @@ ball2_y = height // 4 - ball_h // 2
 ball2_dx = width / 1.1603 # across screen in two seconds (units are pixels/second)
 ball2_dy = height / -2.237 # down screen in four seconds
 
+ball3_x = width - ball_w
+ball3_y = height // 4 - ball_h // 2
+ball3_dx = width / -0.8603 # across screen in two seconds (units are pixels/second)
+ball3_dy = height / 1.237 # down screen in four seconds
+
 def distance(x1,y1,x2,y2):
     return math.sqrt((x1-x2)**2 + (y1-y2)**2)
 
@@ -56,6 +61,9 @@ while True:
     (ball2_x, ball2_y, ball2_dx, ball2_dy) = move(ball2_x, ball2_y,
                                                   ball2_dx, ball2_dy)
 
+    (ball3_x, ball3_y, ball3_dx, ball3_dy) = move(ball3_x, ball3_y,
+                                                  ball3_dx, ball3_dy)
+
     # check collision
     if distance(ball1_x + r,
                 ball1_y + r,
@@ -64,8 +72,24 @@ while True:
         (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)
         (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)
 
+    elif distance(ball1_x + r,
+                ball1_y + r,
+                ball3_x + r,
+                ball3_y + r ) < 2 * r:
+        (ball1_dx, ball3_dx) = (ball3_dx, ball1_dx)
+        (ball1_dy, ball3_dy) = (ball3_dy, ball1_dy)
+
+    elif distance(ball2_x + r,
+                ball2_y + r,
+                ball3_x + r,
+                ball3_y + r ) < 2 * r:
+        (ball2_dx, ball3_dx) = (ball3_dx, ball2_dx)
+        (ball2_dy, ball3_dy) = (ball3_dy, ball2_dy)
+
+
 
     win.blit(ball, (ball1_x, ball1_y))
     win.blit(ball, (ball2_x, ball2_y))
+    win.blit(ball, (ball3_x, ball3_y))
     pygame.display.update()
     pygame.event.poll()

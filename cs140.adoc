@@ -57,12 +57,14 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 === Hello World
 
-https://www.python.org/[Python] is a popular programming language used widely in industry. It is also used in introductory courses because it is relatively easy to use and get started with.  So lets get started.
+https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for web programming, scientific computing, and developing games.  It is also used in introductory programming courses because it is relatively easy to use and get started with.  So lets get started.
 
 It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
 [source,python]
+----
 print("Hello world")
+----
 
 ////
 .This will have a link next to it
@@ -3758,7 +3760,10 @@ How can we detect when the two particles collide? One way is to notice that if t
 
 image::particles_collide.png[caption="Figure n: Particle Collision", align="center", width=400]
 
-We can use the formula for the distance between two points to see if the particles are closer than two radii. 
+We can use the formula for the distance between two points to see if the center of the particles are less than the sum of the radius of each particle.
+
+NOTE: _Collision detection_, detecting when two objects on a display collide, can be complicated. It is relatively straightforward in the case of two circles, but imagine more complex or irregular shapes.
+
 
 stem:[d=\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}]
 
@@ -3771,9 +3776,157 @@ def distance(x1,y1,x2,y2):
     return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 ----
 
-But how should we handle the collision? Physics tells us that the vlocity of `ball1` will get transferred to `ball2` and the velocity of `ball2` will get transferred to `ball1`. That is, the two particles _swap_ velocities.
+But how should we handle the collision? In billiards, imagine the cue ball striking a stationary 8 ball dead on. If perfectly struck the cue ball will stop dead with all of its velocity transferring to the 8 ball. So the velocity of the cue ball was transferred to the 8 ball and the velocity of the 8 ball was transferred to the cue ball. That is, they _swapped_ velocities. 
 
-=== Pong
+To swap _x_ velocities we need to introduce a temporary variable, `tmp`.
+
+[source,python]
+----
+tmp = ball1_dx
+ball1_dx = ball2_dx
+ball2_dx = tmp
+----
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Writ the code to swap the _y_ velocities.
+
+[.result]
+====
+
+[source,python]
+----
+tmp = ball1_dy
+ball1_dy = ball2_dy
+ball2_dy = tmp
+----
+====
+
+This is the classic way to express this in just about every programming language. Python's tuple notation allows us to write this a little more succinctly. Two swap the value of two variables in Python you can use _tuple assignment_. For example, to swap the two variables `a` and `b` you can simply write ...
+
+[source,python]
+----
+(a,b) = (b,a)
+----
+
+Notice that there is a tuple on the left hand side of the assignment operator `=`. Up until now we have only ever had a single variable. 
+
+To wrap up collision detection we need to check if the particles are colliding, in the loop body we can write.
+
+[source,python]
+----
+if distance(ball1_x + r,
+            ball1_y + r,
+            ball2_x + r,
+            ball2_y + r ) < 2 * r:               <1>
+    (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)  <2>
+    (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)   <3>
+----
+<1> Assuming that `r` is the radius of the particle, it is just `ball_w / 2`.
+<2> Using tuple assignment here ...
+<3> and here.
+
+CAUTION: This way of handling a collision, simply swapping velocities, is overly simplistic and doesn't take into account particles glancing of each other at angles. That involves a bit more math and trigonometry.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Here is the entire program.
+
+[.result]
+====
+Problem solution goes here maybe with some additional python code
+
+[source,python]
+----
+import pygame, color, math
+pygame.init()
+side = 600
+win = pygame.display.set_mode((side,side))
+width = win.get_width()
+height = win.get_height()
+
+ball = pygame.image.load("../images/ball.png").convert_alpha()
+ball_w = ball.get_width()
+ball_h = ball.get_height()
+r = ball_w//2  # radius of the ball
+
+# Properties of particle 1
+ball1_x = width // 2 - ball_w // 2
+ball1_y = height // 2 - ball_h // 2
+ball1_dx = width / 2.02 # across screen in two seconds (units are pixels/second)
+ball1_dy = height / 3.99 # down screen in four seconds
+
+# Properties of particle 2
+ball2_x = width // 4 - ball_w // 2
+ball2_y = height // 4 - ball_h // 2
+ball2_dx = width / 1.1603 # across screen in two seconds (units are pixels/second)
+ball2_dy = height / -2.237 # down screen in four seconds
+
+# Function to compute the distance between two points.
+def distance(x1,y1,x2,y2):
+    return math.sqrt((x1-x2)**2 + (y1-y2)**2)
+
+# The move function. Moves a particle and bounces it
+# off of the outer walls if needed.
+def move(x, y, dx, dy):
+
+    dt = clock.tick(60) / 1000.0
+
+    x = x + (dt * dx)
+    y = y + (dt * dy)
+
+    if x < 0:
+        x = 0
+        dx = -dx
+    elif x + ball_w >= width:
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:
+        y = 0
+        dy = -dy
+    elif y +ball_h >= height:
+        y = height - ball_h
+        dy = -dy
+
+    return (x,y,dx,dy)
+
+	
+clock = pygame.time.Clock()
+
+# The main outer loop.
+while True:
+    win.fill(color.lightgray)
+
+	# move the particles
+    (ball1_x, ball1_y, ball1_dx, ball1_dy) = move(ball1_x, ball1_y, 
+	                                              ball1_dx, ball1_dy)
+
+    (ball2_x, ball2_y, ball2_dx, ball2_dy) = move(ball2_x, ball2_y, 
+	                                              ball2_dx, ball2_dy)
+
+    # check collision
+    if distance(ball1_x + r,
+                ball1_y + r,
+                ball2_x + r,
+                ball2_y + r ) < 2 * r:
+        (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)
+        (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)
+
+
+    win.blit(ball, (ball1_x, ball1_y))
+    win.blit(ball, (ball2_x, ball2_y))
+    pygame.display.update()
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a third particle to the simulation and collision detection logic.
+
+Adding a fourth and fifth particle is a lot of cutting-and-pasting. This should feel wrong. And it is. We'll have a more general solution when we discuss _lists_ where we can have as many particles as we want.
+
+=== Exercises
+
+.Inner Wall
+Add an inner wall to the particle simulation that us centered within the display and has a width that is one tenth the width of the window and half of the height of the window. Have a particle bounce off of the left and right face of the wall. Don't worry about the top and bottom. If it happens to hit the top it will look a little weird.
 
 === Terminology 
 
@@ -3784,13 +3937,18 @@ But how should we handle the collision? Physics tells us that the vlocity of `ba
 a|
  * frame
  * frame rate
+ * tupple assignment
 
 a|
  * millisecond
  * alpha transparency
+ * collision detection
 
 |===
 
+== Event Handling
+
+=== Pong
 
 == Image Processing
 
