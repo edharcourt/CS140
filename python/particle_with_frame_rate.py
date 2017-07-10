@@ -10,17 +10,15 @@ ball_w = ball.get_width()
 ball_h = ball.get_height()
 ball_x = width//2 - ball_w//2
 ball_y = height//2 - ball_h//2
-ball_dx = .4
-ball_dy = .1
-
-win.fill(color.lightgray)
-win.blit(ball, (ball_x, ball_y))
-pygame.display.update()
+ball_dx = width // 2 # across screen in two seconds (units are pixels/second)
+ball_dy = height // 4 # down screen in four seconds
 
 def move(x, y, dx, dy):
 
-    x = x + dx
-    y = y + dy
+    dt = clock.tick(60) / 1000.0
+
+    x += dt * ball_dx
+    y += dt * ball_dy
 
     if x < 0:
         x = 0
@@ -38,11 +36,13 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 
+clock = pygame.time.Clock()
+
 while True:
     win.fill(color.lightgray)
+
     (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+
     win.blit(ball, (ball_x, ball_y))
     pygame.display.update()
     pygame.event.poll()
-
-input()

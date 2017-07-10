@@ -3607,6 +3607,172 @@ You'll ntice that the velocity variables `dx` and `dy` are set to be very small.
 
 === Understnading the _Frame Rate_
 
+One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animcation will slow down. One isse is that our velocity `ball_dx` and `ball_dy` are in pixels? But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
+
+A _frame_ is one still image, a snapshot, of an animation. A standard _frame rate_ for movies is 24 frames per second (_fps_). The movie _The Hobbit: The Desolation of Smaug_ was filmed at 48 _fps_. 
+
+NOTE: A _frame_ is one image in a sequence of images that is part of a video. The _frame rate_ is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for cartoons to run at 15 _fps_.
+
+The particle simulation runs at _one frame per loop iteration_. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.
+
+Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the _x_ velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
+
+[source,python]
+----
+ball_dx = width  / 2  # travel across display in two seconds
+ball_dy = height / 4  # four seconds to travel from top to bottom
+----
+
+We need to know how far the particle traveled in one loop iteration. This is where pygame's `Clock` object is helpful. We can create a clock to measure time using ...
+
+[source,python]
+----
+clock = pygame.time.Clock()
+---- 
+
+and we can call the object's `tick` method that will return how many milliseconds have passed since the previous call to tick.
+
+[source,python]
+----
+dt = pygame.time.tick() <1>
+---- 
+<1> let `dt` mean _delta time_ or _the change in time_. In this case milliseconds.
+
+We can then compute how far the particle has travelled in both the _x_ and _y_ direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
+
+[source,python]
+----
+dt = clock.tick(60) / 1000.0 # in seconds
+ball_x = ball_x + dt * ball_dx <1>
+ball_y = ball_y + dt * ball_dy <2>
+---- 
+<1> The particle's new _x_ coordinate is the old _x_ coordinate plus the time passed times the ball's _x_ velocity. This should make intuitive sense.
+<2> Similarly for the change in the _y_component.
+
+The logic for boucing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
+
+[source,python]
+----
+def move(x, y, dx, dy):
+
+    time_passed = clock.tick(60) / 1000.0  <1>
+
+    x = x + time_passed * dx
+    y = y + time_passed * dy
+
+	# bounce of the four walls <2>
+    if x < 0:                     # left
+        x = 0
+        dx = -dx
+    elif x + ball_w >= width:     # right
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                     # top
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:    # bottom
+        y = height - ball_h
+        dy = -dy
+
+    return (x,y,dx,dy)
+---- 
+<1> The `tick` function can take an optional frame rate as an argument (in this case 60), which means pygame will make sure that the loop does not go faster than 60 _fps_. 
+<2> This conditional is exactly like before.
+
+Piecing this all together we have ...
+
+[source,python]
+----
+import pygame, color
+pygame.init()
+side = 600
+win = pygame.display.set_mode((side,side))
+width = win.get_width()
+height = win.get_height()
+
+ball = pygame.image.load("ball.png").convert_alpha()
+ball_w = ball.get_width()
+ball_h = ball.get_height()
+ball_x = width//2 - ball_w//2
+ball_y = height//2 - ball_h//2
+
+# particle velocity
+ball_dx = width // 2  <1>
+ball_dy = height // 4 <2>
+
+# a clock object for handling the frme rate
+clock = pygame.time.Clock()
+
+while True:
+    win.fill(color.lightgray)
+
+    (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+
+    win.blit(ball, (ball_x, ball_y))
+    pygame.display.update()
+----
+<1> move across _x_ axis in two seconds
+<2> move down _y_ axis in four seconds
+
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a second particle to the simulation. *Hint*: you will need variables for the secnd particle's position and velocity.
+
+[.result]
+====
+Create variables for the second particle's position and velocity. Use different values 
+than for the first particle to make it more interesting.
+
+[source,python]
+----
+# this goes before loop
+ball2_x = width // 4 - ball_w // 2
+ball2_y = height // 4 - ball_h // 2
+ball2_dx = width / 1.603 # across screen in two seconds (units are pixels/second)
+ball2_dy = height / -3.237 # down screen in four seconds
+----
+
+Now modify the loop body to move the second particle. And don't forget toredraw the second particle.
+
+[source,python]
+----
+while True:
+    win.fill(color.lightgray)
+
+    (ball1_x, ball1_y, ball1_dx, ball1_dy) = move(ball1_x, ball1_y, ball1_dx, ball1_dy)
+    (ball2_x, ball2_y, ball2_dx, ball2_dy) = move(ball2_x, ball2_y, ball2_dx, ball2_dy) <1>
+
+    win.blit(ball, (ball1_x, ball1_y))
+    win.blit(ball, (ball2_x, ball2_y)) <2>
+    pygame.display.update()
+
+----
+<1> Need to call `move` for the second particle.See how handy using a function is so we don't have to cut-and-paste all of that code!
+<2> Draw the second particle.
+====
+
+=== Collision Detection
+
+How can we detect when the two particles collide? One way is to notice that if two particles overlap at all then the distance between the center of the two particles must be less than two times the radius of the particle (assuming the particles have the same radius). 
+
+image::particles_collide.png[caption="Figure n: Particle Collision", align="center", width=400]
+
+We can use the formula for the distance between two points to see if the particles are closer than two radii. 
+
+stem:[d=\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}]
+
+And we can write a nice function for:
+
+[source,python]
+----
+# compute the distance between point (x1,y1) and (x2,y2)
+def distance(x1,y1,x2,y2):
+    return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+----
+
+But how should we handle the collision? Physics tells us that the vlocity of `ball1` will get transferred to `ball2` and the velocity of `ball2` will get transferred to `ball1`. That is, the two particles _swap_ velocities.
+
 === Pong
 
 === Terminology 
@@ -3616,11 +3782,12 @@ You'll ntice that the velocity variables `dx` and `dy` are set to be very small.
 |===
 
 a|
+ * frame
  * frame rate
- * alpha transparency
 
 a|
  * millisecond
+ * alpha transparency
 
 |===
 
