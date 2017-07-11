@@ -48,6 +48,8 @@ def move(x, y, dx, dy):
 
 clock = pygame.time.Clock()
 
+mm = 0
+
 while True:
     win.fill(color.lightgray)
 
@@ -68,4 +70,10 @@ while True:
     win.blit(ball, (ball1_x, ball1_y))
     win.blit(ball, (ball2_x, ball2_y))
     pygame.display.update()
-    pygame.event.poll()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
+
