@@ -57,7 +57,7 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 === Hello World
 
-https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for web programming, scientific computing, and developing games.  It is also used in introductory programming courses because it is relatively easy to use and get started with.  So lets get started.
+https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games.  And much more. It is also used in introductory programming courses because it is relatively easy to use and get started with.  So lets get started.
 
 It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
@@ -66,21 +66,9 @@ It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_p
 print("Hello world")
 ----
 
-////
-.This will have a link next to it
-----
-* always displayed
-* always displayed 2
-----
+That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the _console_. But there is a lot going on in that one line, so lets break it down. 
 
-[.result]
-====
-* hidden till clicked
-* hidden till clicked 2
-====
-////
-
-That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the console. But there is a lot going on in that one line, so lets break it down. 
+NOTE: The _console_ is a text window where python sends the output of `print` statements and where the user can also enter data from `input` statements. 
 
 The python _builtin function_ `print` prints, to the console, the value between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
@@ -178,17 +166,17 @@ Variable names in Python should be meaningful. We could have said
 
 [source,python]
 ----
-george = 3.14159
-print("The value of pi squared is", george * george)
+rumpelstiltskin = 3.14159
+print("The value of pi squared is", rumpelstiltskin * rumpelstiltskin)
 ----
 
-bt this makes the code less understandable.
+but this makes the code less understandable.
 
 Variable names must start with either an alphabetic character (a - z, A - Z) or underscore, and may also contain digits. Variable names are also _case sensitive_, so `pi`, `Pi`, and `PI` are all different variable names.footnote:[In reality Python 3 is much more flexible on what characters can be used in variables names including Greek characters such as `α`,`β`,`γ`,`δ`,`Γ`,`Δ`. Maybe a better variable name than `pi` is `π`.]
 
-The value of on the of `=` can also be an _expression_.
+The value on the right of `=` can also be an _expression_.
 
-IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. This former is not valid Python.
+IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. The former is not valid Python.
 
 [source,python]
 ----
@@ -701,17 +689,23 @@ NOTE: A _module_ is a named collection of related frunctions and definitions. Mo
 To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
 [source,python]
+----
 import math
+----
 
 One way to compute the square root of a number would be just to raise to the 1/2 power. 
 
 [source,pyhon]
+----
 print(2**.5)
+----
 
 Another way would be to use the math module's square root function.
 
 [source,python]
+----
 print(math.sqrt(2))
+----
 
 TIP: `import` is a Python _keyword_. A keyword is a word reserved for use by Python. 
 As such you should never use a keyword as a variable name (in fact that is an error). 
@@ -740,9 +734,10 @@ image::function-composition.png[align="center"]
 
 .Version 1
 [source,python]
+----
 result = math.sin(math.sqrt(math.pi/4)) <1>
 print(round(result, 2)) <2>
-
+----
 <1> This is the function composition of `math.sin` and `math.sqrt`.
 <2> Here we are composing `print` and `round`
 
@@ -750,25 +745,31 @@ We could have done all this in one (albeit less readable) line ...
 
 .Version 2
 [source,python]
+----
 print(round(math.sin(math.sqrt(math.pi/4)), 2))
+----
 
 Or we could have also broken it up into more statements ...
 
 .Version 3
 [source,python]
+----
 result1 = math.sqrt(math.pi/4)
 result2 = math.sin(result1)
 result3 = round(result2, 2) 
 print(result3)
+----
 
 These are all equivalent and one is not necessarily better than the other. A fourth version reuses the `result` variable in each statement and does not define new variables.
 
 .Version 4
 [source,python]
+----
 result = math.sqrt(math.pi/4)
 result = math.sin(result)
 result = round(result, 2) 
 print(result)
+----
 
 We will see over and over that there are many ways to express the same computation, some may be better than others because they are more readable or more efficient.
 
@@ -916,6 +917,7 @@ a|
 * bit
 * compiler
 * range (of a function)
+* console
 
 |===
 
@@ -968,10 +970,13 @@ NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in p
 
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (1024 pixels wide by 768 pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometims abbreviated _px_.
 
-NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represent a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
+NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represents a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
 .`x` is primitive and `win` is _reference_ +
 image:references.png[width=500,align="center"]
 
+NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associate with objects are called _methods_.
+
+For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pxiels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. FOr example `win.get_height()`.
 
 .Waiting +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Can you think of a way we might be able to pause the program to keep the window from disappearing until the user hits a key on the keyboard?
@@ -1472,6 +1477,7 @@ a|
 * display surface
 * off-by-one error
 * vector graphics
+* object
 
 a|
 * tuple
@@ -1479,6 +1485,7 @@ a|
 * surface
 * proportional graphics
 * raster graphics
+* method
 
 |===
 
@@ -3946,9 +3953,98 @@ a|
 
 |===
 
+== The `for` loop
+
+Recall that a very common looping pattern is a _counting loop_ that iterates an
+exact number of times. Recall the pattern ...
+
+[source,python]
+----
+i = 0
+while i < n:
+    # loop body
+	i = i + 1
+----	
+
+This loop will body will execute exactly `n` times; as long as `n` is not modified in the loop body. Another way to write this in python is using the for loop.
+
+[source,python]
+----
+for i in range(n):
+    # loop body
+----
+
+There are two new python keywords `for` and `in`. Notice also that the there is no explicit assignment statement incrementing `i` by one. There is also the use of this new thing `range(n)`. Technically `range` is not a function in Python but a _range type_ which is used to generate an immutable sequence of integers. Something that is _immutable_ cannot be changed. So `range(n)` generates a sequence of numbers from `0` up to but not including `n`.
+
+The loop 
+
+[source,python]
+----
+for i in range(10):
+    print(i)
+----
+
+will print the integers 0 through 9. More generally, the `for` loop has the sytnax
+
+[source,python]
+----
+for var in some_sequence_type:
+    stmt
+----
+
+Where `some_sequence_type` represents a sequence of values, such as the sequence of integers generated by the `range` function. The variable `var` will take on each value in the sequence, and `var` cn be used in the loop body, but var should not be modified in the loop body.
+
+We don't also have to use the `range` function to generate a sequence. A string literal is  also a sequence of characters. For example, the loop
+
+[source,python]
+----
+name = "Tom Marvolo Riddle"
+for ch in name:
+    print(ch)
+----
+
+will print each character in the string literal `"Tom Marvolo Riddle"` on a separate line. So a string is a sequence type. We will see one more important sequence type later on called a _list_.
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * sequence type
+
+a|
+ * 
+
+|===
+
+
 == Event Handling
 
+Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.
+
+NOTE: An _event_ is a pygame object that represents some sort of user action such as pressing a key or moving a mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depdns on the event. For example, if the mouse was moved then the event also contains the current location of the mouse.
+
+First we need to take a quick side trip and introduse a new kind of python loop.
+
+
+
 === Pong
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * event
+
+a|
+ * event queue
+
+|===
 
 == Image Processing
 
