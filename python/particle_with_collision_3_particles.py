@@ -92,4 +92,9 @@ while True:
     win.blit(ball, (ball2_x, ball2_y))
     win.blit(ball, (ball3_x, ball3_y))
     pygame.display.update()
-    pygame.event.poll()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+

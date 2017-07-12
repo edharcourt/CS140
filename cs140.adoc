@@ -4020,7 +4020,7 @@ will print each character in the string literal `"Tom Marvolo Riddle"` on a sepa
 
 === Exercises
 
-Lots of for loop exercises
+Lots of `for`-loop exercises
 
 === Terminology 
 
@@ -4041,15 +4041,36 @@ a|
 
 Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.
 
-NOTE: An _event_ is a pygame object that represents some sort of user action such as pressing a key or moving a mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depdns on the event. For example, if the mouse was moved then the event also contains the current location of the mouse.
+NOTE: An _event_ is a pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
 
 One event we can check for is to see if the user has clicked the X in the pygame
-window to kill the program. We can check for the `QUIT` event which is named `pygame.QUIT`. Events can come be generated quickly. Just moving your mouse across the pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events. 
+window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
 
-Events get stored in the _event queue_. A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. So an _event queue_ is python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed! Anything else would be strange.  
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed! Anything else would be strange.  
 
+Here is a snippet to check for the `QUIT` event and stop the program if the user
+has clicked on the X. The pygame function `pygame.event.get()` retrieves the event queue (which is a sequence).
+
+[source,python]
+----
+for event in pygame.event.get():   <1>
+	if event.type == pygame.QUIT:  <2>
+		pygame.quit()              <3>
+		exit()                     <4>
+----
+<1> For each event in the event queue
+<2> See if is the `QUIT` event. If it is then ...
+<3> stop pygame (this is a new function)
+<4> exit out of the program
+
+We could place this code in the outer while loop of our particle simulation.
 
 === Pong
+https://en.wikipedia.org/wiki/Pong[Pong] is a classic computer game, one of the first computer video games. Lets add a paddle to our particle simulation and bounce the particles off the paddle. First we'll need a graphic for the paddle.
+
+image::paddle.png[caption="Our Pong Paddle", align="center"]
+
+=== Exercises
 
 === Terminology 
 
