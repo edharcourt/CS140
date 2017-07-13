@@ -11,16 +11,24 @@ v0.1, May 2017:
 :includedir: .
 :docinfo:
 
+////
+http://www.petercollingridge.co.uk/pygame-physics-simulation/collisions
+http://www.petercollingridge.co.uk/book/export/html/6
+http://www.petercollingridge.co.uk/book
+https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
+
+////
+
 [preface]
 == Preface
 
-I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. They probably do not hold together as a standalone resource for learning programming in Python. These notes are by no means complete with regards to the Python language or pygame. But if you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python language. If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
 Goals of the course include:
 
 * Appreciate the complexity of the software systems we encounter every day
 * Emphasize problem soving in a precise, logical framework 
-* Explore a multitude of topics in computer science such as; image processing, simulation and randomness, cryptography, network communications, and much more.
+* Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
 == Introduction
 
@@ -61,7 +69,7 @@ https://www.python.org/[Python] is a popular programming language used widely in
 
 It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
-[source,python]
+[source,python,numbered]
 ----
 print("Hello world")
 ----
@@ -76,7 +84,7 @@ NOTE: In programming, a string literal is also called _string constant_
 
 The `print` function can take multiple values separated by commas.
 
-[source,python]
+[source,python,numbered]
 ----
 print("The value of pi squared is", 3.14159 * 3.14159)
 ----
@@ -100,7 +108,7 @@ Values that are passed to a function are called _arguments_. The second argument
 There is a big difference between the string literal `"3.0"` and the floating-point literal `3.0`. 
 
 .What would get printed by the following print statement?
-[source,python]
+[source,python,numbered]
 ----
 print("3.0 * 3.0", 3.0 * 3.0)
 ----
@@ -141,20 +149,20 @@ The radius of an electron is _0.00000000000000281792_ meters. Express this numbe
 
 Let's return to our simple program ...
 
-[source,python]
+[source,python,numbered]
 ----
 print("The value of pi squared is", 3.14159 * 3.14159)
 ----
 
 It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python using an _assignment statement_.
 
-[source,python]
+[source,python,numbered]
 ----
 pi = 3.14159
 ----
 And we can rewrite our program as 
 
-[source,python]
+[source,python,numbered]
 ----
 pi = 3.14159
 print("The value of pi squared is", pi * pi)
@@ -164,7 +172,7 @@ To the left of the `=` sign is a _variable name_ and we read the assignment stat
 
 Variable names in Python should be meaningful. We could have said
 
-[source,python]
+[source,python,numbered]
 ----
 rumpelstiltskin = 3.14159
 print("The value of pi squared is", rumpelstiltskin * rumpelstiltskin)
@@ -178,7 +186,7 @@ The value on the right of `=` can also be an _expression_.
 
 IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. The former is not valid Python.
 
-[source,python]
+[source,python,numbered]
 ----
 pi = 3.14159
 pi_squared = pi * pi
@@ -189,7 +197,7 @@ IMPORTANT: Variables must be defined before they are used.
 
 The Python program 
 
-[source,python]
+[source,python,numbered]
 ----
 print(x)
 ----
@@ -199,7 +207,7 @@ would produce an error becuse the variable `x` does not have a value.
 IMPORTANT: Variable names are not string literals.
 
 .There is a big difference between the two statements...
-[source,python]
+[source,python,numbered]
 ----
 print("The value of pi squared is", pi_squared) # <1>
 print("The value of pi squared is", "pi_squared") # <2>
@@ -217,7 +225,7 @@ Almost certainly not what was intended.
 We can add notes to our program using a _comment_. In Python a one line comment starts 
 with a hashtag and continue to the end of the line.
 
-[source,python]
+[source,python,numbered]
 ----
 # define a variable pi
 pi = 3.14159
@@ -225,7 +233,7 @@ pi = 3.14159
 
 You can also use a comment to finish a line.
 
-[source,python]
+[source,python,numbered]
 ----
 pi = 3.14159   # define a variable pi
 ----
@@ -267,7 +275,7 @@ order of operations_ you learned in grade school apply.
 What is the output of each of the examples below?
 
 .Example 1
-[source,python]
+[source,python,numbered]
 ----
 x = 3 + 5 * 9
 print(x)
@@ -279,7 +287,7 @@ print(x)
 ====
 
 .Example 2
-[source,python]
+[source,python,numbered]
 ----
 x = 1/2 <1>
 print(x)
@@ -296,7 +304,7 @@ Contrast this with _integer division_ using the double slash operator `//`.
 In integer division the result is always an integer.
 
 .Example 3
-[source,python]
+[source,python,numbered]
 ----
 w = 1 // 2
 x = 3 // 7
@@ -313,7 +321,7 @@ print(w,x,y,z)
 Integer division will plays a key role in many applications incomputer science.
 
 .Example 4
-[source,python]
+[source,python,numbered]
 ----
 x = 7
 y = 9
@@ -328,7 +336,7 @@ print(z)
 
 Expressions produce a value. Something must be done with that value such as assign it to a variable or use it as an argument in a function call (such as `print`).  Consider the following Python program.
 
-[source,python]
+[source,python,numbered]
 ----
 two_pi = 3.14159 * 2 <1>
 two_pi * two_pi <2>  
@@ -343,7 +351,7 @@ print(two_pi) <3>
 _Modular arithmetic_ is important in computer science.  Modular arithmetic is just arithmetic that uses the remainder after finding a quotient. For example, `7 // 3` is `2` with a remainder of `1`. The remainder operator is `%`. In this case `7 % 3` is `1`.
 
 .Check Yourself
-[source,python]
+[source,python,numbered]
 ----
 # What gets printed by the following?
 w = 1 % 2
@@ -367,7 +375,7 @@ Computing the modulus of a negative number is also important, for example `-1 % 
 `-14 % 12` would be to go counter clockwise one full revolution leaving s with `-2 % 12`, which is `10`. 
 
 .Check Yourself
-[source,python]
+[source,python,numbered]
 ----
 # What gets printed by the following?
 w = -1 % 2
@@ -390,25 +398,25 @@ Strings are an important part of programming. Strings often seem boring but they
 
 A string literal is a sequence of characters between double quotes. 
 
-[source,python]
+[source,python,numbered]
 "This is a valid string literal"
 
 Or single quotes.
 
-[source,python]
+[source,python,numbered]
 'and so is this'
 
 IMPORTANT: the opening and closing quotes in a string literal must match
 
-[source,python]
+[source,python,numbered]
 "but this string literal has an error, why?'
 
-[source,python]
+[source,python,numbered]
 'and so does this, why?"
 
 But what if we want to include a single quote as one of the characters in our string literal? One way to do it is to use double quotes for the string literal.
 
-[source,python]
+[source,python,numbered]
 "This isn't an error"
 
 This works becuase the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
@@ -421,7 +429,7 @@ The following is incorrect.
 Python can't tell that the second single quote in `isn't` is part of the word but recognizes it as the closing quote matching the open quote.
 
 .What would get printed by the following print statement?
-[source,python]
+[source,python,numbered]
 ----
 print('He said "Do it!"') 
 ----
@@ -435,7 +443,7 @@ Things can get pretty crazy. How about if we wanted to print the string _He said
 
 The statement
 
-[source,python]
+[source,python,numbered]
 print('He said "don\'t"') 
 
 produces the output 
@@ -448,17 +456,17 @@ He said "don't"
 
 Spaces, like in writing, are used to separate words in Python, and are often used to make code more readable. For example, in a `print` statement you can put a space after the comma that is separating values to print.
 
-[source,python]
+[source,python,numbered]
 print(a, b, c, d) 
 
 which might look slightly less cramped than
  
-[source,python]
+[source,python,numbered]
 print(a,b,c,d) 
 
 Spaces can also make code less readable,
 
-[source,python]
+[source,python,numbered]
 print(a      ,           b,c,                       d) 
 
 is also valid -- but ugly.
@@ -471,7 +479,7 @@ We will see later on that indentation plays an important role in Python. For now
 
 Here is an example. The following program is in error because the second statement is indented one space.
 
-[source,python]
+[source,python,numbered]
 x = 4
  print(x*x)
 
@@ -598,7 +606,7 @@ As you gain practice you will be able to quickly find syntax errors.
 
 Python's `input` function allows the user to enter input from the keyboard. It takes a string as an argument and uses it as a prompt. The `input` function is a different kind of function than the `print` function. The `print` puts values on the Python console window whereas the `input` function produces a string value of the characters that the user typed.
 
-[source,python]
+[source,python,numbered]
 name = input('Enter your name: ')
 print("Hello", name)
 
@@ -610,7 +618,7 @@ print("Hello", name)
 It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in fahrenheit to celsius is 
 latexmath:[5/9(f-32)]
 
-[source,python]
+[source,python,numbered]
 f = input('Enter a temperature (F): ')
 c = 5/9*(f - 32)
 print(f, "fahrenheit is", c, "celsius")
@@ -632,7 +640,7 @@ NOTE: The function `float` takes a string argument and attempts to convert it to
 
 Here is our modified program
 
-[source,python]
+[source,python,numbered]
 f = float(input('Enter a temperature (F): ')) <1>
 c = 5/9*(f - 32)
 print(f, "degrees fahrenheit is", c, "degrees celsius")
@@ -648,7 +656,7 @@ Here is a sample run of the Fahrenheit to Celsius conversion program.
 
 Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks rediculous. Python has a builtin function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
 
-[source,python]
+[source,python,numbered]
 f = float(input('Enter a temperature (F): '))
 c = 5/9*(f - 32)
 print(f, "degrees fahrenheit is", round(c,1), "degrees celsius") <1>
@@ -688,7 +696,7 @@ NOTE: A _module_ is a named collection of related frunctions and definitions. Mo
 
 To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
-[source,python]
+[source,python,numbered]
 ----
 import math
 ----
@@ -702,7 +710,7 @@ print(2**.5)
 
 Another way would be to use the math module's square root function.
 
-[source,python]
+[source,python,numbered]
 ----
 print(math.sqrt(2))
 ----
@@ -712,7 +720,7 @@ As such you should never use a keyword as a variable name (in fact that is an er
 
 A constant defined in the math module is `math.pi`
 
-[source,python]
+[source,python,numbered]
 ----
 print(math.pi)
 ----
@@ -733,7 +741,7 @@ For example, if we needed to compute stem:[sin(\sqrt{\pi/4})] ...
 image::function-composition.png[align="center"]
 
 .Version 1
-[source,python]
+[source,python,numbered]
 ----
 result = math.sin(math.sqrt(math.pi/4)) <1>
 print(round(result, 2)) <2>
@@ -744,7 +752,7 @@ print(round(result, 2)) <2>
 We could have done all this in one (albeit less readable) line ...
 
 .Version 2
-[source,python]
+[source,python,numbered]
 ----
 print(round(math.sin(math.sqrt(math.pi/4)), 2))
 ----
@@ -752,7 +760,7 @@ print(round(math.sin(math.sqrt(math.pi/4)), 2))
 Or we could have also broken it up into more statements ...
 
 .Version 3
-[source,python]
+[source,python,numbered]
 ----
 result1 = math.sqrt(math.pi/4)
 result2 = math.sin(result1)
@@ -763,7 +771,7 @@ print(result3)
 These are all equivalent and one is not necessarily better than the other. A fourth version reuses the `result` variable in each statement and does not define new variables.
 
 .Version 4
-[source,python]
+[source,python,numbered]
 ----
 result = math.sqrt(math.pi/4)
 result = math.sin(result)
@@ -783,7 +791,7 @@ Recall that a syntax error is an error in how you string together the words and 
 
 A _run-time_ error are errors that cannot be detected before program execution and only occur while your program is executing. Common run-time errors include divding by zero, or using a variable before it is defined. For example, consider the following simple (and silly) program:
 
-[source,python]
+[source,python,numbered]
 ----
 s = int(input("Enter a number: "))
 print("1000 divided by", s, "is", 1000/s) 
@@ -797,7 +805,7 @@ There are even more insidious and difficult to find errors. At least with a synt
 Lets revisit our celsius to fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
 
 .Logic error
-[source,python]
+[source,python,numbered]
 ----
 f = float(input('Enter a temperature (F): '))
 c = 5/9 * f-32
@@ -953,7 +961,7 @@ A fun way to learn to program is through graphics, images, and animation.  https
 To use pygame there is some standard code we need at the start of every program (but only in programs that use pygame).
 
 .hello_pygame.py
-[source,python]
+[source,python,numbered]
 ----
 import pygame <1>
 pygame.init() <2>
@@ -986,7 +994,7 @@ Can you think of a way we might be able to pause the program to keep the window 
 The `input` function waits for the user to type something on the keyboard and hit enter.
 
 .hello_pygame.py
-[source,python]
+[source,python,numbered]
 ----
 import pygame 
 pygame.init() 
@@ -995,7 +1003,7 @@ dummy = input("Hit <enter> to quit.") <1>
 ----
 <1> We don't need the `dummy` variable since we aren't going to use what the user typed. We could have just said ...
 
-[source,python]
+[source,python,numbered]
 ----
 input("Hit <enter> to quit.")
 ----
@@ -1010,7 +1018,7 @@ NOTE: There are many online tools to help determine the RGB values for various c
 One common thing many of our pygame programs will do is to define some colors. 
 
 .color.py
-[source,python]
+[source,python,numbered]
 ----
 # file color.py
 red    = (255,0,0)
@@ -1030,7 +1038,7 @@ We can then import `color.py` into our pygame program and voila! we have created
 TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to reuse code rather than duplicate it. 
 
 .hello_pygame.py
-[source,python]
+[source,python,numbered]
 ----
 import color   # this is the color.py file we just wrote above
 import pygame
@@ -1082,7 +1090,7 @@ Draw a yellow rectangle that is one third the width of the display surface and o
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 import pygame, color
 
@@ -1156,7 +1164,7 @@ TIP: Try and always use _proportional graphics_. In proportional graphics a shap
 
 Constrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.
 
-[source,python]
+[source,python,numbered]
 pygame.draw.rect(win, color.yellow, (100,200,300,200))
 
 then this woould draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
@@ -1185,23 +1193,23 @@ Lets draw a dark gray circle centered in the upper left quadrant of the yellow s
 
 The x coordinate of the circle is relative to `r_x`, the x coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
  
-[source,python]
+[source,python,numbered]
 ul_c_x = r_x + r_width//4   # ul_c_x is short for upper left circle x coordinate
 
 Similarly the y coordinate is 
 
-[source,python]
+[source,python,numbered]
 ul_c_y = r_y + r_height // 4
 
 Remember that the circle fcuntion requires the radius but the problem stated that the 
 diameter of the circle is 1/3 the width of the quadrant. We know the width f the quadrant is `r_width//2` and 1/3 od that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
 
-[source,python]
+[source,python,numbered]
 ul_c_radius = r_width// 2 // 3 // 2 # or r_width // 12 
 
 Defining a new color `darkgray = (100,100,100)` in our color module and putting it all together we have 
 
-[source,python]
+[source,python,numbered]
 ul_c_x = r_x + r_width // 4
 ul_c_y = r_y + r_height // 4
 ul_c_radius = r_width//2//3//2  # width of quadrant is r_width//2 then 1/3 of that
@@ -1219,7 +1227,7 @@ Draw another dark gray circle with the same radius centered in the upper right q
 The only thing that changes is the x coordinate. The y coordinate and the radius
 of the upper right circle are the same as the y coordinate and readius f the upper left circle. One way to think about the x coordinate is that is 3/4 of the width of the rectangle. 
 
-[source,python]
+[source,python,numbered]
 ----
 ur_c_x = r_x + 3*r_width//4
 ur_c_y = r_y + r_height // 4    # same as upper left circle
@@ -1311,7 +1319,7 @@ These are, in fact, the same arguments for drawing a rectangle.
 Continuing our program from before lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add `pink = (255, 20, 147)` to our `color.py` module.
 
 
-[source,python]
+[source,python,numbered]
 ----
 e_width = r_width // 2
 e_height = r_height // 4
@@ -1333,7 +1341,7 @@ image:nose.png[width=300,height=200,align="center"]
 [.result]
 ====
 There are lots of ways to do this, but you need to make it relative to the head. 
-[source,python]
+[source,python,numbered]
 ----
 n_width = r_width // 10  # 1/10th width of head
 n_height = r_height // 4 # 1/4 height of head
@@ -1350,7 +1358,7 @@ image:smile.png[width=300,height=200,align="center"]
 [.result]
 ====
 This is one line, drawing an ellipse shifted up, say 20% of the width of the mouth.
-[source,python]
+[source,python,numbered]
 ----
 pygame.draw.ellipse(win, color.yellow, (e_x, e_y, e_width, e_height - .2*e_height))
 ----
@@ -1387,7 +1395,7 @@ image:eye-cross.png[width=300,height=200,align="center"]
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 pygame.draw.line(win, color.white,
                  (ul_c_x, ul_c_y - ul_c_radius),
@@ -1518,7 +1526,7 @@ image::print-func.png[width=604,height=226,align="cener"]
 
 We saw earlier that 
 
-[source,python]
+[source,python,numbered]
 ----
 print("Hello World")
 ----
@@ -1527,7 +1535,7 @@ will print _Hello World_ on the console, but `print` also returned the `None` va
 
 The following looks strange, but is legit, and almost certainly not what was intended.
 
-[source,python]
+[source,python,numbered]
 ---- 
 print(print("Hello World"))
 ----
@@ -1538,7 +1546,7 @@ What would get printed by the code above?
 [.result]
 ====
 
-[source,python]
+[source,python,numbered]
 ----
 Hello World
 None
@@ -1554,14 +1562,14 @@ TIP: `None` is an actual value in Python like `3` and `3,14` and `"Hello"`. It i
 
 Lets get a little more formal about calling functions. Consider the statement
 
-[source,python]
+[source,python,numbered]
 print("Hello World")
 
 We say that we are _calling_ the `print` function and _passing_ the argument `Hello World`. Passing an argument means we send the value to the function.
 
 Consider our previous program where we needed to compute stem:[sin(\sqrt{\pi/4})] ...
 
-[source,python]
+[source,python,numbered]
 ----
 result = math.sin(math.sqrt(math.pi/4))
 print(round(result, 2))
@@ -1582,7 +1590,7 @@ In total there are four function calls and five arguments involved.
 The real power with functions is that we get to define our own. Functions allow us to encasulate of commonly occurring computation. Lets go back to our rather banal example of our formula to convert a fahrenheit temperature to celsius. Rather than having to keep remember the formula we can just define a function.
 
 .util.py
-[source,python]
+[source,python,numbered]
 ----
 def f2c(f): <1>
     c = 5 / 9 * (f - 32) <2>
@@ -1601,7 +1609,7 @@ image::f2c-func.png[align="center"]
 
 We can use `f2c` in a program by _calling_ it with an argument.
 
-[source,python]
+[source,python,numbered]
 ----
 print(f2c(32))
 ----
@@ -1620,7 +1628,7 @@ Because `f2c` returns a value, and this line does not do anything with that valu
 
 It is a common mistake for students to confuse a function _returning a value_ and a _function printing a value_. Consider this version of `f2c`.
 
-[source,python]
+[source,python,numbered]
 ----
 def f2c(f):
     c = 5 / 9 * (f - 32)
@@ -1629,7 +1637,7 @@ def f2c(f):
 
 This function returns the value `None` and, as a side effect, prints the value of the variable `c` on the console. This function is not technically wrong. It does not have a syntax error, nor a run-time error, or even a logic error. But it is in some way inferior to the first version of `f2c`. Consider the following program.
 
-[source,python]
+[source,python,numbered]
 ----
 t = float(intput("Enter a temperature: "))
 print(f2c(t) +  100)
@@ -1643,7 +1651,7 @@ WARNING: A function that returns a value is not the same thing as the function p
 
 Since we will be using the `f2c` function later in the text it is a good idea to place general functions in a module, such as `util.py`.
 
-[source,python]
+[source,python,numbered]
 ----
 import util 
 
@@ -1669,7 +1677,7 @@ What if we wanted to draw two or more blockheads on the display surface? One way
 
 In keeping with the way drawing rectangle works specifying the Blockhead's x and y coordinate along with its width and height makes sense:
 
-[source,python]
+[source,python,numbered]
 ----
 def draw_blockhead(head_x, head_y, head_w, head_h):
     pass
@@ -1679,7 +1687,7 @@ This is just the function header. Notice the use of the Python statement `pass`.
 
 So what we'll do now is place all of the code used for the drawing inside the function and make sure that we use the parameters to initilize the 
 
-[source,python]
+[source,python,numbered]
 ----
 def draw_blockhead(head_x, head_y, head_w, head_h):
 
@@ -1742,7 +1750,7 @@ Noteice that the `draw_blockhead` function still uses the variable `win`, which 
 
 NOTE: A _global variable_ is defined in the main program. Its scope is the point from where it was defined until the end of the program.
 
-[source,python]
+[source,python,numbered]
 ----
 # initial pygame stuff
 import pygame, color
@@ -1793,19 +1801,19 @@ Write a function `circ_area` that that takes the radius of a circle as a paramet
 .Exercise 2
 Answer questions about the program below. The lines are number 
 
-[source,python]
+[source,python,numbered]
 ----
-x = 5                   <1>
-y = 6                   <2>
-z = 33                  <3>
+x = 5                   
+y = 6                   
+z = 33                  
 
-def f(x):               <4>
-   y = 9                <5>
-   print(x + y + z)     <6>
+def f(x):               
+   y = 9                
+   print(x + y + z)     
 
-print(x + y + z)        <7>
-f(12)                   <8>
-print(x + y + z)        <9>   
+print(x + y + z)        
+f(12)                   
+print(x + y + z)        
 pass
 ----
 
@@ -1861,7 +1869,7 @@ Lets assume we have a particle.footnote:[a circle in pygame, which might be a ba
 
 NOTE: We will often use the term _particle_ to represent any kind of moving object such as a baseball, a hockey puck, an electron, etc.
 
-[source,python]
+[source,python,numbered]
 ----
 import color, pygame
 
@@ -1883,7 +1891,7 @@ pygame.display.update()
 
 What if we wanted to draw another particle right next to the first? The next particle's x coordinate will be 2 radii (plural of radius) past the first particle's x coordinate.
 
-[source,python]
+[source,python,numbered]
 ----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
@@ -1891,7 +1899,7 @@ pygame.draw.circle(win, color.blue, (px, py), radius)
 
 How about a third particle?
 
-[source,python]
+[source,python,numbered]
 ----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
@@ -1911,7 +1919,7 @@ while (*_condition_*):
 
 We want to keep repeating the two lines of code 
 
-[source,python]
+[source,python,numbered]
 ----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
@@ -1919,7 +1927,7 @@ pygame.draw.circle(win, color.blue, (px, py), radius)
 
 as long as some condition is true. As long as the particle's right edge is to the left of the right side of the display.
 
-[source,python]
+[source,python,numbered]
 ----
 while px + radius < side:
     px = px + 2 * radius
@@ -1937,7 +1945,7 @@ One modification is that we can _animate_ the particle moving across the screen 
 . Redraw the object
 . introduce a slight delay to model the passage of time
 
-[source,python]
+[source,python,numbered]
 ----
 while px + radius < side:
     win.fill(color.white)                                    <1>
@@ -2003,7 +2011,7 @@ i   2^i
 10 | 1024
 ----
 
-[source,python]
+[source,python,numbered]
 ----
 # table header
 print("i     2^i")
@@ -2040,7 +2048,7 @@ Print the integers counting down from 10 to 0. WHen you are done print "Blast of
 === Accumulating Loops
 Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where _n_ is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
 
-[source,python]
+[source,python,numbered]
 ----
 n   = int(input("Enter n: "))   
 i   = 1                          <1>
@@ -2075,7 +2083,7 @@ The average is  6.75
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 n   = float(input("Enter a number: "))
 i   = 0
@@ -2108,7 +2116,7 @@ image::94_to_the_i.png[width=480,height=360,align="center"]
 This is an example of _exponential growth_ in the number of characters in the password. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
 So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
 
-[source,python]
+[source,python,numbered]
 ----
 i = 1
 sum = 0
@@ -2145,7 +2153,7 @@ P = P * 1.011
 
 We can just keep iterating this statement after we give it an initial population.
 
-[source,python]
+[source,python,numbered]
 ----
 P = 7.5e9      # initial population
 P = P * 1.011  # population after year 1
@@ -2156,7 +2164,7 @@ P = P * 1.011  # population after year 3
 
 of course if we want to compute the population _P_ after _n_ years we should use a loop.
 
-[source,python]
+[source,python,numbered]
 ----
 P = 7.5e9    # initial population 7.5 billion
 i = 0        # counter
@@ -2190,7 +2198,7 @@ When using a loop like this we can easily ask alternative questions such as _how
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 p = 7.5e9    # initial population 7.5 billion
 i = 0        # counter
@@ -2216,7 +2224,7 @@ If the growth rate decreases long enough it will eventually become negative. Cor
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 p = 7.5e9    # initial population 7.5 billion
 i = 0        # counter
@@ -2247,7 +2255,7 @@ How do we write program to compute a checksum? If we have an integer such as ste
 
 We can put this in a function that takes an integer to compute the checksum of and return the checksum.
 
-[source,python]
+[source,python,numbered]
 ----
 def checksum(n):               <1>
     sum = 0                    <2>
@@ -2267,7 +2275,7 @@ def checksum(n):               <1>
 
 How can we append the checksum of an integer on the end (the _least significant digit_)? FOr example if the checkum of the integer stem:[51326] is stem:[7] how do we build th new integer stem:[513267]?
 
-[source,python]
+[source,python,numbered]
 ----
  check = checksum(x) <1>
  data = x * 10 + check <2>
@@ -2330,7 +2338,7 @@ The `random` module contains many functions for generating random numbers. The f
 
 NOTE: A random number generator is _uniform_ if all outcomes are equally likely.
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 print(random.random())
@@ -2340,7 +2348,7 @@ print(random.random())
 
 The function `random.randrange(n)` returns a _uniform_ random integer between 0 and `n-1` inclusive. 
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 print(random.randrange(6))
@@ -2362,7 +2370,7 @@ If the condition is true then the block of statement labelled `true_stmts` will 
 
 Back to simulating a coin toss. Here is one way using `random.random()`
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 x = random.random()
@@ -2376,7 +2384,7 @@ else:
 
 Here is another way using `random.randrange()`
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 x = random.randrange(2)
@@ -2393,7 +2401,7 @@ Write a program that reads an integer from the keyboard and prints `even`, if th
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 n = int(input("Enter an integer: "))
 
@@ -2408,7 +2416,7 @@ else:
 
 Loops and conditionals can be combined in complex ways. Lets take an example of tossing a single die.footnote:[_die_ is the singular of the plural _dice_, one die, pair of dice.]. We will print `one` if we rolled a one, `two` if we rolled a two, etc. One way to write this:
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 
@@ -2452,7 +2460,7 @@ The final `else` clause is optional. Note the new keyword `elif`.  `condition1` 
 
 Now we can write our die toss program as:
 
-[source,python]
+[source,python,numbered]
 ----
 d = random.randrange(6) + 1
 if d == 1:                 
@@ -2477,7 +2485,7 @@ Up until now our conditions in either the while loop or the if-statment have bee
 
 Lets say we rolled a pair of dice and wanted to check if we rolled two ones (snake eyes). Our first attempt, which is not incorrect, might be:
 
-[source,python]
+[source,python,numbered]
 ----
 d1 = random.randrange(6) + 1
 d2 = random.randrange(6) + 1
@@ -2489,7 +2497,7 @@ if d1 == 1:
 
 This works just fine, albeit a bit clunky. More concise would be to use the logical operator `and`.
 
-[source,python]
+[source,python,numbered]
 ----
 d1 = random.randrange(6) + 1
 d2 = random.randrange(6) + 1
@@ -2524,7 +2532,7 @@ Write an if-statement that checks whether an integer `n` is between 0 and 100 in
 ====
 
 .Version 1
-[source,python]
+[source,python,numbered]
 ----
 if n >= 0:
     if n <= 100:
@@ -2532,7 +2540,7 @@ if n >= 0:
 ----
 
 .Version 2
-[source,python]
+[source,python,numbered]
 ----
 if n >= 0 and n <= 100:
     x = 0
@@ -2548,7 +2556,7 @@ NOTE: A _code fragment_ is an incomplete segment of pythoncode. It is not meant 
 
 Returning to our dice roll, lets check to see if at least one of the dice is a one. Again, your first instinct might be to write this using if-statements alone, which is possible.
 
-[source,python]
+[source,python,numbered]
 ----
 d1 = random.randrange(6) + 1
 d2 = random.randrange(6) + 1
@@ -2561,7 +2569,7 @@ elif d2 == 1:
 
 But a more concise way would be to use the logical `or` operator.
 
-[source,python]
+[source,python,numbered]
 ----
 d1 = random.randrange(6) + 1
 d2 = random.randrange(6) + 1
@@ -2594,7 +2602,7 @@ Assume variable `d1` and `d2` have values.
 ====
 There several ways to write this. Here is one way.
 
-[source,python]
+[source,python,numbered]
 ----
 if (d1 == 1 or d2 == 1) and d1 != d2: <1>
     print("exactly one, 1")
@@ -2602,7 +2610,7 @@ if (d1 == 1 or d2 == 1) and d1 != d2: <1>
 
 The parentheses around the `or` are necessary.  Another solution is:
 
-[source,python]
+[source,python,numbered]
 ----
 if (d1 == 1 or d2 == 1) and (d1 != 1 or d2 != 1): <1>
     print("exactly one, 1")
@@ -2660,7 +2668,7 @@ NOTE: "A random process models the progression of a system over time, where the 
 
 Lets simulate tossing a coin _n_ times counting the number of ooccurrences of a head or a tail. We will have _n_ be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
 
-[source,python]
+[source,python,numbered]
 ----
 toss = random.randrange(2)
 
@@ -2676,7 +2684,7 @@ This is the loop body, all we need to do now is to get _n_ from the user, initia
 
 TIP: Don't try and write the program all at once. Break into parts.
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 
@@ -2715,7 +2723,7 @@ Modify the coint toss program to count the number of times we toss ten heads in 
 ====
 This is just one possible solution.
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 
@@ -2760,7 +2768,7 @@ Lets modify our coin toss program and see if we can learn something about random
 
 How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as double your chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over long stretches. Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program just always chose heads (or tails) for the guess.
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 chips = 1000
@@ -2778,7 +2786,7 @@ print(chips) <1>
 
 As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can't quit, even when they are ahead. What might the program look like now?  
 
-[source,python]
+[source,python,numbered]
 ----
 import random
 chips = 1000
@@ -2802,14 +2810,14 @@ Lets visualize this random process, plotting the number of chips the gambler has
 
 The pygame command 
 
-[source,python]
+[source,python,numbered]
 ----
 win.set_at( (x,y), RGB)
 ----
 
 draws a single pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
 
-[source,python]
+[source,python,numbered]
 ----
 import random,pygame,color
 pygame.init()
@@ -2858,7 +2866,7 @@ Modify the random walk above so that whenever we have a positive chip count we p
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 TBD
 ----
@@ -2869,7 +2877,7 @@ Modify the random walk so that whenever we hit a new high we mark the location b
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 TBD
 ----
@@ -2892,7 +2900,7 @@ In this case we will have two random variables, one in the _x_ direction and one
 
 INFO: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
-[source,python]
+[source,python,numbered]
 ----
 dir = random.randrange(8)
 if dir == 0:     # top middle 
@@ -2921,7 +2929,7 @@ This is essentially the process we need to repeat overand over (when do we quit?
 
 image::2D_move.png[width=362,height=130,align="center"]
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x,y):
     # insert code from above
@@ -2942,7 +2950,7 @@ Write a logical condition that is true if the particle as coordinate `(x,y)` is 
 ====
 Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
 `y` must be between `0` and `h` (including 0, but excluding `h`).
-[source,python]
+[source,python,numbered]
 ----
 (0 <= x and x < w) and (0 <= y and y < h)
 ----
@@ -2950,7 +2958,7 @@ Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
 The parenthese are not strictly necessary but aid in clarity. 
 
 Python allows for a more concise mathematical way to describe inequalitites. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
-[source,python]
+[source,python,numbered]
 ----
 (0 <= x < w) and (0 <= y < h)
 ----
@@ -2960,7 +2968,7 @@ Python allows for a more concise mathematical way to describe inequalitites. For
 
 Putting this altogether we have ...
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, random, color
 
@@ -3029,7 +3037,7 @@ Hints:
 [.result]
 ====
 Like alaways, there are many solutions. Here is one.
-[source,python]
+[source,python,numbered]
 ----
 import pygame, random, color
 
@@ -3077,7 +3085,7 @@ That big if-statement in the `move` function is rather clunky and error prone. I
 
 A better and more concise `move` function.
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x,y):
 
@@ -3105,7 +3113,7 @@ Modify the Brownian particle simulation so that a particle stays within the boun
 ====
 The only thing you need to add is an if-statemtn that checks the bounds of the particle. An appropriate place to put this is the `move` function, since it is related to moving the particle.
 
-[source,python]
+[source,python,numbered]
 ----
 # add this to the bottom of the move function.
 if x >= w:     <1> <2>
@@ -3128,7 +3136,7 @@ Another more interesting solution migh be to pretend that the display _wraps aro
 
 An obvious way to do this is similar to the above _check yourself_ solution and check if the particle has gone off an edge and reset its coordinate accordingly. 
 
-[source,python]
+[source,python,numbered]
 ----
 # wrap the x-coordinate around the x-axis.
 if x >= w:
@@ -3146,7 +3154,7 @@ image:brownian_on_torus.png[width=240,height=226,align="center"]
 
 The concept of a variable _wrapping around_ should be familiar. This is modular arithmetic. So rather than the if-statement above we can simply add or subtract 1 modulo the width or height of the window. In which case our `move` function becomes ... 
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x,y):
 
@@ -3191,7 +3199,7 @@ NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1
 the average of the _x_-coordinates and the average of the _y_-coordinates, or 
 stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})]
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, random, color
 side = 500
@@ -3267,7 +3275,7 @@ We'll tackle each of these in turn.
 
 We can assign goats and a car to doors in any order. One thing we need to be careful about is that we do not assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
 
-[source,python]
+[source,python,numbered]
 ----
 goat1 = random.randrange(1,4) <1>
 ----
@@ -3275,7 +3283,7 @@ goat1 = random.randrange(1,4) <1>
 
 Now how about the second goat?
 
-[source,python]
+[source,python,numbered]
 ----
 goat2 = random.randrange(1,4)
 ----
@@ -3283,7 +3291,7 @@ goat2 = random.randrange(1,4)
 This doesn't quit work because we might accidentally get the same 
 random number as `goat1`.  Here is another attempt.
 
-[source,python]
+[source,python,numbered]
 ----
 goat2 = random.randrange(1,4)
 
@@ -3295,7 +3303,7 @@ if goat1 == goat2:
 This is a common mistake. Why is it incorrect? Well, while it is less likely, we can still
 get the same random number twice in a row. We need to keep trying as long as they are the same.
 
-[source,python]
+[source,python,numbered]
 ----
 goat2 = random.randrange(1,4)
 
@@ -3308,7 +3316,7 @@ while goat1 == goat2:
 
 We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
 
-[source,python]
+[source,python,numbered]
 ----
 car = random.randrange(1,4)
 while car == goat1 or car == goat2:
@@ -3323,7 +3331,7 @@ it without using a loop. Hint: Think of a simple expression involving th door nu
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 car = 6 - goat1 + goat2 <1>
 ----
@@ -3332,7 +3340,7 @@ car = 6 - goat1 + goat2 <1>
 
 In the second part of the game we need to have the contestant choose a door. We can simply ask them to input it from the keyboard.
 
-[source,python]
+[source,python,numbered]
 ----
 choice = int(input("Choose a door: ")) <1>
 ----
@@ -3349,7 +3357,7 @@ In the third step of the game we reveal one of the two goats being careful not t
 
 If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
 
-[source,python]
+[source,python,numbered]
 ----
 if choice == goat1:    <1>
     show = goat2
@@ -3387,7 +3395,7 @@ Below is just one version based on the code we've been developing.
 
 [.result]
 ====
-[source,python]
+[source,python,numbered]
 ----
 import random
 
@@ -3488,7 +3496,7 @@ image::ball.png[align="center"]
 Assume that the particle is in an image file `ball.png`. We can load that image into
 pygame with `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a pygame surface of the image.
 
-[source,python]
+[source,python,numbered]
 ----
 ball = pygame.image.load("ball.png") <1>
 ----
@@ -3497,7 +3505,7 @@ ball = pygame.image.load("ball.png") <1>
 We've previously discussed pygame surfaces noting that the pygame display is a surface.
 Here we are constructing a new kind of surface. The variable `ball` refers to a pygame surface that is not the display surface, but a surface that that represent an image and can be drawn _onto_ the display surface.
 
-[source,python]
+[source,python,numbered]
 ----
 # Draw a particle (an image of a scooer ball) on the display
 import pygame, color
@@ -3526,7 +3534,7 @@ image::particle_move.png[align="center"]
 
 Hereis a rough draft of the move function.
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x, y, dx, dy):
 
@@ -3545,7 +3553,7 @@ image::particle_bounce.png[align="center"]
 
 Here is the completed move function.
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x, y, dx, dy):
 '''
@@ -3577,7 +3585,7 @@ Now all that is left is to write the main program and call the `move` function.
 
 We'll start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, les than 1. We'll expaplin that later.
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, color
 pygame.init()
@@ -3626,7 +3634,7 @@ The particle simulation runs at _one frame per loop iteration_. The problem is t
 
 Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the _x_ velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
 
-[source,python]
+[source,python,numbered]
 ----
 ball_dx = width  / 2  # travel across display in two seconds
 ball_dy = height / 4  # four seconds to travel from top to bottom
@@ -3634,14 +3642,14 @@ ball_dy = height / 4  # four seconds to travel from top to bottom
 
 We need to know how far the particle traveled in one loop iteration. This is where pygame's `Clock` object is helpful. We can create a clock to measure time using ...
 
-[source,python]
+[source,python,numbered]
 ----
 clock = pygame.time.Clock()
 ---- 
 
 and we can call the object's `tick` method that will return how many milliseconds have passed since the previous call to tick.
 
-[source,python]
+[source,python,numbered]
 ----
 dt = pygame.time.tick() <1>
 ---- 
@@ -3649,7 +3657,7 @@ dt = pygame.time.tick() <1>
 
 We can then compute how far the particle has travelled in both the _x_ and _y_ direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
 
-[source,python]
+[source,python,numbered]
 ----
 dt = clock.tick(60) / 1000.0 # in seconds
 ball_x = ball_x + dt * ball_dx <1>
@@ -3660,7 +3668,7 @@ ball_y = ball_y + dt * ball_dy <2>
 
 The logic for boucing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
 
-[source,python]
+[source,python,numbered]
 ----
 def move(x, y, dx, dy):
 
@@ -3691,7 +3699,7 @@ def move(x, y, dx, dy):
 
 Piecing this all together we have ...
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, color
 pygame.init()
@@ -3733,7 +3741,7 @@ Add a second particle to the simulation. *Hint*: you will need variables for the
 Create variables for the second particle's position and velocity. Use different values 
 than for the first particle to make it more interesting.
 
-[source,python]
+[source,python,numbered]
 ----
 # this goes before loop
 ball2_x = width // 4 - ball_w // 2
@@ -3744,7 +3752,7 @@ ball2_dy = height / -3.237 # down screen in four seconds
 
 Now modify the loop body to move the second particle. And don't forget toredraw the second particle.
 
-[source,python]
+[source,python,numbered]
 ----
 while True:
     win.fill(color.lightgray)
@@ -3776,7 +3784,7 @@ stem:[d=\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}]
 
 And we can write a nice function for:
 
-[source,python]
+[source,python,numbered]
 ----
 # compute the distance between point (x1,y1) and (x2,y2)
 def distance(x1,y1,x2,y2):
@@ -3787,7 +3795,7 @@ But how should we handle the collision? In billiards, imagine the cue ball strik
 
 To swap _x_ velocities we need to introduce a temporary variable, `tmp`.
 
-[source,python]
+[source,python,numbered]
 ----
 tmp = ball1_dx
 ball1_dx = ball2_dx
@@ -3800,7 +3808,7 @@ Writ the code to swap the _y_ velocities.
 [.result]
 ====
 
-[source,python]
+[source,python,numbered]
 ----
 tmp = ball1_dy
 ball1_dy = ball2_dy
@@ -3810,7 +3818,7 @@ ball2_dy = tmp
 
 This is the classic way to express this in just about every programming language. Python's tuple notation allows us to write this a little more succinctly. Two swap the value of two variables in Python you can use _tuple assignment_. For example, to swap the two variables `a` and `b` you can simply write ...
 
-[source,python]
+[source,python,numbered]
 ----
 (a,b) = (b,a)
 ----
@@ -3819,7 +3827,7 @@ Notice that there is a tuple on the left hand side of the assignment operator `=
 
 To wrap up collision detection we need to check if the particles are colliding, in the loop body we can write.
 
-[source,python]
+[source,python,numbered]
 ----
 if distance(ball1_x + r,
             ball1_y + r,
@@ -3839,9 +3847,8 @@ Here is the entire program.
 
 [.result]
 ====
-Problem solution goes here maybe with some additional python code
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, color, math
 pygame.init()
@@ -3858,14 +3865,14 @@ r = ball_w//2  # radius of the ball
 # Properties of particle 1
 ball1_x = width // 2 - ball_w // 2
 ball1_y = height // 2 - ball_h // 2
-ball1_dx = width / 2.02 # across screen in two seconds (units are pixels/second)
-ball1_dy = height / 3.99 # down screen in four seconds
+ball1_dx = width / 2.02  # 2.02 seconds right
+ball1_dy = height / 3.99 # 3.99 seconds down screen
 
 # Properties of particle 2
 ball2_x = width // 4 - ball_w // 2
 ball2_y = height // 4 - ball_h // 2
-ball2_dx = width / 1.1603 # across screen in two seconds (units are pixels/second)
-ball2_dy = height / -2.237 # down screen in four seconds
+ball2_dx = width / 1.1603     # 1.1603 seconds
+ball2_dy = height / -2.237    # 2.237 seconds
 
 # Function to compute the distance between two points.
 def distance(x1,y1,x2,y2):
@@ -3896,19 +3903,18 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 
-	
-clock = pygame.time.Clock()
+clock = pygame.time.Clock() # create a clock object
 
 # The main outer loop.
 while True:
     win.fill(color.lightgray)
 
 	# move the particles
-    (ball1_x, ball1_y, ball1_dx, ball1_dy) = move(ball1_x, ball1_y, 
-	                                              ball1_dx, ball1_dy)
+    (ball1_x, ball1_y, ball1_dx, ball1_dy) = 
+	    move(ball1_x, ball1_y, ball1_dx, ball1_dy)
 
-    (ball2_x, ball2_y, ball2_dx, ball2_dy) = move(ball2_x, ball2_y, 
-	                                              ball2_dx, ball2_dy)
+    (ball2_x, ball2_y, ball2_dx, ball2_dy) = 
+	    move(ball2_x, ball2_y, ball2_dx, ball2_dy)
 
     # check collision
     if distance(ball1_x + r,
@@ -3918,22 +3924,23 @@ while True:
         (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)
         (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)
 
-
     win.blit(ball, (ball1_x, ball1_y))
     win.blit(ball, (ball2_x, ball2_y))
     pygame.display.update()
+	
 ----
+
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Add a third particle to the simulation and collision detection logic.
 
-Adding a fourth and fifth particle is a lot of cutting-and-pasting. This should feel wrong. And it is. We'll have a more general solution when we discuss _lists_ where we can have as many particles as we want.
+Adding a fourth and fifth particle is a lot of cutting-and-pasting. This should feel wrong. And it is. We'll have a more general solution later on when we discuss _lists_ where we can have as many particles as we want.
 
 === Exercises
 
 .Inner Wall
-Add an inner wall to the particle simulation that us centered within the display and has a width that is one tenth the width of the window and half of the height of the window. Have a particle bounce off of the left and right face of the wall. Don't worry about the top and bottom. If it happens to hit the top it will look a little weird.
+Add an inner wall to the particle simulation that is centered within the display and has a width that is one tenth the width of the window and half of the height of the window. Have a particle bounce off of the left and right face of the wall. Don't worry about the top and bottom. If it happens to hit the top it will look a little weird.
 
 === Terminology 
 
@@ -3958,7 +3965,7 @@ a|
 Recall that a very common looping pattern is a _counting loop_ that iterates an
 exact number of times. Recall the pattern ...
 
-[source,python]
+[source,python,numbered]
 ----
 i = 0
 while i < n:
@@ -3968,7 +3975,7 @@ while i < n:
 
 This loop will body will execute exactly `n` times; as long as `n` is not modified in the loop body. Another way to write this in python is using the for loop.
 
-[source,python]
+[source,python,numbered]
 ----
 for i in range(n):
     # loop body
@@ -3978,7 +3985,7 @@ There are two new python keywords `for` and `in`. Notice also that the there is 
 
 The `for`-loop 
 
-[source,python]
+[source,python,numbered]
 ----
 for i in range(10):
     print(i)
@@ -3986,7 +3993,7 @@ for i in range(10):
 
 will print the integers 0 through 9, one per line. More generally, the `for`-loop has the sytnax
 
-[source,python]
+[source,python,numbered]
 ----
 for var in some_sequence_type:
     stmt
@@ -3998,7 +4005,7 @@ Where `some_sequence_type` represents a sequence of values, such as the sequence
 
 Here is an example for loop that will sum the integers from 1 to 100.
 
-[source,python]
+[source,python,numbered]
 ----
 sum = 0
 for i in range(101):
@@ -4009,7 +4016,7 @@ for i in range(101):
 
 We don't always have to use the `range` function to generate a sequence. A string literal is  also a sequence of characters. For example, the loop
 
-[source,python]
+[source,python,numbered]
 ----
 name = "Tom Marvolo Riddle"
 for ch in name:
@@ -4046,12 +4053,12 @@ NOTE: An _event_ is a pygame object that represents a user action such as pressi
 One event we can check for is to see if the user has clicked the X in the pygame
 window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
 
-A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed! Anything else would be strange.  
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
 
 Here is a snippet to check for the `QUIT` event and stop the program if the user
-has clicked on the X. The pygame function `pygame.event.get()` retrieves the event queue (which is a sequence).
+has clicked on the X. The pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
 
-[source,python]
+[source,python,numbered]
 ----
 for event in pygame.event.get():   <1>
 	if event.type == pygame.QUIT:  <2>
@@ -4066,9 +4073,56 @@ for event in pygame.event.get():   <1>
 We could place this code in the outer while loop of our particle simulation.
 
 === Pong
-https://en.wikipedia.org/wiki/Pong[Pong] is a classic computer game, one of the first computer video games. Lets add a paddle to our particle simulation and bounce the particles off the paddle. First we'll need a graphic for the paddle.
+
+One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games, if you will.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
 
 image::paddle.png[caption="Our Pong Paddle", align="center"]
+
+Next we need to set up some properties of the paddle and `blit` it to the display inside of the outer `while`.  We'll offset the paddle a little padding on the left and start it in the middle of the _y_ axis of the display.
+
+[source,python,numbered]
+----
+# properties of the paddle
+paddle = pygame.image.load("../images/paddle.png")
+paddle_w = paddle.get_width()
+paddle_h = paddle.get_height()
+paddle_x = 10
+paddle_y = height // 2 - paddle_h // 2
+---- 
+
+and add the following line right after we `blit` the ball in the outer `while` loop. (Okay, so we are playing pong with a soccer ball).
+
+[source,python]
+----
+win.blit(paddle, (paddle_x, paddle_y))
+----
+
+We need to figure out how to make the paddle responsive to the up and down arrow on the keyboard. The `KEYDOWN` event means that some key on the keyboard is being pressed. We can look at some data associated with the event to determine which key it is.  We can
+check to see if `event.key` is `K_UP` or `K_DOWN`, the constants for the up and down  arrow keys and add or sbtract to `paddle_y` as appropriate.
+
+Our code to process events is a little more complicated.
+
+[source,python,numbered]
+----
+for event in pygame.event.get():
+	if event.type == pygame.QUIT:
+		pygame.quit()
+		exit()
+	elif event.type == pygame.KEYDOWN:
+		if event.key == pygame.K_UP:
+			paddle_y = paddle_y - 1
+		elif event.key == pygame.K_DOWN:
+			paddle_y = paddle_y + 1
+----
+
+When you add this to the while loop you will notice that you need to keep hitting the up or down arrow key just to move the paddke one pixel. What we would like to have happen is that when we keep holding the key down we continue to generate `KEYDOWN` events at a regular interval. We can do this at the start of the program using the pyagem function
+
+[source,python]
+----
+pygame.key.set_repeat(1,1)
+----
+
+What this says is to generate an initial event after one millisencond and then as the key is held down generate an event every millisecond after that. Moving the paddle one pixel at a time is still kind of slow, so we'll set up another variable `paddle_dy` to move it eight pixels every time.
 
 === Exercises
 
