@@ -28,17 +28,17 @@ def move(x, y, dx, dy):
     x += dt * ball_dx
     y += dt * ball_dy
 
-    if x < 0:
-        x = 0
-        dx = -dx
-    elif x + ball_w >= width:
+    #if x < 0:
+    #    x = 0
+    #    dx = -dx
+    if x + ball_w >= width:
         x = width - ball_w
         dx = -dx
 
     if y < 0:
         y = 0
         dy = -dy
-    elif y +ball_h >= height:
+    elif y + ball_h >= height:
         y = height - ball_h
         dy = -dy
 
@@ -50,10 +50,15 @@ pygame.key.set_repeat(1,1)
 while True:
     win.fill(color.lightgray)
 
-    (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+    (ball_x,ball_y,ball_dx,ball_dy) = \
+          move(ball_x,ball_y,ball_dx,ball_dy)
+
+    # check to see if we lost.
+    if ball_x < 0:
+        pygame.quit()
+        exit()
 
     # handle events
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -61,15 +66,8 @@ while True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 paddle_y = paddle_y - paddle_dy
-                paddle_dy = paddle_dy*1.05
             elif event.key == pygame.K_DOWN:
                 paddle_y = paddle_y + paddle_dy
-                paddle_dy = paddle_dy * 1.05
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                paddle_dy = 1
-            elif event.key == pygame.K_DOWN:
-                paddle_dy = 1
 
     win.blit(ball, (ball_x, ball_y))
     win.blit(paddle, (paddle_x, paddle_y))

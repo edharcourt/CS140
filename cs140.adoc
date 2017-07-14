@@ -1867,9 +1867,11 @@ a|
 
 Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey pick, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
 
-NOTE: We will often use the term _particle_ to represent any kind of moving object such as a baseball, a hockey puck, an electron, etc.
+NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc.
 
-[source,python,numbered]
+When the particle is obviously something like a soccer ball I will often use the term _particle_ and _ball_ interchangeably. 
+
+[source,python,linenums]
 ----
 import color, pygame
 
@@ -1887,11 +1889,11 @@ win.fill(color.white)
 pygame.draw.circle(win, color.blue, (px, py), radius)
 pygame.display.update()
 ----
-<1> WHere would the particle display of we set `px = 0`
+<1> Where would the particle display of we set `px = 0`
 
-What if we wanted to draw another particle right next to the first? The next particle's x coordinate will be 2 radii (plural of radius) past the first particle's x coordinate.
+What if we wanted to draw another particle right next to the first? The next particle's _x_ coordinate will be one diameter (or 2 radii) past the first particle's _x_ coordinate.
 
-[source,python,numbered]
+[source,python,linenums]
 ----
 px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
@@ -3610,19 +3612,20 @@ while True:
     win.fill(color.lightgray)
 	
 	# move the particle capturing its new position and possibly new velocity
-    (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+    (ball_x,ball_y,ball_dx,ball_dy) =  \     <1>
+	    move(ball_x, ball_y, ball_dx, ball_dy)
 	
-	# draw the aprticle on the screen
+	# draw the a particle on the screen
     win.blit(ball, (ball_x, ball_y))
 	
 	# update the display
     pygame.display.update()
-
 ----
+<1>Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
 
-You'll ntice that the velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the _x_ direction and one hundreth of a picxel in the _y_ direction? Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`, but for reasons that will be come clearer later we don't want to force the loop to execute more slowly, and we want a more general solution for different speed computers, say laptops vs desktops, etc. 
+The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the _x_ direction and one hundreth of a picxel in the _y_ direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something like that but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
 
-=== Understnading the _Frame Rate_
+=== Understanding the _Frame Rate_
 
 One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animcation will slow down. One isse is that our velocity `ball_dx` and `ball_dy` are in pixels? But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
 
@@ -4088,6 +4091,7 @@ paddle_w = paddle.get_width()
 paddle_h = paddle.get_height()
 paddle_x = 10
 paddle_y = height // 2 - paddle_h // 2
+paddle_dy = 8
 ---- 
 
 and add the following line right after we `blit` the ball in the outer `while` loop. (Okay, so we are playing pong with a soccer ball).
@@ -4108,21 +4112,130 @@ for event in pygame.event.get():
 	if event.type == pygame.QUIT:
 		pygame.quit()
 		exit()
-	elif event.type == pygame.KEYDOWN:
-		if event.key == pygame.K_UP:
-			paddle_y = paddle_y - 1
-		elif event.key == pygame.K_DOWN:
-			paddle_y = paddle_y + 1
+	elif event.type == pygame.KEYDOWN:         <1>
+		if event.key == pygame.K_UP:           <2>
+			paddle_y = paddle_y - paddle_dy
+		elif event.key == pygame.K_DOWN:       <3>
+			paddle_y = paddle_y + paddle_dy
+----
+<1> Do we have a key press event?
+<2> If so, then is it the up-arrow ...
+<3> or the down-arrow key?
+
+When you add this to the outer `while` loop you will notice that you need to keep hitting the up or down arrow key just to move the paddle one pixel. That is because when you press the down arrow key you generate only one event. What we would like to have happen is that when we press the key we continue to generate `KEYDOWN` events at a regular interval as long as it stays pressed. We can do this at the start of the program using the pygame function:
+
+[source,python]
+----
+pygame.key.set_repeat(initial,interval)
 ----
 
-When you add this to the while loop you will notice that you need to keep hitting the up or down arrow key just to move the paddke one pixel. What we would like to have happen is that when we keep holding the key down we continue to generate `KEYDOWN` events at a regular interval. We can do this at the start of the program using the pyagem function
+What this says is to generate an initial event after `initial` milliseconds and then at regular intervals of `interval` milliseconds as the key is pressed.  Reasonable values for
+`initial` and `interval` are `1` millisecond.
 
 [source,python]
 ----
 pygame.key.set_repeat(1,1)
 ----
 
-What this says is to generate an initial event after one millisencond and then as the key is held down generate an event every millisecond after that. Moving the paddle one pixel at a time is still kind of slow, so we'll set up another variable `paddle_dy` to move it eight pixels every time.
+Moving the paddle one pixel at a time is still slow, so we'll set up another variable `paddle_dy` to move it eight pixels every event.
+
+In order to make this a complete Pong game we need some way to lose. In Pong this is by not hitting the ball and having go off the left edge. IN the `move` function we need to remove the code that bounces the particle off of the left wall. And in the outer `while` loop we can simply check the _x_ coordinate of the ball and exit the program much like we did for the `QUIT` event.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the `move` function so the particle does not bounce off of the left wall.
+
+[.result]
+====
+Simply delete the part of the condition where we check if _x_ is less than 0. The new `move` function is below.
+
+[source,python,numbered]
+----
+def move(x, y, dx, dy):
+
+    dt = clock.tick(60) / 1000.0   # time elapsed since last frame
+
+    x = x + dt * ball_dx           # new x and y coordinates      
+    y = y + dt * ball_dy
+
+	# code to bounce off of left wall was deleted here.
+	
+    if x + ball_w >= width:        # right wall
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                      # top wall
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:     # bottom wall
+        y = height - ball_h
+        dy = -dy
+
+    return (x,y,dx,dy)
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the outer `while` loop so that the game ends (rather abruptly) when the ball
+goes off the left hand side of the window.
+
+[.result]
+====
+To check to see if the player lost we could add the following code 
+to the outer `while` loop. 
+
+[source,python,numbered]
+----
+# check to see if we lst.
+if ball_x < 0:
+	pygame.quit()
+	exit()
+----
+
+Here is the entire outer while loop including our event code to check for the
+`QUIT` event and the paddle movement.
+
+[source,python,numbered]
+----
+pygame.key.set_repeat(1,1)
+
+while True:
+    win.fill(color.lightgray)
+
+    (ball_x,ball_y,ball_dx,ball_dy) = \
+          move(ball_x,ball_y,ball_dx,ball_dy)
+
+    # check to see if we lost.
+    if ball_x < 0:
+        pygame.quit()
+        exit()
+
+    # handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                paddle_y = paddle_y - paddle_dy
+            elif event.key == pygame.K_DOWN:
+                paddle_y = paddle_y + paddle_dy
+
+    win.blit(ball, (ball_x, ball_y))
+    win.blit(paddle, (paddle_x, paddle_y))
+
+    pygame.display.update()
+----
+
+====
+
+
+
+
+
+
+We also need to bounce the ball off of the paddle. To do this lets make sure we understand all of the coordinates and widths and heights.
+
+image::ball_hitting_paddle.png[align="center", width=500]
 
 === Exercises
 
