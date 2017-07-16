@@ -1300,6 +1300,8 @@ some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)
 
 image::ellipse.png[align="center"]
 
+INFO: The _bounding box_ is the rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
+
 +++
 <code class="listingblock">
 pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
@@ -1486,6 +1488,7 @@ a|
 * off-by-one error
 * vector graphics
 * object
+* bounding box
 
 a|
 * tuple
@@ -3721,7 +3724,7 @@ ball_y = height//2 - ball_h//2
 ball_dx = width // 2  <1>
 ball_dy = height // 4 <2>
 
-# a clock object for handling the frme rate
+# a clock object for handling the frame rate
 clock = pygame.time.Clock()
 
 while True:
@@ -4210,7 +4213,7 @@ while True:
         exit()
 
     # handle events
-    for event in pygame.event.get():
+    for event in pygame.event.get():  <1>
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
@@ -4225,17 +4228,97 @@ while True:
 
     pygame.display.update()
 ----
+<1> This is the same as the event processing `for` loop we just covered above.
 
 ====
 
-
-
-
-
+TIP: The outer loop in our case the `while` loop throttled by the frame rate) is often call _the game loop_.
 
 We also need to bounce the ball off of the paddle. To do this lets make sure we understand all of the coordinates and widths and heights.
 
-image::ball_hitting_paddle.png[align="center", width=500]
+image::ball_hitting_paddle.png[align="center", width=600]
+
+With the paddle on the left hand side of the display, the ball is always coming in from the right. One common mistake is to check if the _x_ coordinate of the right side of the paddle (`paddle_x + paddle_w`) is equal to the left edge of the ball, `ball_x`. 
+
+[source,python,numbered]
+----
+if paddle_x + paddle_w == ball_x:
+    dx = -dx
+----
+
+But remember that the particle travels a certain distance each frame and the left edge of the ball will most likely overlap the right edge of the paddle and rarely be equal. We should check if the left edge of the ball is less than or equal to the right edge of the paddle.
+
+[source,python,numbered]
+----
+if ball_x <= paddle_x + paddle_w:
+    dx = -dx
+----
+
+That's closer. Bt this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the _y_ coordinates of the paddle.
+
+[source,python,numbered]
+----
+if x <= paddle_x + paddle_w and \
+   paddle_y <= ball_y <= paddle_y + paddle_h: <1>
+	dx = -dx
+----
+<1> Using Python's more mathematical notation for inequality stem:[x \le y \le z]
+
+It probably makes sense for this to go in the `move` function for the ball to keep the body of the main loop less cluttered.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the `move` function so that it properly checks to see if the ball bounces off of the paddle.
+
+[.result]
+====
+Problem solution goes here maybe with some additional python code
+
+[source,python]
+----
+def move(x, y, dx, dy):
+
+    dt = clock.tick(60) / 1000.0
+
+    x += dt * ball_dx
+    y += dt * ball_dy
+
+    if x + ball_w >= width:     # right wall
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                   #top wall
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:  # bottom wall
+        y = height - ball_h
+        dy = -dy
+
+    # check if particle hits paddle.          <1>
+    if x <= paddle_x + paddle_w and \         <2>
+       paddle_y <= y <= paddle_y + paddle_h:
+        dx = -dx
+
+    return (x,y,dx,dy)
+
+----
+<1> This `if`-statement is the only modification to the `move` function.
+<2> We are using the parameters `x` and `y` and not `ball_x` and `ball_y`. Why? See the next _check yourself_.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a second ball to the png game. Lose when both balls have gone off the screen.
+
+[.result]
+====
+TBD
+
+[source,python]
+----
+# TBD
+----
+====
+
+
 
 === Exercises
 

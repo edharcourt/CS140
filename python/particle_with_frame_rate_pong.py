@@ -19,7 +19,7 @@ paddle_w = paddle.get_width()
 paddle_h = paddle.get_height()
 paddle_x = 10
 paddle_y = height // 2 - paddle_h // 2
-paddle_dy = 1
+paddle_dy = 8
 
 def move(x, y, dx, dy):
 
@@ -28,19 +28,21 @@ def move(x, y, dx, dy):
     x += dt * ball_dx
     y += dt * ball_dy
 
-    #if x < 0:
-    #    x = 0
-    #    dx = -dx
-    if x + ball_w >= width:
+    if x + ball_w >= width:     # right wall
         x = width - ball_w
         dx = -dx
 
-    if y < 0:
+    if y < 0:                   #top wall
         y = 0
         dy = -dy
-    elif y + ball_h >= height:
+    elif y + ball_h >= height:  # bottom wall
         y = height - ball_h
         dy = -dy
+
+    # check if particle hits paddle.
+    if x <= paddle_x + paddle_w and \
+       paddle_y <= y <= paddle_y + paddle_h:
+        dx = -dx
 
     return (x,y,dx,dy)
 
