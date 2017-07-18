@@ -4306,7 +4306,7 @@ def move(x, y, dx, dy):
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Add a second ball to the png game. Lose when both balls have gone off the screen.
+Add a second ball to the pong game. Lose when both balls have gone off the screen.
 
 [.result]
 ====
@@ -4338,6 +4338,106 @@ a|
 
 == Image Processing
 
+There are many useful application for processing images. All of your smartphones have image processing software to related to the camera,and the fingerprint sensor on the device had image processing software for fingerprint matching. The software I'm using to write these notes with has image processing capabilities to resize images.
+
+From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
+
+If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 10%? Theoretically this should make the image darker.  
+
+To do this we need a systematic way to go through every pixel in the image so we don't miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way toprocess an image is row-by-row and top to bottom. 
+
+=== Interlude
+
+Processing a rectangular table of numbers is extremely common in computer science. We have a systematic way in which we can go through each number using two nested for loops. For example, lets say we wanted to produce the following _9 X 9_ multiplcation table on the console:
+
+....
+1 	2 	3 	4 	5 	6 	7 	8 	9 	
+2 	4 	6 	8 	10 	12 	14 	16 	18 	
+3 	6 	9 	12 	15 	18 	21 	24 	27 	
+4 	8 	12 	16 	20 	24 	28 	32 	36 	
+5 	10 	15 	20 	25 	30 	35 	40 	45 	
+6 	12 	18 	24 	30 	36 	42 	48 	54 	
+7 	14 	21 	28 	35 	42 	49 	56 	63 	
+8 	16 	24 	32 	40 	48 	56 	64 	72 	
+9 	18 	27 	36 	45 	54 	63 	72 	81 
+....	
+
+[source,python,numbered]
+----
+for i in range(1,10):
+    for j in range(1,10):
+        print(i * j, "\t", end="") <1>
+    print()
+----
+<1> The character `\t` represent the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an option argument named `end` that indicates how we should handle the end of line. In this case we don't want the `print` statement to print on a separate line, so we suppress printing `\n` with `end=""`.
+
+INFO: A _matrix_ is a rectangular table of numbers.
+
+TIP: The branch of mathematics that deals with matrices is called _linear algebra_.
+
+
+
+=== Darken an Image
+
+In pseudocode we need something like ...
+
+[source]
+----
+for each row r in the image
+   for each column c in row r
+      get the RGBA components of pixel (c,r)
+	  reduce each component by 10%
+	  reset the pixel at (c,r) with the new RGBA values
+----
+
+A new Pygame function will assist us, `surface.get_at( (x,y) )` returns the RGBA tuple at column `x` and row `y`. For example, if `win` was our surface, we could get the pixel in the upper left corner of the image with ...
+
+[source,python]
+----
+(r,g,b,a) = win.get_at((0,0)) <1>
+----
+<1> To be more precise recall that functions like `get_at` _methods_ because they are called using an _object_.
+
+The pygame function `surface.set_at( (x,y), RGBA)` modifies the pixel at coordinate `(x,y)` to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black ...
+
+[source,python]
+----
+win.set_at((0,0), (0,0,0)) <1>
+----
+<1> The `set_at` function does not return a value. Recall that functions that do not return a value really return the special value `None`.
+
+Here's a program that darkens the image below by 10%. We will review it line by line.
+
+[#img-bug]
+.Copyright https://500px.com/biker11[Ondrej Pakan]
+image::bug.jpg[align="left",width=340]
+
+
+
+=== Black And White
+
+=== Steganography
+
+=== Schelling Segregation Model
+
+=== Exercises
+
+Collage
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * grayscale
+
+a|
+ * tbd
+
+|===
+
 == String and File Processing
 
 === DNA Sequence Analysis
@@ -4346,9 +4446,47 @@ a|
 
 === Network Programming
 
+=== Exercises
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * tbd
+
+a|
+ * tbd 
+
+|===
+
+
 == Lists
 
 === The Birthday Paradox
+
+=== Particle Simulation: Take 2
+
+=== Forest Fire Model
+
+=== Exercises
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * tbd
+
+a|
+ * tbd 
+
+|===
+
 
 [appendix]
 
