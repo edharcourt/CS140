@@ -1300,7 +1300,7 @@ some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)
 
 image::ellipse.png[align="center"]
 
-INFO: The _bounding box_ is the rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
+NOTE: The _bounding box_ is the rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
 
 +++
 <code class="listingblock">
@@ -2903,7 +2903,7 @@ image::pixel_neighbors.png[width=214,height=200,align="center"]
 
 In this case we will have two random variables, one in the _x_ direction and one in the _y_ direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` correspnding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
-INFO: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
+NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
 [source,python,numbered]
 ----
@@ -4078,6 +4078,26 @@ for event in pygame.event.get():   <1>
 
 We could place this code in the outer while loop of our particle simulation.
 
+=== A Handy Utility Function
+
+The above event processing code checks for a `QUIT` event wihle the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and writ a functin `wait_for_qui()` that cause the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
+
+[source,python,numbered]
+----
+def wait_for_quit():
+   
+    while True:
+        for event in pygame.event.get():   <1>
+            if event.type == pygame.QUIT:
+                pygame.quit()
+				exit()
+		pygame.time.delay(100) <2>
+----
+<1> Same event code as before.
+<2> While this is line not absolutely necessary this keeps the `while` loop from just spinning an burning up CPU time. 
+
+
+
 === Pong
 
 One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games, if you will.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
@@ -4271,7 +4291,6 @@ Modify the `move` function so that it properly checks to see if the ball bounces
 
 [.result]
 ====
-Problem solution goes here maybe with some additional python code
 
 [source,python]
 ----
@@ -4373,14 +4392,30 @@ for i in range(1,10):
         print(i * j, "\t", end="") <1>
     print() <2>
 ----
-<1> The character `\t` represent the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an option argument named `end` that indicates how we should handle the end of line. In this case we don't want the `print` statement to print on a separate line, so we suppress printing `\n` with `end=""`.
+<1> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding paramater name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
 <2> This starts a new line.
 
-NOTE: A _matrix_ is a rectangular table of numbers.
+NOTE: A _matrix_ is a rectangular table of numbers. The branch of mathematics that deals with matrices is called _linear algebra_.
 
-TIP: The branch of mathematics that deals with matrices is called _linear algebra_.
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Rewrite the two nested `for`-loops above using two nested `while` loops. 
 
+[.result]
+====
 
+[source,python,numbered]
+----
+i = 1
+while i < 10:
+    j = 1
+    while j < 10:
+        print(i * j, "\t", end="")
+        j = j + 1
+    print()
+    i = i + 1
+----
+
+====
 
 === Darken an Image
 
@@ -4411,15 +4446,18 @@ win.set_at((0,0), (0,0,0)) <1>
 ----
 <1> The `set_at` function does not return a value. Recall that functions that do not return a value really return the special value `None`.
 
-Here's a program that darkens the image below by 10%. We will review it line by line.
+Here's a program that darkens the image below by 30%. We will review it line by line.
 
 [#img-bug]
 .Copyright https://500px.com/biker11[Ondrej Pakan]
 image::bug.jpg[align="left",width=340]
 
+[source,python,numbered]
+----
 
+----
 
-=== Black And White
+=== Converting an image to Grayscale (and more)
 
 === Steganography
 
@@ -4438,9 +4476,12 @@ Collage
 a|
  * grayscale
  * default parameter
+ * alpha transparency
 
 a|
  * named parameter
+ * matrix
+ * default parameter
 
 |===
 
