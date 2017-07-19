@@ -4080,8 +4080,9 @@ We could place this code in the outer while loop of our particle simulation.
 
 === A Handy Utility Function
 
-The above event processing code checks for a `QUIT` event wihle the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and writ a functin `wait_for_qui()` that cause the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
+The above event processing code checks for a `QUIT` event wihle the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
 
+.`util.py`
 [source,python,numbered]
 ----
 def wait_for_quit():
@@ -4094,9 +4095,9 @@ def wait_for_quit():
 		pygame.time.delay(100) <2>
 ----
 <1> Same event code as before.
-<2> While this is line not absolutely necessary this keeps the `while` loop from just spinning an burning up CPU time. 
+<2> While this is line not absolutely necessary forcing a delay keeps the `while` loop from just spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
 
-
+We are assuming that if the ser closes the winodw they want the program to terminate as well. The function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other pygame programs.
 
 === Pong
 
@@ -4454,8 +4455,30 @@ image::bug.jpg[align="left",width=340]
 
 [source,python,numbered]
 ----
+import pygame, util
+pygame.init()
 
+image = pygame.image.load("bug.jpg")  <1>
+win = pygame.display.set_mode((image.get_width(), image.get_height()))  <2>
+image = image.convert_alpha()  <3>
+
+for y in range(image.get_height()):
+    for x in range(image.get_width()):
+        (r,g,b,a) = image.get_at((x,y))
+        r = r * .7  <4>
+        g = g * .7
+        b = b * .7
+        image.set_at((x,y), (r,g,b))
+
+win.blit(image, (0,0))
+pygame.display.update()
+util.wait_for_click()  <5>
 ----
+<1> We load the image _before_ we construct the display so we know how largeto make the display.
+<2> Construct a display srface that is the same size as the image.
+<3> We call the `convert_alpha()` method separately _after_ we load the image on line 4 and then construct the display on line 5.  This is becausr the the `convert_alpha` function is making the format of the image compatible with the format of the display.
+<4> Decreasing a value by 30% is the same as multiplying it by `.7`.
+<5> Recall that the `wait_for_click()` function was defined in the section on event handling.
 
 === Converting an image to Grayscale (and more)
 
