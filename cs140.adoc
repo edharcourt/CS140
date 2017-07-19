@@ -4342,24 +4342,28 @@ There are many useful application for processing images. All of your smartphones
 
 From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
 
-If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 10%? Theoretically this should make the image darker.  
+If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 30%? Theoretically this should make the image darker.
 
 To do this we need a systematic way to go through every pixel in the image so we don't miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way toprocess an image is row-by-row and top to bottom. 
 
-=== Interlude
+=== Interlude - processing rectangular data
 
-Processing a rectangular table of numbers is extremely common in computer science. We have a systematic way in which we can go through each number using two nested for loops. For example, lets say we wanted to produce the following _9 X 9_ multiplcation table on the console:
+Processing a rectangular table of numbers is common in computer science. We have
+a systematic way in which we can go through each number using two nested for
+loops. For example, lets say we wanted to produce the following _9 X 9_
+multiplication table on the console:
 
+.Multiplication Table
 ....
-1 	2 	3 	4 	5 	6 	7 	8 	9 	
-2 	4 	6 	8 	10 	12 	14 	16 	18 	
-3 	6 	9 	12 	15 	18 	21 	24 	27 	
-4 	8 	12 	16 	20 	24 	28 	32 	36 	
-5 	10 	15 	20 	25 	30 	35 	40 	45 	
-6 	12 	18 	24 	30 	36 	42 	48 	54 	
-7 	14 	21 	28 	35 	42 	49 	56 	63 	
-8 	16 	24 	32 	40 	48 	56 	64 	72 	
-9 	18 	27 	36 	45 	54 	63 	72 	81 
+1	2	3	4	5	6	7	8	9
+2	4	6	8	10	12	14	16	18
+3	6	9	12	15	18	21	24	27
+4	8	12	16	20	24	28	32	36
+5	10	15	20	25	30	35	40	45
+6	12	18	24	30	36	42	48	54
+7	14	21	28	35	42	49	56	63
+8	16	24	32	40	48	56	64	72
+9	18	27	36	45	54	63	72	81
 ....	
 
 [source,python,numbered]
@@ -4367,11 +4371,12 @@ Processing a rectangular table of numbers is extremely common in computer scienc
 for i in range(1,10):
     for j in range(1,10):
         print(i * j, "\t", end="") <1>
-    print()
+    print() <2>
 ----
 <1> The character `\t` represent the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an option argument named `end` that indicates how we should handle the end of line. In this case we don't want the `print` statement to print on a separate line, so we suppress printing `\n` with `end=""`.
+<2> This starts a new line.
 
-INFO: A _matrix_ is a rectangular table of numbers.
+NOTE: A _matrix_ is a rectangular table of numbers.
 
 TIP: The branch of mathematics that deals with matrices is called _linear algebra_.
 
@@ -4432,9 +4437,10 @@ Collage
 
 a|
  * grayscale
+ * default parameter
 
 a|
- * tbd
+ * named parameter
 
 |===
 
