@@ -7,13 +7,11 @@ image = image.convert_alpha()
 
 for y in range(image.get_height()):
     for x in range(image.get_width()):
-        (r,g,b,a) = image.get_at((x,y))
-        r = r * .7
-        g = g * .7
-        b = b * .7
-        image.set_at((x,y), (r,g,b))
+        (r, g, b, a) = image.get_at((x, y))
+        gray = (r + g + b) // 3
+        image.set_at((x, y), (gray, gray, gray))
 
 win.blit(image, (0,0))
 pygame.display.update()
-#pygame.image.save(image, "D:/Shared/images/darker_bug.jpg")
+pygame.image.save(image, "D:/Shared/images/gray_bug.jpg")
 util.wait_for_click()

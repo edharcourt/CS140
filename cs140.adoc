@@ -4080,7 +4080,7 @@ We could place this code in the outer while loop of our particle simulation.
 
 === A Handy Utility Function
 
-The above event processing code checks for a `QUIT` event wihle the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
+The above event processing code checks for a `QUIT` event while the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
 
 .`util.py`
 [source,python,numbered]
@@ -4474,13 +4474,64 @@ win.blit(image, (0,0))
 pygame.display.update()
 util.wait_for_click()  <5>
 ----
-<1> We load the image _before_ we construct the display so we know how largeto make the display.
-<2> Construct a display srface that is the same size as the image.
-<3> We call the `convert_alpha()` method separately _after_ we load the image on line 4 and then construct the display on line 5.  This is becausr the the `convert_alpha` function is making the format of the image compatible with the format of the display.
+<1> Load the image _before_ we construct the display so we know how large to make the display.
+<2> Construct a display surface that is the same size as the image.
+<3> Call the `convert_alpha()` method _after_ we load the image on line 4 and construct the display on line 5.  This is because the the `convert_alpha` function is making the format of the image compatible with the format of the display.
 <4> Decreasing a value by 30% is the same as multiplying it by `.7`.
 <5> Recall that the `wait_for_click()` function was defined in the section on event handling.
 
+And here is the result of darkening the image of the bug.
+
+.Darker Bug
+image::darker_bug.jpg[width=340]
+
 === Converting an image to Grayscale (and more)
+
+The code for darking an image gives us a useful template for doing a variety of image processing examples. The pixels in a grayscale image (_i.e.,_ black-and-white) are
+always a shaed of gray. Recall that in a grey pixel the RGB values are all equal.
+
+Lets say in our color image we had a pixel that was a very dark color, `(93,15,13)`, 
+a dark maroon. We would expect the corresponding grayscale pixel to be dark as well, a dark gray. Conversely, we would expect a bright color such as yellow `(255,255,0)` to be a light gray. One technique is to average the pixels of the color and use the average for all thre color components. For example dark maroon would get converted to 
+stem:[(93 + 15 + 13)/3 = 40.3], or the dark gray `(40,40,40)`.  Yellow would get converted
+to stem:[(255 + 255 + 0)/3 = 170], or the light gray `(170,170,170)`. We can almost reuse the entire program for darkening an image. Just change the inner loop body to ...
+
+[source,python,numbered]
+----
+(r,g,b,a) = image.get_at((x,y))
+gray = (r+g+b)//3
+image.set_at((x,y), (gray,gray,gray))
+----
+
+The result is ...
+
+.Grayscale Bug
+image::gray_bug.jpg[width=340]
+
+What is cool with digital images is that we can do whatever we want to the pixel values. 
+The photographic negative of a pixel is to subtracy each color component from 255. 
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Computer the photographic negative of the bug.
+
+[.result]
+====
+Just change the inner loop body to ...
+
+[source,python]
+----
+(r,g,b,a) = image.get_at((x,y))
+image.set_at((x,y), (255 - r, 255 - g, 255 - b))
+----
+
+The result is pretty cool looking.
+
+.Negative Bug
+image::negative_bug.jpg[width=340]
+====
+
+
+
+=== Batch vs Real time Image processing
 
 === Steganography
 
@@ -4504,7 +4555,7 @@ a|
 a|
  * named parameter
  * matrix
- * default parameter
+ * 
 
 |===
 
