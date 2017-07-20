@@ -4529,6 +4529,18 @@ The result is pretty cool looking.
 image::negative_bug.jpg[width=340]
 ====
 
+The possibilities are endless. WHat hapens if we switch the color components around? 
+For example, for an RGB pixel turn it in to GBR?
+
+[source,python]
+----
+(r,g,b,a) = image.get_at((x,y))
+image.set_at((x,y), (g,b,r))
+----
+
+.RGB to GBR Bug
+image::gbr_bug.jpg[width=340]
+
 
 
 === Batch vs Real time Image processing
