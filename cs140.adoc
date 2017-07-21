@@ -4525,7 +4525,7 @@ image.set_at((x,y), (255 - r, 255 - g, 255 - b))
 
 The result is pretty cool looking.
 
-.Negative Bug
+.Negative Insect
 image::negative_bug.jpg[width=340]
 ====
 
@@ -4538,10 +4538,61 @@ For example, for an RGB pixel turn it in to GBR?
 image.set_at((x,y), (g,b,r))
 ----
 
-.RGB to GBR Bug
+.RGB to GBR Insect
 image::gbr_bug.jpg[width=340]
 
+=== Scaling an Image
 
+A common image processing operation is to resize an image so that it is large or smaller. Lets think of this operation as a function that takes an image to resize along with the new width and new height of the resulting image.
+
+.Scaling an image
+image::scale.png[width=600]
+
+Until now we have had two ways to create a surfae; thie first is to use the `pygame.display.set_mode` function to create the special display surface. The second waywas to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
+
+The pygame function
+
+[source,python]
+----
+surf = pygame.Surface((w,h))
+----
+
+will create a new empty surface `surf` with width `w` and height `h`. 
+
+Lets assume we have an image we want to scale and it is in a surface `image`. Furthermore assume we have an empty surface `surf` that will be the new scaled image. We have to go through every pixel in `surf` and find a picel in `image` to copy in to `surf`.
+
+.Computing coordinates in scaled image
+image::scale_xy.png[width=600]
+
+Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The _x_ coordinate 10 in the scaled image shuold correspond to _x_ coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
+
+Here is the function `scale`.
+
+[source,python,numbered]
+----
+def scale(original, scaled_w, scaled_h):
+
+    scaled = pygame.Surface((scaled_w, scaled_h)) <1>
+    w_ratio = original.get_width() // scaled_w    <2>
+    h_ratio = original.get_height() // scaled_h   <3>
+
+    for row in range(scaled_h):                   <4>
+        for col in range(scaled_w):
+            x = col * w_ratio                     <5>
+            y = row * h_ratio                     
+            (r,g,b,_) = original.get_at((x,y))    <6>
+            scaled.set_at((col,row), (r,g,b))     <7>
+
+    return scaled                                 <8>
+----
+<1> Create the new empty surface that will contain our scaled image.
+<2> Compute the ratio of the orginal image's width to the new scaled image's width.
+<3> Compute the ratio of the orginal image's height to the new scaled image's height.
+<4> For every pixel in the scaled image ...
+<5> Compute the _x_ and _y_ coordinates of the pixel we need to grab in the original image.
+<6> Get the pixel in the original image.
+<7> And copy it to the new scaled image.
+<8> DOn't forget this is a function that returns a new image.
 
 === Batch vs Real time Image processing
 
