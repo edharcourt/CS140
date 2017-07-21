@@ -4592,7 +4592,7 @@ def scale(original, scaled_w, scaled_h):
 <5> Compute the _x_ and _y_ coordinates of the pixel we need to grab in the original image.
 <6> Get the pixel in the original image.
 <7> And copy it to the new scaled image.
-<8> DOn't forget this is a function that returns a new image.
+<8> Don't forget this is a function that _returns_ a new image.
 
 === Batch vs Real time Image processing
 
