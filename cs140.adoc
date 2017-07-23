@@ -4550,21 +4550,23 @@ image::scale.png[width=600]
 
 Until now we have had two ways to create a surfae; thie first is to use the `pygame.display.set_mode` function to create the special display surface. The second waywas to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
 
-The pygame function
+The pygame following line
 
 [source,python]
 ----
 surf = pygame.Surface((w,h))
 ----
 
-will create a new empty surface `surf` with width `w` and height `h`. 
+creates a new empty surface `surf` with width `w` and height `h` and assigns it to the variable `surf`. 
 
 Lets assume we have an image we want to scale and it is in a surface `image`. Furthermore assume we have an empty surface `surf` that will be the new scaled image. We have to go through every pixel in `surf` and find a picel in `image` to copy in to `surf`.
 
 .Computing coordinates in scaled image
 image::scale_xy.png[width=600]
 
-Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The _x_ coordinate 10 in the scaled image shuold correspond to _x_ coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
+Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The _x_ coordinate 10 in the scaled image should correspond to _x_ coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
+
+In general if the width of the original image is stem:[w] and the width of the scaled image is stem:[w'] then an stem:[x] coordinate in the scaled image will correspond to the stem:[x] coordinate stem:[xw/w'] in the original image. The reasoning is the same for the stem:[y] coordinate.
 
 Here is the function `scale`.
 
@@ -4594,6 +4596,73 @@ def scale(original, scaled_w, scaled_h):
 <7> And copy it to the new scaled image.
 <8> Don't forget this is a function that _returns_ a new image.
 
+==== Shrinking an image
+
+If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The caling ratios `w_ratio` and `h_ratio` are bth `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixle _(1,0)_.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Use the `scale` function to shrink 1/3 of its orgiginal height and width. Display the original image and center the smaller image in the original.
+
+[.result]
+====
+
+[source,python]
+----
+import pygame, util
+pygame.init()
+
+image = pygame.image.load("bug.jpg")
+
+scaled_image = scale(image, image.get_width()//3,   
+                     image.get_height()//3)   <1>
+
+win = pygame.display.set_mode((image.get_width(), image.get_height()))  <2>
+
+win.blit(image, (0,0))  <3>
+
+win.blit(scaled_image, (win.get_width()//2 - scaled_image.get_width()//2,
+                        win.get_height()//2 - scaled_image.get_height()//2)) <4>
+
+pygame.display.update()
+util.wait_for_click()
+----
+<1> scale the original image
+<2> Create a display surface the original size f the image
+<3> Blit the original image in the display
+<4> Blit the scaled image centered in the display.
+
+image::bug_in_a_bug.png[width=340]
+
+====
+
+
+==== Enlarging an image
+
+But does this work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels in the original image.
+
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Problem text goes here
+
+[.result]
+====
+Problem solution goes here maybe with some additional python code
+
+[source,python]
+----
+# python code
+----
+
+and some more text and python code
+
+[source,python]
+----
+# more python
+----
+====
+
+
+
 === Batch vs Real time Image processing
 
 === Steganography
@@ -4614,11 +4683,13 @@ a|
  * grayscale
  * default parameter
  * alpha transparency
+ * neighborhood
 
 a|
  * named parameter
  * matrix
- * 
+ * pixelated
+ * aspect ratio
 
 |===
 
