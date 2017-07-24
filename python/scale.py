@@ -23,12 +23,11 @@ def scale(original, scaled_w, scaled_h):
 import pygame, util,color
 pygame.init()
 
-image = pygame.image.load(
-    "../images/bug.jpg")
+image = pygame.image.load("../images/bug.jpg")
 
 # call our new scale function
-scaled_image = scale(image, image.get_width()//3,
-                     image.get_height()//3)
+scaled_image = scale(image, image.get_width()//2,
+                     image.get_height()//2)
 
 win = pygame.display.set_mode((image.get_width(), image.get_height()))
 win.blit(image, (0,0))

@@ -4575,20 +4575,20 @@ Here is the function `scale`.
 def scale(original, scaled_w, scaled_h):
 
     scaled = pygame.Surface((scaled_w, scaled_h)) <1>
-    w_ratio = original.get_width() // scaled_w    <2>
-    h_ratio = original.get_height() // scaled_h   <3>
+    w_ratio = original.get_width() / scaled_w     <2>
+    h_ratio = original.get_height() / scaled_h    <3>
 
     for row in range(scaled_h):                   <4>
         for col in range(scaled_w):
-            x = col * w_ratio                     <5>
-            y = row * h_ratio                     
+            x = int(col * w_ratio)                <5>
+            y = int(row * h_ratio)                     
             (r,g,b,_) = original.get_at((x,y))    <6>
             scaled.set_at((col,row), (r,g,b))     <7>
 
     return scaled                                 <8>
 ----
 <1> Create the new empty surface that will contain our scaled image.
-<2> Compute the ratio of the orginal image's width to the new scaled image's width.
+<2> Compute the ratio of the orginal image's width to the new scaled image's width. 
 <3> Compute the ratio of the orginal image's height to the new scaled image's height.
 <4> For every pixel in the scaled image ...
 <5> Compute the _x_ and _y_ coordinates of the pixel we need to grab in the original image.
@@ -4596,70 +4596,146 @@ def scale(original, scaled_w, scaled_h):
 <7> And copy it to the new scaled image.
 <8> Don't forget this is a function that _returns_ a new image.
 
+CAUTION: Notice that we use floating-point division on lines 4-5. This is because we might be shrinking an image by a non-integral amount. For example, to shrink an image from _200 X 200_ pixels to _150 X 150_ then `w_ratio` and `h_ratio` need to be `1.33` and not `1`. When enlarging an image from _150 X 150_ to _200 X 200_ then `w_ratio` and `h_ratio` need to be `0.75` and not `0`.  On lines 9-10 we need to convert back to integer coordinates.
+
 ==== Shrinking an image
 
-If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The caling ratios `w_ratio` and `h_ratio` are bth `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixle _(1,0)_.
+If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The caling ratios `w_ratio` and `h_ratio` are bth `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixel _(1,0)_.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Use the `scale` function to shrink 1/3 of its orgiginal height and width. Display the original image and center the smaller image in the original.
+Use the `scale` function to shrink an image 1/3 of its orgiginal height and width. Display the original image and center the smaller image in the original.
 
 [.result]
 ====
 
-[source,python]
+[source,python,numbered]
 ----
 import pygame, util
 pygame.init()
 
 image = pygame.image.load("bug.jpg")
 
+win = pygame.display.set_mode((image.get_width(), image.get_height()))  <1>
+
+image = iage.convert_alpha() <2>
+
 scaled_image = scale(image, image.get_width()//3,   
-                     image.get_height()//3)   <1>
+                     image.get_height()//3)   <3>
 
-win = pygame.display.set_mode((image.get_width(), image.get_height()))  <2>
 
-win.blit(image, (0,0))  <3>
+win.blit(image, (0,0))  <4>
 
 win.blit(scaled_image, (win.get_width()//2 - scaled_image.get_width()//2,
-                        win.get_height()//2 - scaled_image.get_height()//2)) <4>
+                        win.get_height()//2 - scaled_image.get_height()//2)) <5>
 
 pygame.display.update()
 util.wait_for_click()
 ----
-<1> scale the original image
-<2> Create a display surface the original size f the image
-<3> Blit the original image in the display
-<4> Blit the scaled image centered in the display.
+<1> Create a display the size of the original image.
+<2> Always a good idea, but not always necessary.
+<3> Scale the original image.
+<4> Blit the original image on to the display.
+<5> Blit the scaled image centered in the display.
 
 image::bug_in_a_bug.png[width=340]
 
 ====
 
+Notice how we scaled the width and height of the image by the same proportion. That is, we kept the _aspect ratio_ of the image the same.
+
+INFO: The _aspect ratio_ of an image is the ratio of an image's width divided by its height.
+
+We didn't have to keep the aspect ratio the same. The `scale` function will elongate, or stretch, an image along its horizontal or vertical axis.
 
 ==== Enlarging an image
 
 But does this work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels in the original image.
 
+Here is an image of a rainbow toad footnote:[accessed on 7/23/2017 http://www.bbc.co.uk/nature/14151541].
+
+.Rainbow Toad
+image::rainbow_toad_small.jpg[]
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Problem text goes here
+Enlarge the image of the rainbow toad to 3 times its width and height.
 
 [.result]
 ====
-Problem solution goes here maybe with some additional python code
 
-[source,python]
+[source,python,numbered]
 ----
-# python code
-----
+import pygame, util,color
+pygame.init()
 
-and some more text and python code
+image = pygame.image.load("rainbow_toad_small.jpg")                            <1>
+win = pygame.display.set_mode((image.get_width() * 3, image.get_height() * 3)) <2>
+image = image.convert_alpha()                                                  <3>
 
-[source,python]
+scaled_image = scale(image, image.get_width() * 3,                             <4>
+                     image.get_height() * 3)
+
+win.blit(scaled_image, (0,0))
+
+pygame.display.update()
+util.wait_for_click()
 ----
-# more python
-----
+<1> Or whatever you named your image.
+<2> Create a display 3 times the size of the original image.
+<3> Always a good idea, but not always necessary.
+<4> Scale the image.
+
+Here is the enlarged image of the rainbow toad.
+
+image::rainbow_toad_enlarged.png[]
+
 ====
+
+Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixel.
+
+INFO: We say that an image is _pixelated_ when an image is enlarged and we can see the individual pixels in the original image.
+
+=== Smoothing an Image
+
+Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straighforward operations that we can use to try and clean up an image, such as tryingto smooth the hard edges in the pixelated rainbow toad.
+
+One technique is called a _mean filter_. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components, whose green components is the average of all the green components, etc.
+
+.Mean of the Neighborhood
+image::mean_filter.png[width=500]
+
+NOTE: The _neighborhood_ of a pixel is comprised of the eight pixels that surround it.
+
+This is probably best handled by writing a function that takes a surface and an _(x,y)_ coordinate and returns a color triple that is the average color of _(x,y)_ and all of its neighbors. 
+
+[source,python,numbered]
+----
+def neighborhood_mean(surf, x, y):
+    pass <1>
+----
+<1> Recall that we use the `pass` statement as a placeholder for the function body.
+
+[source,python,numbered]
+----
+def neighborhood_mean(surf, x, y):
+
+    red_sum = 0                                   <1>
+    green_sum = 0
+    blue_sum = 0
+
+    for ny in range(y-1,y+2):                     <2>    
+        for nx in range(x-1,x+2):                 <3>
+            (r,g,b,_) = surf.get_at((nx,ny))      <4>
+            red_sum += r                          <5>
+            green_sum += g
+            blue_sum += b
+
+    red_avg = int(round(red_sum/9))               <6>
+    green_avg = int(round(green_sum/9))
+    blue_avg = int(round(blue_sum/9))
+
+    return (red_avg, green_avg, blue_avg)
+----
 
 
 
