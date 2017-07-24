@@ -4615,18 +4615,20 @@ pygame.init()
 
 image = pygame.image.load("bug.jpg")
 
-win = pygame.display.set_mode((image.get_width(), image.get_height()))  <1>
+win = pygame.display.set_mode((image.get_width(), 
+                               image.get_height()))         <1>
 
-image = iage.convert_alpha() <2>
+image = image.convert_alpha()                               <2>
 
 scaled_image = scale(image, image.get_width()//3,   
-                     image.get_height()//3)   <3>
+                     image.get_height()//3)                 <3>
 
 
-win.blit(image, (0,0))  <4>
+win.blit(image, (0,0))                                      <4>
 
-win.blit(scaled_image, (win.get_width()//2 - scaled_image.get_width()//2,
-                        win.get_height()//2 - scaled_image.get_height()//2)) <5>
+tmp_x = win.get_width()//2 - scaled_image.get_width()//2    <5>  
+tmp_y = win.get_height()//2 - scaled_image.get_height()//2
+win.blit(scaled_image, (tmp_x, tmp_y)                       <6>
 
 pygame.display.update()
 util.wait_for_click()
@@ -4635,8 +4637,10 @@ util.wait_for_click()
 <2> Always a good idea, but not always necessary.
 <3> Scale the original image.
 <4> Blit the original image on to the display.
-<5> Blit the scaled image centered in the display.
+<5> Calculate the coordinates where `scaled_image` will be blitted.
+<6> Blit the scaled image.
 
+.Bug centered in a bug
 image::bug_in_a_bug.png[width=340]
 
 ====
@@ -4651,7 +4655,7 @@ We didn't have to keep the aspect ratio the same. The `scale` function will elon
 
 But does this work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels in the original image.
 
-Here is an image of a rainbow toad footnote:[accessed on 7/23/2017 http://www.bbc.co.uk/nature/14151541].
+Here is a small image of a rainbow toad footnote:[accessed on 7/23/2017 http://www.bbc.co.uk/nature/14151541] that we will enlarge.
 
 .Rainbow Toad
 image::rainbow_toad_small.jpg[]
@@ -4667,11 +4671,12 @@ Enlarge the image of the rainbow toad to 3 times its width and height.
 import pygame, util,color
 pygame.init()
 
-image = pygame.image.load("rainbow_toad_small.jpg")                            <1>
-win = pygame.display.set_mode((image.get_width() * 3, image.get_height() * 3)) <2>
-image = image.convert_alpha()                                                  <3>
+image = pygame.image.load("rainbow_toad_small.jpg")      <1>
+win = pygame.display.set_mode((image.get_width() * 3, 
+                               image.get_height() * 3))  <2>
+image = image.convert_alpha()                            <3>
 
-scaled_image = scale(image, image.get_width() * 3,                             <4>
+scaled_image = scale(image, image.get_width() * 3,       <4>
                      image.get_height() * 3)
 
 win.blit(scaled_image, (0,0))
@@ -4690,16 +4695,21 @@ image::rainbow_toad_enlarged.png[]
 
 ====
 
-Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixel.
+Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixels. This is why an image often becomes blurry when enlarged past the point of its resolution.
+
+NOTE: For a digital image the _pixel resolution_ (or just _resolution_) is usually specified by the numbers of pixels wide and the number of pixels high. There also needs to be some indication of a physical dimension, often the dimensions of the display, or the number of pixels that will fit in a linear inch. 
+
+.Example
+The specification for the display on the Samsung Galazy S7 Edge smartphone is _1440 X 2560_ pixels at 534 pixels per linear inch (ppi). That means the width of the display should be stem:[1440/534 \approx 2.7 ] inches. The rear camera on the smartphone is 12MP (_i.e._ 12 megapixels, 12 million pixels) with an image dimension of _4032 px X 3024 px_. 
 
 NOTE: We say that an image is _pixelated_ when an image is enlarged and we can see the individual pixels in the original image.
 
 === Smoothing an Image
 
-Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straighforward operations that we can use to try and clean up an image, such as tryingto smooth the hard edges in the pixelated rainbow toad.
+Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straighforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.
 
 One technique is called a _mean filter_. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
-consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components, whose green components is the average of all the green components, etc.
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for thegreenandblue components.
 
 .Mean of the Neighborhood
 image::mean_filter.png[width=500]
@@ -4711,6 +4721,7 @@ This is probably best handled by writing a function that takes a surface and an 
 .Function `neighborhood_mean` of a pixel
 image::neighborhood_mean.png[width=500]
 
+The function header should be ...
 
 [source,python,numbered]
 ----
@@ -4719,7 +4730,7 @@ def neighborhood_mean(surf, x, y):
 ----
 <1> Recall that we use the `pass` statement as a placeholder for the function body.
 
-We could, write nine separate `get_at` calls to get the color of each pixel, but being a little bit clever we can use a loop. If stem:[(x,y)] represents the center pixel in the nine, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can view this is a small _3 X 3_ grid and use our nested `for`-loop pattern.
+We could, write nine separate `get_at` calls to get the color of each pixel, this is a bit tedious and not very general. What if we wanted to expand the neighborhood to go two pixels on each side? Notice how the nine pixels form a _3 X 3_ grid. If stem:[(x,y)] represents the center pixel in the grid, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can use our nested `for`-loop pattern.
  
 [source,python,numbered]
 ----
@@ -4742,6 +4753,14 @@ def neighborhood_mean(surf, x, y):
 
     return (red_avg, green_avg, blue_avg)
 ----
+<1> Local variables to keep the sum of each color component.
+<2> For each row in the _3 X 3_ grid. Why `y+2` and not `y+1`?
+<3> For each column in the _3 X 3_ grid. Why `x+2` and not `x+1`?
+<4> Get the neighborhood pixel color components.
+<5> The notation `var1 += var2` is shorthand for `var1 = var1 + var2`. So `red_sum += r` means `red_sum = red_sum + r`.
+<6> A color component must be an integer and averages are not integers; so round and convert to the closest integer.
+
+Now all that is left is to call `neighborhood_mean` for every pixel in the image, and write the new image to an initially empty surface.
 
 
 
@@ -4766,12 +4785,15 @@ a|
  * default parameter
  * alpha transparency
  * neighborhood
+ * resolution
+ * MP
 
 a|
  * named parameter
  * matrix
  * pixelated
  * aspect ratio
+ * ppi
 
 |===
 

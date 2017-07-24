@@ -23,7 +23,7 @@ def neighborhood_mean(surf, x, y):
     return (red_avg, green_avg, blue_avg)
 
 # M A I N
-import pygame, util,color
+import pygame, util
 pygame.init()
 
 image = pygame.image.load("../images/rainbow_toad_enlarged.png")
