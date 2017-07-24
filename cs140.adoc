@@ -690,7 +690,7 @@ prints the result using both `c` and `f`
 === The `math` module
  
 Python has lots of support libraries that we can use to get our work done. Think of 
-a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument _x_ (where _x_ is in radians).   
+a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
 
 NOTE: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where yo can have folders inside folders to organize your documents.
 
@@ -874,7 +874,7 @@ Your change is...
 ---- 
 
 .Distance from origin
-The distance of a point _(x,y)_ from the origin, by the Pythagorean theorem is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an _x_ and a _y_ from the user and computes the distance of the point from the origin.
+The distance of a point stem:[(x,y)] from the origin, by the Pythagorean theorem is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an stem:[x] and a stem:[y] from the user and computes the distance of the point from the origin.
 
 .Distance between two points
 The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived usingthe Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
@@ -1079,7 +1079,7 @@ _surface_:: The surface we are going to draw the rectangle on. For now we will j
 
 _color_:: An RGB triple such as (0, 255, 255) or color.yellow (from our color module)
 
-_xywh_:: A four tuple (quadruple) that represents the _x_ and _y_ coordinate of the upper left hand corner of the rectangle and the width _w_ and the height _h_ of the rectangle. All units are in pixels.
+_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner of the rectangle and the width stem:[w] and the height stem:[h] of the rectangle. All units are in pixels.
 
 _optional-line-width_:: If this argment is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
 
@@ -1185,7 +1185,7 @@ _surface_:: The surface we are going to draw the rectangle on.
 
 _color_:: An RGB triple
 
-_xy_:: A tuple that represents the _x_ and _y_ coordinate of the _center_ of the circle.
+_xy_:: A tuple that represents the stem:[x] and stem:[y] coordinate of the _center_ of the circle.
 
 _optional-line-width_:: If this argment is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.
 
@@ -1312,7 +1312,7 @@ _surface_:: The surface we are going to draw the ellipse on.
 
 _color_:: An RGB triple
 
-_xywh_:: A four tuple (quadruple) that represents the _x_ and _y_ coordinate of the upper left hand corner _bounding box_, abd the width _w_ and the height _h_ of the ellipse.
+_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner _bounding box_, abd the widthstem:[w]and the heightstem:[h]of the ellipse.
 
 _optional-line-width_:: same as rectangle and circle functions.
 
@@ -1894,7 +1894,7 @@ pygame.display.update()
 ----
 <1> Where would the particle display of we set `px = 0`
 
-What if we wanted to draw another particle right next to the first? The next particle's _x_ coordinate will be one diameter (or 2 radii) past the first particle's _x_ coordinate.
+What if we wanted to draw another particle right next to the first? The next particle's stem:[x] coordinate will be one diameter (or 2 radii) past the first particle's stem:[x] coordinate.
 
 [source,python,linenums]
 ----
@@ -1946,7 +1946,7 @@ Eventually `px + radius` will become greater than `side` and the loop condition 
 One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
 
 . Erase the background
-. Update the an object's position (for example, the particle's _x_ coordinate).
+. Update the an object's position (for example, the particle's stem:[x] coordinate).
 . Redraw the object
 . introduce a slight delay to model the passage of time
 
@@ -2051,7 +2051,7 @@ Print the integers from 1 to 10, one integer per line.
 Print the integers counting down from 10 to 0. WHen you are done print "Blast off". Add a one second delay in between integers. Hint: use the `pygame.time.delay` function. How many milliseconds in a second?
 
 === Accumulating Loops
-Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where _n_ is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
+Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] wherestem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
 
 [source,python,numbered]
 ----
@@ -2114,7 +2114,7 @@ Why are longer passwords better than shorter passwords? It is obvious, longer pa
 
 There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
 
-Plotting stem:[94^i] where _i_ is the number of characters in the password gives us the graph:
+Plotting stem:[94^i] wherestem:[i]is the number of characters in the password gives us the graph:
 
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
@@ -2167,7 +2167,7 @@ P = P * 1.011  # population after year 3
 # and so on
 ----
 
-of course if we want to compute the population _P_ after _n_ years we should use a loop.
+of course if we want to compute the population _P_ afterstem:[n]years we should use a loop.
 
 [source,python,numbered]
 ----
@@ -2194,7 +2194,7 @@ Assume we have current population of roughly 7.5 billion.footnote:[https://www.c
 | image:pop-5000-year.png[width=300,height=300]
 |===
 
-NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where _m_ is the slope and _b_ is the _y_-intercept.
+NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] wherestem:[m]is the slope andstem:[b]is the stem:[y]-intercept.
 
 NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituing once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n]. And the exponential is obvious. 
 
@@ -2671,7 +2671,7 @@ NOTE: A computer program is _deterministic_ if it produces the same exact result
 
 NOTE: "A random process models the progression of a system over time, where the evolution is random rather than deterministic."footnote:[https://reference.wolfram.com/language/guide/RandomProcesses.html]
 
-Lets simulate tossing a coin _n_ times counting the number of ooccurrences of a head or a tail. We will have _n_ be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+Lets simulate tossing a coinstem:[n]times counting the number of ooccurrences of a head or a tail. We will havestem:[n]be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
 
 [source,python,numbered]
 ----
@@ -2685,7 +2685,7 @@ else:
 <1> This is actually a syntax error because `heads` is not yet defined.
 <2> Same comment. `tails` is not yet defined.
 
-This is the loop body, all we need to do now is to get _n_ from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the die _n_ times.
+This is the loop body, all we need to do now is to getstem:[n]from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the diestem:[n]times.
 
 TIP: Don't try and write the program all at once. Break into parts.
 
@@ -2722,7 +2722,7 @@ NOTE: A _computer simulation_ is a computer program that represents a simulation
 As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?
 
 .Check Yourself
-Modify the coint toss program to count the number of times we toss ten heads in a row. if we ever toss ten heads in a row. How big do you have to make _n_ in order to get ten heads in a row?
+Modify the coint toss program to count the number of times we toss ten heads in a row. if we ever toss ten heads in a row. How big do you have to makestem:[n]in order to get ten heads in a row?
 
 [.result]
 ====
@@ -2811,7 +2811,7 @@ We don't even need to run the program to see what will happen here. This is the 
 
 ==== A One Dimensional Random Walk
 
-Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of width _w_ and height _h_, if we let the center _y_ coordinate of the window represent 0 chips then `0 - chips` will be the _y_ coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of widthstem:[w]and height _h_, if we let the center stem:[y] coordinate of the window represent 0 chips then `0 - chips` will be the stem:[y] coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
 
 The pygame command 
 
@@ -2896,12 +2896,12 @@ The Gambler's Ruin is an example of a _one dimensional reandom walk. One dimensi
 
 === Brownian Motion
 
-Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the _x_ or _y_ direction.  In terms of a graphic display, the particle's coordinate _(x,y)_ has 
+Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the stem:[x] or stem:[y] direction.  In terms of a graphic display, the particle's coordinate stem:[(x,y)] has 
 eight possible neighboring locations that it can move to )forgetting, for the time being, about a particle that is on an edge of the display). 
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have two random variables, one in the _x_ direction and one in the _y_ direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` correspnding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have two random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` correspnding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
@@ -3201,7 +3201,7 @@ Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, 
 TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real python code, but in more informal text, what coputer scientists call _pseudocode_.
 
 NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
-the average of the _x_-coordinates and the average of the _y_-coordinates, or 
+the average of the stem:[x]-coordinates and the average of the stem:[y]-coordinates, or 
 stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})]
 
 [source,python,numbered]
@@ -3527,7 +3527,7 @@ pygame.display.update()
 
 Images are rectangular, even if they are an image of a circle. So in order for the image to appear like a circle the pixels that are outside of the ball are _transparent_. In graphics terminology we call this _alpha transparency_.  The `convert_alpha` function ensures that when we load the image we don't lose any of the transparency in the image pixels.
 
-To animate a particle with a velocity we see that a velocity has two components, its direction on the _x_-axis a direction on the _y_-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would moveto the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
+To animate a particle with a velocity we see that a velocity has two components, its direction on the stem:[x]-axis a direction on the stem:[y]-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would moveto the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
 
 image:ball_velocity.png[width=455,height=261,align="center"]
 
@@ -3552,7 +3552,7 @@ def move(x, y, dx, dy):
     return (x,y,dx,dy)
 ----
 
-When a particle hits either the right or left wall its _x_ velocity needs to reverse direction. Its _y_ velocity will stay the same. For example, in the diagram below the particle is traveling from left to right and strikes the right wall.
+When a particle hits either the right or left wall its stem:[x] velocity needs to reverse direction. Its stem:[y] velocity will stay the same. For example, in the diagram below the particle is traveling from left to right and strikes the right wall.
 
 image::particle_bounce.png[align="center"]
 
@@ -3626,7 +3626,7 @@ while True:
 ----
 <1>Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
 
-The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the _x_ direction and one hundreth of a picxel in the _y_ direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something like that but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
+The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundreth of a picxel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something like that but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
 
 === Understanding the _Frame Rate_
 
@@ -3638,7 +3638,7 @@ NOTE: A _frame_ is one image in a sequence of images that is part of a video. Th
 
 The particle simulation runs at _one frame per loop iteration_. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.
 
-Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the _x_ velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
+Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the stem:[x] velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
 
 [source,python,numbered]
 ----
@@ -3661,7 +3661,7 @@ dt = pygame.time.tick() <1>
 ---- 
 <1> let `dt` mean _delta time_ or _the change in time_. In this case milliseconds.
 
-We can then compute how far the particle has travelled in both the _x_ and _y_ direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
+We can then compute how far the particle has travelled in both the stem:[x] and stem:[y] direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
 
 [source,python,numbered]
 ----
@@ -3669,8 +3669,8 @@ dt = clock.tick(60) / 1000.0 # in seconds
 ball_x = ball_x + dt * ball_dx <1>
 ball_y = ball_y + dt * ball_dy <2>
 ---- 
-<1> The particle's new _x_ coordinate is the old _x_ coordinate plus the time passed times the ball's _x_ velocity. This should make intuitive sense.
-<2> Similarly for the change in the _y_component.
+<1> The particle's new stem:[x] coordinate is the old stem:[x] coordinate plus the time passed times the ball's stem:[x] velocity. This should make intuitive sense.
+<2> Similarly for the change in the stem:[y]component.
 
 The logic for boucing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
 
@@ -3735,8 +3735,8 @@ while True:
     win.blit(ball, (ball_x, ball_y))
     pygame.display.update()
 ----
-<1> move across _x_ axis in two seconds
-<2> move down _y_ axis in four seconds
+<1> move across stem:[x] axis in two seconds
+<2> move down stem:[y] axis in four seconds
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -3799,7 +3799,7 @@ def distance(x1,y1,x2,y2):
 
 But how should we handle the collision? In billiards, imagine the cue ball striking a stationary 8 ball dead on. If perfectly struck the cue ball will stop dead with all of its velocity transferring to the 8 ball. So the velocity of the cue ball was transferred to the 8 ball and the velocity of the 8 ball was transferred to the cue ball. That is, they _swapped_ velocities. 
 
-To swap _x_ velocities we need to introduce a temporary variable, `tmp`.
+To swap stem:[x] velocities we need to introduce a temporary variable, `tmp`.
 
 [source,python,numbered]
 ----
@@ -3809,7 +3809,7 @@ ball2_dx = tmp
 ----
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Writ the code to swap the _y_ velocities.
+Writ the code to swap the stem:[y] velocities.
 
 [.result]
 ====
@@ -4105,7 +4105,7 @@ One of the first successful video games was https://en.wikipedia.org/wiki/Pong[P
 
 image::paddle.png[caption="Our Pong Paddle", align="center"]
 
-Next we need to set up some properties of the paddle and `blit` it to the display inside of the outer `while`.  We'll offset the paddle a little padding on the left and start it in the middle of the _y_ axis of the display.
+Next we need to set up some properties of the paddle and `blit` it to the display inside of the outer `while`.  We'll offset the paddle a little padding on the left and start it in the middle of the stem:[y] axis of the display.
 
 [source,python,numbered]
 ----
@@ -4163,14 +4163,14 @@ pygame.key.set_repeat(1,1)
 
 Moving the paddle one pixel at a time is still slow, so we'll set up another variable `paddle_dy` to move it eight pixels every event.
 
-In order to make this a complete Pong game we need some way to lose. In Pong this is by not hitting the ball and having go off the left edge. IN the `move` function we need to remove the code that bounces the particle off of the left wall. And in the outer `while` loop we can simply check the _x_ coordinate of the ball and exit the program much like we did for the `QUIT` event.
+In order to make this a complete Pong game we need some way to lose. In Pong this is by not hitting the ball and having go off the left edge. IN the `move` function we need to remove the code that bounces the particle off of the left wall. And in the outer `while` loop we can simply check the stem:[x] coordinate of the ball and exit the program much like we did for the `QUIT` event.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Modify the `move` function so the particle does not bounce off of the left wall.
 
 [.result]
 ====
-Simply delete the part of the condition where we check if _x_ is less than 0. The new `move` function is below.
+Simply delete the part of the condition where we check if stem:[x] is less than 0. The new `move` function is below.
 
 [source,python,numbered]
 ----
@@ -4259,7 +4259,7 @@ We also need to bounce the ball off of the paddle. To do this lets make sure we 
 
 image::ball_hitting_paddle.png[align="center", width=600]
 
-With the paddle on the left hand side of the display, the ball is always coming in from the right. One common mistake is to check if the _x_ coordinate of the right side of the paddle (`paddle_x + paddle_w`) is equal to the left edge of the ball, `ball_x`. 
+With the paddle on the left hand side of the display, the ball is always coming in from the right. One common mistake is to check if the stem:[x] coordinate of the right side of the paddle (`paddle_x + paddle_w`) is equal to the left edge of the ball, `ball_x`. 
 
 [source,python,numbered]
 ----
@@ -4275,7 +4275,7 @@ if ball_x <= paddle_x + paddle_w:
     dx = -dx
 ----
 
-That's closer. Bt this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the _y_ coordinates of the paddle.
+That's closer. Bt this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the stem:[y] coordinates of the paddle.
 
 [source,python,numbered]
 ----
@@ -4508,10 +4508,10 @@ The result is ...
 image::gray_bug.jpg[width=340]
 
 What is cool with digital images is that we can do whatever we want to the pixel values. 
-The photographic negative of a pixel is to subtracy each color component from 255. 
+The term _photographic negative_ comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becoes white. For colors, the photographic negative of a pixel means to subtract each color component from 255. 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Computer the photographic negative of the bug.
+Compute and display the _photographic negative_ of the bug.
 
 [.result]
 ====
@@ -4529,8 +4529,8 @@ The result is pretty cool looking.
 image::negative_bug.jpg[width=340]
 ====
 
-The possibilities are endless. WHat hapens if we switch the color components around? 
-For example, for an RGB pixel turn it in to GBR?
+The possibilities are endless. What hapens if we switch the color components around? 
+For example, for every pixel stem:[(r,g,b)] change it to stem:[(g,b,r)]? Sometimes the effects are surprising and beautiful.
 
 [source,python]
 ----
@@ -4564,7 +4564,7 @@ Lets assume we have an image we want to scale and it is in a surface `image`. Fu
 .Computing coordinates in scaled image
 image::scale_xy.png[width=600]
 
-Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The _x_ coordinate 10 in the scaled image should correspond to _x_ coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
+Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The stem:[x] coordinate 10 in the scaled image should correspond to stem:[x] coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
 
 In general if the width of the original image is stem:[w] and the width of the scaled image is stem:[w'] then an stem:[x] coordinate in the scaled image will correspond to the stem:[x] coordinate stem:[xw/w'] in the original image. The reasoning is the same for the stem:[y] coordinate.
 
@@ -4591,7 +4591,7 @@ def scale(original, scaled_w, scaled_h):
 <2> Compute the ratio of the orginal image's width to the new scaled image's width. 
 <3> Compute the ratio of the orginal image's height to the new scaled image's height.
 <4> For every pixel in the scaled image ...
-<5> Compute the _x_ and _y_ coordinates of the pixel we need to grab in the original image.
+<5> Compute the stem:[x] and stem:[y] coordinates of the pixel we need to grab in the original image.
 <6> Get the pixel in the original image.
 <7> And copy it to the new scaled image.
 <8> Don't forget this is a function that _returns_ a new image.
@@ -4643,7 +4643,7 @@ image::bug_in_a_bug.png[width=340]
 
 Notice how we scaled the width and height of the image by the same proportion. That is, we kept the _aspect ratio_ of the image the same.
 
-INFO: The _aspect ratio_ of an image is the ratio of an image's width divided by its height.
+NOTE: The _aspect ratio_ of an image is the ratio of an image's width divided by its height.
 
 We didn't have to keep the aspect ratio the same. The `scale` function will elongate, or stretch, an image along its horizontal or vertical axis.
 
@@ -4692,7 +4692,7 @@ image::rainbow_toad_enlarged.png[]
 
 Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixel.
 
-INFO: We say that an image is _pixelated_ when an image is enlarged and we can see the individual pixels in the original image.
+NOTE: We say that an image is _pixelated_ when an image is enlarged and we can see the individual pixels in the original image.
 
 === Smoothing an Image
 
@@ -4706,7 +4706,11 @@ image::mean_filter.png[width=500]
 
 NOTE: The _neighborhood_ of a pixel is comprised of the eight pixels that surround it.
 
-This is probably best handled by writing a function that takes a surface and an _(x,y)_ coordinate and returns a color triple that is the average color of _(x,y)_ and all of its neighbors. 
+This is probably best handled by writing a function that takes a surface and an stem:[(x,y)] coordinate and returns an RGB triple that is the average color of stem:[(x,y)] and all of its neighbors. Using our box and arrow notation we have ...
+
+.Function `neighborhood_mean` of a pixel
+image::neighborhood_mean.png[width=500]
+
 
 [source,python,numbered]
 ----
@@ -4715,6 +4719,8 @@ def neighborhood_mean(surf, x, y):
 ----
 <1> Recall that we use the `pass` statement as a placeholder for the function body.
 
+We could, write nine separate `get_at` calls to get the color of each pixel, but being a little bit clever we can use a loop. If stem:[(x,y)] represents the center pixel in the nine, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can view this is a small _3 X 3_ grid and use our nested `for`-loop pattern.
+ 
 [source,python,numbered]
 ----
 def neighborhood_mean(surf, x, y):
