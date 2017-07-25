@@ -4909,6 +4909,8 @@ a|
  * aspect ratio
  * ppi
  * PNG
+ * lossy compression
+ * non-lossy (or lossless) compression
 
 |===
 
