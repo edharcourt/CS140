@@ -6,5 +6,5 @@ def wait_for_click():
         for e in pygame.event.get():
             if e.type == pygame.MOUSEBUTTONDOWN:
                 done = True
-        #pygame.time.delay(100)
+        pygame.time.wait(100)
 

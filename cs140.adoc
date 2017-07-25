@@ -4,6 +4,7 @@ Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
 :numbered:
+:numbered:
 :icons: font
 :source-highlighter: pygments
 :stem: latexmath
@@ -692,7 +693,7 @@ prints the result using both `c` and `f`
 Python has lots of support libraries that we can use to get our work done. Think of 
 a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
 
-NOTE: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where yo can have folders inside folders to organize your documents.
+NOTE: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where you can have folders inside folders to organize your documents.
 
 To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
@@ -1522,7 +1523,7 @@ Recall that in mathematics a _function_ maps values in a _domain_ to values in a
 .`math.sqrt` function
 image::sqrt-func.png[width=604,height=226,align="cener"]
 
-The round function maps `round(3.56,1)` to `3.6`. *_Functions return values_*. Always. But sometimes we don't care about the return value. In Python functions sometimes return the special value `None` which, which essentially means the function does not "really" return a value.footnote[In other programming languages such as C and and Java these are called _void_ functions.]. For example, the `print` function returns the value `None` but has the _side effect_ of printing its arguments on the console.
+The round function maps `round(3.56,1)` to `3.6`. *_Functions return values_*. Always. But sometimes we don't care about the return value. In Python functions sometimes return the special value `None` which, which essentially means the function does not "really" return a value.footnote:[In other programming languages such as C and and Java these are called _void_ functions.]. For example, the `print` function returns the value `None` but has the _side effect_ of printing its arguments on the console.
 
 .`print` function
 image::print-func.png[width=604,height=226,align="cener"]
@@ -2048,7 +2049,7 @@ TIP: A _convention_ is something that is common practice. Stick with conventions
 Print the integers from 1 to 10, one integer per line. 
 
 .Loop Exercise
-Print the integers counting down from 10 to 0. WHen you are done print "Blast off". Add a one second delay in between integers. Hint: use the `pygame.time.delay` function. How many milliseconds in a second?
+Print the integers counting down from 10 to 0. When you are done print "Blast off". Add a one second delay in between integers. Hint: use the `pygame.time.delay` function. How many milliseconds in a second?
 
 === Accumulating Loops
 Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] wherestem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
@@ -3627,7 +3628,7 @@ while True:
 ----
 <1>Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
 
-The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundreth of a picxel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something like that but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
+The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundreth of a picxel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
 
 === Understanding the _Frame Rate_
 
@@ -4091,14 +4092,46 @@ def wait_for_quit():
     while True:
         for event in pygame.event.get():   <1>
             if event.type == pygame.QUIT:
-                pygame.quit()
-				exit()
-		pygame.time.delay(100) <2>
+                pygame.quit()              
+				exit()                     <2>
+		pygame.time.wait(100)              <3>
 ----
 <1> Same event code as before.
-<2> While this is line not absolutely necessary forcing a delay keeps the `while` loop from just spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
+<2> `wait_for_quit` never returns, it just kills the program right here.
+<3> While this is line not absolutely necessary forcing a delay keeps the `while` loop from spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
 
-We are assuming that if the ser closes the winodw they want the program to terminate as well. The function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other pygame programs.
+TIP: Function `pygame.time.wait` waits for a number of milliseconds. It is similar to `pygame.time.delay` except that `pygame.time.wait` relinquishes the CPU so that other programs may run whereas `pygame.time.delay` continues to use the processor during the delay. 
+
+Function `wait_for_quit` assumes that if the user closes the window they want the program to terminate as well. Function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other pygame programs.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function `wait_for_click()` that _pauses_ the program until the user clicks 
+somewhere in the pygame display. This function should behave a little differently than `wait_for_quit()` in that the program should not exit, but just continue.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+def wait_for_click():
+    done = False                                   <1>
+    while not done:                                <2>
+        for e in pygame.event.get():               <3>
+            if e.type == pygame.MOUSEBUTTONDOWN:   <4>
+                done = True                        <5>
+        pygame.time.wait(100)                     <6>
+
+----
+<1> Local variable used to control loop
+<2> This loop does not terminate until the user has clicked in the pygame display.
+<3> Standard code to get events in event queue.
+<4> Check for the `MOUSEBUTTONDOWN` event. This will check for either left or right mouse button and even clicking the scrolling wheel on the mouse.
+<5> Setting `done` to `True` will cause the `while`-loop to terminate.
+<6> Again, this is to be user friendly and let other programs run and not chew up CPU (or battery).
+
+Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also does not return a value (OK, it returns the special value `None`).  We should alsoput `wait_for_click` in `util.py`.
+
+====
 
 === Pong
 
@@ -4811,9 +4844,41 @@ filtered_image = mean_filter(
 					     mean_filter(image)))
 ----
 
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Complete the main program that calls `mean_filter` on an image.
+
+[.result]
+====
+Problem solution goes here maybe with some additional python code
+
+[source,python]
+----
+# python code
+----
+
+and some more text and python code
+
+[source,python]
+----
+# more python
+----
+====
+
 === Batch vs Real time Image processing
 
-=== Steganography
+=== Image file formats
+
+Computer and software manuafactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
+
+We have already seen one way we can compress an image - just make it smaller. Our `scale` function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it _loses information_.
+
+NOTE: With _lossy compression_ data is either discarded or modified and cannot be reconstructed from the compressed data.
+
+Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also uses lossy compression.
+
+TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses some advanced mathematics to achieve good, but lossy, compression.  
+
+Sometimes lossy compression is not acceptable. For example, 
 
 === Schelling Segregation Model
 
@@ -4834,6 +4899,8 @@ a|
  * neighborhood
  * resolution
  * MP
+ * JPEG
+ * BMP
 
 a|
  * named parameter
@@ -4841,6 +4908,7 @@ a|
  * pixelated
  * aspect ratio
  * ppi
+ * PNG
 
 |===
 
