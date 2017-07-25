@@ -22,12 +22,20 @@ def neighborhood_mean(surf, x, y):
 
     return (red_avg, green_avg, blue_avg)
 
+def mean_filter(orig):
+    surf = pygame.Surface((orig.get_width(), orig.get_height()))
+
+    for y in range(1,orig.get_height()-1):
+        for x in range(1, orig.get_width()-1):
+            (r,g,b) = neighborhood_mean(orig, x,y)
+            surf.set_at((x,y), (r,g,b))
+    return surf
+
 # M A I N
 import pygame, util
 pygame.init()
 
 image = pygame.image.load("../images/rainbow_toad_enlarged.png")
-surf = pygame.Surface((image.get_width(), image.get_height()))
 
 win = pygame.display.set_mode((image.get_width(), image.get_height()))
 win.blit(image, (0,0))
@@ -36,18 +44,14 @@ pygame.display.update()
 print("Click to continue")
 util.wait_for_click()
 
-for y in range(1,image.get_height()-1):
-    for x in range(1, image.get_width()-1):
-        (r,g,b) = neighborhood_mean(image, x,y)
-        surf.set_at((x,y), (r,g,b))
-
-
-print("Click to continue")
-util.wait_for_click()
+surf = mean_filter(image)
 
 win.blit(surf, (0,0))
 
 pygame.display.update()
+
+print("Click to continue")
 util.wait_for_click()
-#pygame.image.save(win, "D:/Shared/images/big_in_a_bug.png")
+
+#pygame.image.save(win, "D:/Shared/images/filtered_toad.png")
 
