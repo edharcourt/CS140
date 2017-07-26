@@ -4870,17 +4870,69 @@ and some more text and python code
 
 Computer and software manuafactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
 
+.Lossy Compression
 We have already seen one way we can compress an image - just make it smaller. Our `scale` function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it _loses information_.
 
 NOTE: With _lossy compression_ data is either discarded or modified and cannot be reconstructed from the compressed data.
 
 Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also uses lossy compression.
 
-TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses some advanced mathematics to achieve good, but lossy, compression.  
+TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses advanced mathematics to achieve good, but lossy, compression.  
 
-Sometimes lossy compression is not acceptable. For example, 
+.Lossless Compression
+Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word rocessing document. We couldn't have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called _non-lossy_ or _lossless_.
 
-=== Schelling Segregation Model
+The _Portable Network Graphics_ image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as stem:[255(300)]. This lossless scheme is called _run length encoding_, because to encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated. 
+
+TIP: PNG  footnote:[https://www.w3.org/TR/PNG/] One of the techniques used in PNG's lossless compression is called _Huffman Encoding_, a common technique discussed in a _Data Structures_ text.
+
+PNG and JPEG are probably the two most important image file formats, but there are other popular formates including GIF (_Graphics Interchange Format_), and BMP (_Bitmap file format_).
+
+WARNING: The moral of the story is that image file formats that use lossy compression (_i.e.,_, JPEG) will change the values of the colors in your file. For example, if you set a pixel to the color value `(23,99,140)` if might get changed when the file is saved as a JPEG to some other "nearby" value such as `(24,98,141)`. 
+
+=== Secrets
+
+As an exercise lets go through every pixel in the image of the fox below, and if the red component of the pixel is odd color the entire pixel black. If it is even the color the pixel white. Recall that to determine if an integer is odd that it is not divisible by two. That is, the remainder after dividing by two is one.
+
+.Fox
+image::png/fox.png[width=450]
+
+CAUTION: Notice that when you right click on the fox image and save it, that it is a PNG file. Make sure to keep it as a PNG file.
+
+One thing we can do is load the image on a surface, process the surface, and then blit 
+the final process on to the display. In this particular case let me suggest that we immediately blit the image to the display, and process the display. This will add a bit of dramatic effect.  
+
+[source,python,numbered]
+----
+import pygame, util, color
+pygame.init()
+image = pygame.image.load("fox.png")
+
+win = pygame.display.set_mode((image.get_width(),
+                               image.get_height()))
+win.blit(image, (0,0))                                      <1>  
+pygame.display.update()
+
+for y in range(win.get_height()):
+    for x in range(win.get_width()):
+        (r,g,b,_) = win.get_at((x, y))
+        if r % 2 == 1:
+            win.set_at((x, y), color.black)                 <2>
+        else:
+            win.set_at((x, y), color.white)                 
+    pygame.display.update()                                 <3>
+	pygame.time.delay(5)                                    <4>
+
+util.wait_for_click()
+----
+<1> Show the image of the fox.
+<2> Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
+<3> Addint the `update` here will update the display after every row is modified. What would happen if we indented this line one level to be inside the inner `for`-loop?
+<4> This delay is for dramatc effect only.
+
+
+
+=== Schelling's Segregation Model
 
 === Exercises
 
