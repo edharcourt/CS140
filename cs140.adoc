@@ -4927,8 +4927,8 @@ util.wait_for_click()
 ----
 <1> Show the image of the fox.
 <2> Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
-<3> Addint the `update` here will update the display after every row is modified. What would happen if we indented this line one level to be inside the inner `for`-loop?
-<4> This delay is for dramatc effect only.
+<3> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
+<4> This delay is for dramatic effect only.
 
 
 
