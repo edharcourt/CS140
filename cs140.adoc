@@ -4894,10 +4894,10 @@ WARNING: The moral of the story is that image file formats that use lossy compre
 
 As an exercise lets go through every pixel in the image of the fox below, and if the red component of the pixel is odd color the entire pixel black. If it is even the color the pixel white. Recall that to determine if an integer is odd that it is not divisible by two. That is, the remainder after dividing by two is one.
 
-.Fox
-image::png/fox.png[width=450]
+.Red Panda (Ailurus Fulgens) `https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG`
+image::png/red_panda.png[width=450]
 
-CAUTION: Notice that when you right click on the fox image and save it, that it is a PNG file. Make sure to keep it as a PNG file.
+CAUTION: Notice that when you right click on the image and save it, that it is a *png* file. Make sure to keep it as a PNG file.
 
 One thing we can do is load the image on a surface, process the surface, and then blit 
 the final process on to the display. In this particular case let me suggest that we immediately blit the image to the display, and process the display. This will add a bit of dramatic effect.  
@@ -4906,7 +4906,7 @@ the final process on to the display. In this particular case let me suggest that
 ----
 import pygame, util, color
 pygame.init()
-image = pygame.image.load("fox.png")
+image = pygame.image.load("red_panda.png")
 
 win = pygame.display.set_mode((image.get_width(),
                                image.get_height()))
