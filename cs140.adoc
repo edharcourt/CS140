@@ -4484,8 +4484,8 @@ win.set_at((0,0), (0,0,0)) <1>
 Here's a program that darkens the image below by 30%. We will review it line by line.
 
 [#img-bug]
-.Copyright https://500px.com/biker11[Ondrej Pakan]
-image::bug.jpg[align="left",width=340]
+.https://500px.com/martinamm[Amm, Martin  `https://500px.com/martinamm` accessed 7/27/2017], found at  https://www.reddit.com/r/pics/comments/x503f/absolutely_stunning_picture_of_a_dragonfly_in_all/[reddit link]
+image::bug.jpg[align="left",width=500]
 
 [source,python,numbered]
 ----
@@ -4517,7 +4517,7 @@ util.wait_for_click()  <5>
 And here is the result of darkening the image of the bug.
 
 .Darker Bug
-image::darker_bug.jpg[width=340]
+image::darker_bug.jpg[width=500]
 
 === Converting an image to Grayscale (and more)
 
@@ -4539,10 +4539,13 @@ image.set_at((x,y), (gray,gray,gray))
 The result is ...
 
 .Grayscale Bug
-image::gray_bug.jpg[width=340]
+image::gray_bug.jpg[width=500]
 
 What is cool with digital images is that we can do whatever we want to the pixel values. 
 The term _photographic negative_ comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becoes white. For colors, the photographic negative of a pixel means to subtract each color component from 255. 
+
+.Grayscale Bug with weighted RGB
+image::gray_weighted_rgb_bug.jpg[width=500]
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Compute and display the _photographic negative_ of the bug.
@@ -4560,7 +4563,7 @@ image.set_at((x,y), (255 - r, 255 - g, 255 - b))
 The result is pretty cool looking.
 
 .Negative Insect
-image::negative_bug.jpg[width=340]
+image::negative_bug.jpg[width=500]
 ====
 
 The possibilities are endless. What hapens if we switch the color components around? 
@@ -4573,7 +4576,7 @@ image.set_at((x,y), (g,b,r))
 ----
 
 .RGB to GBR Insect
-image::gbr_bug.jpg[width=340]
+image::gbr_bug.jpg[width=500]
 
 === Scaling an Image
 
@@ -4675,7 +4678,7 @@ util.wait_for_click()
 <6> Blit the scaled image.
 
 .Bug centered in a bug
-image::bug_in_a_bug.png[width=340]
+image::bug_in_a_bug.png[width=500]
 
 ====
 
@@ -4687,11 +4690,11 @@ We didn't have to keep the aspect ratio the same. The `scale` function will elon
 
 ==== Enlarging an image
 
-But does this work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels in the original image.
+Does our scale function work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels from the original image in the scaled image.
 
-Here is a small image of a rainbow toad footnote:[accessed on 7/23/2017 http://www.bbc.co.uk/nature/14151541] that we will enlarge.
+Here is a small image of a rainbow toad that we will enlarge.
 
-.Rainbow Toad
+.Rainbow Toad footnote:[`http://www.bbc.co.uk/nature/14151541` _Lost rainbow toad is rediscovered_, BBC Nature News, accssed on 7/27/2017]
 image::rainbow_toad_small.jpg[]
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
