@@ -5,7 +5,7 @@ import pygame, util, color
 
 pygame.init()
 
-image = pygame.image.load("D:/Shared/images/png/fox.png")
+image = pygame.image.load("D:/Shared/images/png/yummy_secret.png")
 
 win = pygame.display.set_mode((image.get_width(),
                                image.get_height()))

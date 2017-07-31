@@ -4580,12 +4580,12 @@ image::gbr_bug.jpg[width=500]
 
 === Scaling an Image
 
-A common image processing operation is to resize an image so that it is large or smaller. Lets think of this operation as a function that takes an image to resize along with the new width and new height of the resulting image.
+A common image processing operation is to resize an image so that it is larger or smaller. Lets think of this operation as a function that takes an image to resize along with the new width and new height of the resulting image.
 
 .Scaling an image
 image::scale.png[width=600]
 
-Until now we have had two ways to create a surfae; thie first is to use the `pygame.display.set_mode` function to create the special display surface. The second waywas to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
+Until now we have had two ways to create a surface; the first is to use the `pygame.display.set_mode` function to create the special display surface. The second way was to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
 
 The pygame following line
 
@@ -4852,22 +4852,31 @@ Complete the main program that calls `mean_filter` on an image.
 
 [.result]
 ====
-Problem solution goes here maybe with some additional python code
 
 [source,python]
 ----
-# python code
-----
+import pygame, util
+pygame.init()
 
-and some more text and python code
+image = pygame.image.load("rainbow_toad_enlarged.png")
 
-[source,python]
-----
-# more python
+win = pygame.display.set_mode((image.get_width(), image.get_height()))
+win.blit(image, (0,0))
+pygame.display.update()
+
+print("Click to continue")
+util.wait_for_click()
+
+surf = mean_filter(image)
+
+win.blit(surf, (0,0))
+
+pygame.display.update()
+
+print("Click to continue")
+util.wait_for_click()
 ----
 ====
-
-=== Batch vs Real time Image processing
 
 === Image file formats
 
@@ -4895,15 +4904,14 @@ WARNING: The moral of the story is that image file formats that use lossy compre
 
 === Secrets
 
-As an exercise lets go through every pixel in the image of the fox below, and if the red component of the pixel is odd color the entire pixel black. If it is even the color the pixel white. Recall that to determine if an integer is odd that it is not divisible by two. That is, the remainder after dividing by two is one.
+As an exercise lets go through every pixel in the image of the red panda below, and if the red component of the pixel is odd, then color the pixel black. If it is even then color the pixel white. 
 
 .Red Panda (Ailurus Fulgens) `https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG`
 image::png/red_panda.png[width=450]
 
-CAUTION: Notice that when you right click on the image and save it, that it is a *png* file. Make sure to keep it as a PNG file.
+CAUTION: When you right click on the image and save it, note that it is a PNG file. Make sure to save it as a PNG file.
 
-One thing we can do is load the image on a surface, process the surface, and then blit 
-the final process on to the display. In this particular case let me suggest that we immediately blit the image to the display, and process the display. This will add a bit of dramatic effect.  
+In previous examples we have loaded the image on a surface, processed the surface, and then blitted the image surface on the display surface. In this particular case let me suggest that we immediately blit the image to the display, and process the display surface. This will add a bit of dramatic effect.  
 
 [source,python,numbered]
 ----
@@ -4919,21 +4927,125 @@ pygame.display.update()
 for y in range(win.get_height()):
     for x in range(win.get_width()):
         (r,g,b,_) = win.get_at((x, y))
-        if r % 2 == 1:
-            win.set_at((x, y), color.black)                 <2>
+        if r % 2 == 1:                                      <2>
+            win.set_at((x, y), color.black)                 <3>
         else:
             win.set_at((x, y), color.white)                 
-    pygame.display.update()                                 <3>
-	pygame.time.delay(5)                                    <4>
+    pygame.display.update()                                 <4>
+	pygame.time.delay(5)                                    <5>
 
 util.wait_for_click()
 ----
 <1> Show the image of the fox.
-<2> Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
-<3> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
-<4> This delay is for dramatic effect only.
+<2> If the red component is odd make the pixel black, otherwise white.
+<3> Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
+<4> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
+<5> This delay is for dramatic effect only.
+
+After running this code on the image of the red panda you'll see a secret hidden message. 
+
+.The secret message +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+&nbsp;
+
+[.result]
+====
+image::png/secret.png[width=450]
+====
+
+==== Hiding a message in an image
+
+This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticible visible effect on the image. Even if we ended up changing every pixel.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Why is it important that we subtract one and not add one to make a pixel even?
+
+[.result]
+====
+The red component could be 255, adding one would make it 256, which would cause a run-time error indicating that a color value was out of range.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function that takes a surface and sets all of the red pixels to even values that are at most one less than their orginal value. 
+
+[.result]
+====
+
+[source,python, numbered]
+----
+def make_red_even(image):                             
+    for y in range(image.get_height()):               <1>
+        for x in range(image.get_width()):
+            (r, g, b, _) = image.get_at((x, y))
+            if r % 2 == 1:                            <2>
+                image.set_at((x, y), (r - 1, g, b))   <3>
+    return image
+----
+<1> We should be getting comfortable with this nested `for`-loop pattern for accessing each pixel on a surface.
+<2> This checks to see of the red component is odd.
+<3> If it is odd, then decrease the red value by one and set it.
+
+Notice that `make_red_even` does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface `image`) are really a _reference_ to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the orginal image unmodified. When we should create a new surface object or  modify an exisiting one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.
+====
+
+Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain's a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmaticaly, directly in pygame.
+
+The following two lines create a surface with the text `Attack At Dawn` rendered on it.
+
+[source,python]
+----
+my_font = pygame.font.SysFont("Veranda", 48)                  <1>
+secret = my_font.render("Attack At Dawn", False, color.black) <2>
+----
+<1> Create a _font object_, with 48pt text size. If the font Veranda is not on the system pygame will use a default font.
+<2> Create a surface with the text `Attack At Dawn` on it using the color black (the third argument). The boolean value `False` means do not use _antialiasing_ to smooth the edges on the text, but we want the image to be pure black-and-white, so we don't antialias.
+
+NOTE: _Antialiasing_ uses shades of a color to smooth edges. 
+
+You can see the difference with antialiasing in the image below. The text on top does not use antialiasing while the text on the botton does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
+
+.Antialiasing
+image::png/antialias.png[width=600]
+
+Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresonds with coordinate stem:[(0,0)] in the secret message surface. We can thnk of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fitin the image. That is, both the message width and height are less than the image width and height.
+
+.Overlaying a secret on image
+image::png/panda_overlay_secret.png[]
+
+The follwoing program for hiding a message in an image puts it all together.
+
+.Hiding a message in an image
+[source,python, numbered]
+----
+import pygame,util,color
+pygame.init()
 
 
+# Main Program
+image = pygame.image.load("../images/png/some_image.png")  <1>
+
+image = make_red_even(image)                               <2>
+
+font = pygame.font.SysFont("Veranda", 40)
+msg = font.render("Python is Awesome", False, color.black) <3>
+
+for y in range(msg.get_height()):                          <4>
+    for x in range(msg.get_width()):
+        (r,g,b,_) = msg.get_at((x,y))                      <5>
+        if (r,g,b) == (0,0,0):                             <6>
+            (ir,ig,ib,_) = image.get_at((x,y))             <7>
+            image.set_at((x,y), (ir+1,ig,ib))              <8>
+
+pygame.image.save(image, "new_image.png")                  <9>
+----
+<1> Make sure the image is a PNG image. Why? Because of lossless compression.
+<2> Call the `make_red_even` function.
+<3> Create a secret message `Python is Awesome`
+<4> Go through each pixel in the secret message.
+<5> Get the message pixel and ...
+<6> Check if it is black.
+<7> If it is then we need to get the corresponding pixel in the image and ...
+<8> Make the red component odd.
+<9> This is a new pygame command that saves a surface in a new file.
 
 === Schelling's Segregation Model
 
@@ -4956,6 +5068,7 @@ a|
  * MP
  * JPEG
  * BMP
+ * antialiasing
 
 a|
  * named parameter
