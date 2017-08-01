@@ -1,6 +1,7 @@
 import pygame
 
 def wait_for_click():
+    print("Waiting for click")
     done = False
     while not done:
         for e in pygame.event.get():

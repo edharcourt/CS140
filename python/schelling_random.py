@@ -37,37 +37,55 @@ def find_empty():
         if (r,g,b) == color.white:
             return (x,y)
 
+def find_empty1():
+    # keep looking for an empty cell
+    # until we find one
+    for y in range(grid.get_height()):
+        for x in range(grid.get_width()):
+            (r,g,b,_) = grid.get_at((x,y))
+            if (r,g,b) == color.white:
+                return (x,y)
+
+
 
 # M a i n    P r o g r a m
 pygame.init()
 n = 400
 grid = pygame.display.set_mode((n,n))
 randomly_populate()
+#pygame.image.save(grid, "D:/Shared/images/schelling_initial.jpg")
+pygame.display.update()
+util.wait_for_click()
 
 done = False
+i = 0
+moved = 0
 
+# process each pixel
 while not done:
-    moved = 0
-    for y in range(grid.get_height()):
-        for x in range(grid.get_width()):
-            (r,g,b,_) = grid.get_at((x,y))
+    i = i + 1
+    x = random.randrange(grid.get_width())
+    y = random.randrange(grid.get_height())
 
-            # only move if cell is not empty
-            if (r,g,b) != color.white:
-                like = count_like_neighbors(x,y,(r,g,b))
+    (r,g,b,_) = grid.get_at((x,y))
 
-                # move if less than half my neighbors
-                # are like me
-                if like < .7:
-                    (ex,ey) = find_empty()
-                    grid.set_at((ex,ey), (r,g,b))
-                    grid.set_at((x,y), color.white)
-                    moved = moved + 1
+    # only move if cell is not empty
+    if (r,g,b) != color.white:
+        like = count_like_neighbors(x,y,(r,g,b))
 
-    pygame.display.update()
-    print(moved)
+        # move if less than half my neighbors
+        # are like me
+        if like < 1/3:
+            (ex,ey) = find_empty1()
+            grid.set_at((ex,ey), (r,g,b))
+            grid.set_at((x,y), color.white)
+            moved = moved + 1
+
+    if i == 10000:
+        i = 0
+        pygame.display.update()
+        print(moved)
+        moved = 0
     pygame.event.poll()
-    done = (moved == 0)
 
 util.wait_for_click()
-#pygame.image.save(grid, "D:/Shared/images/schelling_50_25_50_25.jpg")
