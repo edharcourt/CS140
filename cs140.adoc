@@ -26,26 +26,26 @@ https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
 [preface]
 == Preface
 
-
-I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. The course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python language. If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
 Goals of the course include:
 
-* Appreciate the complexity of the software systems we encounter every day
-* Emphasize problem soving in a precise, logical framework 
+* Appreciate the complexity of the software systems we encounter every day.
+* Emphasize problem soving in a precise and logical framework.
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
 == Introduction
 
-_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. It includes such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
 
 A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
 
-The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. This list could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
+The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. It might be the most heavily used programming language in the world. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. Another list that could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
 NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has an alphabet, words, grammar (syntax), and meaning (semantics).
 
 === Software is taking over 
+
 Almost every aspect of our daily life is impacted by software. Think about each of the following and what has changed and if there is software behind that change.
 
 * How often do you go into a bank and interact with a teller? What do you use instead?
@@ -70,7 +70,7 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 === Hello World
 
-https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games.  And much more. It is also used in introductory programming courses because it is relatively easy to use and get started with.  So lets get started.
+https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language. It is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.
 
 It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
@@ -108,7 +108,7 @@ Pictorially we can think of a function as a black box (we may not know how it wo
 
 image::function-fx.png[align="center"]
 
-Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming lananguage the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now, in computer science and programming we call them _floating-point_ numbers, or _floats_ for short.
+Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming language the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now, in computer science and programming we call real numbers _floating-point_ numbers, or _floats_ for short.
 
 There is a big difference between the string literal `"3.0"` and the floating-point literal `3.0`. 
 
@@ -140,7 +140,7 @@ Python (as do most programming languages) supports specifying numbers using _sci
 
 We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is not helpful. We should instead write `9.10938356e-31`.
 
-TIP: An integer (floating-point) literal is also called an _integer (floating-point) constant_.
+TIP: We will often also use the term _constant_ instead of _literal_. An integer literal is also called an _integer constant_. A floating-point literal is also called a _floating-point constant_. A string literal is also called a _string constant_.
 
 .Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 The radius of an electron is _0.00000000000000281792_ meters. Express this number using Python's scientific notation.
@@ -5220,9 +5220,9 @@ def find_empty():
 
 ==== Putting it all together
 
-With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the siulation can take a long time to run, so we will kep it at a sqaure greed 400 on a side.
+With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will kep it at a sqaure greed 400 on a side.
 
-[source,python,numbered]
+[source,python,linenums]
 ----
 pygame.init()
 n = 400
@@ -5242,17 +5242,29 @@ while not done:
                 like = count_like_neighbors(x,y,(r,g,b)) <4>
 
                 if like < threshold:                     <5>
-                    (ex,ey) = find_empty()
-                    grid.set_at((ex,ey), (r,g,b))        <6>
-                    grid.set_at((x,y), color.white)      <7>
-                    moved = moved + 1                    <8>
+                    (ex,ey) = find_empty()               <6>
+                    grid.set_at((ex,ey), (r,g,b))        <7>
+                    grid.set_at((x,y), color.white)      <8>
+                    moved = moved + 1                    <9>
 
-    pygame.display.update()                              <9>
-    print(moved)                                         <10>
-    done = (moved == 0)                                  <11>
+    pygame.display.update()                              <10>
+    print(moved)                                         <11>
+    done = (moved == 0)                                  <12>
 
 util.wait_for_click()
 ----
+<1> Keep processing the grid until there are no more moves (every agent is happy)
+<2> Go through the entore grid using our normal nested `for`0loop pattern.
+<3> Get the agent at the cell, which could beno agent (empty cell).
+<4> If the cell is not empty then we have an agent and get the proportion of their like neighbors.
+<5> If the proportion is less than the theshold then the agent needs to move.
+<6> Find an empty cell for the agent to move to.
+<7> Put the current agent at the empty location.
+<8> Make the agent's old coordinate empty.
+<9> Increment the `moved` count
+<10> Update the display to animate the progress of the model
+<11> print the number of agents that moved. This should be decreasing.
+<12> A little trick, but this sets `done` to `True` if `moved` is `0`. Could have used an if-statement.
 
 When we run the Schelling model with equal proportions of agents and a threshold of stem:[1/3] we notice that there is segregation. 
 

@@ -4,10 +4,12 @@ def randomly_populate():
     for y in range(grid.get_height()):
         for x in range(grid.get_width()):
             r = random.random()
-            if r < .25:
+            if r < .13:
                 grid.set_at((x, y), color.blue)
-            elif r < .75:
+            elif r < .30:
                 grid.set_at((x, y), color.green)
+            elif r < .75:
+                grid.set_at((x, y), color.red)
             else:
                 grid.set_at((x, y), color.white)
 
@@ -37,16 +39,6 @@ def find_empty():
         if (r,g,b) == color.white:
             return (x,y)
 
-def find_empty1():
-    # keep looking for an empty cell
-    # until we find one
-    for y in range(grid.get_height()):
-        for x in range(grid.get_width()):
-            (r,g,b,_) = grid.get_at((x,y))
-            if (r,g,b) == color.white:
-                return (x,y)
-
-
 
 # M a i n    P r o g r a m
 pygame.init()
@@ -75,8 +67,8 @@ while not done:
 
         # move if less than half my neighbors
         # are like me
-        if like < 1/3:
-            (ex,ey) = find_empty1()
+        if like < .5:
+            (ex,ey) = find_empty()
             grid.set_at((ex,ey), (r,g,b))
             grid.set_at((x,y), color.white)
             moved = moved + 1
