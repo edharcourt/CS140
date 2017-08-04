@@ -26,7 +26,9 @@ https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
 [preface]
 == Preface
 
-I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence it is also designed to satisfy a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence and also satisfies a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not necessarily hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. The examples and topics covered are only a small subset fo what could be covered. I have chosen them because I think they are fun, engaging, and relevant to a liberal arts education.
+
+If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
 Goals of the course include:
 
@@ -54,7 +56,7 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 * When was the last time you used a travel agent to purchase an airline ticket?
 
-* What has happened to DVD stores such as Blockbuster?
+* What has happened to DVD stores such as Blockbuster? What has taken its place?
 
 * What is disrupting the hotel and taxi industry?
 
@@ -66,11 +68,13 @@ Almost every aspect of our daily life is impacted by software. Think about each 
 
 * Your smart phone is a powerful computing device, how often do you look at in a day, and what do you use it for?
 
-* Thinking a little further in to the future what could happen to the millions of people who drive for a living, from taxi drivers to truck drivers? 
+* Thinking a little further in to the future what could happen to the millions of people who drive a vehicle for a living, from taxi drivers to truck drivers? 
+
+Software is encroaching on almost all aspects of our life, it might be good to learn something about it.
 
 === Hello World
 
-https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language. It is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.
+https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language and is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.
 
 It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
 
@@ -83,7 +87,7 @@ That is it, just the one line. And it does as you might expect, it prints the me
 
 NOTE: The _console_ is a text window where python sends the output of `print` statements and where the user can also enter data from `input` statements. 
 
-The python _builtin function_ `print` prints, to the console, the value between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
+The python _builtin function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
 NOTE: In programming, a string literal is also called _string constant_
 
@@ -5578,6 +5582,7 @@ Shuffling a string
 a|
  * petabyte
  * index
+ * palindrome
 
 a|
  * byte 
