@@ -4396,7 +4396,7 @@ a|
 
 == Image Processing
 
-There are many useful application for processing images. All of your smartphones have image processing software to related to the camera,and the fingerprint sensor on the device had image processing software for fingerprint matching. The software I'm using to write these notes with has image processing capabilities to resize images.
+There are many useful application for processing images. All of your smartphones have image processing software to related to the camera, and the fingerprint sensor on the device has image processing software for fingerprint matching. The software I'm using to write these notes has image processing capabilities to resize images.
 
 From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
 
@@ -4426,13 +4426,15 @@ multiplication table on the console:
 
 [source,python,numbered]
 ----
-for i in range(1,10):
-    for j in range(1,10):
-        print(i * j, "\t", end="") <1>
-    print() <2>
+for i in range(1,10):              <1>
+    for j in range(1,10):          <2>
+        print(i * j, "\t", end="") <3>
+    print()                        <4>
 ----
-<1> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding paramater name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
-<2> This starts a new line.
+<1> We call this the _outer_ `for`-loop. It constructs the rows in the table.
+<2> We call this the _inner_ `for`-loop. It is responsible for construction a single row.
+<3> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding paramater name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
+<4> This starts a new line.
 
 NOTE: A _matrix_ is a rectangular table of numbers. The branch of mathematics that deals with matrices is called _linear algebra_.
 
@@ -5222,7 +5224,7 @@ def find_empty():
 
 With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will kep it at a sqaure greed 400 on a side.
 
-[source,python,linenums]
+[source,python,linenums,options="nowrap"]
 ----
 pygame.init()
 n = 400
@@ -5276,9 +5278,9 @@ If we make one of the agents a minority the results are even more pronounced. Be
 .Schelling model with 1/3 threshold and 25% blue, 50% green agents
 image::schelling_25_50_25.jpg[]
 
-These results were pretty surprising. If fewer than 33% of an agent's neighbors are like them then the agent moves with the end result being a fair amount of segregation.
+These results were pretty surprising. If fewer than 33% of an agent's neighbors are like them then the agent moves with the end result being a fair amount of segregation. That is, with fairly tolerant agents, we see segregation.
 
-One thing to check with any model is to see if it matches our intuition. If we lower the threshold, that is we make the agent more tolerant, then we should see less segregation. This is indeed the case.
+One thing to check with any model is to see if it matches our intuition. If we lower the threshold, that is we make the agents even more tolerant, then we should see less segregation. This is indeed the case.
 
 .Schelling model with 15% threshold and equal proportion agents.
 image::schelling_thresh_15.jpg[]
@@ -5288,13 +5290,17 @@ If we increased the threshold to say 50% and also introduce a minority agent pop
 .Schelling model with 50% threshold and 25% blue 50% green agents.
 image::schelling_50_25_50_25.jpg[]
 
+If, however, we make agents very intolerant by having, say a 70% threshold, and we have enough diversity in the population it can be very hard to please an agent and the simulation doesn't every really settle down. 
+
 ==== Schelling Summary
 
-The Schelling Model was on eof the early models in an area called _Agent Based Modeling_. Agents live on a grid and are endowed with a set of rules or behaviors. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
+The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publicaitons, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
 
 === Exercises
 
-Collage
+. Collage
+
+. Add a third color agent to the Schelling model
 
 === Terminology 
 
@@ -5327,6 +5333,234 @@ a|
 
 == String and File Processing
 
+Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines sich as google store and search truly massive amounts of text from literally almost every web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
+
+TIP: A _byte_ (8 bits) as enough to store a single character. 
+
+We have already used text in our programs; strings are text. We hardcode text into our programs using string constants ...
+
+[source,python]
+----
+s = 'antidisestablishmentarianism'
+----
+
+or enter them from the keyboard
+
+[source,python]
+----
+s = input("Enter a string: ")
+----
+
+For the following discussion lets assume that `s` is the string `'antidisestablishmentarianism'`
+
+We can get the length of a string using the function `len`. The statement
+
+[source,python]
+----
+print(len(s))
+----
+
+would print `28` on the console.
+
+We can also access individual characters in a string. The characters in a string are numbered starting with `0`. We use a bracket notation for accessing individual characters. `s[0]` is the first character or `'a'` and `s[27]` is the last character, or `'m'`.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+[source,python,numbered]
+----
+# What would get printed?
+s = 'antidisestablishmentarianism'
+print(s[0], s[11], s[len(s)-1])
+----
+
+[.result]
+====
+[source,python]
+----
+a b m 
+----
+====
+
+You need to be careful about _off-by-one_ errors. 
+
+[source,python,numbered]
+----
+print(s[len(s)])
+----
+
+would create an _index out of range_ error, because it is trying to print character `s[28]` but that character does not exist. Oddly enough you can index from that end of the string. `s[-1]` is the last character, `s[-2]` is the second to last character, etc.
+
+=== Looping through a string
+
+There are typically two ways we will loop through and examine each character in a string. 
+
+Assume that the variable `s` contains a string value. Back when we introduced the `for`-loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for`-loop.
+
+[source,python,nymbered]
+----
+for ch in s:
+    # loop body
+----
+
+The variable `ch` (for _character_) will take on each each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
+
+[source,python,nmbered]
+----
+a_count = 0
+
+for ch in s:                   <1>
+    if ch == 'a':
+        a_count = a_count + 1
+----
+<1> `ch` will take on each character in the string `s`.
+
+The way of looping through a string works great if you only need to look at each character independent of all the other characters.
+
+The second way to loop through a string is to remember that each character in a string has an integer _index_. So another way to count the numbers of times the character `a` occurs is:
+
+[source,python,numbered]
+----
+a_count = 0
+for i in range(len(s)):         <1>
+    if s[i] == 'a':             <2>
+        a_count = a_count + 1
+----
+<1> `i` will take on the integer values `0` up to but not including `28`.
+<2> `s` is a string, `i` is an integer, so `s[i]` is the character at index `i`.
+
+==== Strings are _immutable_
+
+Once a variable has been assigned a string value that string cannot be changed. For example, if `s` is a string we can't change the value of `s[0]`. 
+
+[source,python]
+----
+s[0] = 'Z'
+----
+
+This causes an error `'str' object does not support item assignment`. 
+
+NOTE: In Python strings are _immutable_. This means that the components of the string cannot be changed.
+
+The way to modify a string is to build a new one. If `s1` and `s2` are two strings then you can _concatenate_ the two strings with `+`.
+
+[source,python,]
+----
+s1 = "hello"
+s2 = "world"
+s3 = s1 + s2
+print(s3)     <1>
+----
+<1> Will print `helloworld`
+ 
+NOTE: To _concatenate_ strings means to join two or more strings into one. 
+ 
+==== Reversing a string
+
+To illustrate building a string lets write a function that takes a string as an argument and returns the reverse of the string; `reverse('python')` is `'nohtyp'`.
+
+[source,python,numbered]
+----
+def reverse(s):
+    tmp = ""            <1>
+    for ch in s:        <2>
+        tmp = ch + tmp  <3>
+
+    return tmp          <4>
+----
+<1> An initially empty string that we will use to build up the reversed string (there is no space between the double quotes).
+<2> For each character `ch` in the string `s`.
+<3> This is a little tricky. We will discuss below.
+<4> Return the reversed string
+
+Why does this work? Lets take an example of the string `'abcd'` and lets follow the values of `ch` and `tmp` after each loop iteration.
+
+[source]
+----
+ch     tmp
+--     ---
+a      a     <1>
+b      ba    <2>
+c      cba   <3>
+d      dcba  <4>
+----
+<1> `tmp` is initially empty so the new value of `tmp` is `ch + tmp` or `'a'`
+<2> `ch` is `'b'` and `tmp` is `'a'` so the new value of `tmp` is `ch + tmp` or `'ba'`
+<3> `ch` is `'c'` and `tmp` is `'ba'` so the new value of `tmp` is `ch + tmp` or `'cba'`
+<4> finally `ch` is `'d'` and `tmp` is `'cba'` so the new value of `tmp` is `ch + tmp` or `'dcba'`
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What would happen if the loop body in the function `reverse` were `tmp = tmp + ch` instead of `tmp = ch + tmp`.
+
+[.result]
+====
+It just rebuilds the original string and does not build the reverse.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+A _palindrome_ is a string that reads backwards and forwards the same such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argumnt is a palindrome, false otherwise.
+
+[.result]
+====
+This is kind of easy if we can use the `reverse` function.
+
+[source,python]
+----
+def palindrome(s):
+   if s == reverse(s):
+       return True
+   else:
+       return False
+----
+
+There is an even more concise way to write the `palindrome` function.
+
+[source,python]
+----
+def palindrome(s):
+   return s == reverse(s) 
+----
+
+The way to think about this is that if is `s` is equal to `reverse(s)` then that is the value `True`, which is then returned. If they are not equal then it evaluates to `False` which is then returned. This is the same exact behavior as the first version of `palindrome`.
+
+====
+
+
+Slices 
+
+Shuffling a string
+
+.Sizes of data
+[cols="3"]
+|===
+
+| kilobyte (KB)
+| stem:[10^{3} = 1000]  (one thousand)
+| stem:[2^{10}] 
+
+| megabyte (MB)
+| stem:[10^{6} = 1,000,000] (one million) 
+| stem:[2^{20}] 
+
+| gigabyte (GB)
+| stem:[10^{9}] (one billion) 
+| stem:[2^{30}] 
+
+| terabyte (TB)
+| stem:[10^{12}] (one trillion)
+| stem:[2^{40}] 
+
+| petabyte (TB)
+| stem:[10^{15}] (one quadrillion) 
+| stem:[2^{50}] 
+
+| exabyte  (EB)
+| stem:[10^{18}] (one quintillion) 
+| stem:[2^{60}] 
+
+|===
+
+
+
+
 === DNA Sequence Analysis
 
 === Cryptography
@@ -5342,10 +5576,12 @@ a|
 |===
 
 a|
- * tbd
+ * petabyte
+ * index
 
 a|
- * tbd 
+ * byte 
+ * concatenate
 
 |===
 
