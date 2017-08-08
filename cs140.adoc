@@ -3,6 +3,7 @@ An Introduction to Computer Science and Programming with Python
 Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
+:toclevels: 2
 :numbered:
 :numbered:
 :icons: font
@@ -22,11 +23,14 @@ https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
 
 [watermark]#DRAFT#
 
+_Department of Mathematics, Computer Science, and Statistics_ +
+St. Lawrence University +
+Canton, NY 13625
 
 [preface]
 == Preface
 
-I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence and also satisfies a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not necessarily hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. The examples and topics covered are only a small subset fo what could be covered. I have chosen them because I think they are fun, engaging, and relevant to a liberal arts education.
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence and also satisfies a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not necessarily hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. The examples and topics covered are only a small subset of what could be covered. I have chosen them because they are fun, engaging, and relevant to a liberal arts education and are drawn from a variety of dsiciplines including art, biology, physics, mathematics, and of course, computer science.
 
 If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
 
@@ -38,7 +42,7 @@ Goals of the course include:
 
 == Introduction
 
-_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these together. It is where any introduction to computer science begins.
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing you to computer science.
 
 A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
 
@@ -87,7 +91,7 @@ That is it, just the one line. And it does as you might expect, it prints the me
 
 NOTE: The _console_ is a text window where python sends the output of `print` statements and where the user can also enter data from `input` statements. 
 
-The python _builtin function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
+The python _built-in function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
 NOTE: In programming, a string literal is also called _string constant_
 
@@ -663,7 +667,7 @@ Here is a sample run of the Fahrenheit to Celsius conversion program.
 
 <1> The user entered `83.5`
 
-Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks rediculous. Python has a builtin function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
+Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks rediculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
 
 [source,python,numbered]
 f = float(input('Enter a temperature (F): '))
@@ -828,7 +832,59 @@ There are parentheses missing around the `f-32`. This program executes just fine
 
 === Bits, CPUs, Interpreters, and Compilers
 
-Place holder to talk about computers, ...
+At its most basic level everything about modern computing boils down to, at some base level, ones and zeros, true/false, on/off, yes/no, black/white. All information is _binary_. All decimal (base-10) numbers are expressed in binary (base-2). Digital images are just numbers, which are binary. Digital music on Spotify or Pandora, are numbers (hence binary) that represent sound waves. Characters, letters, punctuation, all have a numberic equivalent, and are binary. Internet communication - binary, web pages - binary. Even computer programs get converted to binary. _All information is binary_.
+
+An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _byte_. We often talk of sizes of data in bytes. A megabyte (MB) is one million bytes. Stictly speaking when we use the term megabyte it usually means stem:[2^{20}] bytes rather then stem:[10^6] bytes. Below is a table of sizes, kilobytes, megabytes, ...
+
+.Sizes of data
+[cols="3"]
+|===
+
+| kilobyte (KB)
+| stem:[10^{3} = 1000]  (one thousand)
+| stem:[2^{10}] 
+
+| megabyte (MB)
+| stem:[10^{6} = 1,000,000] (one million) 
+| stem:[2^{20}] 
+
+| gigabyte (GB)
+| stem:[10^{9}] (one billion) 
+| stem:[2^{30}] 
+
+| terabyte (TB)
+| stem:[10^{12}] (one trillion)
+| stem:[2^{40}] 
+
+| petabyte (TB)
+| stem:[10^{15}] (one quadrillion) 
+| stem:[2^{50}] 
+
+| exabyte  (EB)
+| stem:[10^{18}] (one quintillion) 
+| stem:[2^{60}] 
+
+|===
+
+
+The CPU, (_Central Processing Unit_) or _processor_, carries out basic mathematical operations such as addition and multiplication. The CPU is connected to _main memory_ where it can store numbers (bits). Main memory is fast and _volatile_. That is, when the power is turned off main memory loses any information that was stored. Also connected to the CPU and memory are other hardware components such as hard drives, graphics card, and network hardware. Hard drives are _non-volatile_ memory. Turn off the power and they remember what was stored, they are also musch slower than main memory.
+
+Here is a high level layout of a computer.
+
+.Computer Organization
+image::comp_org.png[width=500]
+
+The basic operations of the CPU are called _instructions_, and the binary representation of instructions is called _machine code_. Many programming languages are compiled languages are translated to machine code by a _compiler_, C being the most common compiled language, where the program is converted straight to machine code that is then directly executed by the CPU.
+
+.C Program Compilation
+image::compiler.png[width=400]
+
+Python is a little different, it is not a compiled language but an _interpreted_ language. What that means is that there is another program called the _interpreter_ that reads the Python program and executes it. The Python interpreter itself is written in C.
+
+.Python Interpreter
+image::interpreter.png[width=600]
+
+
 
 === Exercises
 
@@ -905,7 +961,7 @@ a|
 * string literal (constant)
 * integer literal (constant)
 * floating-point literal (constant)
-* builtin function
+* built-in function
 * function call
 * variable
 * _Hello World_ program
@@ -917,6 +973,14 @@ a|
 * CPU
 * interpreter
 * domain (of a function)
+* binary
+* volatile memory
+* bit
+* compiler
+* range (of a function)
+* console
+* non-volatile memory
+* byte
 
 a|
 * argument
@@ -931,10 +995,13 @@ a|
 * assignment statement
 * function composition
 * logic error
-* bit
-* compiler
-* range (of a function)
-* console
+* kilobyte (KB)
+* megabyte (MB)
+* gigabyte (GB)
+* terabyte (TB)
+* petabyte (PB)
+* exabyte (EB)
+
 
 |===
 
@@ -1022,7 +1089,7 @@ input("Hit <enter> to quit.")
 
 Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
 
-NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a builtin Color Picker. There is a free Ecommunity Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
+NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Ecommunity Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
 
 One common thing many of our pygame programs will do is to define some colors. 
 
@@ -5393,7 +5460,7 @@ print(s[len(s)])
 
 would create an _index out of range_ error, because it is trying to print character `s[28]` but that character does not exist. Oddly enough you can index from that end of the string. `s[-1]` is the last character, `s[-2]` is the second to last character, etc.
 
-=== Looping through a string
+=== String operations
 
 There are typically two ways we will loop through and examine each character in a string. 
 
@@ -5500,7 +5567,7 @@ It just rebuilds the original string and does not build the reverse.
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-A _palindrome_ is a string that reads backwards and forwards the same such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argumnt is a palindrome, false otherwise.
+A _palindrome_ is a word that reads backwards and forwards such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argumnt is a palindrome, false otherwise. Hint: use the `reverse` function.
 
 [.result]
 ====
@@ -5524,43 +5591,44 @@ def palindrome(s):
 ----
 
 The way to think about this is that if is `s` is equal to `reverse(s)` then that is the value `True`, which is then returned. If they are not equal then it evaluates to `False` which is then returned. This is the same exact behavior as the first version of `palindrome`.
-
 ====
 
+==== String Slices 
 
-Slices 
+The bracket notation picks out individual characters in a string, 
+`s[i]` is the charater at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, what we call a _slice_. The notation `s[x:y]` extracts the potion ofthe string starting at index `x` and up to but not including the character at index `y`. Lets see we have 
 
-Shuffling a string
+[source,python]
+----
+s = 'antidisestablishmentarianism'
+----
 
-.Sizes of data
-[cols="3"]
-|===
+The slice `s[0:4]` is the string `'anti'`. The slice `s[7:16]` is the string `'establish'`. 
 
-| kilobyte (KB)
-| stem:[10^{3} = 1000]  (one thousand)
-| stem:[2^{10}] 
+Leaving off the ending index then it is assumed the slice is to the end of the string.
 
-| megabyte (MB)
-| stem:[10^{6} = 1,000,000] (one million) 
-| stem:[2^{20}] 
+[source,python]
+----
+print(s[7:])
+----
 
-| gigabyte (GB)
-| stem:[10^{9}] (one billion) 
-| stem:[2^{30}] 
+will print `establishmentarianism`.
 
-| terabyte (TB)
-| stem:[10^{12}] (one trillion)
-| stem:[2^{40}] 
+Leaving off the starting index then the slice starts at index 0.
 
-| petabyte (TB)
-| stem:[10^{15}] (one quadrillion) 
-| stem:[2^{50}] 
+[source,python]
+----
+print(s[:4])
+----
 
-| exabyte  (EB)
-| stem:[10^{18}] (one quintillion) 
-| stem:[2^{60}] 
+will print `anti`.
 
-|===
+
+
+
+
+==== Shuffling a string
+
 
 
 
