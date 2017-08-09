@@ -5,13 +5,12 @@ v0.1, May 2017:
 :toc: right
 :toclevels: 2
 :numbered:
-:numbered:
 :icons: font
 :source-highlighter: pygments
 :stem: latexmath
 :imagesdir: ./images
 :includedir: .
-:docinfo:
+:docinfo: shared,private-head
 
 ////
 http://www.petercollingridge.co.uk/pygame-physics-simulation/collisions
@@ -5595,10 +5594,82 @@ def palindrome(s):
 The way to think about this is that if is `s` is equal to `reverse(s)` then that is the value `True`, which is then returned. If they are not equal then it evaluates to `False` which is then returned. This is the same exact behavior as the first version of `palindrome`.
 ====
 
+==== Searching a String
+
+Often we will want to search a string for a _substring_. For example, does the string `'establish'` appear somewhere in the string `s`. The string function `s1.find(s2)` returns the starting location of the first occurrence of the string `s2` in `s1`. It returns `-1` if it is not there.
+
+[source,python]
+----
+s1 = 'antidisestablishmentarianism'
+s2 = 'hippopotomonstrosesquipedaliophobia'
+print(s1.find('establish')) <1>
+print(s1.find('hippo'))     <2>
+print(s2.find('po'))        <3>
+----
+<1> prints `7`
+<2> prints `-1`
+<3> prints `3`, the first occurrence of `'po'`
+
+A second version of the `find` function takes a starting location for the search; `s1.find(s2,start)` will retrn the location of `s2` in `s1` starting at index `start`.
+
+[source,python]
+----
+print(s2.find('po', 4)) <1>
+----
+<1> prints `5`
+
+If we didn't know to start search at `4` and we wanted to find the second location of `po` we can search fr the first occurrence and se that as a starting point for a search for the second occrurrence.
+
+[source,python]
+----
+start = s2.find('po')           <1>
+print(s2.find('po', start+1))   <2>
+----
+<1> index of first occurrence of `po`
+<2> start searching for the second ccurrence at `start+1` and not `start`, otherwise we would just find the first occurrence all over again.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a program that reads a string from the user and counts the number of times the substring `'is'` appears. Print a user friendly answer. Use the `find` function but do not use the built-in string function `count`.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+s = input("Enter a string: ")                
+count = 0                                    
+loc = s.find('is')                           <1>
+
+while loc != -1:                             <2>
+    count = count + 1   
+    loc = s.find('is',loc+1)                 <3>
+
+print('"is" appears', count, "times in",s)
+----
+<1> Find the first occurrence
+
+Here is an example execution.
+
+[source,python]
+----
+Enter a string: antidisestablishmentarianism
+"is" appears 3 times in antidisestablishmentarianism
+----
+
+Okay, so we could have used the built-in string function `count` to do this.
+
+[source,python]
+----
+print(s.count('is'))
+----
+
+As is often the case, Python's built-in set of functions and libraries will often have what you are looking for.  
+====
+
 ==== String Slices 
 
-The bracket notation picks out individual characters in a string, 
-`s[i]` is the charater at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, what we call a _slice_. The notation `s[x:y]` extracts the potion ofthe string starting at index `x` and up to but not including the character at index `y`. Lets see we have 
+The bracket notation picks out individual characters in a string; 
+`s[i]` is the charater at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, a _substring_, using what Python calls a _slice_ operation. The notation `s[x:y]` extracts the portion of the string starting at index `x` and up to but not including the character at index `y`.
 
 [source,python]
 ----
@@ -5607,7 +5678,7 @@ s = 'antidisestablishmentarianism'
 
 The slice `s[0:4]` is the string `'anti'`. The slice `s[7:16]` is the string `'establish'`. 
 
-Leaving off the ending index then it is assumed the slice is to the end of the string.
+Leaving off the ending index then the slice is to the end of the string.
 
 [source,python]
 ----
@@ -5625,9 +5696,149 @@ print(s[:4])
 
 will print `anti`.
 
+A common use for combining `find` and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like `'39,88'`. But this will be a string, so we need bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers
 
+[source,python]
+----
+print("Enter two numbers separated by a comma.")  <1>
+s = input("> ")                                   <2>
+comma = s.find(',')                               <3>
+num1 = int(s[:comma])                             <4>
+num2 = int(s[comma+1:])                           <5>
 
+avg = (num1 + num2) / 2
+print("Average:", round(avg,2))
+----
+<1> Prompt on a separate line because it is a little long.
+<2> Prompt is short and sweet, just ">".
+<3> Find the position of the comma.
+<4> The first number is before the comma.
+<5> The second number is after the comma.
 
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Ask the user to enter three numbers separated by a comma. Print their average.
+
+[.result]
+====
+There are lots of ways to tackle this. Here is one.
+
+[source,python]
+----
+print("Enter three numbers separated by a comma") 
+s = input("> ")
+comma1 = s.find(',')            <1>
+comma2 = s.find(',', comma1+1)  <2>
+num1 = int(s[:comma1])          <3>
+num2 = int(s[comma1+1:comma2])  <4>
+num3 = int(s[comma2+1:])        <5>
+
+avg = (num1 + num2 + num3) / 3
+print("Average:", round(avg,2))
+----
+<1> Index of first comma.
+<2> Index of the second comma.
+<3> First number is before first comma.
+<4> Second number is _between_ the first and second comma.
+<5> Third number is after the second comma.
+====
+
+Finally, lets take this one step further  and handle an arbitrary number of integers each separated by a comma. We will need to loop through the numbers some how.
+
+[source]
+----
+Enter numbers separated by a comma
+> 2,9,12,-33,15,7,99
+Average: 15.86
+----
+
+Similar to the way we counted the number of times we search for a subtring in a string
+
+NOTE: A list of numbers separated by commas are called _comma separated values_. Files that contain comma separated values are often use a `.csv` file suffix.
+
+Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `sum` and `count` for that.
+
+[source]
+----
+s               sum  count
+-----------     ---  -----
+23,19,46,57      0     0      <1>
+19,46,57         23    1      <2>
+46,57            42    2      <3>
+57               88    3      <4>
+                 145   4      <5>
+----
+<1> `s` is the original input CSV list.
+<2> Extract the first number `23`, add it to `sum`, increment `count`, and delete `23`.
+<3> Extract the first number `19`, add it to `sum`, increment `count`, and delete `19`
+<4> Extract the first number `46`, add it to `sum`, increment `count`, and delete `46`.
+<5> We should be seeing a pattern here. Extract the first number `57`, add it to `sum`, increment `count`, and delete `57. Compute a final average of stem:[145/4 = 36.25]
+
+[source,python,numbered]
+----
+print("Enter a comma separated list of numbers")
+s = input("> ")
+
+comma = s.find(',')
+sum = 0                     <1>
+count = 0                   <2>
+
+while comma != -1:          <3>
+    num = int(s[:comma])    <4>
+    sum = sum + num         
+    count = count + 1       
+    s = s[comma+1:]         <5>
+    comma = s.find(',')     <6>
+
+avg = sum/count
+print("Average: ", round(avg, 2))
+----
+<1> To hold the running sum of the numbers.
+<2> Keep a count of the integers entered.
+<3> Keep processing the list of numbers until there are no more commas.
+<4> Extract the leading number in the list, add it to `sum`, and increment `count`.
+<5> Delete the leading number in the list.
+<6> Get the location of the next comma.
+
+There is actually a subtle bug in the code above; a classic off-by-one error. There are no syntax errors and the code doesn't necessarily crash (more on that later) but it does produce an incorrect result. For example, if we enter `23,19,46,57` we get an average of `29.33`. Recall the answer should be `36.25`.  
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Find and fix the bug in the above code.
+
+[.result]
+====
+The problem is that we skip the last number. For example, if we have the original list 
+`23,19,46,57` eventually the list becomes `57` after line 12. There are no more commas in the list
+so on line 13 `comma` becomes `-1` and when we go back to check the loop condition the loop will quit having not processed the `57`. An easy fix is to realize that after the loop terminates `s` now contains the final number in the list. Add it to `sum`, and don't forget to increment `count`.  The code after the loop becomes:
+
+[source,python]
+----
+sum = sum + int(s)   <1>
+count = count + 1    <2>
+avg = sum/count
+print("Average: ", round(avg, 2))
+----
+<1> Add the final number to `sum`. COuld we have used `num` here and not `s`? No. Why?
+<2> And increment `count`.
+
+One more thing to check is to make sure the code works if we only have a single number to start with. This was also a problem before we fixed the bug, but now works.
+====
+
+==== Error Checking
+
+The term _hacker_ used to be a badge of honor. It just meant you were a sharp programmer. The term now has a negative connotation and usually refers to someone using there technical skills unethically and possibly illegally by either breaking into a system or causing an organization's software systems to crash. 
+
+We will talk about breaking in to systems when we discuss cryptography so lets talk about possibley causing software to crash. One way to try and cause a software system to crash is to enter bogus data in the input. We have all seen this before when we enter data into a web form. If we forget to enter a zip code in our address then the system will generally not let us proceed. Up until we know we haven't talked about checking the input data for errors, or _error checking_, but it is worth a cursory discussion. 
+
+Lets look at our above example of computing the average of a list of numbers. What if instead of a list of numbers we entered an illformed line such as `rumpelstiltskin`, or `23,16,fred,11`.
+
+ Enter a comma separated list of numbers
+ > rumpelstiltskin
+ Traceback (most recent call last):
+   File "D:/Shared/python/csv.py", line 16, in <module>
+     sum = sum + int(s)
+ ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'
+
+This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. It is a little too advanced for us to cover now, but real software systems have to always check inputs for errorneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered integers with commas in between them.
 
 ==== Shuffling a string
 
@@ -5635,11 +5846,7 @@ will print `anti`.
 
 
 
-=== DNA Sequence Analysis
-
-=== Cryptography
-
-=== Network Programming
+=== Example: DNA Sequence Analysis
 
 === Exercises
 
@@ -5650,15 +5857,20 @@ will print `anti`.
 |===
 
 a|
- * petabyte
  * index
  * palindrome
+ * slice
 
 a|
  * byte 
  * concatenate
+ * substring
 
 |===
+
+== Cryptography
+
+== Network Programming
 
 
 == Lists
