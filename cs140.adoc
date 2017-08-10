@@ -3,6 +3,7 @@ An Introduction to Computer Science and Programming with Python
 Ed Harcourt <edharcourt@stlawu.edu>
 v0.1, May 2017:
 :toc: right
+:doctype: book
 :toclevels: 2
 :numbered:
 :icons: font
@@ -51,8 +52,6 @@ NOTE: A _programming language_ is precise notation used for describing computati
 
 === Software is taking over 
 
-Why study computer science? Almost every aspect of our daily lives are impacted by software. It might be good to know something about it.  
-
 Think about each of the following, what has changed, and if there is software behind that change.
 
 * How often do you go into a bank and interact with a teller? What do you use instead?
@@ -75,7 +74,7 @@ Think about each of the following, what has changed, and if there is software be
 
 * Thinking a little further in to the future what could happen to the millions of people who drive a vehicle for a living, from taxi drivers to truck drivers? 
 
-Software is encroaching on almost all aspects of our life, it might be good to learn something about it.
+So why study computer science?  Software is encroaching on almost all aspects of our life, it might be good to learn something about it.
 
 === Hello World
 
