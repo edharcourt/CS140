@@ -6,12 +6,11 @@ def scramble(word):
     while len(word) > 0:
         i = random.randrange(len(word))
         tmp = tmp + word[i]
-        s = word[:i] + word[i+1:]
+        word = word[:i] + word[i+1:]
 
     return tmp
 
 
-print(scramble('python'))
 '''
 j = 0
 sum = 0
@@ -24,3 +23,13 @@ while j < 1000:
 
 print(round(sum/j,1))
 '''
+
+word = 'python'
+anagram = scramble(word)
+print("What word is this an anagram of?", anagram)
+guess = input('Enter word: ')
+
+if guess == word:
+    print("Correct")
+else:
+    print("Incorrect. The word is", '"' + word + '"')

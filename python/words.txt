@@ -1,0 +1,7 @@
+apple
+banana
+interpreter
+racoon
+zombie
+example
+incorrect

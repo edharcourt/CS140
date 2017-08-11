@@ -40,6 +40,11 @@ Goals of the course include:
 * Emphasize problem soving in a precise and logical framework.
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
+=== Acknowledgements
+
+This document is written in http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. It also uses the https://tscanlin.github.io/tocbot/[Tocbot] https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[table of contents plugin] described in this thread footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] and Dan Allen's
+https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Any mathematics is formatted using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]
+
 == Introduction
 
 _Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.
@@ -5832,14 +5837,7 @@ Lets look at our above example of computing the average of a list of numbers. Wh
 
  ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'
 
-This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for errorneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid. 
-
-=== Files
-
-Up until know all of the input to our programs has been coming from the command line (or by pygame events). It is common though that data come from a separate text file. For example, a text file of numbers, or strings.
-
-.Ages
- 
+This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for errorneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid.  
 
 ==== Example: Word scramble
 
@@ -5887,6 +5885,108 @@ def scramble(word):
 <2> Concatenate the character at that index into our temprary string `tmp`.
 <3> Deletes the character at index `i` by rebuilding the word with all of the characters before index `i` (`word[:i]`) concatenated with all of the characters after index `i` (`word[i+1:]`).
 
+Putting it all together we have:
+
+[source,python,numbered]
+----
+word = 'python'               <1>
+anagram = scramble(word)
+print(anagram)
+guess = input('Enter word: ')
+
+if guess == word:
+    print("Correct")
+else:
+    print("Incorrect. The word is", '"' + word + '"')
+----
+<1> Okay, it is a little silly to have a word scramble game with one word. We will fix that next.
+
+=== Files
+
+Up until know all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named `words.txt`. We'll keep it relative short for now, but file can be enormous and could have hundreds of thousands of lines it.
+
+.link:python/words.txt[`words.txt`]
+[source,indent=0]
+----
+apple
+banana
+interpreter
+racoon
+zombie
+example
+incorrect
+----
+
+The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. _newline_ character. We often call spaces, tabs, andnelinw character _whitespace_ characters.  In most programming languages the newline character is written `\n`.
+
+We tell python the name of a file we want to read using the https://docs.python.org/3.6/library/functions.html#open[`open`] function.footnote:[https://docs.python.org/3.6/library/functions.html#open]
+
+[source,python]
+----
+f = open('words.txt') <1>
+----
+<1> If `words.txt` doesn't exist then you will get an error indicating that the file was not found.
+
+Function `open` takes a string as an argument that is the filename to be opened and it returns a reference to a file object. In this case being assigned to the variable `f` (like always we could have used any variable name here).
+
+There are various ways we can read the data in a file, probably the most straightforward is to read it line-by-line using a `for`-loop.  Recall that in a `for`-loop we need a variable that represents a _sequence type_, and it turns out a file object is such a type. For instance,
+
+[source,python,numbered]
+----
+for line in f: <1>
+    print(line)
+----
+<1> `f` should be the variable from the call to `open`.
+
+This will read and print each line in the file to console. But the output is not what you might expect for `words.txt`.
+
+[source]
+----
+apple
+
+banana
+
+interpreter
+
+racoon
+
+zombie
+
+example
+
+incorrect
+----
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Why is there a blank line between each word?
+
+[.result]
+====
+Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.
+
+How can we fix this? We will do it in one of two ways. We can slice off the last character in the line (the newline character) before we print it.
+
+[source,python]
+----
+for line in f:
+    print(line[:len(line)-1]) <1>
+----
+<1> Why `len(line)-1` instead of `len(line)`?
+
+Or we can tell the print function not to print a newline character using a _named parameter_.
+
+[source,python]
+----
+for line in f:
+    print(line, end='') <1>
+----
+<1> The documentation for https://docs.python.org/3.6/library/functions.html#print[`print`] is a little complicated.footnote:[https://docs.python.org/3.6/library/functions.html#print]
+
+
+====
+
+
+
 === Example: DNA Sequence Analysis
 
 === Exercises
@@ -5902,6 +6002,8 @@ a|
  * palindrome
  * slice
  * factorial
+ * whitespace
+ * newline
 
 a|
  * byte 
