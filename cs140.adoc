@@ -42,8 +42,8 @@ Goals of the course include:
 
 === Acknowledgements
 
-This document is written in http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. It also uses the https://tscanlin.github.io/tocbot/[Tocbot] https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[table of contents plugin] described in this thread footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] and Dan Allen's
-https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Any mathematics is formatted using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]
+These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
+https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]
 
 == Introduction
 
@@ -5964,7 +5964,7 @@ Why is there a blank line between each word?
 ====
 Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.
 
-How can we fix this? We will do it in one of two ways. We can slice off the last character in the line (the newline character) before we print it.
+We can fix this in two ways. The first way is to slice off the last character in the line (the newline character) before we print it.
 
 [source,python]
 ----
@@ -5973,14 +5973,32 @@ for line in f:
 ----
 <1> Why `len(line)-1` instead of `len(line)`?
 
-Or we can tell the print function not to print a newline character using a _named parameter_.
+Or we can tell the print function to suppress printing a newline character using a _named parameter_.
 
 [source,python]
 ----
 for line in f:
     print(line, end='') <1>
 ----
-<1> The documentation for https://docs.python.org/3.6/library/functions.html#print[`print`] is a little complicated.footnote:[https://docs.python.org/3.6/library/functions.html#print]
+<1> Instead of printing a newline character print the empty string. The documentation for https://docs.python.org/3.6/library/functions.html#print[`print`] is a little complicated.footnote:[https://docs.python.org/3.6/library/functions.html#print]
+
+==== Counting the lines in a file
+
+How can we count the lines a file? 
+
+[source,python,numbered]
+----
+f = open('words.txt')
+
+count = 0
+for line in f:         <1>
+    count = count + 1
+
+print("words.txt has", count, "lines")
+----
+<1> We are not even using the the variable `line` in the code.
+
+This might be getting a little old, but this is probably better provided as a reusable function.
 
 
 ====
