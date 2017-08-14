@@ -1,4 +1,4 @@
-import random
+import random,util
 
 def scramble(word):
     tmp = ''
@@ -24,12 +24,16 @@ while j < 1000:
 print(round(sum/j,1))
 '''
 
-word = 'python'
-anagram = scramble(word)
-print("What word is this an anagram of?", anagram)
-guess = input('Enter word: ')
+words = open('words.txt')
 
-if guess == word:
-    print("Correct")
-else:
-    print("Incorrect. The word is", '"' + word + '"')
+for word in words:
+    if word[len(word)-1] == '\n':
+        word = word[:len(word)-1]
+    anagram = scramble(word)
+    print("What word is this an anagram of?", anagram)
+    guess = input('Enter word: ')
+
+    if guess == word:
+        print("Correct")
+    else:
+        print("Incorrect. The word is", '"' + word + '"')

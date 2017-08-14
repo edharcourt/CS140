@@ -5924,8 +5924,14 @@ We tell python the name of a file we want to read using the https://docs.python.
 [source,python]
 ----
 f = open('words.txt') <1>
+
+# process the file
+
+f.close()             <2>
+
 ----
 <1> If `words.txt` doesn't exist then you will get an error indicating that the file was not found.
+<2> After we are done with the file it is a good practice to close the file by calling the function `close` on the file object returned from `open`.
 
 Function `open` takes a string as an argument that is the filename to be opened and it returns a reference to a file object. In this case being assigned to the variable `f` (like always we could have used any variable name here).
 
@@ -5981,6 +5987,7 @@ for line in f:
     print(line, end='') <1>
 ----
 <1> Instead of printing a newline character print the empty string. The documentation for https://docs.python.org/3.6/library/functions.html#print[`print`] is a little complicated.footnote:[https://docs.python.org/3.6/library/functions.html#print]
+====
 
 ==== Counting the lines in a file
 
@@ -5994,14 +6001,55 @@ count = 0
 for line in f:         <1>
     count = count + 1
 
+f.close()              <2>
 print("words.txt has", count, "lines")
 ----
-<1> We are not even using the the variable `line` in the code.
+<1> Notice that we are not even using the variable `line` in the code.
+<2> Recall that it is a good practice to close the file when we are done.
 
-This might be getting a little old, but this is probably better provided as a reusable function.
+Once again, this is probably better provided as a reusable function.
 
+[source,python,numbered]
+----
+def linecount(fname):       
+    f = open(fname)
+    count = 0
+    for line in f:
+        count = count + 1
+    f.close()
+    return count
 
-====
+# Main program
+name = 'words.txt'
+print('File', name, 'has', linecount(name), 'lines')
+----
+
+Function `linecount` takes the name of a file as a parameter and returns the number of lines in that file.
+
+==== Word Scramble using a file
+
+Our previous version of word scamble used a single hard coded word that the user had to guess.  Not very interesting. We can now go through the file of words and let the user play multiple times.
+
+.Word Scramble
+[source,python,numbered]
+----
+words = open('words.txt')         <1>
+
+for word in words:                <2>
+    if word[len(word)-1] == '\n': <3>
+        word = word[:len(word)-1]
+    anagram = scramble(word)
+    print("What word is this an anagram of?", anagram)
+    guess = input('Enter word: ')
+
+    if guess == word:
+        print("Correct")
+    else:
+        print("Incorrect. The word is", '"' + word + '"')
+----
+<1> The variable that referes to the file object does not have to be named `f`, in this case we are calling it `words`.
+<2> And the `for`-loop variable does not have to be named `line`, in this case `word` makes sense.
+<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't havean end of line chracter but an _end of file_ character.
 
 
 

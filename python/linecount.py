@@ -1,8 +1,12 @@
 
-f = open('words.txt')
+def linecount(fname):
+    f = open(fname)
+    count = 0
+    for _ in f:
+        count = count + 1
+    f.close()
+    return count
 
-count = 0
-for _ in f:
-    count = count + 1
-
-print("words.txt has", count, "lines")
+# Main program
+name = 'words.txt'
+print('File', name, 'has', linecount(name), 'lines')
