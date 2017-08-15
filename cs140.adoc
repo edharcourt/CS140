@@ -6033,10 +6033,10 @@ Our previous version of word scamble used a single hard coded word that the user
 .Word Scramble
 [source,python,numbered]
 ----
-words = open('words.txt')         <1>
+words = open('words.txt')                                     <1>
 
-for word in words:                <2>
-    if word[len(word)-1] == '\n': <3>
+for word in words:                                            <2>
+    if word[len(word)-1] == '\n':                             <3>
         word = word[:len(word)-1]
     anagram = scramble(word)
     print("What word is this an anagram of?", anagram)
@@ -6046,11 +6046,12 @@ for word in words:                <2>
         print("Correct")
     else:
         print("Incorrect. The word is", '"' + word + '"')
+		break                                                 <4>
 ----
-<1> The variable that referes to the file object does not have to be named `f`, in this case we are calling it `words`.
+<1> The variable that refers to the file object does not have to be named `f`, in this case we are calling it `words`.
 <2> And the `for`-loop variable does not have to be named `line`, in this case `word` makes sense.
-<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't havean end of line chracter but an _end of file_ character.
-
+<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't have an end-of-line chracter but an _end of file_ character.
+<4> The `break` statement causes the `for`-loop to terminate.
 
 
 === Example: DNA Sequence Analysis
@@ -6069,13 +6070,13 @@ a|
  * slice
  * factorial
  * whitespace
- * newline
 
 a|
  * byte 
  * concatenate
  * substring
  * anagram
+ * newline
 
 |===
 

@@ -37,3 +37,4 @@ for word in words:
         print("Correct")
     else:
         print("Incorrect. The word is", '"' + word + '"')
+        break
