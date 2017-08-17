@@ -6115,9 +6115,11 @@ g: 1176575, 25.4%
 t: 1140824, 24.6%
 ----
 
-A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This migh indicate thath there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we didn't know that it came from _E. coli_ we can use _GC Content_ to help determine the organism a DNA sequence comes from.  
+A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This might indicate that there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we didn't know that it came from _E. coli_ we can use _GC Content_ to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of _E. Coli_ is 50.7% and that of humans is 41%.
 
 NOTE: _GC Content_ is the ratio of the number `g` and `c` base pairs to the total number of pase pairs. GC Content is stem:[(g + c)/(a + c + g + t)]
+
+This is just a simple example of how strings are used in DNA and bioinformatics. Many of the algorithms used in bioinformatics are too advanced to describe in an introductory course.
 
 
 === Exercises
@@ -6146,6 +6148,8 @@ a|
 |===
 
 == Cryptography
+
+Cryptography allows two parties to communicate, in secret, but at a distance.  
 
 == Network Programming
 
