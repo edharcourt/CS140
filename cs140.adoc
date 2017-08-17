@@ -6051,10 +6051,74 @@ for word in words:                                            <2>
 <1> The variable that refers to the file object does not have to be named `f`, in this case we are calling it `words`.
 <2> And the `for`-loop variable does not have to be named `line`, in this case `word` makes sense.
 <3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't have an end-of-line chracter but an _end of file_ character.
-<4> The `break` statement causes the `for`-loop to terminate.
+<4> The `break` statement causes the `for`-loop to terminate. More specifically it breaks out of the _innermost_ enclosing `for` or `while` loop.
 
 
-=== Example: DNA Sequence Analysis
+=== Example: Bioinformatics
+
+DNA, _Deoxyribonucleic Acid_, is a molecule that caries the genetic information of all living organisms. DNA has a helical structure famously described by Watson and Crick.footnote:[James Watson and Francis Crick, Molecular Structure of Nucleic Acids, _Nature_. *171*, April 1953.]
+ 
+.Double Helix Structure of DNA.footnote:[https://commons.wikimedia.org/wiki/File%3ADna-split.png, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons]
+image:double_helix.png[width=300]
+ 
+DNA in one respect can be consider a _digital code_ because a DNA strand can be abstractly represented as a string of characters `a`, `c`, `g`, and `t`. These stand for the nucleotides (sometimes called _base pairs_) _adenine_, _cytosine_, _guanine_, and _thymine_ respectively. For example the start of the DNA sequence for the _Escherichia coli_ (abbreviated _E. coli_) bacteria is 
+
+.link:python/ecoli.txt[_E. coli_]
+ agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaagagtg ...
+ 
+It doesn't look like this means much but this sequence of nucleotides mean something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis. 
+
+NOTE: Bioinformatics is the computational branch of molucular biology.
+
+We can start with a simple example. One quick question we could answer are some basic statistics about the sequence. How many occurrences of each nucleotide are there? What are the relative frequencies of the nucleotides in _E. coli_ as a percentage?
+
+[source,python,numbered]
+----
+ecoli = open("ecoli.txt")            <1>
+
+a_count = 0
+c_count = 0
+g_count = 0
+t_count = 0
+
+for line in ecoli:                   <2>
+    for bp in line:
+        if bp == 'a':                <3>
+            a_count = a_count + 1
+        elif bp == 'c':
+            c_count = c_count + 1
+        elif bp == 'g':
+            g_count = g_count + 1
+        elif bp == 't':
+            t_count = t_count + 1
+
+total = a_count + c_count + g_count + t_count
+print('length:', total)
+print('a: ', a_count, ', ', round(a_count/total * 100, 1), '%', sep='') <4>
+print('c: ', c_count, ', ', round(c_count/total * 100, 1), '%', sep='')
+print('g: ', g_count, ', ', round(g_count/total * 100, 1), '%', sep='')
+print('t: ', t_count, ', ', round(t_count/total * 100, 1), '%', sep='')
+----
+<1> Download this file by clicking onthe link above in the sequence.
+<2> For each line in the file. (It turns out there is only one in this example)
+<3> Count the base pairs in the current line.
+<4> We are controlling the spaces in the line manually by indicating that the separator should be the empty string. That is don't print a space after the comma separated items in the `print` statement.
+
+After we execute the program we get the follwing results.
+
+[source]
+----
+length: 4638690   
+a: 1142069, 24.6%
+c: 1179222, 25.4%
+g: 1176575, 25.4%
+t: 1140824, 24.6%
+----
+
+A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This migh indicate thath there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we didn't know that it came from _E. coli_ we can use _GC Content_ to help determine the organism a DNA sequence comes from.  
+
+NOTE: _GC Content_ is the ratio of the number `g` and `c` base pairs to the total number of pase pairs. GC Content is stem:[(g + c)/(a + c + g + t)]
+
 
 === Exercises
 
@@ -6077,6 +6141,7 @@ a|
  * substring
  * anagram
  * newline
+ * bioinformatics
 
 |===
 
