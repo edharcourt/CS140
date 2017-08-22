@@ -18,6 +18,7 @@ http://www.petercollingridge.co.uk/pygame-physics-simulation/collisions
 http://www.petercollingridge.co.uk/book/export/html/6
 http://www.petercollingridge.co.uk/book
 https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
+http://a-little-book-of-r-for-bioinformatics.readthedocs.io/en/latest/index.html
 
 ////
 
@@ -6119,7 +6120,33 @@ A few points.  The number of base pairs in the sequence is approximately 4.6 mil
 
 NOTE: _GC Content_ is the ratio of the number `g` and `c` base pairs to the total number of pase pairs. GC Content is stem:[(g + c)/(a + c + g + t)]
 
-This is just a simple example of how strings are used in DNA and bioinformatics. Many of the algorithms used in bioinformatics are too advanced to describe in an introductory course.
+GC Content is a simple example of how strings are used to analyze DNA.  Many of the algorithms used in bioinformatics are too advanced to describe in an introductory course.
+
+NOTE: _Genomics_ is the branch of bioinformatics that uses string algorithms to study DNA (and RNA) sequences.
+
+==== Searching a DNA Sequence
+
+The _central dogma_ describes how DNA is converted to RNA tomake proteins. A _gene_ is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequence contain genes and are sometimes referred to a _protein-coding_ genes. A _codon_ is three consective base pairs such as `GCA` or `AAT`. Protein coding genes obey the following constraints.
+
+ . Start with the codon `ATG`, (sometimes called a _start codon_)
+ . End with one of the _stop codons_ `TAA`, `TAG`, or `TGA`. 
+ . The number of base-pairs (nucleotides) between the start and stop codons must be a multiple of three.
+ . None of the intervening codons is one of the stop codons.
+
+For example the sequence [mono]#ac##atgcattggagctga##acca# contains a potential gene (highlighted) while The sequence [mono]#ac##atagttggagctga##acca# is not. The reason is that starting at index three we have 
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Verify that the highlighted region above matches the criteria for a possible gene.
+
+[.result]
+====
+The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.
+====
+
+Lets write a function `possible_gene` that takes a DNA sequence and returns true of the sequence meets the criteria for a gene.
+
+
+
 
 
 === Exercises
