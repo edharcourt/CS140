@@ -9,6 +9,15 @@ def wait_for_click():
                 done = True
         pygame.time.wait(100)
 
+def wait_for_click():
+    print("Waiting for quit")
+    done = False
+    while not done:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                done = True
+        pygame.time.wait(100)
+
 def linecount(fname):
     f = open(fname)
     count = 0

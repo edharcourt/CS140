@@ -58,7 +58,7 @@ while not done:
 
                 # move if less than half my neighbors
                 # are like me
-                if like < .7:
+                if like < .6:
                     (ex,ey) = find_empty()
                     grid.set_at((ex,ey), (r,g,b))
                     grid.set_at((x,y), color.white)

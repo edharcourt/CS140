@@ -52,4 +52,3 @@ while (0 <= x1 < w) and (0 <= y1 < h) or \
     (x2,y2) = move(x2,y2)
     pygame.display.update()
 
-input("Enter")

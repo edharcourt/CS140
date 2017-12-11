@@ -44,6 +44,7 @@ while True:
         x = (x + x3) // 2
         y = (y + y3) // 2
 
+    '''
     # choose a random tower but not the same one as before.
     t = random.randrange(4)
     while t == t2prev:
@@ -63,6 +64,7 @@ while True:
         xx = (xx + x3) // 2
         yy = (yy + y3) // 2
 
-    win.set_at((x, y), color.blue)
     win.set_at((xx, yy), color.red)
+    '''
+    win.set_at((x, y), color.blue)
     pygame.display.update()
