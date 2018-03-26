@@ -337,7 +337,7 @@ print(w,x,y,z)
 `0 0 1 15`
 ====
  
-Integer division will plays a key role in many applications incomputer science.
+Integer division will plays a key role in many applications in computer science.
 
 .Example 4
 [source,python,numbered]
@@ -2192,9 +2192,9 @@ There is actually a subtle bug in this code that can sometimes lead to a crash. 
 
 === Exponential Growth (password length)
 
-Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But howmuch harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possibble alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary number, 94, but it is probably close]  
+Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But how much harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possible alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary number, 94, but it is probably close]  
 
-There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three chaacter passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
+There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three character passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
 
 Plotting stem:[94^i] wherestem:[i]is the number of characters in the password gives us the graph:
 
