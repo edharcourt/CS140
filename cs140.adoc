@@ -1,7 +1,7 @@
 An Introduction to Computer Science and Programming with Python
 ===============================================================
 Ed Harcourt <edharcourt@stlawu.edu>
-v0.1, May 2017:
+v0.1, May 2018:
 :toc: right
 :doctype: book
 :toclevels: 2
@@ -38,7 +38,8 @@ If you happen upon these notes outside of my course and you find them useful I w
 Goals of the course include:
 
 * Appreciate the complexity of the software systems we encounter every day.
-* Emphasize problem soving in a precise and logical framework.
+* Emphasize problem soving in a precise and logical framework
+  (the Python programming language).
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
 === Acknowledgements
