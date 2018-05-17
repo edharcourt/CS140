@@ -5471,7 +5471,7 @@ would create an _index out of range_ error, because it is trying to print charac
 
 There are typically two ways we will loop through and examine each character in a string. 
 
-Assume that the variable `s` contains a string value. Back when we introduced the `for`-loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for`-loop.
+Assume that the variable `s` contains a string value. Back when we introduced the `for` loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
 
 [source,python,nymbered]
 ----
@@ -5504,6 +5504,8 @@ for i in range(len(s)):         <1>
 ----
 <1> `i` will take on the integer values `0` up to but not including `28`.
 <2> `s` is a string, `i` is an integer, so `s[i]` is the character at index `i`.
+
+For example, lets say we wanted to count the number of double characters in a string. For example `Mississippi` has three sets of double characters; the first `ss`, the second `ss`, and the `pp`.
 
 ==== Strings are _immutable_
 
