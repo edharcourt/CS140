@@ -913,7 +913,7 @@ stem:[W = 35.74 + 0.6215t + (0.4275t - 35.75)v^{0.16}]
 Print the result rounded to one decimal place, like the `23.7` above.
 
 .Area of circle
-The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a program that prompts the user for a radius and computes and computes and prints the area of the circle rounded to 3 decimal places.
+The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a program that prompts the user for a radius and computes and prints the area of the circle rounded to 3 decimal places.
 
 .Volume of a Cone
 The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Python program that will read the radius and the height from the user and computes and prints the volume of the cone.
@@ -945,10 +945,10 @@ Your change is...
 ---- 
 
 .Distance from origin
-The distance of a point stem:[(x,y)] from the origin, by the Pythagorean theorem is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an stem:[x] and a stem:[y] from the user and computes the distance of the point from the origin.
+The distance stem:[d] of a point stem:[(x,y)] from the origin, by the Pythagorean theorem, is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an stem:[x] and a stem:[y] from the user and computes the distance of the point from the origin.
 
 .Distance between two points
-The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived usingthe Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
+The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived using the Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
 
 '''
 
