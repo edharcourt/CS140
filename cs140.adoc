@@ -1,7 +1,7 @@
 An Introduction to Computer Science and Programming with Python
 ===============================================================
 Ed Harcourt <edharcourt@stlawu.edu>
-v0.1, May 2017:
+v0.1, May 2018:
 :toc: right
 :doctype: book
 :toclevels: 2
@@ -38,7 +38,8 @@ If you happen upon these notes outside of my course and you find them useful I w
 Goals of the course include:
 
 * Appreciate the complexity of the software systems we encounter every day.
-* Emphasize problem soving in a precise and logical framework.
+* Emphasize problem soving in a precise and logical framework
+  (the Python programming language).
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
 === Acknowledgements
@@ -5470,7 +5471,7 @@ would create an _index out of range_ error, because it is trying to print charac
 
 There are typically two ways we will loop through and examine each character in a string. 
 
-Assume that the variable `s` contains a string value. Back when we introduced the `for`-loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for`-loop.
+Assume that the variable `s` contains a string value. Back when we introduced the `for` loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
 
 [source,python,nymbered]
 ----
@@ -5503,6 +5504,8 @@ for i in range(len(s)):         <1>
 ----
 <1> `i` will take on the integer values `0` up to but not including `28`.
 <2> `s` is a string, `i` is an integer, so `s[i]` is the character at index `i`.
+
+For example, lets say we wanted to count the number of double characters in a string. For example `Mississippi` has three sets of double characters; the first `ss`, the second `ss`, and the `pp`.
 
 ==== Strings are _immutable_
 
