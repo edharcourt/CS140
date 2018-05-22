@@ -2031,7 +2031,7 @@ One modification is that we can _animate_ the particle moving across the screen 
 . Erase the background
 . Update the an object's position (for example, the particle's stem:[x] coordinate).
 . Redraw the object
-. introduce a slight delay to model the passage of time
+. introduce a slight delay to model (mimic or simulate) the passage of time
 
 [source,python,numbered]
 ----
@@ -2800,7 +2800,7 @@ One of the benefits of writing a program like this, a _simulation_, is that we c
 
 TIP: If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
 
-NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some realy world process. 
+NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some real-world process. 
 
 As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?
 
@@ -2972,11 +2972,11 @@ TBD
 ----
 ====
 
-The Gambler's Ruin is an example of a _random walk_. Random walks are useful for builing models in many disciplines including economics.footnote:[One of the best know books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
+The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
 
 Random walks have a sophisticated and complex mathematical theory. However, notice how straighforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
 
-The Gambler's Ruin is an example of a _one dimensional reandom walk. One dimensional becuase there is only one random variable.
+The Gambler's Ruin is an example of a _one dimensional random walk. One dimensional becuase there is only one random variable.
 
 === Brownian Motion
 
@@ -6129,24 +6129,24 @@ NOTE: _Genomics_ is the branch of bioinformatics that uses string algorithms to 
 
 ==== Searching a DNA Sequence
 
-The _central dogma_ describes how DNA is converted to RNA tomake proteins. A _gene_ is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequence contain genes and are sometimes referred to a _protein-coding_ genes. A _codon_ is three consective base pairs such as `GCA` or `AAT`. Protein coding genes obey the following constraints.
+The _central dogma_ describes how DNA is converted to RNA to make proteins. A _gene_ is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequences contain genes and are sometimes referred to a _protein-coding_ genes. A _codon_ is three consective base-pairs such as `GCA` or `AAT`. Protein coding genes obey the following constraints.
 
  . Start with the codon `ATG`, (sometimes called a _start codon_)
  . End with one of the _stop codons_ `TAA`, `TAG`, or `TGA`. 
  . The number of base-pairs (nucleotides) between the start and stop codons must be a multiple of three.
  . None of the intervening codons is one of the stop codons.
 
-For example the sequence [mono]#ac##atgcattggagctga##acca# contains a potential gene (highlighted) while The sequence [mono]#ac##atagttggagctga##acca# is not. The reason is that starting at index three we have 
+For example the sequence [mono]#ac##atgcattggagctga##acca# contains a potential gene (highlighted) while the sequence [mono]#ac##atagttggagctga##acca# is not. The reason is that starting at index three we have `ata` and not `atg`.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Verify that the highlighted region above matches the criteria for a possible gene.
+Verify that the first highlighted region above matches the criteria for a potential gene.
 
 [.result]
 ====
 The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.
 ====
 
-Lets write a function `possible_gene` that takes a DNA sequence and returns true of the sequence meets the criteria for a gene.
+Lets write a function `possible_gene` that takes a DNA sequence and returns `True` if the sequence meets the criteria for a gene.
 
 
 
@@ -6179,7 +6179,10 @@ a|
 
 == Cryptography
 
-Cryptography allows two parties to communicate, in secret, but at a distance.  
+Cryptography is the science (and mathematics)  of sending message from a sender to a receiver 
+securely such that someone listening in cannot understand the message. 
+_Real_ cryptography, like that found in implemented in web browsers when you navigate to a secure web site such as your bank, or that found in secure messaging apps such as WhatsApp, requires some advanced mathematics and some sophisticated computer science that is beyond an introductory course. But we can go a long way to understand the fundamentals of how messages can be transmitted secretly.
+
 
 == Network Programming
 
@@ -6187,6 +6190,8 @@ Cryptography allows two parties to communicate, in secret, but at a distance.
 == Lists
 
 === The Birthday Paradox
+
+Example, voter fraud
 
 === Particle Simulation: Take 2
 
@@ -6207,6 +6212,15 @@ a|
  * tbd 
 
 |===
+
+[bibliography]
+== References
+
+. John MacCormick. _Nine Algorithms that Changed the World_. Princeton University Press. 2012.
+. Harrison Kinsley and Will McGugan. _Beginning Python Games Development with Pygame_. Second Edition. Apress. 2015.
+. Robert Sedgewick and Kevin Wayne. _Computer Science, An Interdisciplinary Approach_. Addison Wesley. 2017.
+. Mark Lutz. Learning Python. Fifth Edition. O'Reilly. 2013. 
+
 
 
 [appendix]
