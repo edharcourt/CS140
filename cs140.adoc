@@ -6224,6 +6224,7 @@ a|
 . David Harel with Yishai Feldman. _Algorithmics, The Spirit of Computing_. Third Edition. Addison Wesley. 2004.
 . Iwo Bialynicki-Birula and Iwona Bialynicka-Birula. _Modeling Reality, How Computers Mirror Life_. Oxford University Press. 2004.
 . Sarah Flannery with David Flannery. _In Code, A Young Woman's Mathematical Journey_. Algonquin Books of Chapel Hill. 2002.
+. Leonard Mlodinow. _The Drunkard's Walk, How Randomness Rules Our Lives_. Pantheon. 2008.
 
 [appendix]
 
