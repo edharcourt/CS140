@@ -6236,24 +6236,25 @@ a|
 
 === Installing Pycharm
 
-=== Python Functions
+== Python Functions
 
 ==== Builtin Functions
 
-* len(obj)
+* `len(obj)`
+* `print(args)`
 
-==== The Random Module
+=== The Random Module
 
 * `import random`
 * `random.randrange(n)`
 * `random.random()`
 
-==== The Math Module
+=== The Math Module
 
 * `import math`
 * `math.sqrt(n)`
 
-==== The Pygame Module
+=== The Pygame Module
 
 * `import pygame`
 * `pygame.display.set_mode((w,h))`
