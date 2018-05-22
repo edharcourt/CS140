@@ -19,6 +19,8 @@ http://www.petercollingridge.co.uk/book/export/html/6
 http://www.petercollingridge.co.uk/book
 https://stackoverflow.com/questions/101268/hidden-features-of-python/1024693
 http://a-little-book-of-r-for-bioinformatics.readthedocs.io/en/latest/index.html
+http://codingbat.com/python
+https://www.scipy-lectures.org/
 
 ////
 
@@ -6236,12 +6238,27 @@ a|
 
 === Installing Pycharm
 
+[appendix]
+
 == Python Functions
+
+This is by no means a refereance manual or exhaustive. This only covers functions and 
+modules we have encountered in this text.
 
 ==== Builtin Functions
 
 * `len(obj)`
 * `print(args)`
+* `str(obj)`
+* `int(obj)`
+* `float(obj)`
+* `input(prompt)`
+* `abs(number)`
+* `min(args)`
+* `max(args)`
+* `round(n,d)`
+
+https://docs.python.org/3/library/functions.html
 
 === The Random Module
 
@@ -6253,6 +6270,9 @@ a|
 
 * `import math`
 * `math.sqrt(n)`
+* `math.pi`
+
+https://docs.python.org/3/library/math.html
 
 === The Pygame Module
 
