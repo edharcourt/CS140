@@ -6219,9 +6219,11 @@ a|
 . John MacCormick. _Nine Algorithms that Changed the World_. Princeton University Press. 2012.
 . Harrison Kinsley and Will McGugan. _Beginning Python Games Development with Pygame_. Second Edition. Apress. 2015.
 . Robert Sedgewick and Kevin Wayne. _Computer Science, An Interdisciplinary Approach_. Addison Wesley. 2017.
-. Mark Lutz. Learning Python. Fifth Edition. O'Reilly. 2013. 
-
-
+. Mark Lutz. _Learning Python_. Fifth Edition. O'Reilly. 2013. 
+. Bruce Schneier. _Applied Cryptography_. Second Edition. Wiley. 1996.
+. David Harel with Yishai Feldman. _Algorithmics, The Spirit of Computing_. Third Edition. Addison Wesley. 2004.
+. Iwo Bialynicki-Birula and Iwona Bialynicka-Birula. _Modeling Reality, How Computers Mirror Life_. Oxford University Press. 2004.
+. Sarah Flannery with David Flannery. _In Code, A Young Woman's Mathematical Journey_. Algonquin Books of Chapel Hill. 2002.
 
 [appendix]
 
