@@ -47,7 +47,7 @@ Goals of the course include:
 === Acknowledgements
 
 These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
-https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]
+https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.
 
 == Introduction
 
@@ -2279,9 +2279,9 @@ Assume we have current population of roughly 7.5 billion.footnote:[https://www.c
 | image:pop-5000-year.png[width=300,height=300]
 |===
 
-NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] wherestem:[m]is the slope andstem:[b]is the stem:[y]-intercept.
+NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where stem:[m] is the slope and stem:[b] is the stem:[y]-intercept.
 
-NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituing once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n]. And the exponential is obvious. 
+NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituting once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n]. And the exponential is obvious. 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 When using a loop like this we can easily ask alternative questions such as _how many years will it take to reach a population of 10 billion_? This is just a simple matter of rephrasing the loop condition.
@@ -6145,14 +6145,67 @@ Verify that the first highlighted region above matches the criteria for a potent
 
 [.result]
 ====
-The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.
+The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.  Since the gene must also start with a `atg` and end with a stop-codon that has three base-pairs, the length of the enitre sequence must also be a multiple of three.
 ====
 
-Lets write a function `possible_gene` that takes a DNA sequence and returns `True` if the sequence meets the criteria for a gene.
+Lets write a program to find all of the _potential_ genes in the ecoli bacteria. The program should 
+print the starting location and the ending location of each potential gene location. For example the 
+digram below shows that the first possible gene location starts at location 29 and ends at location 95.
 
+image::gene.png[align="center"]
 
+The yellow highlites are the start and stop codons.    To get the started we can find the location
+of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
 
+[source,python,numbered]
+----
+f = open('ecoli.txt')
+dna = f.readline()
+start = dna.find('atg')                               <1>
 
+if start > -1:                                        <2>
+    for i in range(start+3, len(dna)-3, 3):           <3>
+	    if dna[i:i+3] in ['taa', 'tag', 'tga'] and \  <4>
+		   (i - start) % 3 == 0:                      <5>
+		    print(start, i)                
+		    break                                     <6>
+----
+<1> Find the location of the start codon
+<2> Only look for a stop codon if we found a start codon.
+<3> Look for a stop codon starting from `start+3` being careful not to go off of then end of the DNA string and a potential index out of bounds error.
+<4> This is a nice way to check for the stop codon instead of a complicated logical expression sch as `dna[i:i+3] == 'taa' or dna[i:i+3] == 'tag'` etc.
+<5> Make sure the length of the region is divisible by three.
+<6> As soon as we find a possible gene location stop looking bcause the rule is that there cannot be an intervening stop codon.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The above code only finds the first possible gene location. Modify the program to find all of the possible gene locations.
+
+[.result]
+====
+Rather than use an if-statement to check only the first site we need to keep 
+iterating until we don't find any more start codons.
+
+[source,python]
+----
+f = open('ecoli.txt')
+dna = f.readline()
+start = dna.find('atg')                               
+
+while start > -1:                                     <1>
+    for i in range(start+3, len(dna)-3, 3):           
+	    if dna[i:i+3] in ['taa', 'tag', 'tga'] and \ 
+		   (i - start) % 3 == 0:                      
+		    print(start, i)                
+		    break  
+    start = dna.find('atg',start+1)                   <2>
+			
+----
+<1> Keep looking until we don't find any more start codons.
+<2> Look for the next start codon _after_ the previous start codon.
+====
+
+NOTE: The sequence of base-paris between the start and stop codons are called
+_coding regions_. The base-pairs outside of genes are called _non-coding regions_.
 
 === Exercises
 
@@ -6168,6 +6221,8 @@ a|
  * slice
  * factorial
  * whitespace
+ * start codon
+ * stop codon
 
 a|
  * byte 
@@ -6176,6 +6231,7 @@ a|
  * anagram
  * newline
  * bioinformatics
+ * gene
 
 |===
 
@@ -6216,7 +6272,9 @@ a|
 |===
 
 [bibliography]
-== References
+== References and Reading
+
+Students often ask me about books and resources. Here are some of my goto references, when I'm looking for ideas, examples, or maybe just a knew way to try and explain a difficult concept.
 
 . John MacCormick. _Nine Algorithms that Changed the World_. Princeton University Press. 2012.
 . Harrison Kinsley and Will McGugan. _Beginning Python Games Development with Pygame_. Second Edition. Apress. 2015.
@@ -6227,6 +6285,14 @@ a|
 . Iwo Bialynicki-Birula and Iwona Bialynicka-Birula. _Modeling Reality, How Computers Mirror Life_. Oxford University Press. 2004.
 . Sarah Flannery with David Flannery. _In Code, A Young Woman's Mathematical Journey_. Algonquin Books of Chapel Hill. 2002.
 . Leonard Mlodinow. _The Drunkard's Walk, How Randomness Rules Our Lives_. Pantheon. 2008.
+. David Harel. _Computers Ltd. What They Really Can't Do_. Oxford University Press. 2000.
+. Ian Stewart. _In Pursuit of the Unknown_. Basic Books. 2012.
+. Elizabeth Allman and John Rhodes. _Mathematical Models in Biology, An Introduction_. Cambridge Univeristy Press. 2004.
+. Mitchell Resnick. _Turles, Termites, and Traffic Jams, Explorations in Massivey Parallel Microworlds_. The MIT Press. 1994.
+. Charles Petzold. _CODE, The Hidden Language of Computer Hardware and Software_. Microsoft Press. 2000.
+. Donella Meadows. _Thinking In Systems, A Primer_. Chelsea Green. 2008.
+. Nigel Gilbert. _Agent Based Models_. Sage Publishing. 2008.
+
 
 [appendix]
 
@@ -6245,7 +6311,7 @@ a|
 This is by no means a refereance manual or exhaustive. This only covers functions and 
 modules we have encountered in this text.
 
-==== Builtin Functions
+=== Builtin Functions
 
 * `len(obj)`
 * `print(args)`
