@@ -6154,8 +6154,7 @@ digram below shows that the first possible gene location starts at location 29 a
 
 image::gene.png[align="center"]
 
-The yellow highlites are the start and stop codons.    To get the started we can find the location
-of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
+The yellow highlightes are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
 
 [source,python,numbered]
 ----
@@ -6204,8 +6203,8 @@ while start > -1:                                     <1>
 <2> Look for the next start codon _after_ the previous start codon.
 ====
 
-NOTE: The sequence of base-paris between the start and stop codons are called
-_coding regions_. The base-pairs outside of genes are called _non-coding regions_.
+NOTE: The sequence of base-pairs between the start and stop codons are called
+_coding regions_. The sequence of base-pairs not part of a coding region are called, _non-coding regions_.
 
 === Exercises
 
@@ -6237,9 +6236,13 @@ a|
 
 == Cryptography
 
-Cryptography is the science (and mathematics)  of sending message from a sender to a receiver 
-securely such that someone listening in cannot understand the message. 
-_Real_ cryptography, like that found in implemented in web browsers when you navigate to a secure web site such as your bank, or that found in secure messaging apps such as WhatsApp, requires some advanced mathematics and some sophisticated computer science that is beyond an introductory course. But we can go a long way to understand the fundamentals of how messages can be transmitted secretly.
+Cryptography is the science and related mathematics of sending messages from a sender to a receiver 
+_securely_ such that someone listening in (an evesdroppper) cannot understand the message. 
+In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and some sophisticated computer science that is beyond an introductory course. But we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact one cryptographic system, the _one time pad_, is known to be completely secure and is relatively easy to understand. The one time pad does have some downsides, which we will discuss.
+
+
+
+
 
 
 == Network Programming
