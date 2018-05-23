@@ -416,7 +416,7 @@ TIP: We will see a use of computing the modulus of a negative number in cryptogr
 
 === More on String Literals
 
-Strings are an important part of programming. Strings often seem boring but they are partof every piece of software and are often central to applications such web searching, texting, email, DNA sequence analysis, and cryptography.
+Strings are an important part of programming. Strings often seem boring but they are part of every piece of software and are often central to applications such web searching, texting, email, DNA sequence analysis, and cryptography.
 
 A string literal is a sequence of characters between double quotes. 
 
@@ -2281,7 +2281,7 @@ Assume we have current population of roughly 7.5 billion.footnote:[https://www.c
 
 NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where stem:[m] is the slope and stem:[b] is the stem:[y]-intercept.
 
-NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituting once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n]. And the exponential is obvious. 
+NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituting once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n], and the exponential is obvious. 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 When using a loop like this we can easily ask alternative questions such as _how many years will it take to reach a population of 10 billion_? This is just a simple matter of rephrasing the loop condition.
@@ -5374,7 +5374,7 @@ If, however, we make agents very intolerant by having, say a 70% threshold, and 
 
 ==== Schelling Summary
 
-The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publicaitons, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
+The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
 
 === Exercises
 
@@ -5413,9 +5413,9 @@ a|
 
 == String and File Processing
 
-Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines sich as google store and search truly massive amounts of text from literally almost every web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
+Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines such as google store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
 
-TIP: A _byte_ (8 bits) as enough to store a single character. 
+TIP: A _byte_ (8 bits) is enough to store a single character. 
 
 We have already used text in our programs; strings are text. We hardcode text into our programs using string constants ...
 
