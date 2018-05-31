@@ -11,5 +11,7 @@ def encrypt(clear,shift):
     return cipher
 
 
+
+
 print(encrypt("Attack at dawn!", 13))
 print(encrypt("NGGnpx7nG7qnJA.", -13))

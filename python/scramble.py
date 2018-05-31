@@ -11,6 +11,10 @@ def scramble(word):
     return tmp
 
 
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+key = scramble(alphabet)
+print(key)
+
 '''
 j = 0
 sum = 0

@@ -1098,7 +1098,7 @@ input("Hit <enter> to quit.")
 
 Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
 
-NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Ecommunity Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
+NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
 
 One common thing many of our pygame programs will do is to define some colors. 
 
@@ -6398,6 +6398,137 @@ print(encrypt("NGGnpx7nG7qnJA.", -13))
 ```
 and we get the original `Attack at dawn!` message.
 
+So what is wrong with the Caesar cipher? Just about everything. But the main problem is that there are only as many different shift possibilities as there are characters in the alphabet, and it would be pretty easy to write a program to try them all.
+
+=== Substitution Cipher
+
+Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet to? For example
+
+[source,python]
+----
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+key = scramble(alphabet)
+print(key)
+----
+
+Might print `thubrwfzqpcjeovkmsgdxailny`. In the _substitution cipher_ an `a` would map to a `t` and a `b` would map to an `h`, and so on.
+
+----
+0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+t  h  u  b  r  w  f  z  q  p  c  j  e  o  v  k  m  s  g  d  x  a  i  l  n  y
+---- 
+
+Then to convert from a cleartext character to a ciphertext character it is as straightforward as finding the position of the cleartext character in the alphabet and returning the corresponding ciphertext character at that position. For example, using th key above, the expression `key[alphabet.find('h')]` would evaluate to the character `z`.   The inverse operation needed for decrypting is, given a ciphertext character, find the the corresponding cleartext character. 
+This is easy too. The expression `alphabet[key.find('z')]` would evaluate to `h`.
+
+The function `encrypt` now takes a cleartext message and a key (i.e., a scrambled alphabet) and returns 
+the ciphertext. The function `decrypt` takes a ciphertext message _and the same key that was used to generate the ciphertext_, and returns the cleartext.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write the functions `encrypt` and `decrypt` for the substitution cipher. Assume you can call the`scramble` function to generate a key that can be shared between `encrypt` and `decrypt`.
+
+[.result]
+====
+Here is encrypt.
+
+[source,python]
+----
+def encrypt(cleartext, key):
+
+    alphabet = string.printable
+    ciphertext = ''
+
+    for ch in cleartext:
+        ciphertext = ciphertext + key[alphabet.find(ch)]
+
+    return ciphertext
+
+----
+
+And here is `decrypt`.
+
+[source,python]
+----
+def decrypt(ciphertext, key):
+    alphabet = string.printable
+
+    cleartext = ''
+
+    for ch in ciphertext:
+        cleartext = cleartext + alphabet[key.find(ch)]
+
+    return cleartext
+
+----
+
+Here's a main program that can be used to test `encrypt` and `decrypt`.
+
+[source,python]
+----
+import string
+key = scramble(string.printable)           <1>
+secret = encrypt("Attack at dawn!", key)   <2>
+print(decrypt(secret, key))                <3>
+----
+<1> Create the key by scrambling all of the printable characters in python.
+<2> Encrypt _Attack at dawn!_. 
+<3> Verify that what decrypt returns is indeed _Attack at dawn!_.
+====
+
+Of course, once again, Alice and Bob must share the secret key, which this time is a little more difficult that sharing an integer shift.  How many possible keys are there? A lot! Lets assume our alphabet is just the 26 lower case characters. The first character of the key can be any one of the 26 characters. The second character of the key can be any one of the 25 remaining characters, and so on. The number of possible keys is then stem:[26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 ]. In mathematics this is _26 factorial_, denoted as stem:[26!].  This is a very large number.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a simple Python program to compute 26 factorial.
+
+[.result]
+====
+There are lots of ways to do this. Here is one that matches the order of the operations 
+stem:[26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 ]
+
+[source,python]
+----
+prod = 1
+
+for i in range(26,0,-1):
+    prod = prod * i
+
+print(prod)
+----
+
+Of course, since multiplication is comptative we dont have to start at 26 and count down. We could start at 1 and count up to 26.
+
+[source,python]
+----
+prod = 1
+
+for i in range(1,27): <1>
+    prod = prod * i
+
+print(prod)
+----
+<1> What would happen if our loop header was `for i in range(27):`
+====
+
+Needless to say 26 factorial is `403291461126605635584000000`. This number is large than `4e26`. 
+Surely the massive number of possible keys must mean that the substitution cipher is impossible 
+to break? Sadly, no. The substitution cipher is easy to break using a technique called _frequency 
+analysis_. To illustrate, lets once again assume we are dealing with the lower case Latin 
+alphabet and that Eve see's the ciphertext `hcchtrhclhyu`.  With a standard table of letter frequencies  from https://en.wikipedia.org/wiki/Letter_frequency [Wikipedia] and a little patience a cryptanalyst could figure out that `hcchtrhclhyu` was `attackatdawn`.   The weakness in the substitution cipher (and the Caesar cipher, as well as many other ciphers) is that letters repeat.  
+
+=== The One Time Pad - an Unbreakable Cipher
+
+The One time pad combines the good idea of using addition modulo a random number with the randomness of a string characters from the substitution cipher. Assume we can generate a random string of characters that is as long as the message being encrypted. This random string of characters is the _One Time Pad_, which we will call the key. One again, for illustration, we will assume the lower case Latin alphabet.
+
+To encrypt a message using a one time pad we line up the cleartext and the key and add the positions of each character modulo 26.  For example, lets say we wanted to encrypt `apple` using the one time pad `lzksj`.
+
+----
+apple      0 15 15 11  4
+lzksj     11 25 10 18  9
+lozdn     11 14 25  3 13
+----
+
+
 
 == Network Programming
 
@@ -6406,7 +6537,7 @@ and we get the original `Attack at dawn!` message.
 
 === The Birthday Paradox
 
-Example, voter fraud
+==== Example, voter fraud
 
 === Particle Simulation: Take 2
 
