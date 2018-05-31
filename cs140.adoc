@@ -6520,7 +6520,7 @@ alphabet and that Eve see's the ciphertext `hcchtrhclhyu`.  With a standard tabl
 
 The One time pad combines the good idea of using addition modulo a random number with the randomness of a string characters from the substitution cipher. Assume we can generate a random string of characters that is as long as the message being encrypted. This random string of characters is the _One Time Pad_, which we will call the key. One again, for illustration, we will assume the lower case Latin alphabet.
 
-To encrypt a message using a one time pad we line up the cleartext and the key and add the positions of each character modulo 26.  For example, lets say we wanted to encrypt `apple` using the one time pad `lzksj`.
+To encrypt a message using a one time pad we line up the cleartext and the key and add the positions of each character modulo 26.  For example, lets encrypt `apple` using the one time pad `lzksj`.
 
 ----
 apple      0 15 15 11  4
