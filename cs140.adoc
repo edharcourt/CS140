@@ -6520,15 +6520,69 @@ alphabet and that Eve see's the ciphertext `hcchtrhclhyu`.  With a standard tabl
 
 The One time pad combines the good idea of using addition modulo a random number with the randomness of a string characters from the substitution cipher. Assume we can generate a random string of characters that is as long as the message being encrypted. This random string of characters is the _One Time Pad_, which we will call the key. One again, for illustration, we will assume the lower case Latin alphabet.
 
-To encrypt a message using a one time pad we line up the cleartext and the key and add the positions of each character modulo 26.  For example, lets encrypt `apple` using the one time pad `lzksj`.
+To encrypt a message using a one time pad we line up the cleartext and the key (_i.e.i._, the one time pad) and add the positions of each character modulo 26.  For example, encrypting `apple` using the one time pad `lzksj` results in the ciphertext `lozdn`. 
 
+.One Time Pad Encryption
+image::OTP_encrypt.png[width=500]
+
+The process of decrypting using a one time pad is exactly the opposite. We line up the ciphertext with the key and then _subtract_ modulo 26. For example, given the ciphertext `lozdn` we subtract the one time pad `lzjsj` to get `apple` back.
+
+.One Time Pad Decryption
+image::OTP_decrypt.png[width=500]
+
+The one tricky aspect is to remember how to compute mod using negative numbers. For example, `(14 - 25) % 26` is equal to `-11 % 26` which is `15`.
+
+Implementing the `encrypt` and `decrypt` functions are straighforward.
+
+.One Time Pad Encrypt
+[source, python]
 ----
-apple      0 15 15 11  4
-lzksj     11 25 10 18  9
-lozdn     11 14 25  3 13
+def encrypt(cleartext, otp):                                            <1>
+
+    alphabet = string.printable
+    ciphertext = ''
+
+    for i in range(len(cleartext)):                                     <2>
+        ciphertext += alphabet[(alphabet.find(cleartext[i]) +
+                                alphabet.find(otp[i])) % len(alphabet)] <3>
+
+    return ciphertext
 ----
+<1> The variable `otp` is the one time pad. Its length must be greater than or equal to the length of the cleartext.
+<2> Are using his version of the for-loop becuase we need to get the i^th^ character from _both_ the cleartext and the one time pad.
+<3> There is a lot packed in to this one line, but it simply looks up the position of a cleartext character and the correspnding one time pad character, adds them together mod the length of the alphabet to get the position of the ciphertext character, and extracts that character from the alphabet and concatenates it to the ciphertext. Note the use of the `+=` operator.
+
+.One Time Pad Decrypt
+[source,python]
+----
+def decrypt(ciphertext, otp):
+
+    alphabet = string.printable
+    cleartext = ''
+
+    for i in range(len(ciphertext)):
+        cleartext += alphabet[(alphabet.find(ciphertext[i]) -          <1>
+                               alphabet.find(otp[i])) % len(alphabet)]
+
+    return cleartext
+----
+<1> The only real difference between `encrypt` and `decrypt` is the `-` on this line.
+
+Why is the one time pad considered completely secure (unbreakable)? Recall that the pad must be as long as the cleartext being encrypted and that each character in the one time pad is truely random. Lets say we are presented with the ciphertext `lozdn`. In order to decrypt the first characters `l` we would have to correctly guess the first character in the pad. We have a stem:[1/26 = .038] chance of guessing correctly. To decrypt the first two characters we would have to correctly guess the first two characters of the pad, or stem:[1/26 \cdot 1/26 = .0015] chance. To correctly guess the entire key of length five is stem:[1/26^5 = .000000084]. Message will be much longer than five characters to the probability very quickly approaches zero.
+
+If the One Time Pad is truly unbreakable then why aren't all of our communications completely secure? Well, as you might expect the One Time Pad has a downside.
+
+- as the name suggests, the pad _can only be used once_. If you ever reuse a pad on a different cleartext, then the message is no longer secure because an attacker can now use frequency analysis to break the pad.
+- the pads could be really long and they need to be shared between the sender and receiver (Alice and Bob) in advance. 
+
+What about generating the generating a one time pad? Well this is relatively easy.
+
+- TBD Check yourse;lf, one time pad function
+
+- random number gotcha
 
 
+    
 
 == Network Programming
 
