@@ -2976,7 +2976,7 @@ TBD
 
 The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
 
-Random walks have a sophisticated and complex mathematical theory. However, notice how straighforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
+Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
 
 The Gambler's Ruin is an example of a _one dimensional random walk. One dimensional becuase there is only one random variable.
 
@@ -6511,7 +6511,7 @@ print(prod)
 <1> What would happen if our loop header was `for i in range(27):`
 ====
 
-Needless to say 26 factorial is `403291461126605635584000000`. This number is large than `4e26`. 
+Needless to say 26 factorial is `403291461126605635584000000`. This number is larger than `4e26`. 
 Surely the massive number of possible keys must mean that the substitution cipher is impossible 
 to break? Sadly, no. The substitution cipher is easy to break using a technique called _frequency 
 analysis_. To illustrate, lets once again assume we are dealing with the lower case Latin 
@@ -6574,16 +6574,33 @@ Why is the one time pad considered completely secure (unbreakable)? Recall that 
 If the One Time Pad is truly unbreakable then why aren't all of our communications completely secure? Well, as you might expect the One Time Pad has a downside.
 
 - as the name suggests, the pad _can only be used once_. If you ever reuse a pad on a different cleartext, then the message is no longer secure because an attacker can now use frequency analysis to break the pad.
-- the pads could be really long and they need to be shared between the sender and receiver (Alice and Bob) in advance. 
+- Snce a one time pad must be as long as the cleartext message the pads could be really lon. And since Alice and Bob both need to share a copy of the pad in advance then this could be cumbersome. 
 
-What about generating the generating a one time pad? Well this is relatively easy.
+How does one go about generating a one time pad? This is relatively easy. Keep randomly pick characters from the alphabet and appending them to the pad.
 
-- TBD Check yourse;lf, one time pad function
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function `GenOneTimePad` that takes an integer `n` and returns a random string of characters of langth `n`.
 
-- random number gotcha
+[.result]
+====
 
+[source,python]
+----
+def GenOneTimePad(n):
+    pad = ''
+    alphabet = string.printable
 
-    
+    for i in range(n):
+        pad += alphabet[random.randrange(len(string.printable))] <1>
+
+    return pad
+----
+<1> There is actually a fatal flaw in our use of the standard random number generators in the `random` module. 
+====
+
+Random number generators found in programming languages are really _pseudorandom_. That is the numbers generated are not really random but only appear to be random. They are fine for use in simulations such as Brownian motion or computer games, but their predictability make them unsuitable for cryptography or even games used in casinos. We say that they are not _cryptographically secure_. The acronyms we use for a _pseudo random number generator_ is https://en.wikipedia.org/wiki/Pseudorandom_number_generator[PRNG] and the tounge twister _cryptographically secure pseudo random number generator_ is https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator[CSPRNG].
+
+Fortunately the python module https://docs.python.org/3/library/secrets.html[`secrets`] provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called _entropy_. Entropy is built up over time, for example, times between ketboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.  
 
 == Network Programming
 

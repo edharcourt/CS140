@@ -1,4 +1,4 @@
-import string
+import string, random
 
 def encrypt(cleartext, otp):
 
@@ -22,6 +22,14 @@ def decrypt(ciphertext, otp):
 
     return cleartext
 
+def GenOneTimePad(n):
+    pad = ''
+    alphabet = string.printable
 
-otp ='ljhlkjhwefiuwdfhsdfkjjhksdfjhksdfjhk'
+    for i in range(n):
+        pad += alphabet[random.randrange(len(string.printable))]
+
+    return pad
+
+otp = GenOneTimePad(20)
 print(decrypt(encrypt('Hello!', otp), otp))
