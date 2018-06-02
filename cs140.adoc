@@ -6021,7 +6021,7 @@ def linecount(fname):
     f = open(fname)
     count = 0
     for line in f:
-        count = count + 1
+        count += 1
     f.close()
     return count
 
@@ -6237,7 +6237,7 @@ a|
 == Cryptography
 
 Cryptography is the science and related mathematics of sending messages from a sender to a receiver 
-_securely_ such that someone listening in (an evesdroppper) cannot understand the message. 
+_securely_ such that someone listening in (an evesdropper) cannot understand the message. 
 In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
 some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we wil study one cryptographic system, that is known to be completely secure and is relatively easy to understand and implement. 
 
@@ -6551,7 +6551,7 @@ def encrypt(cleartext, otp):                                            <1>
 ----
 <1> The variable `otp` is the one time pad. Its length must be greater than or equal to the length of the cleartext.
 <2> Are using his version of the for-loop becuase we need to get the i^th^ character from _both_ the cleartext and the one time pad.
-<3> There is a lot packed in to this one line, but it simply looks up the position of a cleartext character and the correspnding one time pad character, adds them together mod the length of the alphabet to get the position of the ciphertext character, and extracts that character from the alphabet and concatenates it to the ciphertext. Note the use of the `+=` operator.
+<3> There is a lot packed in to this one line, but it simply looks up the position of a cleartext character and the corresponding one time pad character, adds them together mod the length of the alphabet to get the position of the ciphertext character, and extracts that character from the alphabet and concatenates it to the ciphertext. Note the use of the `+=` operator.
 
 .One Time Pad Decrypt
 [source,python]
@@ -6574,9 +6574,9 @@ Why is the one time pad considered completely secure (unbreakable)? Recall that 
 If the One Time Pad is truly unbreakable then why aren't all of our communications completely secure? Well, as you might expect the One Time Pad has a downside.
 
 - as the name suggests, the pad _can only be used once_. If you ever reuse a pad on a different cleartext, then the message is no longer secure because an attacker can now use frequency analysis to break the pad.
-- Snce a one time pad must be as long as the cleartext message the pads could be really lon. And since Alice and Bob both need to share a copy of the pad in advance then this could be cumbersome. 
+- Since a one time pad must be as long as the cleartext message the pads could be really lon. And since Alice and Bob both need to share a copy of the pad in advance then this could be cumbersome. 
 
-How does one go about generating a one time pad? This is relatively easy. Keep randomly pick characters from the alphabet and appending them to the pad.
+How does one go about generating a one time pad? This is relatively easy. Keep randomly picking characters from the alphabet and appending them to the pad.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a function `GenOneTimePad` that takes an integer `n` and returns a random string of characters of langth `n`.
@@ -6602,6 +6602,37 @@ Random number generators found in programming languages are really _pseudorandom
 
 Fortunately the python module https://docs.python.org/3/library/secrets.html[`secrets`] provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called _entropy_. Entropy is built up over time, for example, times between ketboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.  
 
+=== Exercises
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * Casear Cipher
+ * Substitution Cipher
+ * cleartext
+ * key
+ * encrypt
+ * Alice, Bob, Eve
+ * Entropy
+ * factorial
+
+a|
+ * Shift Cipher 
+ * One Time Pad
+ * plaintext
+ * ciphertext
+ * decrypt
+ * PRNG
+ * CSPRNG
+ * Frequency Analysis
+
+|===
+
+
 == Network Programming
 
 
@@ -6609,7 +6640,7 @@ Fortunately the python module https://docs.python.org/3/library/secrets.html[`se
 
 === The Birthday Paradox
 
-==== Example, voter fraud
+==== Example, Debunking claims of voter fraud
 
 === Particle Simulation: Take 2
 
