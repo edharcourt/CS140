@@ -159,7 +159,7 @@ We can also use scientific notation for very small numbers.  The mass of an elec
 
 TIP: We will often also use the term _constant_ instead of _literal_. An integer literal is also called an _integer constant_. A floating-point literal is also called a _floating-point constant_. A string literal is also called a _string constant_.
 
-.Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 The radius of an electron is _0.00000000000000281792_ meters. Express this number using Python's scientific notation.
 
 [.result]
@@ -219,7 +219,7 @@ IMPORTANT: Variables must be defined before they are used.
 
 The Python program 
 
-[source,python,numbered]
+[source,python]
 ----
 print(x)
 ----
@@ -228,7 +228,7 @@ would produce an error becuse the variable `x` does not have a value.
 
 IMPORTANT: Variable names are not string literals.
 
-.There is a big difference between the two statements...
+.What is the difference between the two statements...
 [source,python,numbered]
 ----
 print("The value of pi squared is", pi_squared) # <1>
@@ -257,7 +257,7 @@ You can also use a comment to finish a line.
 
 [source,python,numbered]
 ----
-pi = 3.14159   # define a variable pi
+pi = 3.14159   # define a variable named pi
 ----
 
 === Mathematical Expressions
@@ -441,7 +441,7 @@ But what if we want to include a single quote as one of the characters in our st
 [source,python,numbered]
 "This isn't an error"
 
-This works becuase the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
+This works because the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
 
 The following is incorrect.
 
@@ -497,7 +497,7 @@ WARNING: Spacing at the start of a line that changes indentation can cause probl
 
 === A note about indentation
 
-We will see later on that indentation plays an important role in Python. For now you should just note that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
+We will see later on that indentation plays an important role in Python. For now just be aware that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
 
 Here is an example. The following program is in error because the second statement is indented one space.
 
@@ -626,7 +626,7 @@ As you gain practice you will be able to quickly find syntax errors.
 
 === Keyboard Input
 
-Python's `input` function allows the user to enter input from the keyboard. It takes a string as an argument and uses it as a prompt. The `input` function is a different kind of function than the `print` function. The `print` puts values on the Python console window whereas the `input` function produces a string value of the characters that the user typed.
+Python's `input` function allows the user to enter input from the keyboard. It takes a string as an argument and uses it as a prompt to display on the Python console. The `input` function is a different kind of function than the `print` function. The `print` function puts values on the Python console window whereas the `input` function produces a string value of the characters that the user typed.
 
 [source,python,numbered]
 name = input('Enter your name: ')
@@ -637,15 +637,16 @@ print("Hello", name)
  
 <1> `Hermione` is what the user typed and then hit _enter_ on the keyboard.
  
-It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in fahrenheit to celsius is 
+It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in Fahrenheit to Celsius is 
 latexmath:[5/9(f-32)]
 
 [source,python,numbered]
 f = input('Enter a temperature (F): ')
 c = 5/9*(f - 32)
-print(f, "fahrenheit is", c, "celsius")
+print(f, "Fahrenheit is", c, "Celsius")
 
-Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. You need to first convert `f` to either 
+Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. For example, if the user type `75` it would be like trying to 
+compute `"75" - 32`, which is as bad as trying to compute `"hello" - 32`. You need to first convert the value in the variable `f` to either 
 an integer or a floating-point number using either the `int` or `float` function.
 
 WARNING: The `input` function returns a string value, even if the user entered a number. You must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
@@ -665,23 +666,23 @@ Here is our modified program
 [source,python,numbered]
 f = float(input('Enter a temperature (F): ')) <1>
 c = 5/9*(f - 32)
-print(f, "degrees fahrenheit is", c, "degrees celsius")
+print(f, "degrees Fahrenheit is", c, "degrees Celsius")
 
 <1> Notice the use of the function `float` to convert the string to a floating-point number. 
 
 Here is a sample run of the Fahrenheit to Celsius conversion program.
 
  Enter a temperature (F): 83.5 <1>
- 83.5 degrees fahrenheit is 28.61111111111111 degrees celsius
+ 83.5 degrees Fahrenheit is 28.61111111111111 degrees Celsius
 
 <1> The user entered `83.5`
 
-Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks rediculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
+Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks ridiculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
 
 [source,python,numbered]
 f = float(input('Enter a temperature (F): '))
 c = 5/9*(f - 32)
-print(f, "degrees fahrenheit is", round(c,1), "degrees celsius") <1>
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius") <1>
 
 <1> Notice the use of the function `round` to round th value `c` to one decimal places.
 
@@ -706,15 +707,15 @@ that executes defines the variable `f`. +
 `c = 5/9*(f - 32)` +
 defines `c` _by using_ the variable `f`
 . The third statement +
-`print(f, "degrees fahrenheit is", round(c,1), "degrees celsius")` <1> +
+`print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")` +
 prints the result using both `c` and `f`
 
 === The `math` module
  
 Python has lots of support libraries that we can use to get our work done. Think of 
-a support library as predefined functions that you can call on. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
+a support library as predefined functions and definitions that you can use. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
 
-NOTE: A _module_ is a named collection of related frunctions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where you can have folders inside folders to organize your documents.
+NOTE: A _module_ is a named collection of related functions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where you can have folders inside folders to organize your documents.
 
 To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
 
@@ -6637,6 +6638,8 @@ a|
 
 
 == Lists
+
+
 
 === The Birthday Paradox
 
