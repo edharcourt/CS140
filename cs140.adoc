@@ -6633,11 +6633,51 @@ a|
 
 |===
 
-
+////
 == Network Programming
+////
 
+== Tuples and Lists
 
-== Lists
+Recall that a _tuple_ is a type in Python that contain a collection of values. For example we used a tuple for coordinates, such as `(32,712)` or `(0,0)`. We used a tuple with three integers to specify colors, red is `(255,0,0)`, and yellow is `(255,255,0)`. 
+
+A tuple need not contain integers. Any time we want to think of several values as one we can use a tuple. For example we can use a tuple to hold a name such as `("Harry", "Potter")` or 
+`("Harry", "Ron", "Hermione")`.
+
+Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first characters as `s[0]` we can index tuples as well.
+
+[source,python]
+----
+name = ("Harry", "Potter")
+print(name[1], name[0])
+----
+
+prints `Potter Harry`.  Tuples have a length.
+
+----
+print(len(name))
+----
+
+prints `2`.
+
+We can also use tuples to hold a sequence of values. For example, a collection of grades.
+
+[source,python]
+----
+grades = (98, 78, 72, 100, 85, 76)
+----
+
+Because tuples are a _sequence type_ we can iterate over them just like we can a string. To compute the average grade:
+
+[source,python]
+----
+sum = 0
+for g in grades:
+    sum += g
+
+avg = sum / len(grades)
+print("The average is", round(avg,2))
+----
 
 
 
