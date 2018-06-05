@@ -6633,18 +6633,89 @@ a|
 
 |===
 
-////
-== Network Programming
-////
+== Accessing the Web
+
+- geonames example
+
+[source,python,numbered]
+----
+import util
+
+# a module for making HTTP requests
+import urllib.request
+
+# have user enter a zipcode
+zipcode = input('Enter zipcode:')
+
+# construct URL for postalCodeSearch
+url = 'http://api.geonames.org/postalCodeSearch' + \
+      '?postalcode=' + zipcode + \
+      '&username=edharcourt' + \
+      '&country=US'
+
+# make the HTTP request
+data = urllib.request.urlopen(url)
+
+# for each line in the data
+for line in data:
+    line = str(line)
+
+    # extract the latitude
+    if line.find('<lat>') > -1:
+        start = line.find('<lat>') + len('<lat>')
+        end = line.find('</lat>')
+        lat = line[start:end]
+
+    # extract the longitude
+    if line.find('<lng>') > -1:
+        start = line.find('<lng>') + len('<lng>')
+        end = line.find('</lng>')
+        lng = line[start:end]
+
+    # extract the location name
+    if line.find('<name>') > -1:
+        start = line.find('<name>') + len('<name>')
+        end = line.find('</name>')
+        name = line[start:end]
+
+
+# Print basic infor extracted
+print('Latitude:', lat)
+print('Longitude:', lng)
+print('City:', name)
+
+# Look up weather data based on the latitude and
+# longitude that we just got from postalCodeSearch
+url = 'http://api.geonames.org/findNearByWeather' + \
+      '?lat=' + lat + \
+      '&lng=' + lng + \
+      '&username=edharcourt'
+
+# Make the HTTP request to get the weather data
+weatherdata = urllib.request.urlopen(url)
+
+# For every line in the weather data
+for line in weatherdata:
+    line = str(line)
+    if line.find('<temperature>') > -1:
+        start = line.find('<temperature>') + \
+                len('<temperature>')
+        end = line.find('</temperature>')
+        temp = line[start:end]
+
+# print the temperature in both celsius and fahrenheit
+print('Celsius:', temp)
+print('Fahrenheit', round(util.c2f(float(temp)), 1))
+----
+
 
 == Tuples and Lists
 
-Recall that a _tuple_ is a type in Python that contain a collection of values. For example we used a tuple for coordinates, such as `(32,712)` or `(0,0)`. We used a tuple with three integers to specify colors, red is `(255,0,0)`, and yellow is `(255,255,0)`. 
+Recall that a _tuple_ is a value that contains a _collection of values_. For example we used a tuple for coordinates, such as `(32,712)` or `(0,0)`. We used a tuple with three integers to specify colors, red is `(255,0,0)`, and yellow is `(255,255,0)`. 
 
-A tuple need not contain integers. Any time we want to think of several values as one we can use a tuple. For example we can use a tuple to hold a name such as `("Harry", "Potter")` or 
-`("Harry", "Ron", "Hermione")`.
+A tuple need not contain integers. Any time we want to think of several values as a single value we can use a tuple. For example, we can use a tuple to hold a name such as `("Harry", "Potter")` which might be more helpful than storing the name as a single string `"Harry Potter"`.
 
-Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first characters as `s[0]` we can index tuples as well.
+Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first character as `s[0]` we can index tuples as well.
 
 [source,python]
 ----
@@ -6654,6 +6725,7 @@ print(name[1], name[0])
 
 prints `Potter Harry`.  Tuples have a length.
 
+[source,python]
 ----
 print(len(name))
 ----
@@ -6667,17 +6739,51 @@ We can also use tuples to hold a sequence of values. For example, a collection o
 grades = (98, 78, 72, 100, 85, 76)
 ----
 
-Because tuples are a _sequence type_ we can iterate over them just like we can a string. To compute the average grade:
+Because tuples are a _sequence type_ we can iterate over them just like we can a string. To compute the average grade in `grades` ...
 
 [source,python]
 ----
-sum = 0
+total = 0
 for g in grades:
-    sum += g
+    total += g
 
-avg = sum / len(grades)
+avg = total / len(grades)
 print("The average is", round(avg,2))
 ----
+
+Like strings, tuples are _immutable_. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we migh twant to try 
+
+[source,python]
+----
+grades[0] = 100
+----
+causes a run-time error
+
+----
+TypeError: 'tuple' object does not support item assignment
+----
+
+=== Lists
+
+A list in Python is a lot like a tuple, except that it is _mutable_.  When defining a list we can use square brackets instead of parentheses.
+
+[source,python]
+----
+grades = [98, 78, 72, 100, 85, 76]
+----
+
+Unlike a tuple we _can_ modify a list.
+
+[source,python]
+----
+grades[0] = 100 <1>
+----
+<1> Replaces the 98 with 100.
+
+- find the median of a list of grades
+- replace the smallest grade with the largest grade.
+- count the number grades in the 80s
+
 
 
 
