@@ -98,9 +98,9 @@ print("Hello world")
 
 That is it, just the one line. And it does as you might expect, it prints the message `Hello World` on the _console_. But there is a lot going on in that one line, so lets break it down. 
 
-NOTE: The _console_ is a text window where python sends the output of `print` statements and where the user can also enter data from `input` statements. 
+NOTE: The _console_ is a text window where Python sends the output of `print` statements and where the user can also enter data from `input` statements. 
 
-The python _built-in function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in python is a sequence of characters between double quotes or single quotes. More on string literals later.
+The _built-in function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in Python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
 NOTE: In programming, a string literal is also called a _string constant_
 
@@ -164,7 +164,7 @@ The radius of an electron is _0.00000000000000281792_ meters. Express this numbe
 
 [.result]
 ====
-`2.81792e-15`  # meters
+`2.81792e-15  # meters`
 ====
 
 === Variables
@@ -176,7 +176,7 @@ Let's return to our simple program ...
 print("The value of pi squared is", 3.14159 * 3.14159)
 ----
 
-It would be nice to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python using an _assignment statement_.
+It would be convenient to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python by defining a _variable_ using an _assignment statement_.
 
 [source,python,numbered]
 ----
@@ -224,7 +224,7 @@ The Python program
 print(x)
 ----
 
-would produce an error becuse the variable `x` does not have a value.
+would produce an error because the variable `x` does not have a value.
 
 IMPORTANT: Variable names are not string literals.
 
@@ -245,7 +245,7 @@ Almost certainly not what was intended.
 === Comments
 
 We can add notes to our program using a _comment_. In Python a one line comment starts 
-with a hashtag and continue to the end of the line.
+with a hashtag and continues to the end of the line.
 
 [source,python,numbered]
 ----
