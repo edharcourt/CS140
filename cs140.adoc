@@ -6,6 +6,7 @@ v0.2, June 2018:
 :doctype: book
 :toclevels: 2
 :numbered:
+:sectanchors:
 :icons: font
 :source-highlighter: pygments
 :stem: latexmath
@@ -5840,7 +5841,7 @@ The term _hacker_ used to be a badge of honor. It just meant you were a sharp pr
 
 We will talk a little bit about breaking in to systems when we discuss cryptography so lets talk about possibly causing software to crash. One way to try and cause a software system to crash is to enter bogus data in the input. We have all seen this before when we enter data into a web form. If we forget to enter a zip code in our address then the system will generally not let us proceed. Up until we know we haven't talked about checking the input data for errors, or _error checking_, but it is worth a cursory discussion. 
 
-Lets look at our above example of computing the average of a list of numbers. What if instead of a list of numbers we entered an illformed line such as `rumpelstiltskin`, or `23,16,fred,11`. We get a run-time error (what I have also been calling a _crash_).
+Lets look at our above example of computing the average of a list of numbers. What if instead of a list of numbers we entered an ill-formed line such as `rumpelstiltskin`, or `23,16,fred,11`. We get a run-time error (what I have also been calling a _crash_).
 
  ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'
 
@@ -6207,7 +6208,29 @@ while start > -1:                                     <1>
 NOTE: The sequence of base-pairs between the start and stop codons are called
 _coding regions_. The sequence of base-pairs not part of a coding region are called, _non-coding regions_.
 
+=== Example: Files of numbers
+Often we have files of numbers that we need to process in some way. Lets say we had 
+a file of integers that represented grades and we need to compute the average grade. We know that we need to read the file line-by-line adding each grade to a total, and then finally dividing by the total numbers of grades. Since we may not know in advance how many grades 
+are in the file we will have to keep a count of the number of grades.  We also need to be careful to convert the line read to an integer 
+
+[source,python,numbered]
+----
+f = open("grades.txt")
+
+total = 0
+count = 0
+
+for grade in f:
+    total += int(grade) <1>
+    count += 1
+
+print("The average is", round(total/count, 1))
+----
+<1> Make sure to convert the string read from the file to an integer.
+
 === Exercises
+
+
 
 === Terminology 
 
@@ -6765,14 +6788,18 @@ TypeError: 'tuple' object does not support item assignment
 
 === Lists
 
-A list in Python is a lot like a tuple, except that it is _mutable_.  When defining a list we can use square brackets instead of parentheses.
+A list in Python is a lot like a tuple, except that it is _mutable_.
+
+NOTE: A _mutable_ value can be modified.
+
+When defining a list we use square brackets instead of parentheses to define lists.
 
 [source,python]
 ----
 grades = [98, 78, 72, 100, 85, 76]
 ----
 
-Unlike a tuple we _can_ modify a list.
+Because lists are mutable we can modify individual elements of the list. 
 
 [source,python]
 ----
@@ -6780,12 +6807,41 @@ grades[0] = 100 <1>
 ----
 <1> Replaces the 98 with 100.
 
+==== List methods
+
+The list `[]` is the empty list whose length is zero.
+
+[source,python]
+----
+grades = []
+print(len(grades)) <1>
+----
+<1> prints `0`.
+
+
 - find the median of a list of grades
 - replace the smallest grade with the largest grade.
 - count the number grades in the 80s
 
+We can add a value on the end of the list using the `append` method.
 
+[source,python]
+----
+grades.append(78)
+grades.append(83) <1>
+----
+<1> The list is now `[78,83]`
 
+This seems a little seeing that we could have just defined the list as
+
+[source,python]
+----
+grades = [78,83]
+----
+
+But we might not know that exact values that are in a list. What if they are coming from a file of grades? Or from the Internet?
+
+What if we wanted to compute the _median_ of a file of numbers? Recall that the _median_ is the middle number, where half of the numbers are above and below the media. If there is an even number of numbers then the media is the average of the middle two numbers. One way to compute the median is the sort the numbers and pick the middle element. We can't just read a number, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
 
 === The Birthday Paradox
 
