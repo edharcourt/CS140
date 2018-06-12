@@ -6839,13 +6839,115 @@ This seems a little seeing that we could have just defined the list as
 grades = [78,83]
 ----
 
-But we might not know that exact values that are in a list. What if they are coming from a file of grades? Or from the Internet?
+But we might not know the exact values in the list. What if they are coming from a file of grades? Or from the Internet? For example, lets compute the _median_ of a file of numbers? The _median_ is the middle number, where half of the numbers are above and below the median. If there is an even number of numbers then the median is the average of the middle two numbers. One way to compute the median is to sort the numbers and pick the middle element. We can't just read a number from the file, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
 
-What if we wanted to compute the _median_ of a file of numbers? Recall that the _median_ is the middle number, where half of the numbers are above and below the media. If there is an even number of numbers then the media is the average of the middle two numbers. One way to compute the median is the sort the numbers and pick the middle element. We can't just read a number, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
+To sort a list we can call the `sort` method on the list.
+
+[source,python]
+----
+grades.sort() <1>
+----
+<1> Sort the list of grades. The sort method returns `None` and has the side effect of modifying the list. 
+
+[source,python,numbered]
+----
+f = open('grades.txt')
+grades = []
+
+for grade in f:                         <1>
+    grades.append(float(grade))  
+
+grades.sort()                       
+
+if len(grades) % 2 == 1:                <2>
+    median = grades[len(grades)//2]
+else:                                   <3>
+    mid1 = grades[len(grades)//2 - 1]   <4>
+    mid2 = grades[len(grades)//2]
+    median = (mid1 + mid2) / 2
+
+print('Median:', round(median, 1))
+----
+<1> Append each grade in the file to the list.
+<2> For an odd length list the median is in the middle.
+<3> Otherwise we need to compute the mean of the middle two elements.
+<4> Convince yourself that the grades at `len(grades)//2 - 1` and `len(grades)//2` are the middle two elements.
 
 === The Birthday Paradox
 
-==== Example, Debunking claims of voter fraud
+The _Birthday Paradox_ (also called the _Birthday Problem_) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a https://en.wikipedia.org/wiki/Birthday_attack[_birthday attack_].  The popular radio show _This American Life_ did an https://www.thisamericanlife.org/630/things-i-mean-to-know[episode] where the results from the birthday paradox were used to debunk claims of voter 
+fraud.footnote:[https://5harad.com/papers/1p1v.pdf[_One Person, One Vote:
+Estimating the Prevalence of Double Voting
+in U.S. Presidential Elections_]] 
+
+The mathematics for solving the birthday problem, while not all that complicated, is beyond the scope of this text. However, writing a program to simulate the birthday problem is fairly straightforward.
+
+There are 366 possible birthdays (including the leap year day February 29). We can think of the calendar as a list of 366 integers. Call this list `birthdays`. The number of people in the room that share January 1 as a birthday is in `birthdays[0]` and the number that share December 31 is in `birthdays[365]`.  Initially `birthdays` is initialized to all zeros.
+
+[source,python,numbered]
+----
+birthdays = []
+
+for i in range(366):    <1>
+    birthdays.append(0)
+----
+<1> Append 366 zeros to the `birthdays` list.
+
+Python has an even simpler notation for initializing a list to all of the same value. We can
+replicate all three line of code above with the one line ...
+
+[source,python]
+----
+birthdays = [0]*366
+----
+
+How can we simulate someone's birthday?  Generate a random number between 0 and 365 and increment the corresponding birthday in the `birthdays` list.
+
+[source,python,numbered]
+----
+bday = random.randrange(366)
+birthdays[bday] += 1
+----
+
+We need to do this a number of times, once for each person in the room. How many times? This is precisely what we are trying to figure out. Lets start with 100. 
+
+[source,python,numbered]
+----
+for i in range(100):                <1>
+    bday = random.randrange(366)
+    birthdays[bday] += 1
+----
+<1> Generate one hundred random birthdays.
+
+How do we know if two or more people share a birthday? One of the items in the `birthdays` list will be greater than 1. If nobody shared a birthday then all of the integers in `birthdays` are either 0 or 1. 
+
+[source,python,numbered]
+----
+i = 0
+for count in birthdays:
+    if count > 1:
+        print(count, "birthdays on day", i)
+    i = i + 1
+----
+
+If we run this with 100 people in the room we see that lots of people share a birthday. (You will get different results because we are generating random birthdays).
+
+----
+2 birthdays on day 10
+2 birthdays on day 23
+2 birthdays on day 49
+2 birthdays on day 69
+3 birthdays on day 95
+2 birthdays on day 144
+2 birthdays on day 178
+2 birthdays on day 290
+3 birthdays on day 315
+2 birthdays on day 316
+2 birthdays on day 333
+----
+
+In fact with 100 people, you are almost guaranteed to have people share a birthday. WIth a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. The Birthday Problem is sometime calld the Birthday Paradox because that _seems_ like a surprisingly small number.
+
 
 === Particle Simulation: Take 2
 
