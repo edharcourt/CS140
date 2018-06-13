@@ -3346,7 +3346,7 @@ The Gambler's Ruin is an example of a one dimensional random walk, because the n
 Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
 
 .Exercise
-Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable `prev` that keeps track of the previous tower guessed . When chosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
+Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable `prev` that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
 
 === The Monty Hall Problem
 
@@ -3714,7 +3714,7 @@ while True:
 ----
 <1>Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
 
-The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundreth of a picxel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
+The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundredth of a pixel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
 
 === Understanding the _Frame Rate_
 
@@ -3844,7 +3844,7 @@ ball2_dx = width / 1.603 # across screen in two seconds (units are pixels/second
 ball2_dy = height / -3.237 # down screen in four seconds
 ----
 
-Now modify the loop body to move the second particle. And don't forget toredraw the second particle.
+Now modify the loop body to move the second particle. And don't forget to redraw the second particle.
 
 [source,python,numbered]
 ----
@@ -4892,7 +4892,7 @@ image::mean_filter_func.png[width=500]
 
 There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don't have any neighborson the left and if the `neighborhood_mean` functions tries to access a negative _x_ coordinate the program will crash. 
 
-There are several ways we could handle this. We could modify `neighborhood_mean` to not access pixels outside of the boundary of the image, and only compute the mean of the neighbors the pixel does have. Pixels along the left edge (except the corners) wouldonly have five neighbors. Corner pixel nly have three neighbors, etc.We would have to keep a count of the number of actual neighbors because we can't always deivide by nine.
+There are several ways we could handle this. We could modify `neighborhood_mean` to not access pixels outside of the boundary of the image, and only compute the mean of the neighbors the pixel does have. Pixels along the left edge (except the corners) would only have five neighbors. Corner pixels only have three neighbors, etc. We would have to keep a count of the number of actual neighbors because we can't always divide by nine.
 
 An easier way is to skip over the border pixels and skip the first and last row and column.
 
@@ -6930,6 +6930,20 @@ for count in birthdays:
     i = i + 1
 ----
 
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Rewrite the above loop so that it uses the other form a `for`-loop using the `range` function.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+for i in range(len(birthdays)):
+    if birthdays[i] > 1:
+        print(birthdays[i], 'birthdays on day', i)
+----
+====
+
 If we run this with 100 people in the room we see that lots of people share a birthday. (You will get different results because we are generating random birthdays).
 
 ----
@@ -6946,10 +6960,31 @@ If we run this with 100 people in the room we see that lots of people share a bi
 2 birthdays on day 333
 ----
 
-In fact with 100 people, you are almost guaranteed to have people share a birthday. WIth a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. The Birthday Problem is sometime calld the Birthday Paradox because that _seems_ like a surprisingly small number.
-
+In fact with 100 people, you are almost guaranteed to have people share a birthday. WIth a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. The Birthday Problem is sometime called the Birthday Paradox because that _seems_ like a surprisingly small number.
 
 === Particle Simulation: Take 2
+
+Recall our particle simulation in <<#_case_study_particles_and_collision>> where we had two particles moving and colliding.  We had to define variables for 
+two particles ...
+
+[source,python,numbered]
+----
+ball1_x  = width // 2 - ball_w // 2
+ball1_y  =  ...
+ball1_dx = ...
+ball1_dy = ...
+
+ball2_x  = ...
+ball2_y  = ...
+ball2_dx = ...
+ball2_dy = ...
+# and so on
+----
+
+To add a third particle we need another set of variables? What about a fifth and sixth particle, or a thousand particles. Clearly adding variables this way should feel wrong, and it is.
+
+
+
 
 === Forest Fire Model
 
