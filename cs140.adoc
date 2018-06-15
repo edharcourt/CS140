@@ -7062,12 +7062,44 @@ Assuming `side` is the height and width of the display and `r` is the radius of 
 
 [source,python,numbered]
 ----
-for row in range(r, side, 3*r):      <1>
-    for col in range(r, side, 3*r):
+for row in range(r, side, 6*r):      <1>
+    for col in range(r, side, 6*r):
         x.append(col)
         y.append(row)
 ----
-<1> Start at `r` so that the first particle is off of the edge. Increment in steps of `3*r` so that there is some space between the particles.
+<1> Start at `r` so that the first particle is off of the edge. Increment in steps of `6*r` so that there is some space between the particles.
+
+We might want to verify that the code above works. We should check it by displaying
+the particle on the pygame window.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a python code fragment that would display the particles on the pygame display.
+
+[.result]
+====
+We need to loop through all of the `x` and `y` coordinates and `blit` each
+particle to the disaply.
+
+[source,python]
+----
+for i in range(len(x)):           <1>
+    win.blit(ball, (x[i], y[i]))
+pygame.display.update()
+----
+<1> We could have used the `len(y)` here as well. The two lists are the same length.
+
+And what we get should be something like the image ...
+
+image::nparticles.png[align="center",width=300]
+====
+
+We also need to give each particle a velocity. And we want to give them
+different velocities, otherwise they would all move in the same direction at the same speed.
+
+Recalling our discussion of the frame rate, if the width of the window was 600 pixels and we set a particles' `dx` property to 600 pixels per second the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 picels per second). Lets say that we want the particle to travel across the screen between 2 and 4 seconds, randomly. We could set `dx` to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
+
+Why does this work? Well `random.random() * 2` gives a random values between 0 and 2` and adding 2 gives us a random value between 2 and 4.
+
 
 
 

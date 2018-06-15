@@ -1,4 +1,4 @@
-import pygame, color
+import pygame, color, random
 pygame.init()
 side = 600
 win = pygame.display.set_mode((side,side))
@@ -6,41 +6,38 @@ width = win.get_width()
 height = win.get_height()
 
 ball = pygame.image.load("../images/ball.png").convert_alpha()
-r = ball.get_width()//2
-ball_dx = width // 2 # across screen in two seconds (units are pixels/second)
-ball_dy = height // 4 # down screen in four seconds
+ball_w = ball_h = ball.get_width()
+r = ball_w//2
 
 x = []
 y = []
+dx = []
+dy = []
 
-"""
-row = r
-col = r
-
-while row < side:
-    col = r
-    while col < side:
+for row in range(r, side, 6*r):
+    for col in range(r, side, 6*r):
         x.append(col)
         y.append(row)
-        col = col + 3*r
-    row = row + 3*r
-"""
+        tdx = side / (random.random() * 2 + 2)
+        tdy = side / (random.random() * 2 + 2)
+        tdx = -tdx if random.random() < .5 else tdx
+        tdy = -tdy if random.random() < .5 else tdy
 
-for row in range(r, side, 3*r):
-    for col in range(r, side, 3*r):
-        x.append(col)
-        y.append(row)
+        dx.append(tdx)
+        dy.append(tdy)
         win.blit(ball, (col,row))
 
+win.fill(color.lightgray)
+for i in range(len(x)):
+    win.blit(ball, (x[i], y[i]))
 pygame.display.update()
 input()
 
+
 def move(x, y, dx, dy):
 
-    dt = clock.tick(60) / 1000.0
-
-    x += dt * ball_dx
-    y += dt * ball_dy
+    x += dt * dx
+    y += dt * dy
 
     if x < 0:
         x = 0
@@ -52,19 +49,24 @@ def move(x, y, dx, dy):
     if y < 0:
         y = 0
         dy = -dy
-    elif y +ball_h >= height:
+    elif y + ball_h >= height:
         y = height - ball_h
         dy = -dy
 
     return (x,y,dx,dy)
 
+# main animation loop
 clock = pygame.time.Clock()
 
 while True:
     win.fill(color.lightgray)
+    dt = clock.tick(60) / 1000.0
+    #dt = .1
 
-    (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
+    for i in range(len(x)):
+        (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
+        win.blit(ball, (x[i], y[i]))
 
-    win.blit(ball, (ball_x, ball_y))
     pygame.display.update()
     pygame.event.poll()
+
