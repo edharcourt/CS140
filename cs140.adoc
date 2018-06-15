@@ -3897,7 +3897,7 @@ ball2_dx = tmp
 ----
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Writ the code to swap the stem:[y] velocities.
+Write the code to swap the stem:[y] velocities.
 
 [.result]
 ====
@@ -3917,18 +3917,16 @@ This is the classic way to express this in just about every programming language
 (a,b) = (b,a)
 ----
 
-Notice that there is a tuple on the left hand side of the assignment operator `=`. Up until now we have only ever had a single variable. 
+Notice that there is a tuple on the left hand side of `=`, the assignment operator. Up until now we have only ever had a single variable. 
 
 To wrap up collision detection we need to check if the particles are colliding, in the loop body we can write.
 
 [source,python,numbered]
 ----
-if distance(ball1_x + r,
-            ball1_y + r,
-            ball2_x + r,
-            ball2_y + r ) < 2 * r:               <1>
+if distance(ball1_x + r, ball1_y + r,
+            ball2_x + r, ball2_y + r ) < 2 * r:  <1>
     (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)  <2>
-    (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)   <3>
+    (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)  <3>
 ----
 <1> Assuming that `r` is the radius of the particle, it is just `ball_w / 2`.
 <2> Using tuple assignment here ...
@@ -3936,7 +3934,7 @@ if distance(ball1_x + r,
 
 CAUTION: This way of handling a collision, simply swapping velocities, is overly simplistic and doesn't take into account particles glancing of each other at angles. That involves a bit more math and trigonometry.
 
-.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+.Two Particles +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Here is the entire program.
 
 [.result]
@@ -4028,6 +4026,89 @@ while True:
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Add a third particle to the simulation and collision detection logic.
+
+[.result]
+====
+This gets to be a bit messy.  We will have a better solution to handling multiple particles when we cover _lists_.
+
+I left out the `move` and `distance` functions because they are exactly the same as previous.
+
+[source,python,numbered]
+----
+import pygame, color, math
+pygame.init()
+side = 400
+win = pygame.display.set_mode((side,side))
+width = win.get_width()
+height = win.get_height()
+
+ball = pygame.image.load("ball.png").convert_alpha()
+ball_w = ball.get_width()
+ball_h = ball.get_height()
+r = ball_w//2
+
+# particle 1
+ball1_x = width // 2 - ball_w // 2
+ball1_y = height // 2 - ball_h // 2
+ball1_dx = width / 2.02 # across screen in two seconds (units are pixels/second)
+ball1_dy = height / 3.99 # down screen in four seconds
+
+# particle 2
+ball2_x = width // 4 - ball_w // 2
+ball2_y = height // 4 - ball_h // 2
+ball2_dx = width / 1.1603 # across screen in two seconds (units are pixels/second)
+ball2_dy = height / -2.237 # down screen in four seconds
+
+# particle 3
+ball3_x = width - ball_w
+ball3_y = height // 4 - ball_h // 2
+ball3_dx = width / -0.8603 # across screen in two seconds (units are pixels/second)
+ball3_dy = height / 1.237 # down screen in four seconds
+
+clock = pygame.time.Clock()
+
+while True:
+    win.fill(color.lightgray)
+
+    (ball1_x, ball1_y, ball1_dx, ball1_dy) = 
+	    move(ball1_x, ball1_y, ball1_dx, ball1_dy)
+
+    (ball2_x, ball2_y, ball2_dx, ball2_dy) = 
+	    move(ball2_x, ball2_y, ball2_dx, ball2_dy)
+
+    (ball3_x, ball3_y, ball3_dx, ball3_dy) = 
+	    move(ball3_x, ball3_y, ball3_dx, ball3_dy)
+
+    # check collisions
+    if distance(ball1_x + r, ball1_y + r,              
+                ball2_x + r, ball2_y + r ) < 2 * r:
+        (ball1_dx, ball2_dx) = (ball2_dx, ball1_dx)
+        (ball1_dy, ball2_dy) = (ball2_dy, ball1_dy)
+
+    elif distance(ball1_x + r, ball1_y + r,
+                  ball3_x + r, ball3_y + r ) < 2 * r:
+        (ball1_dx, ball3_dx) = (ball3_dx, ball1_dx)
+        (ball1_dy, ball3_dy) = (ball3_dy, ball1_dy)
+
+    elif distance(ball2_x + r, ball2_y + r,
+                  ball3_x + r, ball3_y + r ) < 2 * r:
+        (ball2_dx, ball3_dx) = (ball3_dx, ball2_dx)
+        (ball2_dy, ball3_dy) = (ball3_dy, ball2_dy)
+
+
+    win.blit(ball, (ball1_x, ball1_y))
+    win.blit(ball, (ball2_x, ball2_y))
+    win.blit(ball, (ball3_x, ball3_y))
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
+
+----
+====
 
 Adding a fourth and fifth particle is a lot of cutting-and-pasting. This should feel wrong. And it is. We'll have a more general solution later on when we discuss _lists_ where we can have as many particles as we want.
 
@@ -6964,25 +7045,29 @@ In fact with 100 people, you are almost guaranteed to have people share a birthd
 
 === Particle Simulation: Take 2
 
-Recall our particle simulation in <<#_case_study_particles_and_collision>> where we had two particles moving and colliding.  We had to define variables for 
-two particles ...
+Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  We had to define four separate `x`, `y`, `dx`, and `dy` variables for every article. If we have six particles then we needed twenty-four variables. Our condition for checking collisions gets very long. We would have to check particle 1 against particles 2-6, particle 2 against 3-6
+and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we would need stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] conditions. So 100 particles would be stem:[4950] conditions. 
+
+Rather have separate variables for all of the _x_ coordinates lets keep a _list of x coordinates_ where `x[0]` is the x-coordinate for th first particle, `x[1]` for the second particle, and so on. 
+
+We will do the same thing for the y-coordinates. 
+
+[source,python]
+----
+x = [] 
+y = []
+----
+
+Assume `r` is the radius of the particle we can use two nested for-loops to distribute the particles evenly over the display.  
 
 [source,python,numbered]
 ----
-ball1_x  = width // 2 - ball_w // 2
-ball1_y  =  ...
-ball1_dx = ...
-ball1_dy = ...
-
-ball2_x  = ...
-ball2_y  = ...
-ball2_dx = ...
-ball2_dy = ...
-# and so on
+for row in range(r, side, 3*r):      <1>
+    for col in range(r, side, 3*r):
+        x.append(col)
+        y.append(row)
 ----
-
-To add a third particle we need another set of variables? What about a fifth and sixth particle, or a thousand particles. Clearly adding variables this way should feel wrong, and it is.
-
+<1> Start at `r` so that the first particle is off of the edge. Increment in steps of `3*r` so that there is some space between the particles.
 
 
 

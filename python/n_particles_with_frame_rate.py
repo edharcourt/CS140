@@ -6,12 +6,34 @@ width = win.get_width()
 height = win.get_height()
 
 ball = pygame.image.load("../images/ball.png").convert_alpha()
-ball_w = ball.get_width()
-ball_h = ball.get_height()
-ball_x = width//2 - ball_w//2
-ball_y = height//2 - ball_h//2
+r = ball.get_width()//2
 ball_dx = width // 2 # across screen in two seconds (units are pixels/second)
 ball_dy = height // 4 # down screen in four seconds
+
+x = []
+y = []
+
+"""
+row = r
+col = r
+
+while row < side:
+    col = r
+    while col < side:
+        x.append(col)
+        y.append(row)
+        col = col + 3*r
+    row = row + 3*r
+"""
+
+for row in range(r, side, 3*r):
+    for col in range(r, side, 3*r):
+        x.append(col)
+        y.append(row)
+        win.blit(ball, (col,row))
+
+pygame.display.update()
+input()
 
 def move(x, y, dx, dy):
 
