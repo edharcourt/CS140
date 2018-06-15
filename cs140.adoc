@@ -5926,7 +5926,7 @@ Lets look at our above example of computing the average of a list of numbers. Wh
 
  ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'
 
-This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for errorneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid.  
+This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for erroneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid.  
 
 ==== Example: Word scramble
 
@@ -7058,7 +7058,7 @@ x = []
 y = []
 ----
 
-Assume `r` is the radius of the particle we can use two nested for-loops to distribute the particles evenly over the display.  
+Assuming `side` is the height and width of the display and `r` is the radius of the particle (`ball.get_width()//2`) we can use two nested for-loops to distribute the particles evenly over the display.  
 
 [source,python,numbered]
 ----
