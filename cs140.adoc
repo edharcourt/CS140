@@ -7046,9 +7046,13 @@ In fact with 100 people, you are almost guaranteed to have people share a birthd
 === Particle Simulation: Take 2
 
 Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  We had to define four separate `x`, `y`, `dx`, and `dy` variables for every article. If we have six particles then we needed twenty-four variables. Our condition for checking collisions gets very long. We would have to check particle 1 against particles 2-6, particle 2 against 3-6
-and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we would need stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] conditions. So 100 particles would be stem:[4950] conditions. 
+and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we would need 
 
-Rather have separate variables for all of the _x_ coordinates lets keep a _list of x coordinates_ where `x[0]` is the x-coordinate for th first particle, `x[1]` for the second particle, and so on. 
+stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] 
+
+conditions. So 100 particles would be stem:[4950] conditions. 
+
+Rather have separate variables for all of the _x_ coordinates lets keep a _list of x coordinates_ where `x[0]` is the x-coordinate for the first particle, `x[1]` for the second particle, and so on. 
 
 We will do the same thing for the y-coordinates. 
 
@@ -7070,15 +7074,15 @@ for row in range(r, side, 6*r):      <1>
 <1> Start at `r` so that the first particle is off of the edge. Increment in steps of `6*r` so that there is some space between the particles.
 
 We might want to verify that the code above works. We should check it by displaying
-the particle on the pygame window.
+the particles on the pygame window.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a python code fragment that would display the particles on the pygame display.
 
 [.result]
 ====
-We need to loop through all of the `x` and `y` coordinates and `blit` each
-particle to the disaply.
+We need to loop through all of the `x` and `y` coordinates and 
+`blit` each particle to the disaply.
 
 [source,python]
 ----
@@ -7093,13 +7097,24 @@ And what we get should be something like the image ...
 image::nparticles.png[align="center",width=300]
 ====
 
-We also need to give each particle a velocity. And we want to give them
-different velocities, otherwise they would all move in the same direction at the same speed.
+We also need to give each particle a velocity. And we want to give them different velocities, otherwise they would all move in the same direction at the same speed.
 
-Recalling our discussion of the frame rate, if the width of the window was 600 pixels and we set a particles' `dx` property to 600 pixels per second the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 picels per second). Lets say that we want the particle to travel across the screen between 2 and 4 seconds, randomly. We could set `dx` to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
+Since each particle will have its own velocity we will need a list
+of x-velocities and a list of y-velocities.
+
+[soucr,python]
+----
+dx = []
+dy = []
+----
+
+Recall our discussion of the frame rate. If the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second). Lets say that we want the particle to travel across the screen some random value between 2 and 4 seconds, randomly. We could set the x-velocity to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
 
 Why does this work? Well `random.random() * 2` gives a random values between 0 and 2` and adding 2 gives us a random value between 2 and 4.
 
+But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative. What if we used `side / (random.random()*4 - 2)`. The denominator would generate values between -2 and 2, but it would also generate values very close to zero, sch as .001, and `side/.001` for example is a very fast velocity.  It is saying that the particle will travel across the screen in `.001` seconds.
+
+It is probably best to just toss a coin and random negate the value `side / (random.random() * 2 + 2)`
 
 
 
