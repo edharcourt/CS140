@@ -3851,8 +3851,10 @@ Now modify the loop body to move the second particle. And don't forget to redraw
 while True:
     win.fill(color.lightgray)
 
-    (ball1_x, ball1_y, ball1_dx, ball1_dy) = move(ball1_x, ball1_y, ball1_dx, ball1_dy)
-    (ball2_x, ball2_y, ball2_dx, ball2_dy) = move(ball2_x, ball2_y, ball2_dx, ball2_dy) <1>
+    (ball1_x, ball1_y, ball1_dx, ball1_dy) = 
+	    move(ball1_x, ball1_y, ball1_dx, ball1_dy)
+    (ball2_x, ball2_y, ball2_dx, ball2_dy) = 
+	    move(ball2_x, ball2_y, ball2_dx, ball2_dy) <1>
 
     win.blit(ball, (ball1_x, ball1_y))
     win.blit(ball, (ball2_x, ball2_y)) <2>
@@ -3867,7 +3869,7 @@ while True:
 
 How can we detect when the two particles collide? One way is to notice that if two particles overlap at all then the distance between the center of the two particles must be less than two times the radius of the particle (assuming the particles have the same radius). 
 
-image::particles_collide.png[caption="Figure n: Particle Collision", align="center", width=400]
+image::particles_collide.png[caption="Figure n: Particle Collision", align="center", width=500]
 
 We can use the formula for the distance between two points to see if the center of the particles are less than the sum of the radius of each particle.
 
@@ -7102,20 +7104,109 @@ We also need to give each particle a velocity. And we want to give them differen
 Since each particle will have its own velocity we will need a list
 of x-velocities and a list of y-velocities.
 
-[soucr,python]
+[source,python]
 ----
 dx = []
 dy = []
 ----
 
-Recall our discussion of the frame rate. If the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second). Lets say that we want the particle to travel across the screen some random value between 2 and 4 seconds, randomly. We could set the x-velocity to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
+Recall our discussion of <<_understanding_the_frame_rate>>. If the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second) assuming `side` is the widht of the window. Lets say we want to randomize the velocity of the particle between 2 and 4 seconds. We could set the x-velocity to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
 
 Why does this work? Well `random.random() * 2` gives a random values between 0 and 2` and adding 2 gives us a random value between 2 and 4.
 
-But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative. What if we used `side / (random.random()*4 - 2)`. The denominator would generate values between -2 and 2, but it would also generate values very close to zero, sch as .001, and `side/.001` for example is a very fast velocity.  It is saying that the particle will travel across the screen in `.001` seconds.
+But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative, between -2 and -4. We have to be careful because we don't want to generate values near `0` such as `.001` because then `side/.001` would be far too fast.
+
+image::numberline.png[align="center",width="400"]
 
 It is probably best to just toss a coin and random negate the value `side / (random.random() * 2 + 2)`
 
+Our code for initializing the positions and velocities of each particle is ...
+
+.Initializing the particles
+[source,python,numbered]
+----
+import pygame, color, random
+pygame.init()
+side = 600
+win = pygame.display.set_mode((side,side))
+
+ball = pygame.image.load("../images/ball.png").convert_alpha()
+r = ball.get_width()//2
+
+for row in range(r, side, 6*r):
+    for col in range(r, side, 6*r):
+        x.append(col)
+        y.append(row)
+
+        # generate random velocities
+        tdx = side / (random.random() * 2 + 2) <1>
+        tdy = side / (random.random() * 2 + 2) <2>
+   
+        if random.random() < .5:               <3>
+            tdx = -tdx
+
+        if random.random() < .5:               <4>
+            tdy = -tdy
+
+        dx.append(tdx)
+        dy.append(tdy)
+----
+<1> Generate a random x-velocity value between `side/2` and `side/4`.
+<2> The same for the y-velocity.
+<3> Randomly negate the x-velocity
+<4> And the same for the y-velocity.
+
+==== Moving the Particles
+
+To move the particles we will use the same structure as we did when were animating just two particles. The main animation loop stays the same.
+
+.Animation Loop
+[source,python,numbered]
+----
+clock = pygame.time.Clock()
+
+while True:
+    win.fill(color.lightgray)
+    dt = clock.tick(60) / 1000.0
+   
+    # code to move and blit each particle goes here
+
+    pygame.display.update()
+----
+
+Back when we were animating two particles we had two separate calls to the 
+`move` function. If we had three particles we had three distinct calls to `move`. But here we are using lists and we want to move the _i^th^_ particle.
+
+[source,python]
+----
+(x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
+----
+ 
+where _i_ loops through all of thr particles.
+
+[source,python]
+----
+for i in range(len(x)):
+    (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
+    win.blit(ball, (x[i], y[i])) <1>
+----
+<1>  Don't forget to `blit` the particle.
+
+Putting this all together we have the code to animate the particles.
+
+.Animating the particles. 
+[source,python,numbered]
+----
+while True:
+    win.fill(color.lightgray)
+    dt = clock.tick(60) / 1000.0
+
+    for i in range(len(x)):
+        (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
+        win.blit(ball, (x[i], y[i]))
+
+    pygame.display.update()
+----
 
 
 === Forest Fire Model

@@ -18,14 +18,18 @@ for row in range(r, side, 6*r):
     for col in range(r, side, 6*r):
         x.append(col)
         y.append(row)
+
+        # generate random velocities
         tdx = side / (random.random() * 2 + 2)
         tdy = side / (random.random() * 2 + 2)
-        tdx = -tdx if random.random() < .5 else tdx
-        tdy = -tdy if random.random() < .5 else tdy
+        if random.random() < .5:
+            tdx = -tdx
+
+        if random.random() < .5:
+            tdy = -tdy
 
         dx.append(tdx)
         dy.append(tdy)
-        win.blit(ball, (col,row))
 
 win.fill(color.lightgray)
 for i in range(len(x)):
@@ -61,7 +65,6 @@ clock = pygame.time.Clock()
 while True:
     win.fill(color.lightgray)
     dt = clock.tick(60) / 1000.0
-    #dt = .1
 
     for i in range(len(x)):
         (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
