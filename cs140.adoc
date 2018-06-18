@@ -7047,21 +7047,21 @@ In fact with 100 people, you are almost guaranteed to have people share a birthd
 
 === Particle Simulation: Take 2
 
-Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  We had to define four separate `x`, `y`, `dx`, and `dy` variables for every article. If we have six particles then we needed twenty-four variables. Our condition for checking collisions gets very long. We would have to check particle 1 against particles 2-6, particle 2 against 3-6
-and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we would need 
+Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two partivles we need eight variables, and if we had six particles then we would need twenty-four variables. Also,our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
+and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we need 
 
 stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] 
 
 conditions. So 100 particles would be stem:[4950] conditions. 
 
-Rather have separate variables for all of the _x_ coordinates lets keep a _list of x coordinates_ where `x[0]` is the x-coordinate for the first particle, `x[1]` for the second particle, and so on. 
+Rather than having separate variables for each _x_ coordinate we can keep a _list of x coordinates_ where `x[0]` is the x-coordinate for the first particle, `x[1]` for the second particle, and so on. 
 
 We will do the same thing for the y-coordinates. 
 
 [source,python]
 ----
-x = [] 
-y = []
+x = []  # list of x-coordinates. x[i] is the x-coordinate for particle i
+y = []  # list of y-coordinates. y[i] is the y-coordinate for particle i
 ----
 
 Assuming `side` is the height and width of the display and `r` is the radius of the particle (`ball.get_width()//2`) we can use two nested for-loops to distribute the particles evenly over the display.  
@@ -7073,10 +7073,9 @@ for row in range(r, side, 6*r):      <1>
         x.append(col)
         y.append(row)
 ----
-<1> Start at `r` so that the first particle is off of the edge. Increment in steps of `6*r` so that there is some space between the particles.
+<1> Start at `r` so that the first particle is off of the edge a bit. Increment in steps of `6*r` so that there is some space between the particles.
 
-We might want to verify that the code above works. We should check it by displaying
-the particles on the pygame window.
+We might want to verify that the code above works. We should check it by displaying the particles on the pygame window.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a python code fragment that would display the particles on the pygame display.
@@ -7106,19 +7105,19 @@ of x-velocities and a list of y-velocities.
 
 [source,python]
 ----
-dx = []
-dy = []
+dx = []   # list of x-velocities. dx[i] is the x velocity for particle i
+dy = []   # list of y-velocities. dy[i] is the y velocity for particle i
 ----
 
-Recall our discussion of <<_understanding_the_frame_rate>>. If the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second) assuming `side` is the widht of the window. Lets say we want to randomize the velocity of the particle between 2 and 4 seconds. We could set the x-velocity to `side / (random.random() * 2 + 2)` where `side` is the width of the window in pixels.
+We saw that in our discussion of the frame rate (<<_understanding_the_frame_rate>>) if the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second) assuming `side` is the width of the window. We want to give particles different velocities to make it look realistic. We can randomize the velocity of the particle between `side/2` and `side/4` seconds. For example, setting the x-velocity and y-velocity to `side / (random.random() * 2 + 2)`
 
-Why does this work? Well `random.random() * 2` gives a random values between 0 and 2` and adding 2 gives us a random value between 2 and 4.
+Why does this work? Well `random.random() * 2` gives a random value between 0 and 2` and adding 2 gives us a random value between 2 and 4.
 
 But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative, between -2 and -4. We have to be careful because we don't want to generate values near `0` such as `.001` because then `side/.001` would be far too fast.
 
 image::numberline.png[align="center",width="400"]
 
-It is probably best to just toss a coin and random negate the value `side / (random.random() * 2 + 2)`
+It is probably easiest to just toss a coin and randomly negate the value `side / (random.random() * 2 + 2)`
 
 Our code for initializing the positions and velocities of each particle is ...
 
@@ -7208,6 +7207,86 @@ while True:
     pygame.display.update()
 ----
 
+==== Colliding the Particles
+
+Assume we have stem:[n] particles. We need to collide particle `0` with particles `1`, `2`, ..., `n-1` and particle `2` with `3`, `4`, ..., `n-1`. 
+In general we collide particle `i` with particles `i+1`, `i+2`, ..., `n-1`.
+
+.Collision Pattern
+[width="33%",options="header"]
+|===
+|Particle _i_  | Collides with particles
+|0
+|1, 2, 3, ... , stem:[n-1]
+
+|1
+|2, 3, ..., stem:[n-1]
+
+|...
+|...
+
+|stem:[n-3]
+|stem:[n-2], stem:[n-1]
+
+|stem:[n-2]	
+|stem:[n-1]
+|=== 
+
+When we get to the last particle, stem:[n-1], it has no other particles to collide with that 
+we have not already checked.
+
+[source,python,numbered]
+----
+for i in range(len(x) - 1):          <1>
+    for j in range(i+1, len(x)):     <2>
+        # collide particle i and j
+----  
+<1> for every particle `i` except the last
+<2> for every particle from `i+1` to the last
+
+Now wejust asdd the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.
+
+[source,python,numbered]
+----
+if distance(x[i] + r, y[i] + r, x[j] + r, y[j] + r) < 2 * r:
+    (dx[i], dx[j]) = (dx[j], dx[i])
+    (dy[i], dy[j]) = (dy[j], dy[i])
+----
+
+Putting it all together 
+
+[source,python,numbered]
+----
+for i in range(len(x) - 1):
+    for j in range(i+1, len(x)):
+        if distance(x[i] + r, y[i] + r, x[j] + r, y[j] + r) < 2 * r:
+            (dx[i], dx[j]) = (dx[j], dx[i])
+            (dy[i], dy[j]) = (dy[j], dy[i])
+----
+
+This goes in the main animation loop, which is now 
+
+[source,python,numbered,]
+----
+# main animation loop
+clock = pygame.time.Clock()
+
+while True:
+    win.fill(color.lightgray)
+    dt = clock.tick(60) / 1000.0
+
+    for i in range(len(x)):
+        (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
+        win.blit(ball, (x[i], y[i]))
+
+    for i in range(len(x) - 1):
+        for j in range(i+1, len(x)):
+            if distance(x[i] + r, y[i] + r, x[j] + r, y[j] + r) < 2 * r:
+                (dx[i], dx[j]) = (dx[j], dx[i])
+                (dy[i], dy[j]) = (dy[j], dy[i])
+
+    pygame.display.update()
+----
 
 === Forest Fire Model
 
