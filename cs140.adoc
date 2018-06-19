@@ -836,7 +836,7 @@ Lets revisit our Celsius to Fahrenheit conversion program.  The program below do
 ----
 f = float(input('Enter a temperature (F): '))
 c = 5/9 * f-32
-print(f, "degrees fahrenheit is", round(c,1), "degrees celsius")
+print(f, "degrees Fahrenheit is", round(c,1), "degrees celsius")
 ----
 
 [.result]
