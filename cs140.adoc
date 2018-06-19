@@ -285,13 +285,17 @@ The arithmetic operators we will be using most are:
 |exponentiation
 |===
 
-Python has many more operators, but this is all we will need for now.  You can combine these operations in complicated ways including using parentheses. The _normal 
+Python has many more operators than shown in this table, but this is all we will need for now.  You can combine these operations in complicated ways including using parentheses. The _normal 
 order of operations_ you learned in grade school apply.
 
 . parentheses
-. exponention
+. exponentiation
 . multiplication, division (include remainder)
 . addition and subtraction
+
+If there are two operators at the same precedence then they should be evaluated from left to right.
+For example `4 - 5 + 3` should be evaluated as `(4 - 5) + 3` (which is `2`) and not `4 - (5 + 3)` 
+(which is `-4`).
 
 ==== Examples
 
@@ -421,25 +425,25 @@ Strings are an important part of programming. Strings often seem boring but they
 
 A string literal is a sequence of characters between double quotes. 
 
-[source,python,numbered]
+[source,python]
 "This is a valid string literal"
 
 Or single quotes.
 
-[source,python,numbered]
+[source,python]
 'and so is this'
 
-IMPORTANT: the opening and closing quotes in a string literal must match
+IMPORTANT: The opening and closing quotes in a string literal must match.
 
-[source,python,numbered]
+[source,python]
 "but this string literal has an error, why?'
 
-[source,python,numbered]
+[source,python]
 'and so does this, why?"
 
 But what if we want to include a single quote as one of the characters in our string literal? One way to do it is to use double quotes for the string literal.
 
-[source,python,numbered]
+[source,python]
 "This isn't an error"
 
 This works because the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
@@ -467,17 +471,16 @@ Things can get pretty crazy. How about if we wanted to print the string _He said
 The statement
 
 [source,python,numbered]
-print('He said "don\'t"') 
+print('He said "don\'t" do it!') 
 
 produces the output 
 
 [source]
-He said "don't"
-
+He said "don't do it!"
 
 === A note about spaces
 
-Spaces, like in writing, are used to separate words in Python, and are often used to make code more readable. For example, in a `print` statement you can put a space after the comma that is separating values to print.
+Spaces, like in writing, are used to separate words in Python and are often used to make code more readable. For example, in a `print` statement you can put a space after the comma that is separating values to print.
 
 [source,python,numbered]
 print(a, b, c, d) 
@@ -498,7 +501,7 @@ WARNING: Spacing at the start of a line that changes indentation can cause probl
 
 === A note about indentation
 
-We will see later on that indentation plays an important role in Python. For now just be aware that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
+We will see later that indentation plays an important role in Python. For now just be aware that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
 
 Here is an example. The following program is in error because the second statement is indented one space.
 
@@ -506,7 +509,7 @@ Here is an example. The following program is in error because the second stateme
 x = 4
  print(x*x)
 
-TIP: Python is unique in the way that it treats indentation. Most other programming languages are not sensitive to the way that indentation is handled.
+TIP: Python is unique in the way that it treats indentation and spacing. Most other programming languages are not sensitive to the way that indentation is handled.
 
 === Syntax Errors
 
@@ -656,7 +659,7 @@ WARNING: The `input` function returns a string value, even if the user entered a
 
 The function `int` takes a string argument and attempts to convert it to an integer and return the resulting integer. For example `int("-36")` would return the integer `-36`. The `int` function is also used to convert a floating-point number to an integer by truncating the decimal point. For example `int(3.14159)` would return `3`. Sometimes `int` can result in a _run-time error_. For example `int("3.14159")` causes an error because the string cannot converted to an integer. What about `int('hello')`?
 
-NOTE: A _run-time error_ is an error that can only be detected when the program executes and not before. A run-time error is often called a _crash_. You'll often hear programmers say "The programming is crashing" or "the program crashes on this line of code".
+NOTE: A _run-time error_ is an error that can only be detected when the program executes and not before. A run-time error is often called a _crash_. You'll often hear programmers say "The program is crashing" or "the program crashes on this line of code".
 
 .The `float` function
 NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
@@ -669,7 +672,7 @@ f = float(input('Enter a temperature (F): ')) <1>
 c = 5/9*(f - 32)
 print(f, "degrees Fahrenheit is", c, "degrees Celsius")
 
-<1> Notice the use of the function `float` to convert the string to a floating-point number. 
+<1> Notice the use of the function `float` to convert the string in `f` to a floating-point number. 
 
 Here is a sample run of the Fahrenheit to Celsius conversion program.
 
@@ -678,28 +681,28 @@ Here is a sample run of the Fahrenheit to Celsius conversion program.
 
 <1> The user entered `83.5`
 
-Notice the rather unhelpful number of digits in the result `28.61111111111111`. It looks ridiculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
+The result `28.61111111111111` has an unhelpful number of digits. It looks ridiculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
 
 [source,python,numbered]
 f = float(input('Enter a temperature (F): '))
 c = 5/9*(f - 32)
 print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius") <1>
 
-<1> Notice the use of the function `round` to round th value `c` to one decimal places.
+<1> Use `round` to round the value in`c` to one decimal place.
 
 Here is a sample run of the Fahrenheit to Celsius conversion program.
 
  Enter a temperature (F): 83.5
- 83.5 degrees fahrenheit is 28.6 degrees celsius
+ 83.5 degrees Fahrenheit is 28.6 degrees Celsius
  
-NOTE: There are two different kinds of functions in Python, those that _return_ values, and those that do not return a value but peform some other side effect. `print` is an example of a function that does not return a value but has the the side effect of printing to the console window. Contrast this to the `round` function which returns a rounded result.
+NOTE: There are two different kinds of functions in Python, those that _return_ values, and those that do not return a value but perform some other side effect. `print` is an example of a function that does not return a value but has the the side effect of printing a value on the console window. Contrast this to the `round` function which returns a rounded result.
 
 image::round.png[align="center"]
 
 ==== Program Flow
 
 Python programs execute line-by-line top-to-bottom. Variables must be defined and assigned 
-values before those values can be used. Consider the previous celsius-to-fahrenheit conversion program. 
+values before those values can be used. Consider the previous Celsius-to-Fahrenheit conversion program. 
 
 . The first assignment statement +
 `f = float(input('Enter a temperature (F): '))` +
@@ -713,8 +716,8 @@ prints the result using both `c` and `f`
 
 === The `math` module
  
-Python has lots of support libraries that we can use to get our work done. Think of 
-a support library as predefined functions and definitions that you can use. One such support library is called the _math module_. The math module contains lots of functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
+Python has many support libraries that we can use. Think of 
+a support library as predefined functions and definitions that you can use. One such support library is called the _math module_. The math module contains many math related functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
 
 NOTE: A _module_ is a named collection of related functions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where you can have folders inside folders to organize your documents.
 
@@ -754,7 +757,7 @@ print(math.pi)
 3.141592653589793
 ----
 
-NOTE: To reference functions and definitions in a module use _dot notation_. For example, `math.pi`, `math.sqrt(x)`.
+NOTE: To reference functions and definitions in a module use _dot notation_. For example, `math.pi` or `math.sqrt(x)`.
 
 ==== Function Composition
 
@@ -811,9 +814,9 @@ https://docs.python.org/3/library/math.html[Python math module documentation]
 
 We have already discussed _syntax errors_ and _run-time errors_. 
 
-Recall that a syntax error is an error in how you string together the words and characters of your program. For example, a missing parentheses, or quote in a string literal, etc.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
+Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
 
-A _run-time_ error are errors that cannot be detected before program execution and only occur while your program is executing. Common run-time errors include divding by zero, or using a variable before it is defined. For example, consider the following simple (and silly) program:
+A _run-time_ error are errors that cannot be detected before program execution and only occur while your program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple (and silly) program:
 
 [source,python,numbered]
 ----
@@ -826,7 +829,7 @@ What would happen if the user entered a 0 at the input prompt? There is no way f
 ==== Logic Errors
 There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error python will tell you exactly which line caused the crash. 
 
-Lets revisit our celsius to fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
+Lets revisit our Celsius to Fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
 
 .Logic error
 [source,python,numbered]
@@ -7275,11 +7278,13 @@ while True:
     win.fill(color.lightgray)
     dt = clock.tick(60) / 1000.0
 
-    for i in range(len(x)):
+	# move the particles
+    for i in range(len(x)):                                                
         (x[i],y[i],dx[i],dy[i]) = move(x[i],y[i],dx[i],dy[i])
         win.blit(ball, (x[i], y[i]))
 
-    for i in range(len(x) - 1):
+	# collide the particles
+    for i in range(len(x) - 1):                                            
         for j in range(i+1, len(x)):
             if distance(x[i] + r, y[i] + r, x[j] + r, y[j] + r) < 2 * r:
                 (dx[i], dx[j]) = (dx[j], dx[i])
