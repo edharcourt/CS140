@@ -48,7 +48,7 @@ Goals of the course include:
 === Acknowledgements
 
 These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
-https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax].footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.
+https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax]footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.
 
 == Introduction
 
@@ -589,7 +589,8 @@ print(x)
 
 [.result]
 ====
-Python expects there to be something _between_ the `5` and the `9` such as a mathematical operator `+` or `*`.
+Python expects there to be something _between_ the `5` and the `9` such as a mathematical operator `+` or `*`. Unless the programmer meant the integer `59` 
+in which case there should be no space at all.
 ====
 
 .Example 8
@@ -600,7 +601,7 @@ print(x)
 
 [.result]
 ====
-Python expects there to be something a variable to the left of `=`.
+Python expects there to be a variable to the left of `=`, not an expression.
 ====
 
 .Example 9
@@ -614,7 +615,7 @@ print(x)
 Python does not have an operator named `@`.
 ====
 
-Some syntax errors are just nasty and difficult to find. The following one line program looks like it should be a syntax error non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
+Some syntax errors are just nasty and difficult to find. The following one line program looks like it should have a syntax error. It is non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
 
 .Example 8
 ----
@@ -622,9 +623,9 @@ print
 ----
 
 [.result]
-====
+----
 <built-in function print>
-====
+----
 
 As you gain practice you will be able to quickly find syntax errors.
 
@@ -704,15 +705,22 @@ image::round.png[align="center"]
 Python programs execute line-by-line top-to-bottom. Variables must be defined and assigned 
 values before those values can be used. Consider the previous Celsius-to-Fahrenheit conversion program. 
 
-. The first assignment statement +
-`f = float(input('Enter a temperature (F): '))` +
-that executes defines the variable `f`. +
-. The second statement +
-`c = 5/9*(f - 32)` +
-defines `c` _by using_ the variable `f`
-. The third statement +
-`print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")` +
-prints the result using both `c` and `f`
+The first assignment statement that executes defines the variable `f`. 
+
+----
+f = float(input('Enter a temperature (F): '))
+----
+
+The second statement execute defines `c` by _using_ the variable `f`
+
+----
+c = 5/9*(f - 32)
+----
+
+Finally, the third statement executed prints the result _using_ both `c` and `f`.
+----
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")
+----
 
 === The `math` module
  
@@ -816,7 +824,7 @@ We have already discussed _syntax errors_ and _run-time errors_.
 
 Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
 
-A _run-time_ error are errors that cannot be detected before program execution and only occur while your program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple (and silly) program:
+A _run-time_ error is an error that cannot be detected _before_ program execution but only while the program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple program:
 
 [source,python,numbered]
 ----
@@ -824,7 +832,7 @@ s = int(input("Enter a number: "))
 print("1000 divided by", s, "is", 1000/s) 
 ----
 
-What would happen if the user entered a 0 at the input prompt? There is no way for python to know what the user is going to type and if they enter a 0 then the program will _crash_.
+What would happen if the user entered a 0 at the input prompt? There is no way for python to know what the user is going to type, and if they enter a `0`, then the program will _crash_ on line 2. If the user enters the word `"hello"` then the program will crash on line 1 when Python tries to convert `"hello"` to an integer.
 
 ==== Logic Errors
 There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error python will tell you exactly which line caused the crash. 
@@ -846,7 +854,7 @@ There are parentheses missing around the `f-32`. This program executes just fine
 
 === Bits, CPUs, Interpreters, and Compilers
 
-At its most basic level everything about modern computing boils down to, at some base level, ones and zeros, true/false, on/off, yes/no, black/white. All information is _binary_. All decimal (base-10) numbers are expressed in binary (base-2). Digital images are just numbers, which are binary. Digital music on Spotify or Pandora, are numbers (hence binary) that represent sound waves. Characters, letters, punctuation, all have a numberic equivalent, and are binary. Internet communication - binary, web pages - binary. Even computer programs get converted to binary. _All information is binary_.
+At its most basic level everything about modern computing boils down to, at some base level, ones and zeros, true/false, on/off, yes/no, black/white. All information is _binary_. All decimal (base-10) numbers are expressed in binary (base-2). Digital images are just numbers, which are binary. Digital music on Spotify or Pandora, are numbers (hence binary) that represent sampled sound waves. Characters, letters, punctuation, all have a numeric equivalent, and are binary. Internet communication - binary, web pages - binary. Even computer programs get converted to binary. _All information is binary_.
 
 An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _byte_. We often talk of sizes of data in bytes. A megabyte (MB) is one million bytes. Stictly speaking when we use the term megabyte it usually means stem:[2^{20}] bytes rather then stem:[10^6] bytes. Below is a table of sizes, kilobytes, megabytes, ...
 
@@ -898,13 +906,14 @@ Python is a little different, it is not a compiled language but an _interpreted_
 .Python Interpreter
 image::interpreter.png[width=600]
 
+NOTE: Python is actually a bit more complicated. The Python interpreteter actually compiles Python programs to a CPU independent intermediate language called 
+_byte code_. It is the program's byte code that is then executed the Python interpreter.
 
 
 === Exercises
 
 .C2F 
-Write a program that converts a temperature in celsius to fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output 
-neat and descriptive.
+Write a program that converts a temperature in celsius to fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
 
 .Windchill
 Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem:[v] (in MPH). The current temperature and the wind velocity should be entered by the user from the keyboard. +
@@ -1069,10 +1078,10 @@ NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in p
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (1024 pixels wide by 768 pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometims abbreviated _px_.
 
 NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represents a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
-.`x` is primitive and `win` is _reference_ +
+`x` is primitive and `win` is _reference_ +
 image:references.png[width=500,align="center"]
 
-NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associate with objects are called _methods_.
+NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
 
 For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pxiels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. FOr example `win.get_height()`.
 
@@ -1122,10 +1131,10 @@ burntsienna = (138,54,15)
 lightgray = (200,200,200)
 ----	
 
-We will soon get tired of retyping these definitions in our pygame programs. One thing we can do is to place these color definitions in their own file and name is `color.py`.
-We can then import `color.py` into our pygame program and voila! we have created our own python module named `color` and we can reuse our color definitions without having to retype them every time.
+We will soon get tired of retyping these definitions in our pygame programs. We can place these color definitions in their own file and name it `color.py`.
+We can then import `color.py` into our pygame program with `import color` and voila! we have created our own Python module named `color` and we can reuse our color definitions without having to retype them every time.
 
-TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to reuse code rather than duplicate it. 
+TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to _reuse_ code you have already written rather than duplicate it. 
 
 .hello_pygame.py
 [source,python,numbered]
@@ -1157,7 +1166,7 @@ In this section we are going to introduce how to draw a circle, ellipse, rectang
 
 The pygame function `pygame.draw.rect` draws a rectangle on a surface and takes either three or four arguments.
 
-NOTE: Pygame programs only ever have one display surface. We will se later on that our pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
+NOTE: Pygame programs only ever have one display surface. We will see later on that our pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
 
 +++
 <code class="listingblock">
@@ -1167,13 +1176,13 @@ pygame.draw.rect(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-wid
 
 _surface_:: The surface we are going to draw the rectangle on. For now we will just use the display surface `win` that was constructed using the `set_mode` function.
 
-_color_:: An RGB triple such as (0, 255, 255) or color.yellow (from our color module)
+_color_:: An RGB triple such as (0, 255, 255) or `color.yellow` (from our color module)
 
 _xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner of the rectangle and the width stem:[w] and the height stem:[h] of the rectangle. All units are in pixels.
 
 _optional-line-width_:: If this argment is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
 
-CAUTION: The upper left coordinate of the surface is the origin (0,0). 
+CAUTION: The upper left coordinate of a pygame surface is the origin `(0,0)`. 
 
 .Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Draw a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
@@ -1226,7 +1235,7 @@ What is the coordinate of the top right pixel in the pygame window?
 ====
 (599,0)
 
-Now,most likely what you said was (600,0). This is a common mistake, Remember
+Now, most likely what you said was (600,0). This is a common mistake, Remember
 the window is 600 pixels wide and we are starting counting at 0. So the 600th pixel
 is column 599. This mistake of being off by one, computer scientists quite literally call an _off by one error_.
 ====
