@@ -844,7 +844,7 @@ Lets revisit our Celsius to Fahrenheit conversion program.  The program below do
 ----
 f = float(input('Enter a temperature (F): '))
 c = 5/9 * f-32
-print(f, "degrees Fahrenheit is", round(c,1), "degrees celsius")
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")
 ----
 
 [.result]
@@ -856,7 +856,7 @@ There are parentheses missing around the `f-32`. This program executes just fine
 
 At its most basic level everything about modern computing boils down to, at some base level, ones and zeros, true/false, on/off, yes/no, black/white. All information is _binary_. All decimal (base-10) numbers are expressed in binary (base-2). Digital images are just numbers, which are binary. Digital music on Spotify or Pandora, are numbers (hence binary) that represent sampled sound waves. Characters, letters, punctuation, all have a numeric equivalent, and are binary. Internet communication - binary, web pages - binary. Even computer programs get converted to binary. _All information is binary_.
 
-An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _byte_. We often talk of sizes of data in bytes. A megabyte (MB) is one million bytes. Stictly speaking when we use the term megabyte it usually means stem:[2^{20}] bytes rather then stem:[10^6] bytes. Below is a table of sizes, kilobytes, megabytes, ...
+An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _byte_. We often talk of sizes of data in bytes. A megabyte (MB) is one million bytes. Strictly speaking when we use the term megabyte it usually means stem:[2^{20}] bytes rather then stem:[10^6] bytes. Below is a table of sizes, kilobytes, megabytes, ...
 
 .Sizes of data
 [cols="3"]
