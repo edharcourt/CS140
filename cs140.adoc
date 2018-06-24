@@ -901,13 +901,13 @@ The basic operations of the CPU are called _instructions_, and the binary repres
 .C Program Compilation
 image::compiler.png[width=400]
 
-Python is a little different, it is not a compiled language but an _interpreted_ language. What that means is that there is another program called the _interpreter_ that reads the Python program and executes it. The Python interpreter itself is written in C.
+Python is a little different, it is not a compiled language but an _interpreted_ language. What that means is that there is another program called the _interpreter_ that reads the Python program and executes it directly. The Python interpreter itself is written in C.
 
 .Python Interpreter
 image::interpreter.png[width=600]
 
 NOTE: Python is actually a bit more complicated. The Python interpreteter actually compiles Python programs to a CPU independent intermediate language called 
-_byte code_. It is the program's byte code that is then executed the Python interpreter.
+_byte code_. It is the Python program's byte code that is then executed the Python interpreter.
 
 
 === Exercises
@@ -1071,7 +1071,7 @@ win = pygame.display.set_mode((600,600)) <3>
 <2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
 <3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surfce_.
 
-When we run the program above a window will display on our monitor and then quickly vanish. The window disappears because the program finished. We probably don't want the window to disappear right away.
+When we run the program above a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
 NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
@@ -1083,10 +1083,10 @@ image:references.png[width=500,align="center"]
 
 NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
 
-For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pxiels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. FOr example `win.get_height()`.
+For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pxiels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
 
-.Waiting +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Can you think of a way we might be able to pause the program to keep the window from disappearing until the user hits a key on the keyboard?
+.Keeping the window from disappearing +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Can you think of a way we might be able to pause the program to keep the pygame display window from disappearing until the user hits a key on the keyboard?
 
 [.result]
 ====
@@ -1120,21 +1120,23 @@ One common thing many of our pygame programs will do is to define some colors.
 [source,python,numbered]
 ----
 # file color.py
-red    = (255,0,0)
-green  = (0,255,0)
-blue   = (0,0,255)
-yellow = (255,255,0)
-white  = (255,255,255)
-black  = (0,0,0)
-aqua   = (0,255,255)
+red         = (255,0,0)
+green       = (0,255,0)
+blue        = (0,0,255)
+yellow      = (255,255,0)
+white       = (255,255,255)
+black       = (0,0,0)
+aqua        = (0,255,255)
 burntsienna = (138,54,15)
-lightgray = (200,200,200)
+lightgray   = (200,200,200)
 ----	
 
-We will soon get tired of retyping these definitions in our pygame programs. We can place these color definitions in their own file and name it `color.py`.
+We will soon get tired of retyping color definitions in our pygame programs. We can place these definitions in their own file and name it `color.py`.
 We can then import `color.py` into our pygame program with `import color` and voila! we have created our own Python module named `color` and we can reuse our color definitions without having to retype them every time.
 
 TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to _reuse_ code you have already written rather than duplicate it. 
+
+WARNING: Don't name your Python programs the same name as modules you commonly import. For example, if you name your program `pygame.py` and then in your program `import pygame` your are in the embarrassing situation of your program trying to import itself.
 
 .hello_pygame.py
 [source,python,numbered]
@@ -1146,9 +1148,9 @@ pygame.init()
 width = 600
 height = 500
 win = pygame.display.set_mode((width,height)) <1> 
-win.fill(color.burntsienna) <2>
-pygame.display.update() <3>
-input("Hit <enter> to quit.") <4>
+win.fill(color.burntsienna)                   <2>
+pygame.display.update()                       <3>
+input("Hit <enter> to quit.")                 <4>
 ----
 <1> `win` (short for window) is a _display surface_ in pygame. We did not have to call it `win`. We could have called it any legal variable name.
 
@@ -1160,7 +1162,7 @@ input("Hit <enter> to quit.") <4>
 
 === Shapes
 
-In this section we are going to introduce how to draw a circle, ellipse, rectangel, line, and a single pixel on a surface.
+In this section we learn how to draw basic shapes; a circle, ellipse, rectangle, line, and a single pixel on a surface.
 
 ==== Rectangle 
 
@@ -1180,12 +1182,12 @@ _color_:: An RGB triple such as (0, 255, 255) or `color.yellow` (from our color 
 
 _xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner of the rectangle and the width stem:[w] and the height stem:[h] of the rectangle. All units are in pixels.
 
-_optional-line-width_:: If this argment is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
+_optional-line-width_:: If this argument is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
 
 CAUTION: The upper left coordinate of a pygame surface is the origin `(0,0)`. 
 
 .Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Draw a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
+Place a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
 
 [.result]
 ====
@@ -1241,7 +1243,7 @@ is column 599. This mistake of being off by one, computer scientists quite liter
 ====
 
 .Bottom Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the top right pixel in the pygame window?
+What is the coordinate of the bottom left pixel in the pygame window?
 
 [.result]
 ====
@@ -1249,7 +1251,7 @@ What is the coordinate of the top right pixel in the pygame window?
 ====
 
 .Bottom Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the top right pixel in the pygame window?
+What is the coordinate of the bottom right pixel in the pygame window?
 
 [.result]
 ====
@@ -1257,16 +1259,17 @@ What is the coordinate of the top right pixel in the pygame window?
 ====
 
 .Proportional Graphics
-Notice that our yellow square is _proportional_ and relative to the size of the main pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
+The yellow square is _proportional_ and relative to the size of the main pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
 
-TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example an eye would be drawn relative to a head, and a pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
+TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be 
+drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
 
-Constrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.
+Contrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.
 
 [source,python,numbered]
 pygame.draw.rect(win, color.yellow, (100,200,300,200))
 
-then this woould draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
+then this would draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
 
 Graphics using individual pixels only called _raster graphics_.
 
@@ -1286,25 +1289,25 @@ _color_:: An RGB triple
 
 _xy_:: A tuple that represents the stem:[x] and stem:[y] coordinate of the _center_ of the circle.
 
-_optional-line-width_:: If this argment is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.
+_optional-line-width_:: If this argument is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.
 
-Lets draw a dark gray circle centered in the upper left quadrant of the yellow sqaure. We will do this proportionally, making the diameter of the sircle 1/3 width of the quandrant. Calculating the `x` and `y` coordinates of the circle can be a little tricky. The width of the quadrant is `r_width//2`
+Lets draw a dark gray circle centered in the upper left quadrant of the yellow square. We will do this proportionally, making the diameter of the circle 1/3 width of the quadrant. Calculating the `x` and `y` coordinates of the circle can be a little tricky. The width of the quadrant is `r_width//2`
 
-The x coordinate of the circle is relative to `r_x`, the x coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
+The stem:[x] coordinate of the circle is relative to `r_x`, the stem:[x] coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
  
 [source,python,numbered]
 ul_c_x = r_x + r_width//4   # ul_c_x is short for upper left circle x coordinate
 
-Similarly the y coordinate is 
+Similarly the stem:[y] coordinate is 
 
 [source,python,numbered]
 ul_c_y = r_y + r_height // 4
 
-Remember that the circle fcuntion requires the radius but the problem stated that the 
-diameter of the circle is 1/3 the width of the quadrant. We know the width f the quadrant is `r_width//2` and 1/3 od that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
+Remember that the circle function requires the radius but the problem stated that the 
+diameter of the circle is 1/3 the width of the quadrant. We know the width of the quadrant is `r_width//2` and 1/3 of that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
 
 [source,python,numbered]
-ul_c_radius = r_width// 2 // 3 // 2 # or r_width // 12 
+ul_c_radius = r_width//2//3//2 # or r_width // 12 
 
 Defining a new color `darkgray = (100,100,100)` in our color module and putting it all together we have 
 
@@ -1323,8 +1326,8 @@ Draw another dark gray circle with the same radius centered in the upper right q
 
 [.result]
 ====
-The only thing that changes is the x coordinate. The y coordinate and the radius
-of the upper right circle are the same as the y coordinate and readius f the upper left circle. One way to think about the x coordinate is that is 3/4 of the width of the rectangle. 
+The only thing that changes is the stem:[x] coordinate. The stem:[y] coordinate and the radius
+of the upper right circle are the same as the stem:[y] coordinate and radius f the upper left circle. One way to think about the stem:[x] coordinate is that it is 3/4 of the width of the rectangle. 
 
 [source,python,numbered]
 ----
@@ -1369,7 +1372,7 @@ pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
 
 ur_c_x = r_x + 3 * r_width // 4
 ur_c_y = r_y + r_height // 4
-ur_c_radius = r_width//2//3//2  # width of quadrant is r_width//2 then 1/3 of that
+ur_c_radius = r_width//2//3//2  # or r_width//12
 pygame.draw.circle(win, color.darkgray, (ur_c_x,ur_c_y), ur_c_radius)
 
 pygame.display.update()
@@ -1380,7 +1383,7 @@ input("Hit <enter> when done")
  
 [WARNING]
 ====
-Notice the line for calculatig the x-coordinate of the upper right circle
+Notice the line for calculating the stem:[x]-coordinate of the upper right circle
 
  ur_c_x = r_x + 3 * r_width // 4
 
@@ -1394,7 +1397,7 @@ Why is the incorrect? Because `3//4` is 0!
  
 ==== Ellipse
 
-An ellipse is an oval shape with a width and a height. In graphics an ellipse is very similar to a rectangle. In fact the function to draw an ellipse is almost execatly the same as the function to draw a rectangle.  The one part of drawing an ellipse that takes
+An ellipse is an oval shape with a width and a height. In graphics an ellipse is very similar to a rectangle. In fact the function to draw an ellipse is almost exactly the same as the function to draw a rectangle.  The one part of drawing an ellipse that takes
 some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)` coordinate of the rectangle (or _bounding box_) that surrounds the ellipse.
 
 image::ellipse.png[align="center"]
@@ -1411,13 +1414,13 @@ _surface_:: The surface we are going to draw the ellipse on.
 
 _color_:: An RGB triple
 
-_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner _bounding box_, abd the widthstem:[w]and the heightstem:[h]of the ellipse.
+_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner _bounding box_, and the width stem:[w] and the height stem:[h] of the ellipse.
 
 _optional-line-width_:: same as rectangle and circle functions.
 
 These are, in fact, the same arguments for drawing a rectangle.
 
-Continuing our program from before lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add `pink = (255, 20, 147)` to our `color.py` module.
+Continuing our program from before, lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add `pink = (255, 20, 147)` to our `color.py` module.
 
 
 [source,python,numbered]
@@ -1453,7 +1456,7 @@ pygame.draw.ellipse(win, color.blue, (n_x,n_y,n_width,n_height))
 ====
 
 .Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-You can give the Blockhead a smil by drawing an ellipse over the top of the mouth shifted up slightly, and make it the same color as the background head. +
+You can give the Blockhead a smile by drawing an ellipse over the top of the mouth shifted up slightly, and make it the same color as the background head. +
 image:smile.png[width=300,height=200,align="center"]
 
 [.result]
@@ -1472,7 +1475,7 @@ TIP: You can always check to see if you are making your shapes proportional if y
 
 ==== Lines
 
-You can draw a line in pyagme using the function `pygame.draw.line`.
+You can draw a line in pygame using the function `pygame.draw.line`.
 
 +++
 <code class="listingblock">
@@ -1484,9 +1487,9 @@ _surface_:: The surface we are going to drawing the line on.
 
 _color_:: An RGB triple
 
-_start-xy_:: The (x,y) coordinate of one endpoint of the line
+_start-xy_:: The stem:[(x,y)] coordinate of one endpoint of the line
 
-_end-xy_:: The (x,y) coordinate of the other endpoint of the line
+_end-xy_:: The stem:[(x,y)] coordinate of the other endpoint of the line
 
 _optional-line-width_:: The width of the line in pixels
 
@@ -1508,10 +1511,10 @@ pygame.draw.line(win, color.white,
 ----
 ====
 
-There are other pygame drawing functions that we will introdce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
+There are other pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
 
 .Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Variables have been renamed to be more meaningful. FOr example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
+Variables have been renamed to be more meaningful. For example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
 
 [.result]
 ====
@@ -1615,13 +1618,14 @@ a|
 == Functions 
 
 Functions play a massively important role in programming. They encapsulate common computations and keep programmers from having to reinvent the wheel.
+You can just use the `math.sqrt` function. You don't have to write is yourself. 
 
-Recall that in mathematics a _function_ maps values in a _domain_ to values in a _range_. In Python the `math.sqrt` function maps 4 to 2, 9 to 3, and 2 to 1.4142135...  
+Recall that in mathematics a _function_ maps values in a _domain_ to values in a _range_. In Python the `math.sqrt` function maps 4 to 2.0, 9 to 3.0, and 2 to 1.4142135623730951.footnote:[This is only an approximation. The stem:[\sqrt{2}] is _irrational_. That is, it is a never ending, non-repeating sequence of digits.]  
 
 .`math.sqrt` function
 image::sqrt-func.png[width=604,height=226,align="cener"]
 
-The round function maps `round(3.56,1)` to `3.6`. *_Functions return values_*. Always. But sometimes we don't care about the return value. In Python functions sometimes return the special value `None` which, which essentially means the function does not "really" return a value.footnote:[In other programming languages such as C and and Java these are called _void_ functions.]. For example, the `print` function returns the value `None` but has the _side effect_ of printing its arguments on the console.
+The round function maps `round(3.56,1)` to `3.6`. *_Functions return values_*. Always. But sometimes we don't care about the return value. In Python functions sometimes return the special value `None`, which essentially means the function does not "really" return a value.footnote:[In other programming languages such as C and and Java these are called _void_ functions.]. For example, the `print` function returns the value `None` but has the _side effect_ of printing its arguments on the console.
 
 .`print` function
 image::print-func.png[width=604,height=226,align="cener"]
@@ -1678,46 +1682,45 @@ print(round(result, 2))
 ----
 
 .Self Check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-How many function calls are there? Explain all of the arguments and return values.
+How many function calls are there in the two lines above? Explain all of the arguments and return values.
 
 [.result]
 ====
-The first line contains two function calls. First `math.sqrt` is called with the argument `math.pi/4`. Then `math.sin` is called and uses the _return value_ from the `math.sqrt` call as its arguments. The return value of `math.sin` is then assigned to the variable `result`. The second line contains two function calls as well. First `round` is called with _two_ arguments, `result` and `2`. `result` is the value being rounded and `2` is the number of places to round to. The return value from `round` is then used as the only argument to the `print` function. 
+The first line contains two function calls. First `math.sqrt` is called with the argument `math.pi/4`. Then `math.sin` is called and uses the value returned from the `math.sqrt` call as its arguments. The return value of `math.sin` is then assigned to the variable `result`. The second line contains two function calls as well. First `round` is called with _two_ arguments, `result` and `2`. `result` is the value being rounded and `2` is the number of places to round to. The return value from `round` is then used as the only argument to the `print` function. 
 
 In total there are four function calls and five arguments involved.
 ====
 
 === Defining Functions
 
-The real power with functions is that we get to define our own. Functions allow us to encasulate of commonly occurring computation. Lets go back to our rather banal example of our formula to convert a fahrenheit temperature to celsius. Rather than having to keep remember the formula we can just define a function.
+The real power with functions is that programmers get to define our own. Functions allow us to encapsulate commonly occurring computations. Lets go back to our rather banal example of our formula to convert a Fahrenheit temperature to Celsius. Rather than having to keep remembering the formula we can just define a function.
 
 .util.py
 [source,python,numbered]
 ----
-def f2c(f): <1>
+def f2c(f):              <1>
     c = 5 / 9 * (f - 32) <2>
-    return c <3>
+    return c             <3>
 ----
 	
-<1> This is the _function header_. It tells Python we are defining our own function and it takes one _parameter_ `f`. The value of `f` is determined by the argment when `f2c` is called.
+<1> This is the _function header_. It tells Python we are defining our own function and it takes one _parameter_ `f`. The value of `f` is determined by the argument when `f2c` is called.
 <2> This is the main part of the function that does the computation. It defines a _local variable_ `c`.
 <3> This is the return statement that indicates that function `f2c` returns the value `c` to the _caller_ that was just computed.
 
 Lines 2 and 3 constitute the _function body_, which is indented under the function header.
 
-We now have our own function for converting fahrenheit to celsius and we can tuck it away in a file somewhere so we can reuse it later.
+We now have our own function for converting Fahrenheit to Celsius and we can tuck it away in a file somewhere so we can reuse it later.
 
 image::f2c-func.png[align="center"]
 
 We can use `f2c` in a program by _calling_ it with an argument.
 
-[source,python,numbered]
+[source,python]
 ----
 print(f2c(32))
 ----
 
-We call this the _main program_. The main program is any code that exists outside of 
-a function.
+We call this the _main program_. The main program is any code that exists outside of a function.
 
 .Self check +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Why is the following line incorrect? +
@@ -1741,15 +1744,15 @@ This function returns the value `None` and, as a side effect, prints the value o
 
 [source,python,numbered]
 ----
-t = float(intput("Enter a temperature: "))
+t = float(input("Enter a temperature: "))
 print(f2c(t) +  100)
 ----
 
-This program reads a temperature from the user and puts it in the variable `t`. It then converts `t` to celsius and add 100 degrees celsius to the result and printing the final value. For the first version of `f2c` this works fine. But the second version crashes because it tries to add 100 to `None`.
+This program reads a temperature from the user and puts it in the variable `t`. It then converts `t` to Celsius and adds 100 degrees Celsius to the result and printing the final value. For the first version of `f2c` this works fine. But the second version crashes because it tries to add 100 to `None`.
  
 WARNING: A function that returns a value is not the same thing as the function printing a value. 
 
-==== Putting function in a module
+==== Putting functions in a module
 
 Since we will be using the `f2c` function later in the text it is a good idea to place general functions in a module, such as `util.py`.
 
@@ -1777,7 +1780,7 @@ include::python/blockhead.py[]
 
 What if we wanted to draw two or more blockheads on the display surface? One way is to make another copy of the code, and change lots of variable names etc. This is a perfect situation where we can write a function `blockhead` that we can call more than once. 
 
-In keeping with the way drawing rectangle works specifying the Blockhead's x and y coordinate along with its width and height makes sense:
+In keeping with the way drawing rectangle works specifying the Blockhead's stem:[x] and stem[y] coordinate along with its width and height makes sense:
 
 [source,python,numbered]
 ----
@@ -1785,21 +1788,23 @@ def draw_blockhead(head_x, head_y, head_w, head_h):
     pass
 ----
 	
-This is just the function header. Notice the use of the Python statement `pass`. This is the statement that does nothing. We are using it here as a placeholder for the function body.
+This is just the function header. The Python statement `pass` is the statement that does nothing. We are using it here as a placeholder for the function body, which we have not yet written.
 
-So what we'll do now is place all of the code used for the drawing inside the function and make sure that we use the parameters to initilize the 
+So what we'll do now is place all of the code used for the drawing inside the function and make sure that we use the parameters to initialize the 
 
 [source,python,numbered]
 ----
 def draw_blockhead(head_x, head_y, head_w, head_h):
 
-    pygame.draw.rect(win, color.yellow, (head_x, head_y, head_width, head_height))
+    pygame.draw.rect(win, color.yellow, 
+	                (head_x, head_y, head_width, head_height))
 
     # left eye
     left_eye_x = head_x + head_width // 4
     left_eye_y = head_y + head_height // 4
     left_eye_r = head_width // 12
-    pygame.draw.circle(win, color.darkgray, (left_eye_x, left_eye_y), left_eye_r)
+    pygame.draw.circle(win, color.darkgray, 
+	                  (left_eye_x, left_eye_y), left_eye_r)
 
     # left eye cross
     pygame.draw.line(win, color.white,
@@ -1842,13 +1847,13 @@ def draw_blockhead(head_x, head_y, head_w, head_h):
 Now we can call the `draw_blockhead` function as many times as we like without having to 
 duplicate lots of code. The variables `head_x`, `head_y`, `head_w`, `head_h` are _parameters_ and they can be used anywhere in the function body. That is their _scope_.
 
-NOTE: The _scope_ of a variable is the region of the progrsm where it can be used.
+NOTE: The _scope_ of a variable is the region of the program where it can be used.
 
 All of the other variables that are defined in the function are _local variables_. A local variable's scope is from the point where where it is defined until the end of the function.
 
-NOTE: A _local variable_ is defined in the function. Its scope is th point from where it was defined until the end of the function.
+NOTE: A _local variable_ is defined in a function. Its scope is the point from where it was defined until the end of the function.
 
-Noteice that the `draw_blockhead` function still uses the variable `win`, which is neither passed as a parameter nor is it defined with the function. The function assumes `win` is defined in the main program. We say that `win` is a _global variable_.
+The `draw_blockhead` function still uses the variable `win`, which is neither passed as a parameter nor is it defined with the function. The function assumes `win` is defined in the main program. We say that `win` is a _global variable_.
 
 NOTE: A _global variable_ is defined in the main program. Its scope is the point from where it was defined until the end of the program.
 
@@ -1885,7 +1890,7 @@ If you look at the main program above it is clear that the program draws four fi
 
 ==== Functions make code less buggy
 
-Imagine had we not used a function and we found an error in the code, we would then have to fix that error in every place where the code was duplicated. WHen we use a function we just fix it once.
+Imagine had we not used a function and we found an error in the code, we would then have to fix that error in every place where the code was duplicated. When we use a function we just fix it once.
 
 ==== Functions make programs more concise
 
@@ -1893,15 +1898,15 @@ This one is obvious. We don't have to copy and paste code, and the program is mu
 
 ==== Functions allow programmers to easily _reuse_ code.
 
-Consider our fahrenheit-to-celsius conversion function `f2c` that we placed in a file `util.py`. We can reuse that functionwhenever we want without having to reinvent the wheel every time.
+Consider our Fahrenheit-to-Celsius conversion function `f2c` that we placed in a file `util.py`. We can reuse that function whenever we want without having to reinvent the wheel every time.
 
 === Exercises
 
 .Exercise 1
-Write a function `circ_area` that that takes the radius of a circle as a parameter and retrns the area of the circle.  Write a main program that reads the radius from the user (keyboard) and prints the area.
+Write a function `circ_area` that that takes the radius of a circle as a parameter and returns the area of the circle.  Write a main program that reads the radius from the user (keyboard) and prints the area.
 
 .Exercise 2
-Answer questions about the program below. The lines are number 
+Answer questions about the program below.
 
 [source,python,numbered]
 ----
@@ -1937,7 +1942,7 @@ pass
 
 . Are there any parameters defined in the program? Explain.
 
-. What does the last line do? The line that is not numbered.
+. What does the last line do?
 
 === Terminology
 
@@ -1967,9 +1972,9 @@ a|
 
 == Repetition - The While Loop
 
-Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey pick, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
+Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
 
-NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc.
+NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc. The term https://en.wikipedia.org/wiki/Particle[_particle_] comes from physics and is an abstract representation of some object.
 
 When the particle is obviously something like a soccer ball I will often use the term _particle_ and _ball_ interchangeably. 
 
@@ -1991,7 +1996,7 @@ win.fill(color.white)
 pygame.draw.circle(win, color.blue, (px, py), radius)
 pygame.display.update()
 ----
-<1> Where would the particle display of we set `px = 0`
+<1> Where would the particle show up of we set `px = 0`
 
 What if we wanted to draw another particle right next to the first? The next particle's stem:[x] coordinate will be one diameter (or 2 radii) past the first particle's stem:[x] coordinate.
 
@@ -2062,7 +2067,7 @@ while px + radius < side:
 <2> delay 5 milliseconds
 <3> moving 1 pixel at a time makes motion look smooth
 
-NOTE: A _sprite_ is a more general term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
+NOTE: A _sprite_ is a more general computer graphics term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
 
 === Relational Operators
 
@@ -2093,7 +2098,7 @@ Animate moving the particle to the bottom of the screen.
 Animate moving the particle from right to left.
 
 .Exercise
-Aniate moving the particle to the top of the screen.
+Animate moving the particle to the top of the screen.
 
 TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
 
@@ -2127,7 +2132,7 @@ while i <= 10:              <2>
     i = i + 1               <4>
 ----
 <1> In a counting loop we almost always initialize a variable to 0. It is a _convention_ to use `i`, `j`, and `k` as a name for a counting variable.
-<2> We want to include `10` in our table to se use `<=` here. Could we have also said `i < 11`? Yes.
+<2> We want to include `10` in our table so we use `<=` here. Could we have also said `i < 11`? Yes.
 <3> `'\t'` represents the tab character. Without it the table columns would not be lined up neatly. Recall our discssion of _escape_ characters back in the section on string literals.
 <4> This increments the value of `i` by 1.  
 
