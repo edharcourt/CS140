@@ -56,7 +56,8 @@ _Computer Science_ is the field of study encompassing the theory and practical i
 
 A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
 
-The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. It might be the most heavily used programming language in the world. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. Another list that could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
+The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. It might be the most heavily used programming language in the world. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java] or 
+https://kotlinlang.org[Kotlin]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. Another list that could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
 
 NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has an alphabet, words, grammar (syntax), and meaning (semantics).
 
@@ -628,6 +629,9 @@ print
 ----
 
 As you gain practice you will be able to quickly find syntax errors.
+
+NOTE: A _built-in function_ is a function that is predefined by Python and is part
+of the Python programming language. 
 
 === Keyboard Input
 
@@ -1760,7 +1764,7 @@ Since we will be using the `f2c` function later in the text it is a good idea to
 ----
 import util 
 
-t = float(intput("Enter a temperature: "))
+t = float(input("Enter a temperature: "))
 print(util.f2c(t) +  100)
 ----
 
@@ -1944,6 +1948,34 @@ pass
 
 . What does the last line do?
 
+.Exercise 3
+What is a _built-in_ function?
+
+.Exercise 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Assume that *_C_* is an initial amount of an investment, *_r_* is the yearly rate of interest (e.g., .02 is 2%), *_t_* is the number of years until maturation, *_n_* is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a function `investment` that takes *_C_*, *_r_*, *_n_*, and *_t_* as arguments and returns the final value of the investment to the nearest penny. Test your function with a main program where stem:[C = 1000, r = .01, n = 1, t = 1].
+
+[.result]
+====
+This exercise should be familiar from Chapter 1.
+
+[source,python]
+----
+def investment(c,r,n,t):
+    p = c*(1 + r/n)**(t*n)
+    return p <1>
+----
+<1> We didn't have to use the local variable `p`. We could just as well have said `return c*(1 + r/n)**(t*n)`
+
+Test on stem:[C = 1000, r = .01, n = 1, t = 1].
+
+[source,python]
+----
+print(interest(1000,.01,1,1)) <1>
+----
+<1> Should print `1010.0`
+====
+
+
 === Terminology
 
 .Terminology
@@ -2091,14 +2123,60 @@ Python can compare two values using _relational operators_ such as _less than_ `
 |not equal to
 |===
 
-.Exercise
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Animate moving the particle to the bottom of the screen.
 
-.Exercise
+[.result]
+====
+While the particle's stem:[y] coordinate plus the radius is less than the 
+side length.
+
+[source,python,numbered]
+----
+while py + radius < side:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    py = py + 1
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Animate moving the particle from right to left.
 
-.Exercise
+[.result]
+====
+While the particle's stem:[x] coordinate is greater than 0.
+
+[source,python,numbered]
+----
+while px > 0:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    px = px - 1
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Animate moving the particle to the top of the screen.
+
+[.result]
+====
+While the particle's stem:[y] coordinate is greater than 0.
+
+[source,python,numbered]
+----
+while py > 0:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    py = py - 1
+----
+====
 
 TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
 
@@ -2133,51 +2211,108 @@ while i <= 10:              <2>
 ----
 <1> In a counting loop we almost always initialize a variable to 0. It is a _convention_ to use `i`, `j`, and `k` as a name for a counting variable.
 <2> We want to include `10` in our table so we use `<=` here. Could we have also said `i < 11`? Yes.
-<3> `'\t'` represents the tab character. Without it the table columns would not be lined up neatly. Recall our discssion of _escape_ characters back in the section on string literals.
+<3> `'\t'` represents the tab character. Without it the table columns would not be lined up neatly. Recall our discussion of _escape_ characters back in the section on string literals.
 <4> This increments the value of `i` by 1.  
 
 Lets be careful how we interpret the statement `i = i + 1`. This is an _assignment statement_, not a statement in mathematics (which would be nonsense). The way to read this is _the new value of `i` gets the old value of `i` plus one_. 
 
-.Think About
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 What would happen if we forgot the line `i = i + 1`? 
 
 [.result]
 ====
-Since `i` would never increment, the loop condition would never become false and the loop would never terminate. This is called an _infinite loop_. 
+Since `i` would never increment, the loop condition would never become false and the loop would never terminate. This is called an _infinite loop_. Furthermore,
+the program would keep printing the line `0  |  1`
 ====
 
 TIP: A _convention_ is something that is common practice. Stick with conventions as it makes code more readable.
 
-.Loop Exercise
-Print the integers from 1 to 10, one integer per line. 
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a while-loop that prints the integers from 1 to 10, one integer per line. 
 
-.Loop Exercise
-Print the integers counting down from 10 to 0. When you are done print "Blast off". Add a one second delay in between integers. Hint: use the `pygame.time.delay` function. How many milliseconds in a second?
+[.result]
+====
+Here is one way to do it.
+
+[source,python,numbered]
+----
+i = 1
+while i <= 10:
+    print(i)
+    i = i + 1
+----
+
+Does the following program work? If not, fix it.
+[source,python,numbered]
+----
+i = 1
+while i < 10:
+    i = i + 1
+    print(i)
+----
+
+You could fix it by starting `i` at `0` instead of `1`.
+
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Print the integers counting down from 10 to 0. When you are done print "Blast off!". Add a one second delay in between integers. Hint: use the `pygame.time.delay(n)` function where `n` is the number of 
+milliseconds to delay.
+
+[.result]
+====
+There is a 1000 milliseconds in a second.
+
+[source,python,numbered]
+----
+import pygame
+
+i = 10
+while i > -1:
+    print(i)
+    i = i - 1
+    pygame.time.delay(1000)
+print("Blast off!")
+
+----
+====
 
 === Accumulating Loops
-Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] wherestem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
+Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where stem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
 
 [source,python,numbered]
 ----
 n   = int(input("Enter n: "))   
 i   = 1                          <1>
-sum = 0                          <2>                        
+total = 0                        <2>                        
 
 while i <= n:                    <3>
-    sum = sum + i                <4>
+    total = total + i            <4>
     i = i + 1                    <5>
 
-print("The sum from 1 to", n, "is", sum)
+print("The sum from 1 to", n, "is", total)
 ----
-<1> The loop counter. This could have started at 0 but including 0 in the sum doesn't change it.
-<2> Keep track of the running total in `sum`.
+<1> The loop counter. This could have started at 0 but including 0 in the total doesn't change it.
+<2> Keep track of the running total in `total`. I have purposefully avoided
+usng the variable named `sum` because `sum` is also the name of a built-in function.
 <3> Make sure to include `n`
-<4> This adds the current value of `i` to the running total in `sum`. Again, interpret this as the assgnment statement _the new value of_ `sum` _gets the old value of_ `sum` _plus_ `i`.
+<4> This adds the current value of `i` to the running total in `total`. Again, interpret this as the assignment statement _the new value of_ `total` _gets the old value of_ `total` _plus_ `i`.
 <5> Increment the loop counter
 
+[TIP]
+====
+Programmers often use assignment statements such as `x = x + 1`. Most programming languages, Python included, has a `+=` operator and we can write
+`x = x + 1` as the more pithy `x += 1`.footnote:[The operator `+=` is really called the _in place add_ operator and can have a different behavior than one might expect.] The while loop in the example above could be rewritten to be 
+[source,python]
+----
+while i <= n:                   
+    total += i               
+    i += 1                   
+----
+====
 
-.Exercise 
-Write a program that computes the average of non-negative numbers entered by the user. Quit reading numbers when the user has entered a negative number. Here is an example run of the program. Be careful, make sure you don't include the negative number in the average.
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a program that computes the average of non-negative numbers (for example quiz grades) entered by the user. Quit reading numbers when the user has entered a negative number. Be careful, make sure you don't include the negative number in the average. Here is an example run of the program.
 ----
 Enter a number: 3
 Enter a number: 9
@@ -2187,7 +2322,7 @@ Enter a number: -1
 The average is  6.75
 ----
 
-.Answer +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 
 [.result]
@@ -2196,58 +2331,59 @@ The average is  6.75
 ----
 n   = float(input("Enter a number: "))
 i   = 0
-sum = 0
+total = 0
 
 while n >= 0:
-    i = i + 1
-    sum = sum + n
+    i += 1
+    total += n
     n = float(input("Enter a number: "))
 
-average = sum / i
+average = total / i
 print("The average is ", round(average, 2))
 ----
 
 This is actually a little tricky. Notice the first line. We read our first number _before_ the loop. Once we get into the loop we know that we must have entered a non-negative number. 
 
-There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user typed in was negative?]
+There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user entered was negative?]
 ====
 
-=== Exponential Growth (password length)
+=== Exponential Growth (Example: Password Length)
 
 Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But how much harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possible alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary number, 94, but it is probably close]  
 
 There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three character passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
 
-Plotting stem:[94^i] wherestem:[i]is the number of characters in the password gives us the graph:
+Plotting stem:[94^i], where stem:[i] is the number of characters in the password, gives us the graph:
 
 image::94_to_the_i.png[width=480,height=360,align="center"]
 
 This is an example of _exponential growth_ in the number of characters in the password. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
-So what are total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
+What is the total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
 
 [source,python,numbered]
 ----
 i = 1
-sum = 0
+total = 0
 while i <= 10:
-    sum = sum + 94**i
-    i = i + 1
+    total += 94**i
+    i += 1
 
-print(sum)
+print(total)
 ----
 
 which would print `54440667446151152650`, which is also just bigger than stem:[5.4 \times 10^{19}]. 
 
-To emphasize the difference between say a six character password and a ten character password, let's say a hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could attempt 1 billion passwords per second. 
+To emphasize the difference between a six character password and a ten character password, let's assume a malicious hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could attempt 1 billion passwords per second. 
 
-For a six character password that's stem:[94^6/10^9/60 \approx 11.5] minutes. That's to try all possibilities. On average we'll search about half the passwords,so on average it would take about 6 minutes.
+For a six character password that's stem:[94^6/10^9/60 \approx 11.5] minutes to try all possibilities. On average we will search about half the passwords, so on average it would take about  stem:[6]  minutes.
 
 For a ten character password,
-we have stem:[94^{10}/10^9] seconds. Dividing by 60 to get minutes then another 60 to hours, then 24 to get days, then 365.25 to get years, we have stem:[94^{10}/10^9/60/60/24/365.25 = 1706] years! Again, this is to try them all, so on average we would find it after looking at half othe asswords, so it would only take about 850 years.
+we have stem:[94^{10}/10^9] seconds. Dividing by  stem:[60]  to get minutes then another stem:[60] for hours, then  stem:[24] to get days, then stem:[365.25] to get years, we have stem:[94^{10}/10^9/60/60/24/365.25 = 1706] years! Again, this is to try them all, so on average we would find it after looking at half of the passwords, so it would only take about 
+stem:[850] years.
 
 NOTE: a _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
 
-=== Exponential growth (populations)
+=== Exponential Growth (Example: Population)
 
 Exponential growth arises in more subtle ways. In the previous example we were raising the base of the exponent, _94_, to a fairly large power.  What if the base were small, but still greater than one? Lets use an example of world population growth rate, which is currently estimated to be _1.11_% (or .011) per year in 2017.footnote:[https://www.census.gov] 
 
@@ -2255,7 +2391,7 @@ Let stem:[t] be the current year and stem:[P_t] be the current population  at th
 
 One way of interpreting the formula stem:[P_{t+1} = P_t(1.011)] is to see that _the new value of stem:[P] is the old value of stem:[P] times 1.011_. We have seen this pattern before in code. It is just an assignment statement:
 
-[source,pthon]
+[source,python]
 ----
 P = P * 1.011
 ----
@@ -2271,7 +2407,7 @@ P = P * 1.011  # population after year 3
 # and so on
 ----
 
-of course if we want to compute the population _P_ afterstem:[n]years we should use a loop.
+Of course if we want to compute the population _P_ after stem:[n] years we should use a loop.
 
 [source,python,numbered]
 ----
@@ -2322,7 +2458,7 @@ print(i, "years to 10 billion")
 ====
 
 .Check Yourself 
-The population growth rate is not constant. It fluxuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is very easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximatel stem:[9.5 \times 10^9].
+The population growth rate is not constant. It fluctuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is very easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximately stem:[9.5 \times 10^9].
 
 image:pop-decreasing-growth.png[align"center"]
 
@@ -2352,13 +2488,12 @@ print("Final population: ", int(p))
 
 === Checksums; detecting network communication errors
 
-A _checksum_ is an integer derived from a larger integer and is used to detect errors in network communication.  There are many different checksum techniques but one of the most common is to add up the digits in an integer number modulo ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits (music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, 
-0s and 1s, we'll use the more familiar base-ten digits 0-9.
+A _checksum_ is an integer derived from a larger integer and is used to detect communications errors in a network.  There are many different checksum techniques but one of the easiest to program is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.
 
-If a network was transmitting the number stem:[51623] we would compute the checksum by computing stem:[(5+1+6+2+3) % 10 = 7] and we would then transmit the number stem:[516237]. What would happen if there was an error in the transmission and the number transmitted was stem:[596237]. We take off the checksum digit which is 7, and compute 
-the checksum of stem:[59623] which is stem:[(5+9+6+2+3) % 10 = 5] and we see that stem:[7 \neq 5] so there must have been an error in the transmission.
+If a network was transmitting the number stem:[51623] we would compute the checksum by computing stem:[(5+1+6+2+3)\% 10 = 7] and we would then transmit the number stem:[516237]. We call stem:[7] the _checksum digit_, or just _checksum_ for short. What would happen if there was an error in the transmission and the number transmitted was stem:[596237]. We remove the checksum digit stem:[7], and compute 
+the checksum of stem:[59623] which is stem:[(5+9+6+2+3) \% 10 = 5] and we see that stem:[7 \neq 5] so there must have been an error in the transmission.
 
-Why does this work? First this only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if there were two errors in the original communication such as stem:[526137] the checksum is still 7. If there is only single error it makes sense that a change in any single digit would change the final checksum mod 10.
+Why does this work? First this only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if there were two errors in the original communication such as stem:[526137] the checksum is still stem:[7]. If there is only single error it makes sense that a change in any single digit would change the final checksum mod stem:[10].
 
 How do we write program to compute a checksum? If we have an integer such as stem:[51623] we can peel of the last digit using % 10, stem:[51623 % 10 = 3]. Then we need to the remaining digits stem:[5162]. We can get that using _integer division_ by 10, stem:[51623 // 10 = 3]. We just keep repeating this process adding up the remainder until the number has been reduced to 0.
 
@@ -2366,13 +2501,13 @@ We can put this in a function that takes an integer to compute the checksum of a
 
 [source,python,numbered]
 ----
-def checksum(n):               <1>
-    sum = 0                    <2>
+def checksum(n):                 <1>
+    total = 0                    <2>
                              
-    while n > 0:               <3>
-        sum = sum + (n % 10)   <4>
-        n = n // 10            <5>
-    return sum % 10            <6>
+    while n > 0:                 <3>
+        total = total + (n % 10) <4>
+        n = n // 10              <5>
+    return total % 10            <6>
 ----
 
 .Review
@@ -2382,12 +2517,12 @@ def checksum(n):               <1>
 . Line 1 is the  ________________ 
 . What is the value of `checksum(91242)`
 
-How can we append the checksum of an integer on the end (the _least significant digit_)? FOr example if the checkum of the integer stem:[51326] is stem:[7] how do we build th new integer stem:[513267]?
+How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
 
 [source,python,numbered]
 ----
- check = checksum(x) <1>
- data = x * 10 + check <2>
+check = checksum(x)   <1>
+data = x * 10 + check <2>
 ----
 <1> Compute the checksum of `x`, the integer we want to transmit
 <2> Multiply `x` by 10 shifting it left, and then add in the checksum digit `check`.
@@ -2395,8 +2530,7 @@ How can we append the checksum of an integer on the end (the _least significant 
 === Exercises
 
 .Exercise 1
-
-The Fibonacci Sequence
+_The Fibonacci Sequence_ is the sequence of integers stem:[0,1,1,2,3,5,8,\cdots]. Each Fibonacci number is the sum of the previous two Fibonacci numbers. By definition the first two Fibonacci numbers are stem:[0] and stem:[1]. Write a while-loop to compute the first 100 Fibonacci numbers.
 
 .Exercise 2
 
@@ -4201,9 +4335,9 @@ Here is an example for loop that will sum the integers from 1 to 100.
 
 [source,python,numbered]
 ----
-sum = 0
+total = 0
 for i in range(101):
-    sum = sum + i
+    total = total + i
 ----
 
 *TODO: MOre for-loop examples should go here and check yourself.*
@@ -5867,23 +6001,23 @@ Similar to the way we counted the number of times we search for a subtring in a 
 
 NOTE: A list of numbers separated by commas are called _comma separated values_. Files that contain comma separated values are often use a `.csv` file suffix.
 
-Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `sum` and `count` for that.
+Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `total` and `count` for that.
 
 [source]
 ----
-s               sum  count
------------     ---  -----
-23,19,46,57      0     0      <1>
-19,46,57         23    1      <2>
-46,57            42    2      <3>
-57               88    3      <4>
-                 145   4      <5>
+s               total  count
+-----------     ---    -----
+23,19,46,57      0       0      <1>
+19,46,57         23      1      <2>
+46,57            42      2      <3>
+57               88      3      <4>
+                 145     4      <5>
 ----
 <1> `s` is the original input CSV list.
-<2> Extract the first number `23`, add it to `sum`, increment `count`, and delete `23`.
-<3> Extract the first number `19`, add it to `sum`, increment `count`, and delete `19`
-<4> Extract the first number `46`, add it to `sum`, increment `count`, and delete `46`.
-<5> We should be seeing a pattern here. Extract the first number `57`, add it to `sum`, increment `count`, and delete `57. Compute a final average of stem:[145/4 = 36.25]
+<2> Extract the first number `23`, add it to `total`, increment `count`, and delete `23`.
+<3> Extract the first number `19`, add it to `total`, increment `count`, and delete `19`
+<4> Extract the first number `46`, add it to `total`, increment `count`, and delete `46`.
+<5> We should be seeing a pattern here. Extract the first number `57`, add it to `total`, increment `count`, and delete `57. Compute a final average of stem:[145/4 = 36.25]
 
 [source,python,numbered]
 ----
@@ -5891,23 +6025,23 @@ print("Enter a comma separated list of numbers")
 s = input("> ")
 
 comma = s.find(',')
-sum = 0                     <1>
+total = 0                     <1>
 count = 0                   <2>
 
 while comma != -1:          <3>
     num = int(s[:comma])    <4>
-    sum += num         
+    total += num         
     count += 1       
     s = s[comma+1:]         <5>
     comma = s.find(',')     <6>
 
-avg = sum/count
+avg = total/count
 print("Average: ", round(avg, 2))
 ----
-<1> To hold the running sum of the numbers.
+<1> To hold the running total of the numbers.
 <2> Keep a count of the integers entered.
 <3> Keep processing the list of numbers until there are no more commas.
-<4> Extract the leading number in the list, add it to `sum`, and increment `count`.
+<4> Extract the leading number in the list, add it to `total`, and increment `count`.
 <5> Delete the leading number in the list.
 <6> Get the location of the next comma.
 
@@ -5920,16 +6054,16 @@ Find and fix the bug in the above code.
 ====
 The problem is that we skip the last number. For example, if we have the original list 
 `23,19,46,57` eventually the list becomes `57` after line 12. There are no more commas in the list
-so on line 13 `comma` becomes `-1` and when we go back to check the loop condition the loop will quit having not processed the `57`. An easy fix is to realize that after the loop terminates `s` now contains the final number in the list. Add it to `sum`, and don't forget to increment `count`.  The code after the loop becomes:
+so on line 13 `comma` becomes `-1` and when we go back to check the loop condition the loop will quit having not processed the `57`. An easy fix is to realize that after the loop terminates `s` now contains the final number in the list. Add it to `total`, and don't forget to increment `count`.  The code after the loop becomes:
 
 [source,python]
 ----
-sum = sum + int(s)   <1>
+total = total + int(s)   <1>
 count += 1           <2>
-avg = sum/count
+avg = total/count
 print("Average: ", round(avg, 2))
 ----
-<1> Add the final number to `sum`. COuld we have used `num` here and not `s`? No. Why?
+<1> Add the final number to `total`. COuld we have used `num` here and not `s`? No. Why?
 <2> And increment `count`.
 
 One more thing to check is to make sure the code works if we only have a single number to start with. This was also a problem before we fixed the bug, but now works.

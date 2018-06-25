@@ -5,14 +5,14 @@ Problem text goes here
 ====
 Problem solution goes here maybe with some additional python code
 
-[source,python]
+[source,python,numbered]
 ----
 # python code
 ----
 
 and some more text and python code
 
-[source,python]
+[source,python,numbered]
 ----
 # more python
 ----
