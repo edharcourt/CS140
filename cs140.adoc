@@ -2543,7 +2543,7 @@ _TBD: Turn some of the previous examples in to functions._
 .Exercise 4
 
 Write a function `num_digits` that will return the number of digits in an integer. For example,
-if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: similar to the `checksum` algorithm.
+if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
 .Exercise 5
 
