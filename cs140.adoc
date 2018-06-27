@@ -2513,8 +2513,8 @@ def checksum(n):                 <1>
 .Review
 
 . Does the `checksum` function use any local variables?
-. `n` is a ________________ 
-. Line 1 is the  ________________ 
+. `n` is a pass:[_________________________]
+. Line 1 is the  pass:[_________________________] 
 . What is the value of `checksum(91242)`
 
 How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
@@ -3692,7 +3692,7 @@ else:
 ----
 ====
 
-What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch therby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random doo instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
+What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random doo instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
 
 The gist. Proabability is often counterintuitive.
 
