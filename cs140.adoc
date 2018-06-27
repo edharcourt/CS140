@@ -2513,8 +2513,8 @@ def checksum(n):                 <1>
 .Review
 
 . Does the `checksum` function use any local variables?
-. `n` is a pass:[_________________________]
-. Line 1 is the  pass:[_________________________] 
+. `n` is a pass:[________________________]
+. Line 1 is the  pass:[________________________] 
 . What is the value of `checksum(91242)`
 
 How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
