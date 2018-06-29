@@ -2501,20 +2501,22 @@ We can put this in a function that takes an integer to compute the checksum of a
 
 [source,python,numbered]
 ----
-def checksum(n):                 <1>
-    total = 0                    <2>
+def checksum(n):                 
+    total = 0                    
                              
-    while n > 0:                 <3>
-        total = total + (n % 10) <4>
-        n = n // 10              <5>
-    return total % 10            <6>
+    while n > 0:                 
+        total = total + (n % 10) 
+        n = n // 10              
+    return total % 10            
 ----
 
 .Review
 
 . Does the `checksum` function use any local variables?
-. `n` is a pass:[________________________]
-. Line 1 is the  pass:[________________________] 
+. `n` on line 1 is a pass:[________________________]
+. Line 1 is the function pass:[________________________] 
+. Lines 2-7 constitute the function pass:[________________________]
+. `total` on line is defined a pass:[______________________] variable.
 . What is the value of `checksum(91242)`
 
 How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
@@ -2527,25 +2529,61 @@ data = x * 10 + check <2>
 <1> Compute the checksum of `x`, the integer we want to transmit
 <2> Multiply `x` by 10 shifting it left, and then add in the checksum digit `check`.
 
-=== Exercises
+=== Loop Exercises
 
-.Exercise 1
-_The Fibonacci Sequence_ is the sequence of integers stem:[0,1,1,2,3,5,8,\cdots]. Each Fibonacci number is the sum of the previous two Fibonacci numbers. By definition the first two Fibonacci numbers are stem:[0] and stem:[1]. Write a while-loop to compute the first 100 Fibonacci numbers.
+.Exercise 0 
+If you haven't done the _Check Yourself_ exercises in this chapter do those now.
+
+.Exercise 1+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+_The Fibonacci Sequence_ is the sequence of integers stem:[0,1,1,2,3,5,8,13\cdots]. Each Fibonacci number is the sum of the previous two Fibonacci numbers. By definition the first two Fibonacci numbers are stem:[0] and stem:[1]. If the first Fibonacci number is stem:[0] then the seventh Fibonacci number is stem:[8]. Write a while-loop to compute the one-hundredth Fibonacci number. Hint: This is a little tricky. Use two variables, one to keep track of the current Fibonacci number and one for the previous Fibonacci number. 
+
+[.result]
+====
+The answer you get should be `218922995834555169026`.  This is a surprisingly large number. The Fibonacci sequence actually exhibits exponential growth. 
+====
 
 .Exercise 2
-
-Sum of squares
+Write a while loop to compute the sum of squares from stem:[1] to stem:[100], or stem:[1^2 + 2^2 + 3^2 + \cdots + 100^2].
 
 .Exercise 3
+How many times will `hello` be printed by the code below?
 
-_TBD: Turn some of the previous examples in to functions._
+[source,python,numbered]
+----
+i = 2
+while i < 11:
+    print("hello")
+	i = i + 2
+----
 
 .Exercise 4
+How many times will `hello` be printed by the code below?
 
+[source,python,numbered]
+----
+i = 12
+while < 18:
+    print("hello")
+	i = i + 1
+----
+
+.Exercise 4
+What is the output the code below?
+
+[source,python,numbered]
+----
+i = 1
+n = 10
+while i < n:
+    i = i * 2
+print(i)
+----
+
+.Exercise 5
 Write a function `num_digits` that will return the number of digits in an integer. For example,
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
-.Exercise 5
+.Exercise 6
 
 Compute the average of numbers entered by the user.
 
