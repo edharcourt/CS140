@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_exponential_growth_example_password_length">4.5. Exponential Growth (Example: Password Length)</a></li>
 <li><a href="#_exponential_growth_example_population">4.6. Exponential Growth (Example: Population)</a></li>
 <li><a href="#_checksums_detecting_network_communication_errors">4.7. Checksums; detecting network communication errors</a></li>
-<li><a href="#_loop_exercises">4.8. Loop Exercises</a></li>
+<li><a href="#_while_loop_exercises">4.8. While-Loop Exercises</a></li>
 <li><a href="#_terminology_4">4.9. Terminology</a></li>
 </ul>
 </li>
@@ -864,7 +864,7 @@ A <em>programming language</em> is precise notation used for describing computat
 </ul>
 </div>
 <div class="paragraph">
-<p>So why study computer science?  Software is encroaching on almost all aspects of our life, it might be good to learn something about it.</p>
+<p>So why study computer science?  Software impacts almost all aspects of our life, it might be good to learn something about it. <a href="https://en.wikipedia.org/wiki/Marc_Andreessen">Marc Andreesen</a> developed Mosaic, one of the original web browsers, wrote a now somewhat dated but important article in the Wall Street Journal, <a href="https://a16z.com/2016/08/20/why-software-is-eating-the-world/"><em>Why Software Is Eating the World</em></a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -873,7 +873,7 @@ A <em>programming language</em> is precise notation used for describing computat
 <p><a href="https://www.python.org/">Python</a> is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language and is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.</p>
 </div>
 <div class="paragraph">
-<p>It is almost obligatory that <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a> be the first program one writes in any programming language. Here is our first python program:</p>
+<p>It is almost obligatory that <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World</a> be the first program one writes in any programming language. Here is our first Python program:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -929,7 +929,7 @@ In programming, a string literal is also called a <em>string constant</em>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can see right here that <code>*</code> is a character in the alphabet, that two values are on both sides of the <code>*</code> (syntax), and that <code>*</code> must mean <em>multiplication</em> (semantics).</p>
+<p>And we can see right here that 1) <code>*</code> is part of Python, 2) that a value is on each side of the <code>*</code> (syntax), and 3) that <code>*</code> must mean <em>multiplication</em> (semantics).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4594,6 +4594,9 @@ We will often use the term <em>particle</em> to represent a moving object such a
 <div class="paragraph">
 <p>Eventually <code>px + radius</code> will become greater than <code>side</code> and the loop condition becomes false and then the loop <em>terminates</em>.</p>
 </div>
+<div class="paragraph">
+<p>Note: <code>True</code> and <code>False</code> are values in Python, just like the integer <code>1</code> and the float <code>3.14159</code>. <code>True</code> an `False are called <em>boolean</em> values.</p>
+</div>
 <div class="sect2">
 <h3 id="_animation"><a class="anchor" href="#_animation"></a>4.1. Animation</h3>
 <div class="paragraph">
@@ -4663,9 +4666,9 @@ A <em>sprite</em> is a more general computer graphics term for a 2-dimensional o
 <div class="sect2">
 <h3 id="_relational_operators"><a class="anchor" href="#_relational_operators"></a>4.2. Relational Operators</h3>
 <div class="paragraph">
-<p>Python can compare two values using <em>relational operators</em> such as <em>less than</em> <code>&lt;</code>.</p>
+<p>So far we have only used the  <em>less than</em> relational operator <code>&lt;</code>, that compares two values. Table <a href="#relops">Relational Operators</a> lists them all.</p>
 </div>
-<table class="tableblock frame-all grid-all" style="width: 50%;">
+<table id="relops" class="tableblock frame-all grid-all" style="width: 50%;">
 <caption class="title">Table 6. Relational Operators</caption>
 <colgroup>
 <col style="width: 11.1111%;">
@@ -5425,7 +5428,7 @@ the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7
 </div>
 </div>
 <div class="sect2">
-<h3 id="_loop_exercises"><a class="anchor" href="#_loop_exercises"></a>4.8. Loop Exercises</h3>
+<h3 id="_while_loop_exercises"><a class="anchor" href="#_while_loop_exercises"></a>4.8. While-Loop Exercises</h3>
 <div class="paragraph">
 <div class="title">Exercise 0</div>
 <p>If you haven&#8217;t done the <em>Check Yourself</em> exercises in this chapter do those now.</p>
@@ -5502,7 +5505,42 @@ if we were to call <code>num_digits(5132981)</code> it would return 7 because th
 </div>
 <div class="paragraph">
 <div class="title">Exercise 6</div>
-<p>Compute the average of numbers entered by the user.</p>
+<p>The <code>*</code> operator can be applied to a string and an integer. <code>'Z' * 5</code> evaluates to <code>ZZZZZ</code>. Write a Python program that read an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters <code>6</code> then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Enter n: 6
+*
+**
+***
+****
+*****
+******</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Answer  <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter n: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;*&#39;</span> <span class="tok-o">*</span> <span class="tok-n">i</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5534,6 +5572,9 @@ if we were to call <code>num_digits(5132981)</code> it would return 7 because th
 </li>
 <li>
 <p>linear growth</p>
+</li>
+<li>
+<p>boolean</p>
 </li>
 </ul>
 </div></div></td>
@@ -15139,7 +15180,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-06-28 22:22:06 EDT
+Last updated 2018-06-30 14:16:12 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

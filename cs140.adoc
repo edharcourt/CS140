@@ -85,13 +85,13 @@ Think about each of the following, what has changed, and if there is software be
 
 * Thinking a little further in to the future what could happen to the millions of people who drive a vehicle for a living, from taxi drivers to truck drivers? 
 
-So why study computer science?  Software is encroaching on almost all aspects of our life, it might be good to learn something about it.
+So why study computer science?  Software impacts almost all aspects of our life, it might be good to learn something about it. https://en.wikipedia.org/wiki/Marc_Andreessen[Marc Andreesen] developed Mosaic, one of the original web browsers, wrote a now somewhat dated but important article in the Wall Street Journal, https://a16z.com/2016/08/20/why-software-is-eating-the-world/[_Why Software Is Eating the World_].
 
 === Hello World
 
 https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language and is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.
 
-It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first python program:
+It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first Python program:
 
 [source,python,numbered]
 ----
@@ -119,7 +119,7 @@ produces the output
 The value of pi squared is 9.869587728099999
 ----
 
-And we can see right here that `*` is a character in the alphabet, that two values are on both sides of the `*` (syntax), and that `*` must mean _multiplication_ (semantics).
+And we can see right here that 1) `*` is part of Python, 2) that a value is on each side of the `*` (syntax), and 3) that `*` must mean _multiplication_ (semantics).
 
 NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
 
@@ -2077,6 +2077,9 @@ while px + radius < side:
 
 Eventually `px + radius` will become greater than `side` and the loop condition becomes false and then the loop _terminates_.
 
+Note: `True` and `False` are values in Python, just like the integer `1` and the float `3.14159`. `True` an `False are called _boolean_ values.
+
+
 === Animation 
 
 One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
@@ -2103,10 +2106,11 @@ NOTE: A _sprite_ is a more general computer graphics term for a 2-dimensional ob
 
 === Relational Operators
 
-Python can compare two values using _relational operators_ such as _less than_ `<`. 
+So far we have only used the  _less than_ relational operator `<`, that compares two values. Table <<relops>> lists them all.
 
 [cols="1,8", width="50%", options="header"]
 .Relational Operators
+[[relops]]
 |===
 |Operator | operation
 |`<`
@@ -2177,6 +2181,8 @@ while py > 0:
     py = py - 1
 ----
 ====
+
+
 
 TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
 
@@ -2529,7 +2535,7 @@ data = x * 10 + check <2>
 <1> Compute the checksum of `x`, the integer we want to transmit
 <2> Multiply `x` by 10 shifting it left, and then add in the checksum digit `check`.
 
-=== Loop Exercises
+=== While-Loop Exercises
 
 .Exercise 0 
 If you haven't done the _Check Yourself_ exercises in this chapter do those now.
@@ -2584,8 +2590,33 @@ Write a function `num_digits` that will return the number of digits in an intege
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
 .Exercise 6
+The `*` operator can be applied to a string and an integer. `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that read an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks.
+----
+Enter n: 6
+*
+**
+***
+****
+*****
+******
+----
 
-Compute the average of numbers entered by the user.
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python,numbered]
+----
+n = int(input("Enter n: "))
+
+i = 1
+while i <= n:
+    print('*' * i)
+    i = i + 1
+----
+====
+
 
 === Terminology 
 
@@ -2600,6 +2631,7 @@ a|
 * counting loop
 * brute force attack
 * linear growth
+* boolean
 
 a|
 * loop body
