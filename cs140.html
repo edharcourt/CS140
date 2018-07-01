@@ -5505,7 +5505,7 @@ if we were to call <code>num_digits(5132981)</code> it would return 7 because th
 </div>
 <div class="paragraph">
 <div class="title">Exercise 6</div>
-<p>The <code>*</code> operator can be applied to a string and an integer. <code>'Z' * 5</code> evaluates to <code>ZZZZZ</code>. Write a Python program that read an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters <code>6</code> then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks.</p>
+<p>The <code>*</code> operator can be applied to a string and an integer. For example, <code>'Z' * 5</code> evaluates to <code>ZZZZZ</code>. Write a Python program that reads an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters <code>6</code> then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks as in the sample output below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5657,7 +5657,8 @@ A random number generator is <em>uniform</em> if all outcomes are equally likely
 </div>
 </div>
 <div class="paragraph">
-<p>The if-statement executes one of two possible blocks of statements depending on a condition.</p>
+<p>We need some way to check what the random number generator produced.
+The <em>if-statement</em> executes one of two possible blocks of statements depending on a logical condition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5668,7 +5669,7 @@ else:
 </div>
 </div>
 <div class="paragraph">
-<p>If the condition is true then the block of statement labelled <code>true_stmts</code> will be executed, otherwise the block of statements labelled <code>false_stmts</code> will be executed. The else part is optional.  <code>if</code> and <code>else</code> are new <em>keywords</em>. They cannot be used as variable or function names. Notice also that the statements under the <code>if</code> of <code>else</code> are indented just like a functin body, or the body of a while loop.</p>
+<p>If the condition is true then the block of statement labeled <code>true_stmts</code> will be executed, otherwise the block of statements labeled <code>false_stmts</code> will be executed. The else part is optional.  <code>if</code> and <code>else</code> are new <em>keywords</em>. They cannot be used as variable or function names. Notice also that the statements under the <code>if</code> of <code>else</code> are indented just like a function body, or the body of a while loop.</p>
 </div>
 <div class="paragraph">
 <p>Back to simulating a coin toss. Here is one way using <code>random.random()</code></p>
@@ -5695,7 +5696,7 @@ else:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Assigning heads to be less than .5 is, of course, arbitrary.</td>
+<td>Assigning heads to be less than .5 is, of course, arbitrary. We could have just as easily made tails be less than .5.</td>
 </tr>
 </table>
 </div>
@@ -5729,6 +5730,64 @@ else:
 </table>
 </div>
 <div class="paragraph">
+<p>Using either <code>random.random()</code> or <code>random.randrange()</code> is fine. One way is not particularly better than the other. Using <code>random.random()</code> makes it a little easier to simulate tossing an <em>unfair</em> coin. For example, a coin that comes up heads two-thirds of the time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-p">()</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2</span><span class="tok-o">/</span><span class="tok-mi">3</span><span class="tok-p">:</span>        <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If the random number generator is uniform then this should ensure that <code>x</code> is less than <code>2/3</code>, well, with probability <code>2/3</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using <code>random.randrange()</code> is a little tricker, but you can come close.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1000</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">667</span><span class="tok-p">:</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Not exactly two-thirds, but close. How can we make it more accurate?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
 <p>Write a program that reads an integer from the keyboard and prints <code>even</code>, if the number was even, or <code>odd</code> if the number was odd. A number is even if it is divisible by two. That is, the raminder after dividing by two is zero.</p>
 </div>
@@ -5755,7 +5814,7 @@ else:
 <div class="sect2">
 <h3 id="_if_elif_else"><a class="anchor" href="#_if_elif_else"></a>5.1. if-elif-else</h3>
 <div class="paragraph">
-<p>Loops and conditionals can be combined in complex ways. Lets take an example of tossing a single die.<sup class="footnote">[<a id="_footnoteref_18" class="footnote" href="#_footnotedef_18" title="View footnote.">18</a>]</sup>. We will print <code>one</code> if we rolled a one, <code>two</code> if we rolled a two, etc. One way to write this:</p>
+<p>Lets take an example of tossing a single die.<sup class="footnote">[<a id="_footnoteref_18" class="footnote" href="#_footnotedef_18" title="View footnote.">18</a>]</sup>. We will print <code>one</code> if we rolled a one, <code>two</code> if we rolled a two, etc. One way to write this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5857,7 +5916,7 @@ else:
 <div class="sect2">
 <h3 id="_logical_operators"><a class="anchor" href="#_logical_operators"></a>5.2. Logical Operators</h3>
 <div class="paragraph">
-<p>Up until now our conditions in either the while loop or the if-statment have been relative simple. Python, as do all other programming languages, allow you to state more complicated conditions such as, <em>if the temperature greater than 50 and less than 100</em>. We have new Python keywords <code>and</code>, <code>or</code>, <code>not</code>.</p>
+<p>Up until now our conditions in either the while loop or the if-statement have been relatively simple. Python, as do all other programming languages, allow you to state more complicated conditions such as, <em>if the temperature greater than 50 and less than 100</em>. We have new Python keywords <code>and</code>, <code>or</code>, <code>not</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_logical_and"><a class="anchor" href="#_logical_and"></a>5.2.1. Logical <code>and</code></h4>
@@ -5998,7 +6057,7 @@ A <em>truth table</em> enumerates all possible outcomes of a logical operator fo
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A <em>code fragment</em> is an incomplete segment of pythoncode. It is not meant to be a complete program.
+A <em>code fragment</em> is an incomplete segment of python code. It is not meant to be a complete program.
 </td>
 </tr>
 </table>
@@ -15180,7 +15239,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-06-30 14:16:12 EDT
+Last updated 2018-06-30 22:45:25 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

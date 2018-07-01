@@ -2590,7 +2590,7 @@ Write a function `num_digits` that will return the number of digits in an intege
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
 .Exercise 6
-The `*` operator can be applied to a string and an integer. `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that read an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks.
+The `*` operator can be applied to a string and an integer. For example, `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that reads an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks as in the sample output below.
 ----
 Enter n: 6
 *
@@ -2669,7 +2669,8 @@ print(random.randrange(6))
 
  5
 
-The if-statement executes one of two possible blocks of statements depending on a condition.
+We need some way to check what the random number generator produced.
+The _if-statement_ executes one of two possible blocks of statements depending on a logical condition.
 
 [source,python,subs="quotes"]
 ----
@@ -2679,7 +2680,7 @@ else:
     false_stmts
 ----
 
-If the condition is true then the block of statement labelled `true_stmts` will be executed, otherwise the block of statements labelled `false_stmts` will be executed. The else part is optional.  `if` and `else` are new _keywords_. They cannot be used as variable or function names. Notice also that the statements under the `if` of `else` are indented just like a functin body, or the body of a while loop.
+If the condition is true then the block of statement labeled `true_stmts` will be executed, otherwise the block of statements labeled `false_stmts` will be executed. The else part is optional.  `if` and `else` are new _keywords_. They cannot be used as variable or function names. Notice also that the statements under the `if` of `else` are indented just like a function body, or the body of a while loop.
 
 Back to simulating a coin toss. Here is one way using `random.random()`
 
@@ -2693,7 +2694,7 @@ if x < 0.5:
 else:
     print("Tails")
 ----
-<1> Assigning heads to be less than .5 is, of course, arbitrary.
+<1> Assigning heads to be less than .5 is, of course, arbitrary. We could have just as easily made tails be less than .5.
 
 Here is another way using `random.randrange()`
 
@@ -2708,6 +2709,33 @@ else:
     print("Tails")
 ----
 <1> Similar to the above, assigning heads to be 0 is arbitrary.
+
+Using either `random.random()` or `random.randrange()` is fine. One way is not particularly better than the other. Using `random.random()` makes it a little easier to simulate tossing an _unfair_ coin. For example, a coin that comes up heads two-thirds of the time. 
+
+[source,python,numbered]
+----
+import random
+x = random.random()
+
+if x < 2/3:        <1>
+    print("Heads")
+else:
+    print("Tails")
+----
+<1> If the random number generator is uniform then this should ensure that `x` is less than `2/3`, well, with probability `2/3`.
+
+Using `random.randrange()` is a little tricker, but you can come close.
+[source,python,numbered]
+----
+import random
+x = random.randrange(1000)
+
+if x < 667:         <1>
+    print("Heads") 
+else:
+    print("Tails")
+----
+<1> Not exactly two-thirds, but close. How can we make it more accurate? 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a program that reads an integer from the keyboard and prints `even`, if the number was even, or `odd` if the number was odd. A number is even if it is divisible by two. That is, the raminder after dividing by two is zero.
@@ -2727,7 +2755,7 @@ else:
 
 === if-elif-else
 
-Loops and conditionals can be combined in complex ways. Lets take an example of tossing a single die.footnote:[_die_ is the singular of the plural _dice_, one die, pair of dice.]. We will print `one` if we rolled a one, `two` if we rolled a two, etc. One way to write this:
+Lets take an example of tossing a single die.footnote:[_die_ is the singular of the plural _dice_, one die, pair of dice.]. We will print `one` if we rolled a one, `two` if we rolled a two, etc. One way to write this:
 
 [source,python,numbered]
 ----
@@ -2792,7 +2820,7 @@ else:
 
 === Logical Operators
 
-Up until now our conditions in either the while loop or the if-statment have been relative simple. Python, as do all other programming languages, allow you to state more complicated conditions such as, _if the temperature greater than 50 and less than 100_. We have new Python keywords `and`, `or`, `not`.
+Up until now our conditions in either the while loop or the if-statement have been relatively simple. Python, as do all other programming languages, allow you to state more complicated conditions such as, _if the temperature greater than 50 and less than 100_. We have new Python keywords `and`, `or`, `not`.
 
 ==== Logical `and` 
 
@@ -2862,7 +2890,7 @@ if n >= 0 and n <= 100:
 These are not complete programs as we haven't assigned a value to `n` yet. We will often call these _code fragments_.
 ====
 
-NOTE: A _code fragment_ is an incomplete segment of pythoncode. It is not meant to be a complete program.
+NOTE: A _code fragment_ is an incomplete segment of python code. It is not meant to be a complete program.
 
 
 ==== Logical `or` 
