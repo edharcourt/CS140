@@ -1119,7 +1119,7 @@ win = pygame.display.set_mode((600,600)) <3>
 
 <1> import the pygame module
 <2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
-<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surfce_.
+<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surface_.
 
 When we run the program above a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
@@ -1650,6 +1650,61 @@ image::dlgold16.png[width=300,height=200,align="center"]
 image::djang16.png[width=300,height=200,align="center"]
 ====
 
+=== Exercises
+
+.Exercise 1 - Multiple Choice
+Answer questions about the following code fragment.
+[source,python,numbered]
+----
+import color   # this is the color.py file we just wrote above
+import pygame
+
+pygame.init()
+width = 600
+height = 500
+win = pygame.display.set_mode((width,height)) 
+win.fill(color.burntsienna)                   
+pygame.display.update()                       
+input("Hit <enter> to quit.")                 
+----
+
+. In the statement `win.fill(color.burntsienna)`, `win` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `win.fill(color.burntsienna)`, `fill` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `pygame.display.update()`, `update` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `pygame.display.update()`, `pygame` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+.Exercise 2 - Python Values +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+So far we have encountered six different kinds of Python values. For example, integers are one. Name the others.
+
+[.result]
+====
+integers, floating-point numbers, strings, `None`, tuples, and object references 
+====
+
+
 
 === Terminology
 
@@ -1678,7 +1733,7 @@ a|
 |===
 
 
-=== Functions
+=== Pygame Functions
 
 * `pygame.init`
 * `pygame.display.set_mode`
@@ -1693,7 +1748,7 @@ a|
 == Functions 
 
 Functions play a massively important role in programming. They encapsulate common computations and keep programmers from having to reinvent the wheel.
-You can just use the `math.sqrt` function. You don't have to write is yourself. 
+You can just use the `math.sqrt` function. You don't have to write it yourself. 
 
 Recall that in mathematics a _function_ maps values in a _domain_ to values in a _range_. In Python the `math.sqrt` function maps 4 to 2.0, 9 to 3.0, and 2 to 1.4142135623730951.footnote:[This is only an approximation. The stem:[\sqrt{2}] is _irrational_. That is, it is a never ending, non-repeating sequence of digits.]  
 
@@ -3276,7 +3331,7 @@ plots 100 points per pixel `scale = 100`.
 Even though we have a 50-50 chance of increasing our decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. FOr a negative chip count plot a red pixel.
+Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. For a negative chip count plot a red pixel.
 
 [.result]
 ====
@@ -5384,7 +5439,7 @@ Lossy compression is often acceptable. For example, the JPEG image format uses l
 TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses advanced mathematics to achieve good, but lossy, compression.  
 
 .Lossless Compression
-Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word rocessing document. We couldn't have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called _non-lossy_ or _lossless_.
+Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word processing document. We couldn't have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called _non-lossy_ or _lossless_.
 
 The _Portable Network Graphics_ image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as stem:[255(300)]. This lossless scheme is called _run length encoding_, because to encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated. 
 
@@ -5392,7 +5447,7 @@ TIP: PNG  footnote:[https://www.w3.org/TR/PNG/] One of the techniques used in PN
 
 PNG and JPEG are probably the two most important image file formats, but there are other popular formates including GIF (_Graphics Interchange Format_), and BMP (_Bitmap file format_).
 
-WARNING: The moral of the story is that image file formats that use lossy compression (_i.e.,_, JPEG) will change the values of the colors in your file. For example, if you set a pixel to the color value `(23,99,140)` if might get changed when the file is saved as a JPEG to some other "nearby" value such as `(24,98,141)`. 
+WARNING: The moral of the story is that image file formats that use lossy compression (_i.e._, JPEG) will change the values of the colors in your file. For example, if you set a pixel to the color value `(23,99,140)` if might get changed when the file is saved as a JPEG to some other "nearby" value such as `(24,98,141)`. 
 
 === Secrets
 
