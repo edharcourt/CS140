@@ -916,8 +916,56 @@ _byte code_. It is the Python program's byte code that is then executed the Pyth
 
 === Exercises
 
+.Exercise 1
+Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
+[source,python]
+----
+t = x
+x = y
+y = t
+----
+
+.Exercise 2 (Multiple choice questions)
+Consider the following code fragment.
+[source,python]
+----
+x = 2.0
+y = math.sqrt(x)
+----
+
+. `math` is a ...
+.. function
+.. module
+.. variable
+.. literal
+
+. `sqrt` is a ...
+.. function
+.. module
+.. variable
+.. literal
+
+. The line `x = 2.0` is an example of a/an
+.. variable
+.. floating-point literal
+.. function call
+.. assignment statement
+
+. The line `math.sqrt(x)` in the second line is an example of
+.. function composition
+.. a function call
+.. an argument
+.. a module call 
+
+. The line `y = math.sqrt(x)` in the second line `x` is an example of a
+.. variable
+.. module
+.. argument
+.. floating-point literal
+
+
 .C2F 
-Write a program that converts a temperature in celsius to fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
+Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
 
 .Windchill
 Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem:[v] (in MPH). The current temperature and the wind velocity should be entered by the user from the keyboard. +
@@ -970,8 +1018,6 @@ The distance stem:[d] of a point stem:[(x,y)] from the origin, by the Pythagorea
 
 .Distance between two points
 The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived using the Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
-
-'''
 
 === Terminology
 
@@ -1079,7 +1125,7 @@ When we run the program above a 600X600 pixel window will display on our monitor
 
 NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
-NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (1024 pixels wide by 768 pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometims abbreviated _px_.
+NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (stem:[1024] pixels wide by stem:[768] pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometimes abbreviated _px_.
 
 NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represents a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
 `x` is primitive and `win` is _reference_ +
@@ -1087,7 +1133,7 @@ image:references.png[width=500,align="center"]
 
 NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
 
-For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pxiels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
+For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
 
 .Keeping the window from disappearing +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Can you think of a way we might be able to pause the program to keep the pygame display window from disappearing until the user hits a key on the keyboard?
@@ -1106,7 +1152,7 @@ dummy = input("Hit <enter> to quit.") <1>
 ----
 <1> We don't need the `dummy` variable since we aren't going to use what the user typed. We could have just said ...
 
-[source,python,numbered]
+[source,python]
 ----
 input("Hit <enter> to quit.")
 ----
@@ -1140,7 +1186,7 @@ We can then import `color.py` into our pygame program with `import color` and vo
 
 TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to _reuse_ code you have already written rather than duplicate it. 
 
-WARNING: Don't name your Python programs the same name as modules you commonly import. For example, if you name your program `pygame.py` and then in your program `import pygame` your are in the embarrassing situation of your program trying to import itself.
+WARNING: Don't name your Python programs the same name as modules you commonly import. For example, if you name your program `pygame.py` and then in your program you have `import pygame` you are in the embarrassing situation of your program trying to import itself.
 
 .hello_pygame.py
 [source,python,numbered]
@@ -1530,7 +1576,7 @@ Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional
 
 ==== Sample Blockheads
 
-To give you some ideas here are some of the blockheads that have been turned in over the years as assignments.footnote:[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, and Jack Pattison for allowing me to use their Blockhead submissions.]
+To give you some ideas here are some of the blockheads that have been turned in over the years as assignments.footnote:[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, Jack Pattison, Dakota Golde, Tim Jones, and Dong Hae Jang for allowing me to use their Blockhead submissions.]
 
 .Example 1 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -1579,6 +1625,31 @@ image::grumpy.png[width=300,height=200,align="center"]
 ====
 image::doodlebug.png[width=300,height=200,align="center"]
 ====
+
+.Example 7 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::twjone16.png[width=300,height=200,align="center"]
+====
+
+.Example 8 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::dlgold16.png[width=300,height=200,align="center"]
+====
+
+.Example 9 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::djang16.png[width=300,height=200,align="center"]
+====
+
 
 === Terminology
 
@@ -2975,7 +3046,8 @@ The remaining logical operator is `not`, the logical negation of `True` and `Fal
 
 === Exercises
 
-. logical operator exercises
+.Exercise 1
+
 . larger smaller of two numbers
 . larger smaller of three numbers
 . median of three numbers

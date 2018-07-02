@@ -2339,8 +2339,128 @@ Python is actually a bit more complicated. The Python interpreteter actually com
 <div class="sect2">
 <h3 id="_exercises"><a class="anchor" href="#_exercises"></a>1.16. Exercises</h3>
 <div class="paragraph">
+<div class="title">Exercise 1</div>
+<p>Suppose <code>x</code> and <code>y</code> are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to <code>x</code> and <code>y</code> and follow the code).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">t</span> <span class="tok-o">=</span> <span class="tok-n">x</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">y</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">t</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2 (Multiple choice questions)</div>
+<p>Consider the following code fragment.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mf">2.0</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">math</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>math</code> is a &#8230;&#8203;</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>function</p>
+</li>
+<li>
+<p>module</p>
+</li>
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>literal</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>sqrt</code> is a &#8230;&#8203;</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>function</p>
+</li>
+<li>
+<p>module</p>
+</li>
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>literal</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The line <code>x = 2.0</code> is an example of a/an</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>floating-point literal</p>
+</li>
+<li>
+<p>function call</p>
+</li>
+<li>
+<p>assignment statement</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The line <code>math.sqrt(x)</code> in the second line is an example of</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>function composition</p>
+</li>
+<li>
+<p>a function call</p>
+</li>
+<li>
+<p>an argument</p>
+</li>
+<li>
+<p>a module call</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The line <code>y = math.sqrt(x)</code> in the second line <code>x</code> is an example of a</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>module</p>
+</li>
+<li>
+<p>argument</p>
+</li>
+<li>
+<p>floating-point literal</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
 <div class="title">C2F</div>
-<p>Write a program that converts a temperature in celsius to fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.</p>
+<p>Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.</p>
 </div>
 <div class="paragraph">
 <div class="title">Windchill</div>
@@ -2410,7 +2530,6 @@ Your change is...
 <div class="title">Distance between two points</div>
 <p>The distance <em>between</em> two points <em>(x<sub>1</sub>,y<sub>1</sub>)</em> and <em>(x<sub>2</sub>,y<sub>2</sub>)</em> is also easily derived using the Pythagorean theorem. It is \(d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\). Write a program that reads two points from the user and computes and prints the distance between the two points.</p>
 </div>
-<hr>
 </div>
 <div class="sect2">
 <h3 id="_terminology"><a class="anchor" href="#_terminology"></a>1.17. Terminology</h3>
@@ -2677,7 +2796,7 @@ A <em>tuple</em> is an ordered pair (or triple, or quadruple, etc.). A tuple in 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A <em>pixel</em>, short for <em>picture element</em>, represents a single dot on the screen. A typical display has a <em>resolution</em>, which might be \(1024 \times 768\) (1024 pixels wide by 768 pixels high) or \(1472 \times 1193\).  A pixel has a physical dimension that depends on the size of the display.  The word <em>pixel</em> is sometims abbreviated <em>px</em>.
+A <em>pixel</em>, short for <em>picture element</em>, represents a single dot on the screen. A typical display has a <em>resolution</em>, which might be \(1024 \times 768\) (\(1024\) pixels wide by \(768\) pixels high) or \(1472 \times 1193\).  A pixel has a physical dimension that depends on the size of the display.  The word <em>pixel</em> is sometimes abbreviated <em>px</em>.
 </td>
 </tr>
 </table>
@@ -2709,7 +2828,7 @@ An <em>object</em> in python is a value (not unlike an integer or a float) that 
 </table>
 </div>
 <div class="paragraph">
-<p>For example, the pygame window above has two methods <code>get_height()</code> and <code>get_width()</code> that return the height and width in pxiels of the window. Methods are always called using a <em>dot notation</em> of the object name followed by the methods. For example <code>win.get_height()</code>.</p>
+<p>For example, the pygame window above has two methods <code>get_height()</code> and <code>get_width()</code> that return the height and width in pixels of the window. Methods are always called using a <em>dot notation</em> of the object name followed by the methods. For example <code>win.get_height()</code>.</p>
 </div>
 <div class="paragraph">
 <div class="title">Keeping the window from disappearing <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -2743,8 +2862,7 @@ An <em>object</em> in python is a value (not unlike an integer or a float) that 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 </div>
@@ -2817,7 +2935,7 @@ Put commonly used code in a separate file and import that file into each program
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Don&#8217;t name your Python programs the same name as modules you commonly import. For example, if you name your program <code>pygame.py</code> and then in your program <code>import pygame</code> your are in the embarrassing situation of your program trying to import itself.
+Don&#8217;t name your Python programs the same name as modules you commonly import. For example, if you name your program <code>pygame.py</code> and then in your program you have <code>import pygame</code> you are in the embarrassing situation of your program trying to import itself.
 </td>
 </tr>
 </table>
@@ -3623,6 +3741,45 @@ pygame.draw.line(<i>surface</i>, <i>color</i>, <i>start-xy</i>, <i>end-xy</i>, <
 <div class="imageblock" style="text-align: center">
 <div class="content">
 <img src="./images/doodlebug.png" alt="doodlebug" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 7 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/twjone16.png" alt="twjone16" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 8 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/dlgold16.png" alt="dlgold16" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 9 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/djang16.png" alt="djang16" width="300" height="200">
 </div>
 </div>
 </div>
@@ -6227,10 +6384,8 @@ Assume variable <code>d1</code> and <code>d2</code> have values.</p>
 <div class="sect2">
 <h3 id="_exercises_3"><a class="anchor" href="#_exercises_3"></a>5.3. Exercises</h3>
 <div class="olist arabic">
+<div class="title">Exercise 1</div>
 <ol class="arabic">
-<li>
-<p>logical operator exercises</p>
-</li>
 <li>
 <p>larger smaller of two numbers</p>
 </li>
@@ -15149,7 +15304,7 @@ modules we have encountered in this text.</p>
 <a href="#_footnoteref_7">7</a>. A popular <em>Integerated Development Environmnet</em> is <a href="https://www.jetbrains.com/pycharm/">Pycharm</a> from <a href="https://www.jetbrains.com">Jetbrains</a>. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.
 </div>
 <div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, and Jack Pattison for allowing me to use their Blockhead submissions.
+<a href="#_footnoteref_8">8</a>. Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, Jack Pattison, Dakota Golde, Tim Jones, and Dong Hae Jang for allowing me to use their Blockhead submissions.
 </div>
 <div class="footnote" id="_footnotedef_9">
 <a href="#_footnoteref_9">9</a>. This is only an approximation. The \(\sqrt{2}\) is <em>irrational</em>. That is, it is a never ending, non-repeating sequence of digits.
@@ -15239,7 +15394,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-06-30 22:45:25 EDT
+Last updated 2018-07-01 22:18:54 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
