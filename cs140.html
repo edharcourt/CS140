@@ -878,12 +878,12 @@ A <em>programming language</em> is precise notation used for describing computat
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hello world&quot;</span><span class="tok-p">)</span>
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hello, World!&quot;</span><span class="tok-p">)</span>
 </td></tr></table></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That is it, just the one line. And it does as you might expect, it prints the message <code>Hello World</code> on the <em>console</em>. But there is a lot going on in that one line, so lets break it down.</p>
+<p>That is it, just the one line. And it does as you might expect, it prints the message <code>Hello, World!</code> on the <em>console</em>. But there is a lot going on in that one line, so lets break it down.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1143,7 +1143,7 @@ Variable names are not string literals.
 <div class="title">What is the difference between the two statements&#8230;&#8203;</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
-2</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-n">pi_squared</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+2</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-n">pi_squared</span><span class="tok-p">)</span> <span class="tok-c1">#   </span><i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-s2">&quot;pi_squared&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
 </td></tr></table></code></pre>
 </div>
@@ -4121,7 +4121,7 @@ You can just use the <code>math.sqrt</code> function. You don&#8217;t have to wr
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Self Check <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
 <p>How many function calls are there in the two lines above? Explain all of the arguments and return values.</p>
 </div>
 <div class="exampleblock result">
@@ -6518,19 +6518,87 @@ Assume variable <code>d1</code> and <code>d2</code> have values.</p>
 </div>
 <div class="sect2">
 <h3 id="_exercises_4"><a class="anchor" href="#_exercises_4"></a>5.3. Exercises</h3>
-<div class="olist arabic">
-<div class="title">Exercise 1</div>
-<ol class="arabic">
-<li>
-<p>larger smaller of two numbers</p>
-</li>
-<li>
-<p>larger smaller of three numbers</p>
-</li>
-<li>
-<p>median of three numbers</p>
-</li>
-</ol>
+<div class="paragraph">
+<div class="title">Exercise 1 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function <code>max2</code> that returns the larger of the two parameters. For example, <code>print(max2(9,7))</code>
+would print <code>9</code>.</p>
+</div>
+<div class="listingblock result">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">max2</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">y</span><span class="tok-p">:</span>
+        <span class="tok-k">return</span> <span class="tok-n">x</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-k">return</span> <span class="tok-n">y</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write of function <code>max3</code> that returns the maximum of three parameters. For example, <code>print(max3(4,2,9))</code> would print <code>9</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">max3</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">):</span>
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">z</span><span class="tok-p">:</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-k">return</span> <span class="tok-n">x</span>
+    <span class="tok-k">elif</span> <span class="tok-n">y</span> <span class="tok-o">&gt;</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&gt;</span> <span class="tok-n">z</span><span class="tok-p">:</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">return</span> <span class="tok-n">y</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>                  <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-k">return</span> <span class="tok-n">z</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Is <code>x</code> the largest?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Is <code>y</code> the largest?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>It must be <code>z</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A more concise way would be to use the function <code>max2</code> from the previus
+problem and function composition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">max3</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">):</span>
+    <span class="tok-k">return</span> <span class="tok-n">max2</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">max2</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Okay, so none of this was necessary. Python already has a built-in function <code>max</code> that can take an arbitrary number of arguments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">9</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3</div>
+<p>Write a function <code>median</code> that returns median of three numbers (the middle number).</p>
 </div>
 </div>
 <div class="sect2">
@@ -8011,7 +8079,7 @@ it without using a loop. Hint: Think of a simple expression involving th door nu
 </table>
 </div>
 <div class="paragraph">
-<p>Now, we haven&#8217;t even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch.</p>
+<p>Now, we haven&#8217;t even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself</div>
@@ -8085,12 +8153,14 @@ You won a car!</code></pre>
 45
 46
 47
-48</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+48
+49</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
 
-<span class="tok-c1"># place a goat behind a door. Or assign</span>
-<span class="tok-c1"># a door to goat 1</span>
+<span class="tok-c1"># place a goat behind door one.</span>
 <span class="tok-n">goat1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
 
+<span class="tok-c1"># place the second goat, making sure</span>
+<span class="tok-c1"># that it is not the same door as the first goat.</span>
 <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
 
 <span class="tok-k">while</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
@@ -8139,14 +8209,20 @@ You won a car!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random doo instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
+<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random door instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
 </div>
 <div class="paragraph">
-<p>The gist. Proabability is often counterintuitive.</p>
+<p>Probability is often counterintuitive.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_exercises_5"><a class="anchor" href="#_exercises_5"></a>6.5. Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 1 - Prime Numbers</div>
+<p>Prime numbers play an important role in cryptography. A prime number is only divisible by
+one and itself.  If a number is not prime then it has <em>factor</em> that is not one or itself. For example,
+\(16517\) has factors \(83\) and \(199\) because \(16517 = 83 \times 199\).</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -15529,7 +15605,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-01 22:55:54 EDT
+Last updated 2018-07-02 22:41:29 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
