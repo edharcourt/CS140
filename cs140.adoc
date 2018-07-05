@@ -1,7 +1,7 @@
 An Introduction to Computer Science and Programming with Python
 ===============================================================
 Ed Harcourt <edharcourt@stlawu.edu>
-v0.2, June 2018:
+v0.2, July 2018:
 :toc: right
 :doctype: book
 :toclevels: 2
@@ -2258,18 +2258,19 @@ Animate moving the particle to the bottom of the screen.
 
 [.result]
 ====
-While the particle's stem:[y] coordinate plus the radius is less than the 
+While the particle's stem:[y]-coordinate plus the radius is less than the 
 side length.
 
 [source,python,numbered]
 ----
-while py + radius < side:
+while py + radius < side:  <1>
     win.fill(color.white)
     pygame.draw.circle(win, color.blue, (px,py), radius)
     pygame.display.update()
     pygame.time.delay(5)
     py = py + 1
 ----
+<1> What would happen if we simply had `while py < side`?
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -2277,7 +2278,7 @@ Animate moving the particle from right to left.
 
 [.result]
 ====
-While the particle's stem:[x] coordinate is greater than 0.
+While the particle's stem:[x]-coordinate is greater than 0.
 
 [source,python,numbered]
 ----
@@ -2308,15 +2309,13 @@ while py > 0:
 ----
 ====
 
-
-
 TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
 
 === Counting Loops
 A common loop pattern is to repeat a body of code an exact number of times.
 
 .Example
-Lets say we wanted to print a table of of powers of two up to _2^10^_.
+Lets print a table of powers of two up to _2^10^_.
 
 [listing]
 ----
@@ -2590,7 +2589,7 @@ print(i, "years to 10 billion")
 ====
 
 .Check Yourself 
-The population growth rate is not constant. It fluctuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is very easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximately stem:[9.5 \times 10^9].
+The population growth rate is not constant. It fluctuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximately stem:[9.5 \times 10^9].
 
 image:pop-decreasing-growth.png[align"center"]
 
@@ -2716,7 +2715,7 @@ Write a function `num_digits` that will return the number of digits in an intege
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
 .Exercise 6
-The `*` operator can be applied to a string and an integer. For example, `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that reads an integer from the user and prints the triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisks and the sixth row has six asterisks as in the sample output below.
+The `*` operator can be applied to a string and an integer. For example, `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that reads an integer from the user and prints a triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisk and the sixth row has six asterisks as in the sample output below.
 ----
 Enter n: 6
 *
@@ -2738,11 +2737,11 @@ n = int(input("Enter n: "))
 
 i = 1
 while i <= n:
-    print('*' * i)
+    print('*' * i) <1>
     i = i + 1
 ----
+<1> Print `i` asterisks and an end-of-line character.
 ====
-
 
 === Terminology 
 
@@ -2771,7 +2770,7 @@ a|
 
 == Conditionals
 
-Lets say we wanted to simulate tossing a coin and print `Heads` or `Tails`.
+Lets simulate tossing a coin and print `Heads` or `Tails` with a 50-50 chance.
 
 The `random` module contains many functions for generating random numbers. The function `random.random()` returns a `uniform` floating-point number between 0 and 1.
 
@@ -2806,7 +2805,7 @@ else:
     false_stmts
 ----
 
-If the condition is true then the block of statement labeled `true_stmts` will be executed, otherwise the block of statements labeled `false_stmts` will be executed. The else part is optional.  `if` and `else` are new _keywords_. They cannot be used as variable or function names. Notice also that the statements under the `if` of `else` are indented just like a function body, or the body of a while loop.
+If the condition is true then the block of statements labeled `true_stmts` will be executed, otherwise the block of statements labeled `false_stmts` will be executed. The `else` part is optional.  `if` and `else` are new _keywords_. They cannot be used as variable or function names. Notice also that the statements under the `if` of `else` are indented just like a function body or the body of a while loop.
 
 Back to simulating a coin toss. Here is one way using `random.random()`
 
@@ -2950,7 +2949,7 @@ Up until now our conditions in either the while loop or the if-statement have be
 
 ==== Logical `and` 
 
-Lets say we rolled a pair of dice and wanted to check if we rolled two ones (snake eyes). Our first attempt, which is not incorrect, might be:
+Lets say we rolled a pair of dice and wanted to check if we rolled two ones (snake eyes). Our first attempt, might be:
 
 [source,python,numbered]
 ----
@@ -2973,7 +2972,6 @@ if d1 == 1 and d2 == 1: <1>
     print("snake eyes!")
 ----
 <1> `and` is a python keyword.
-
 
 The logical operator `and` combines a logical value on the left and the right, _X_ `and` _Y_. The entire logical expression is true if both _X_ and _Y_ are true.  We often state this interms of a _truth table_. 
 
@@ -3046,7 +3044,7 @@ if d1 == 1 or d2 == 1: <1>
 ----
 <1> `or` is a python keyword.
 
-The logical operator `or` combines a logical value on the left and the right, _X_ `or` _Y_. The entire logical expression is true if either one of _X_ or _Y_ are true.  The truth table for logical `or` is: 
+The logical operator `or` combines a logical value on the left and the right, _X_ `or` _Y_. The entire logical expression is true if either one of _X_ or _Y_ is true.  The truth table for logical `or` is: 
 
 [width="50%", options="header"]
 .Logical `or`
@@ -3083,6 +3081,13 @@ if (d1 == 1 or d2 == 1) and (d1 != 1 or d2 != 1): <1>
     print("exactly one, 1")
 ----
 <1> Note the parentheses, they are necessary.
+
+Yet a third solution is:
+[source,python,numbered]
+----
+if (d1 == 1 and d2 != 1) or (d1 != 1 and d2 == 1):
+    print("exactly one, 1")
+----
 ====
 
 ==== Logical `not`
@@ -3136,13 +3141,14 @@ def max3(x,y,z):
 <3> It must be `z`
 
 A more concise way would be to use the function `max2` from the previus
-problem and function composition.
+problem. 
 
 [source,python,numbered]
 ----
 def max3(x,y,z):
-    return max2(x,max2(y,z))
+    return max2(x,max2(y,z)) <1>
 ----
+<1> Recall that this is called _function composition_.
 
 Okay, so none of this was necessary. Python already has a built-in function `max` that can take an arbitrary number of arguments.
 
