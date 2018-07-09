@@ -481,7 +481,7 @@ He said "don't do it!"
 
 === A note about spaces
 
-Spaces, like in writing, are used to separate words in Python and are often used to make code more readable. For example, in a `print` statement you can put a space after the comma that is separating values to print.
+Spaces, like in writing, are used to separate words in Python and are often used to make code more legible. For example, in a `print` statement you can put a space after the comma that is separating values to print.
 
 [source,python,numbered]
 print(a, b, c, d) 
@@ -502,7 +502,7 @@ WARNING: Spacing at the start of a line that changes indentation can cause probl
 
 === A note about indentation
 
-We will see later that indentation plays an important role in Python. For now just be aware that all python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
+We will see later that indentation plays an important role in Python. For now just be aware that all Python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
 
 Here is an example. The following program is in error because the second statement is indented one space.
 
@@ -510,16 +510,17 @@ Here is an example. The following program is in error because the second stateme
 x = 4
  print(x*x)
 
-TIP: Python is unique in the way that it treats indentation and spacing. Most other programming languages are not sensitive to the way that indentation is handled.
+TIP: Python is unique in the way that it treats indentation and spacing. Most other programming languages are not sensitive to the way that indentation is handled and programmers are free to indent 
+as they see fit to make their programs more legible. Not so in Python. Indentation is part of the syntax of the language.
 
 === Syntax Errors
 
 We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. 
 
-NOTE: A _syntax error_ is an error that violates the rules of the language. Syntax errors
+NOTE: A _syntax error_ is an error that violates the rules of of how you put together the tokens (words) of the language. Syntax errors
 can be detected _before_ the program executes. 
 
-Find the error in each of the following:
+Find the syntax error in each of the following:
 
 .Example 1
 ----
@@ -616,7 +617,7 @@ print(x)
 Python does not have an operator named `@`.
 ====
 
-Some syntax errors are just nasty and difficult to find. The following one line program looks like it should have a syntax error. It is non-sensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
+Some syntax errors are just nasty and difficult to find. The following one line program looks like it should have a syntax error. It is nonsensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
 
 .Example 8
 ----
@@ -647,14 +648,14 @@ print("Hello", name)
 <1> `Hermione` is what the user typed and then hit _enter_ on the keyboard.
  
 It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in Fahrenheit to Celsius is 
-latexmath:[5/9(f-32)]
+stem:[5/9(f-32)]
 
 [source,python,numbered]
 f = input('Enter a temperature (F): ')
 c = 5/9*(f - 32)
 print(f, "Fahrenheit is", c, "Celsius")
 
-Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. For example, if the user type `75` it would be like trying to 
+Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. For example, if the user typed `75` it would be like trying to 
 compute `"75" - 32`, which is as bad as trying to compute `"hello" - 32`. You need to first convert the value in the variable `f` to either 
 an integer or a floating-point number using either the `int` or `float` function.
 
@@ -670,7 +671,7 @@ NOTE: A _run-time error_ is an error that can only be detected when the program 
 NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
 
 
-Here is our modified program
+Here is our modified program:
 
 [source,python,numbered]
 f = float(input('Enter a temperature (F): ')) <1>
@@ -836,10 +837,10 @@ s = int(input("Enter a number: "))
 print("1000 divided by", s, "is", 1000/s) 
 ----
 
-What would happen if the user entered a 0 at the input prompt? There is no way for python to know what the user is going to type, and if they enter a `0`, then the program will _crash_ on line 2. If the user enters the word `"hello"` then the program will crash on line 1 when Python tries to convert `"hello"` to an integer.
+What would happen if the user entered a 0 at the input prompt? There is no way for Python to know what the user is going to type, and if they enter a `0`, then the program will _crash_ on line 2. If the user enters the word `"hello"` then the program will crash on line 1 when Python tries to convert `"hello"` to an integer.
 
 ==== Logic Errors
-There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error python will tell you exactly which line caused the crash. 
+There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error Python will tell you exactly which line caused the crash. 
 
 Lets revisit our Celsius to Fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
 
@@ -991,7 +992,7 @@ The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r
 In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will promt the user for a number of years and print the estimated population that many years from now.
 
 .Compound Interest
-Assume that *_C_* is an initial amount of an investment, *_r_* is the yearly rate of interest (e.g., .02 is 2%), *_t_* is the number of years until maturation, *_n_* is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads *_C_*, *_r_*, *_n_*, and *_t_* from the user and computes and then prints the final value of the investment to the nearest penny.
+Assume that stem:[C] is an initial amount of an investment, stem:[r] is the yearly rate of interest (e.g., stem:[.02] is stem:[2\%]), stem:[t] is the number of years until maturation, stem:[n] is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads stem:[C], stem:[r], stem:[n], and stem:[t] from the user and computes and then prints the final value of the investment to the nearest penny.
 
 .Change Making 
 Write a prgram that reads an amount of money that we need to make change for, and dispenses
@@ -1105,25 +1106,25 @@ print the string `prompt` to the console and wait for keyboard input. Return the
 
 == Pygame Intro
 
-A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
+A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
 
-To use pygame there is some standard code we need at the start of every program (but only in programs that use pygame).
+To use Pygame there is some standard code we need at the start of every program (but only in programs that use Pygame).
 
 .hello_pygame.py
 [source,python,numbered]
 ----
-import pygame <1>
+import Pygame <1>
 pygame.init() <2>
 win = pygame.display.set_mode((600,600)) <3>
 ----
 
-<1> import the pygame module
-<2> Call a pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
-<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a pygame _display surface_.
+<1> import the Pygame module
+<2> Call a Pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
+<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a Pygame _display surface_.
 
 When we run the program above a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
-NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in python is two or more values wrapped up into using parentheses with the values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (stem:[1024] pixels wide by stem:[768] pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometimes abbreviated _px_.
 
@@ -1131,12 +1132,12 @@ NOTE: Most of the variables we have encountered so far have held integers or flo
 `x` is primitive and `win` is _reference_ +
 image:references.png[width=500,align="center"]
 
-NOTE: An _object_ in python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
+NOTE: An _object_ in Python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
 
-For example, the pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
+For example, the Pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
 
 .Keeping the window from disappearing +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Can you think of a way we might be able to pause the program to keep the pygame display window from disappearing until the user hits a key on the keyboard?
+Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?
 
 [.result]
 ====
@@ -1145,7 +1146,7 @@ The `input` function waits for the user to type something on the keyboard and hi
 .hello_pygame.py
 [source,python,numbered]
 ----
-import pygame 
+import Pygame 
 pygame.init() 
 win = pygame.display.set_mode((600,600)) 
 dummy = input("Hit <enter> to quit.") <1>
@@ -1160,11 +1161,11 @@ input("Hit <enter> to quit.")
 
 === Colors
 
-Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
+Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
 
 NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
 
-One common thing many of our pygame programs will do is to define some colors. 
+One common thing many of our Pygame programs will do is to define some colors. 
 
 .color.py
 [source,python,numbered]
@@ -1181,8 +1182,8 @@ burntsienna = (138,54,15)
 lightgray   = (200,200,200)
 ----	
 
-We will soon get tired of retyping color definitions in our pygame programs. We can place these definitions in their own file and name it `color.py`.
-We can then import `color.py` into our pygame program with `import color` and voila! we have created our own Python module named `color` and we can reuse our color definitions without having to retype them every time.
+We will soon get tired of retyping color definitions in our Pygame programs. We can place these definitions in their own file and name it `color.py`.
+We can then import `color.py` into our Pygame program with `import color` and voila! we have created our own Python module named `color` and we can reuse our color definitions without having to retype them every time.
 
 TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to _reuse_ code you have already written rather than duplicate it. 
 
@@ -1204,9 +1205,9 @@ input("Hit <enter> to quit.")                 <4>
 ----
 <1> `win` (short for window) is a _display surface_ in pygame. We did not have to call it `win`. We could have called it any legal variable name.
 
-<2> Our first pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
+<2> Our first Pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
 
-<3> When pygame functions draw on the display the window is not actally updated until we call the pygame function `pygame.display.update()`. 
+<3> When Pygame functions draw on the display the window is not actally updated until we call the Pygame function `pygame.display.update()`. 
 
 <4> Wait for the user to hit enter so the window doesn't disappear right away.
 
@@ -1216,9 +1217,9 @@ In this section we learn how to draw basic shapes; a circle, ellipse, rectangle,
 
 ==== Rectangle 
 
-The pygame function `pygame.draw.rect` draws a rectangle on a surface and takes either three or four arguments.
+The Pygame function `pygame.draw.rect` draws a rectangle on a surface and takes either three or four arguments.
 
-NOTE: Pygame programs only ever have one display surface. We will see later on that our pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
+NOTE: Pygame programs only ever have one display surface. We will see later on that our Pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
 
 +++
 <code class="listingblock">
@@ -1234,7 +1235,7 @@ _xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coor
 
 _optional-line-width_:: If this argument is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
 
-CAUTION: The upper left coordinate of a pygame surface is the origin `(0,0)`. 
+CAUTION: The upper left coordinate of a Pygame surface is the origin `(0,0)`. 
 
 .Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Place a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
@@ -1266,14 +1267,14 @@ input("Hit <enter> when done")
 
 image::pygame-rect-window.png[width=533,height=367,align="center"]
 
-Notice the use of _integer division_ `//`. All of the pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't mak sense to do this in fractions of a pixel. 
+Notice the use of _integer division_ `//`. All of the Pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't mak sense to do this in fractions of a pixel. 
 
 .Self Check
 
-Assume we have a 600 X 400 pygame display.
+Assume we have a 600 X 400 Pygame display.
 
 .Top Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the top left pixel in the pygame window?
+What is the coordinate of the top left pixel in the Pygame window?
 
 [.result]
 ====
@@ -1281,7 +1282,7 @@ What is the coordinate of the top left pixel in the pygame window?
 ====
 
 .Top Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the top right pixel in the pygame window?
+What is the coordinate of the top right pixel in the Pygame window?
 
 [.result]
 ====
@@ -1293,7 +1294,7 @@ is column 599. This mistake of being off by one, computer scientists quite liter
 ====
 
 .Bottom Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the bottom left pixel in the pygame window?
+What is the coordinate of the bottom left pixel in the Pygame window?
 
 [.result]
 ====
@@ -1301,7 +1302,7 @@ What is the coordinate of the bottom left pixel in the pygame window?
 ====
 
 .Bottom Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the coordinate of the bottom right pixel in the pygame window?
+What is the coordinate of the bottom right pixel in the Pygame window?
 
 [.result]
 ====
@@ -1309,7 +1310,7 @@ What is the coordinate of the bottom right pixel in the pygame window?
 ====
 
 .Proportional Graphics
-The yellow square is _proportional_ and relative to the size of the main pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
+The yellow square is _proportional_ and relative to the size of the main Pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
 
 TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be 
 drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
@@ -1325,7 +1326,7 @@ Graphics using individual pixels only called _raster graphics_.
 
 ==== Circle
 
-The pygame function `pygame.draw.circle` draws a circle on a surface and takes either four or five arguments.
+The Pygame function `pygame.draw.circle` draws a circle on a surface and takes either four or five arguments.
 
 +++
 <code class="listingblock">
@@ -1521,11 +1522,11 @@ pygame.draw.ellipse(win, color.yellow, (e_x, e_y, e_width, e_height - .2*e_heigh
 .Exercise
 Give the Blockhead pupils by drawing a circle or ellipse in each eye. Make sure it is proportional!
 
-TIP: You can always check to see if you are making your shapes proportional if you change the dimensions of the pygame display at the start of the program and make sure the image resizes appropriately.
+TIP: You can always check to see if you are making your shapes proportional if you change the dimensions of the Pygame display at the start of the program and make sure the image resizes appropriately.
 
 ==== Lines
 
-You can draw a line in pygame using the function `pygame.draw.line`.
+You can draw a line in Pygame using the function `pygame.draw.line`.
 
 +++
 <code class="listingblock">
@@ -1561,7 +1562,7 @@ pygame.draw.line(win, color.white,
 ----
 ====
 
-There are other pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
+There are other Pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
 
 .Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Variables have been renamed to be more meaningful. For example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
@@ -1989,7 +1990,7 @@ NOTE: A _global variable_ is defined in the main program. Its scope is the point
 
 [source,python,numbered]
 ----
-# initial pygame stuff
+# initial Pygame stuff
 import pygame, color
 
 pygame.init()
@@ -2130,7 +2131,7 @@ a|
 
 == Repetition - The While Loop
 
-Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a pygame display surface drawn halfway down the display and all the way to the left.
+Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a Pygame display surface drawn halfway down the display and all the way to the left.
 
 NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc. The term https://en.wikipedia.org/wiki/Particle[_particle_] comes from physics and is an abstract representation of some object.
 
@@ -2971,7 +2972,7 @@ d2 = random.randrange(6) + 1
 if d1 == 1 and d2 == 1: <1>
     print("snake eyes!")
 ----
-<1> `and` is a python keyword.
+<1> `and` is a Python keyword.
 
 The logical operator `and` combines a logical value on the left and the right, _X_ `and` _Y_. The entire logical expression is true if both _X_ and _Y_ are true.  We often state this interms of a _truth table_. 
 
@@ -3014,7 +3015,7 @@ if n >= 0 and n <= 100:
 These are not complete programs as we haven't assigned a value to `n` yet. We will often call these _code fragments_.
 ====
 
-NOTE: A _code fragment_ is an incomplete segment of python code. It is not meant to be a complete program.
+NOTE: A _code fragment_ is an incomplete segment of Python code. It is not meant to be a complete program.
 
 
 ==== Logical `or` 
@@ -3042,7 +3043,7 @@ d2 = random.randrange(6) + 1
 if d1 == 1 or d2 == 1: <1>
     print("one")
 ----
-<1> `or` is a python keyword.
+<1> `or` is a Python keyword.
 
 The logical operator `or` combines a logical value on the left and the right, _X_ `or` _Y_. The entire logical expression is true if either one of _X_ or _Y_ is true.  The truth table for logical `or` is: 
 
@@ -3331,9 +3332,9 @@ We don't even need to run the program to see what will happen here. This is the 
 
 ==== A One Dimensional Random Walk
 
-Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a pygame window of widthstem:[w]and height _h_, if we let the center stem:[y] coordinate of the window represent 0 chips then `0 - chips` will be the stem:[y] coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of widthstem:[w]and height _h_, if we let the center stem:[y] coordinate of the window represent 0 chips then `0 - chips` will be the stem:[y] coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
 
-The pygame command 
+The Pygame command 
 
 [source,python,numbered]
 ----
@@ -3708,7 +3709,7 @@ Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, 
 
 [source]
 ----
-1) create a pygame display window
+1) create a Pygame display window
 2) Assign the coordinates of the towers to variables
 3) Assign the hiker random coordinates anywhere within the display
 4) Forever
@@ -3719,7 +3720,7 @@ Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, 
 
 ----
 
-TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real python code, but in more informal text, what coputer scientists call _pseudocode_.
+TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what coputer scientists call _pseudocode_.
 
 NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
 the average of the stem:[x]-coordinates and the average of the stem:[y]-coordinates, or 
@@ -4026,16 +4027,16 @@ But lets use an image of particle (as a soccer ball) rather than a circle.
 image::ball.png[align="center"]
 
 Assume that the particle is in an image file `ball.png`. We can load that image into
-pygame with `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a pygame surface of the image.
+Pygamewith `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a Pygame surface of the image.
 
 [source,python,numbered]
 ----
 ball = pygame.image.load("ball.png") <1>
 ----
-<1> The variable `ball` is a pygame _surface_.
+<1> The variable `ball` is a Pygame _surface_.
 
-We've previously discussed pygame surfaces noting that the pygame display is a surface.
-Here we are constructing a new kind of surface. The variable `ball` refers to a pygame surface that is not the display surface, but a surface that that represent an image and can be drawn _onto_ the display surface.
+We've previously discussed Pygame surfaces noting that the Pygame display is a surface.
+Here we are constructing a new kind of surface. The variable `ball` refers to a Pygame surface that is not the display surface, but a surface that that represent an image and can be drawn _onto_ the display surface.
 
 [source,python,numbered]
 ----
@@ -4054,11 +4055,11 @@ pygame.display.update()
 
 Images are rectangular, even if they are an image of a circle. So in order for the image to appear like a circle the pixels that are outside of the ball are _transparent_. In graphics terminology we call this _alpha transparency_.  The `convert_alpha` function ensures that when we load the image we don't lose any of the transparency in the image pixels.
 
-To animate a particle with a velocity we see that a velocity has two components, its direction on the stem:[x]-axis a direction on the stem:[y]-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would moveto the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
+To animate a particle with a velocity we see that a velocity has two components, its direction on the stem:[x]-axis a direction on the stem:[y]-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would move to the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
 
 image:ball_velocity.png[width=455,height=261,align="center"]
 
-Unlike a pygame circle whose coordinate is measure from the center of the circle, the coordinates of an image in pyagme is the coordinate of the upper left corner of the image (remember, all images are rectangular).
+Unlike a Pygame circle whose coordinate is measure from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).
 
 All that is left to do is to update the particle's coordinates by its velocity and do something sensible if it hits a wall. Lets define a `move` function as we did in the Brownian Motion example. This `move` function will be a little more complicated because not only will the particle's coordinates change (`x` and `y`), but if the particle hits a wall its direction will change, that is, the velocity `dx` or `dy`.
 
@@ -4227,7 +4228,7 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 ---- 
-<1> The `tick` function can take an optional frame rate as an argument (in this case 60), which means pygame will make sure that the loop does not go faster than 60 _fps_. 
+<1> The `tick` function can take an optional frame rate as an argument (in this case 60), which means Pygame will make sure that the loop does not go faster than 60 _fps_. 
 <2> This conditional is exactly like before.
 
 Piecing this all together we have ...
@@ -4589,7 +4590,7 @@ while i < n:
 	i = i + 1
 ----	
 
-This loop will body will execute exactly `n` times; as long as `n` is not modified in the loop body. Another way to write this in python is using the for loop.
+This loop will body will execute exactly `n` times; as long as `n` is not modified in the loop body. Another way to write this in Python is using the for loop.
 
 [source,python,numbered]
 ----
@@ -4597,7 +4598,7 @@ for i in range(n):
     # loop body
 ----
 
-There are two new python keywords `for` and `in`. Notice also that the there is no explicit assignment statement incrementing `i` by one. There is also the use of this new thing `range(n)`. Technically `range` is not a function in Python but a _range type_ which is used to generate an immutable sequence of integers. Something that is _immutable_ cannot be changed. So `range(n)` generates a sequence of numbers from `0` up to but not including `n`.
+There are two new Python keywords `for` and `in`. Notice also that the there is no explicit assignment statement incrementing `i` by one. There is also the use of this new thing `range(n)`. Technically `range` is not a function in Python but a _range type_ which is used to generate an immutable sequence of integers. Something that is _immutable_ cannot be changed. So `range(n)` generates a sequence of numbers from `0` up to but not including `n`.
 
 The `for`-loop 
 
@@ -4662,17 +4663,17 @@ a|
 
 == Event Handling
 
-Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.
+Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.
 
-NOTE: An _event_ is a pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
+NOTE: An _event_ is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
 
-One event we can check for is to see if the user has clicked the X in the pygame
-window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
+One event we can check for is to see if the user has clicked the X in the Pygame
+window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the Pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
 
-A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
 
 Here is a snippet to check for the `QUIT` event and stop the program if the user
-has clicked on the X. The pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
+has clicked on the X. The Pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
 
 [source,python,numbered]
 ----
@@ -4683,14 +4684,14 @@ for event in pygame.event.get():   <1>
 ----
 <1> For each event in the event queue
 <2> See if is the `QUIT` event. If it is then ...
-<3> stop pygame (this is a new function)
+<3> stop Pygame (this is a new function)
 <4> exit out of the program
 
 We could place this code in the outer while loop of our particle simulation.
 
 === A Handy Utility Function
 
-The above event processing code checks for a `QUIT` event while the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
+The above event processing code checks for a `QUIT` event while the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a Pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
 
 .`util.py`
 [source,python,numbered]
@@ -4710,11 +4711,11 @@ def wait_for_quit():
 
 TIP: Function `pygame.time.wait` waits for a number of milliseconds. It is similar to `pygame.time.delay` except that `pygame.time.wait` relinquishes the CPU so that other programs may run whereas `pygame.time.delay` continues to use the processor during the delay. 
 
-Function `wait_for_quit` assumes that if the user closes the window they want the program to terminate as well. Function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other pygame programs.
+Function `wait_for_quit` assumes that if the user closes the window they want the program to terminate as well. Function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other Pygame programs.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a function `wait_for_click()` that _pauses_ the program until the user clicks 
-somewhere in the pygame display. This function should behave a little differently than `wait_for_quit()` in that the program should not exit, but just continue.
+somewhere in the Pygame display. This function should behave a little differently than `wait_for_quit()` in that the program should not exit, but just continue.
 
 [.result]
 ====
@@ -4731,7 +4732,7 @@ def wait_for_click():
 
 ----
 <1> Local variable used to control loop
-<2> This loop does not terminate until the user has clicked in the pygame display.
+<2> This loop does not terminate until the user has clicked in the Pygame display.
 <3> Standard code to get events in event queue.
 <4> Check for the `MOUSEBUTTONDOWN` event. This will check for either left or right mouse button and even clicking the scrolling wheel on the mouse.
 <5> Setting `done` to `True` will cause the `while`-loop to terminate.
@@ -4788,7 +4789,7 @@ for event in pygame.event.get():
 <2> If so, then is it the up-arrow ...
 <3> or the down-arrow key?
 
-When you add this to the outer `while` loop you will notice that you need to keep hitting the up or down arrow key just to move the paddle one pixel. That is because when you press the down arrow key you generate only one event. What we would like to have happen is that when we press the key we continue to generate `KEYDOWN` events at a regular interval as long as it stays pressed. We can do this at the start of the program using the pygame function:
+When you add this to the outer `while` loop you will notice that you need to keep hitting the up or down arrow key just to move the paddle one pixel. That is because when you press the down arrow key you generate only one event. What we would like to have happen is that when we press the key we continue to generate `KEYDOWN` events at a regular interval as long as it stays pressed. We can do this at the start of the program using the Pygame function:
 
 [source,python]
 ----
@@ -5083,7 +5084,7 @@ A new Pygame function will assist us, `surface.get_at( (x,y) )` returns the RGBA
 ----
 <1> To be more precise recall that functions like `get_at` _methods_ because they are called using an _object_.
 
-The pygame function `surface.set_at( (x,y), RGBA)` modifies the pixel at coordinate `(x,y)` to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black ...
+The Pygame function `surface.set_at( (x,y), RGBA)` modifies the pixel at coordinate `(x,y)` to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black ...
 
 [source,python]
 ----
@@ -5197,7 +5198,7 @@ image::scale.png[width=600]
 
 Until now we have had two ways to create a surface; the first is to use the `pygame.display.set_mode` function to create the special display surface. The second way was to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
 
-The pygame following line
+The Pygame following line
 
 [source,python]
 ----
@@ -5606,7 +5607,7 @@ The following two lines create a surface with the text `Attack At Dawn` rendered
 my_font = pygame.font.SysFont("Veranda", 48)                  <1>
 secret = my_font.render("Attack At Dawn", False, color.black) <2>
 ----
-<1> Create a _font object_, with 48pt text size. If the font Veranda is not on the system pygame will use a default font.
+<1> Create a _font object_, with 48pt text size. If the font Veranda is not on the system Pygame will use a default font.
 <2> Create a surface with the text `Attack At Dawn` on it using the color black (the third argument). The boolean value `False` means do not use _antialiasing_ to smooth the edges on the text, but we want the image to be pure black-and-white, so we don't antialias.
 
 NOTE: _Antialiasing_ uses shades of a color to smooth edges. 
@@ -5654,7 +5655,7 @@ pygame.image.save(image, "new_image.png")                  <9>
 <6> Check if it is black.
 <7> If it is black then we need to get the corresponding pixel in the image and ...
 <8> make the red component f the image pixel odd. Hence the `ir+1`.
-<9> `pygame.image.save` is a new pygame function that saves a surface in a new file in the image format specifed by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
+<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specifed by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
 
 WARNING: The above program can crash if the image containing the message is larger than the image that is hiding the message.
 
@@ -5898,7 +5899,7 @@ If, however, we make agents very intolerant by having, say a 70% threshold, and 
 
 ==== Schelling Summary
 
-The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
+The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
 
 === Exercises
 
@@ -6449,7 +6450,7 @@ incorrect
 
 The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. _newline_ character. We often call spaces, tabs, andnelinw character _whitespace_ characters.  In most programming languages the newline character is written `\n`.
 
-We tell python the name of a file we want to read using the https://docs.python.org/3.6/library/functions.html#open[`open`] function.footnote:[https://docs.python.org/3.6/library/functions.html#open]
+We tell Python the name of a file we want to read using the https://docs.python.org/3.6/library/functions.html#open[`open`] function.footnote:[https://docs.python.org/3.6/library/functions.html#open]
 
 [source,python]
 ----
@@ -7146,7 +7147,7 @@ def GenOneTimePad(n):
 
 Random number generators found in programming languages are really _pseudorandom_. That is the numbers generated are not really random but only appear to be random. They are fine for use in simulations such as Brownian motion or computer games, but their predictability make them unsuitable for cryptography or even games used in casinos. We say that they are not _cryptographically secure_. The acronyms we use for a _pseudo random number generator_ is https://en.wikipedia.org/wiki/Pseudorandom_number_generator[PRNG] and the tounge twister _cryptographically secure pseudo random number generator_ is https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator[CSPRNG].
 
-Fortunately the python module https://docs.python.org/3/library/secrets.html[`secrets`] provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called _entropy_. Entropy is built up over time, for example, times between ketboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.  
+Fortunately the Python module https://docs.python.org/3/library/secrets.html[`secrets`] provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called _entropy_. Entropy is built up over time, for example, times between ketboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.  
 
 === Exercises
 
@@ -7514,10 +7515,10 @@ for row in range(r, side, 6*r):      <1>
 ----
 <1> Start at `r` so that the first particle is off of the edge a bit. Increment in steps of `6*r` so that there is some space between the particles.
 
-We might want to verify that the code above works. We should check it by displaying the particles on the pygame window.
+We might want to verify that the code above works. We should check it by displaying the particles on the Pygame window.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a python code fragment that would display the particles on the pygame display.
+Write a Python code fragment that would display the particles on the Pygame display.
 
 [.result]
 ====
@@ -7820,5 +7821,6 @@ https://docs.python.org/3/library/math.html
 
 * `import pygame`
 * `pygame.display.set_mode((w,h))`
+
 
 
