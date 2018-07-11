@@ -104,7 +104,7 @@ NOTE: The _console_ is a text window where Python sends the output of `print` st
 
 The _built-in function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in Python is a sequence of characters between double quotes or single quotes. More on string literals later.
 
-NOTE: In programming, a string literal is also called a _string constant_
+NOTE: In programming, a string literal is also called a _string constant_.
 
 The `print` function can take multiple values separated by commas.
 
@@ -151,9 +151,9 @@ Numbers without decimal points are called _integers_ or _ints_ for short.
 
 Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative integers -1, -2, -3, ...
 
-IMPORTANT: Don't start an integer literal with a leading 0, such as 09. This is an error in Python.
+IMPORTANT: Don't start an integer literal with a leading `0`, such as `09`. This is an error in Python.
 
-Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159. 
+Floating-point literals include a decimal place, and include numbers such as `0.3`, `-0.3`, `.3`, `3.`, `-3.14159`. 
 
 Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write Avagadro's number as `6.022140857e23`.
 
@@ -233,8 +233,8 @@ IMPORTANT: Variable names are not string literals.
 .What is the difference between the two statements...
 [source,python,numbered]
 ----
-print("The value of pi squared is", pi_squared) #   <1>
-print("The value of pi squared is", "pi_squared") # <2>
+print("The value of pi squared is", pi_squared)    <1>
+print("The value of pi squared is", "pi_squared")  <2>
 ----
 
 [.result]
@@ -346,7 +346,7 @@ print(w,x,y,z)
 `0 0 1 15`
 ====
  
-Integer division will plays a key role in many applications in computer science.
+As we will see, integer division plays an important role in many applications in computer science.
 
 .Example 4
 [source,python,numbered]
@@ -367,8 +367,8 @@ Expressions produce a value. Something must be done with that value such as assi
 [source,python,numbered]
 ----
 two_pi = 3.14159 * 2 <1>
-two_pi * two_pi <2>  
-print(two_pi) <3>
+two_pi * two_pi      <2>  
+print(two_pi)        <3>
 ----
 <1> compute 2&pi; and store the result in the variable `two_pi`
 <2> multiply `two_pi` times `two_pi` _and do nothing with the result_ so Python just throws the value away. *This line is pointless*, it has no effect, but it is legal.
@@ -1106,7 +1106,7 @@ print the string `prompt` to the console and wait for keyboard input. Return the
 
 == Pygame Intro
 
-A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
+A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
 
 To use Pygame there is some standard code we need at the start of every program (but only in programs that use Pygame).
 
@@ -1122,14 +1122,15 @@ win = pygame.display.set_mode((600,600)) <3>
 <2> Call a Pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
 <3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a Pygame _display surface_.
 
-When we run the program above a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
+When we run the program above, a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
 NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (stem:[1024] pixels wide by stem:[768] pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometimes abbreviated _px_.
 
 NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represents a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
-`x` is primitive and `win` is _reference_ +
+
+In the statement `x = 73` we say that `x` is _primitive_ and `win` is _reference_ to an object. +
 image:references.png[width=500,align="center"]
 
 NOTE: An _object_ in Python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
@@ -1161,7 +1162,7 @@ input("Hit <enter> to quit.")
 
 === Colors
 
-Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
+Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, for _Red-Green-Blue_. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
 
 NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
 
@@ -1315,9 +1316,9 @@ The yellow square is _proportional_ and relative to the size of the main Pygame 
 TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be 
 drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
 
-Contrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.
+Contrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate `(100,200)` with a width of 300px and a height of 200px.
 
-[source,python,numbered]
+[source,python]
 pygame.draw.rect(win, color.yellow, (100,200,300,200))
 
 then this would draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
@@ -1346,18 +1347,18 @@ Lets draw a dark gray circle centered in the upper left quadrant of the yellow s
 
 The stem:[x] coordinate of the circle is relative to `r_x`, the stem:[x] coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
  
-[source,python,numbered]
+[source,python]
 ul_c_x = r_x + r_width//4   # ul_c_x is short for upper left circle x coordinate
 
 Similarly the stem:[y] coordinate is 
 
-[source,python,numbered]
+[source,python]
 ul_c_y = r_y + r_height // 4
 
 Remember that the circle function requires the radius but the problem stated that the 
 diameter of the circle is 1/3 the width of the quadrant. We know the width of the quadrant is `r_width//2` and 1/3 of that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
 
-[source,python,numbered]
+[source,python]
 ul_c_radius = r_width//2//3//2 # or r_width // 12 
 
 Defining a new color `darkgray = (100,100,100)` in our color module and putting it all together we have 
@@ -1365,7 +1366,7 @@ Defining a new color `darkgray = (100,100,100)` in our color module and putting 
 [source,python,numbered]
 ul_c_x = r_x + r_width // 4
 ul_c_y = r_y + r_height // 4
-ul_c_radius = r_width//2//3//2  # width of quadrant is r_width//2 then 1/3 of that
+ul_c_radius = r_width//2//3//2
 pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
 
 And we should get something that looks like
@@ -1453,7 +1454,7 @@ some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)
 
 image::ellipse.png[align="center"]
 
-NOTE: The _bounding box_ is the rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
+NOTE: The _bounding box_ is the invisible rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
 
 +++
 <code class="listingblock">
@@ -1463,7 +1464,7 @@ pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-
 
 _surface_:: The surface we are going to draw the ellipse on.
 
-_color_:: An RGB triple
+_color_:: An RGB triple.
 
 _xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner _bounding box_, and the width stem:[w] and the height stem:[h] of the ellipse.
 
@@ -1705,6 +1706,11 @@ So far we have encountered six different kinds of Python values. For example, in
 integers, floating-point numbers, strings, `None`, tuples, and object references 
 ====
 
+.Exercise 3 - Smiley
+Write a Python/pygame program that reproduces the smiley below.
+
+image::smiley.png[width=300,height=200,align="center"]
+ 
 
 
 === Terminology
@@ -1911,7 +1917,7 @@ include::python/blockhead.py[]
 
 What if we wanted to draw two or more blockheads on the display surface? One way is to make another copy of the code, and change lots of variable names etc. This is a perfect situation where we can write a function `blockhead` that we can call more than once. 
 
-In keeping with the way drawing rectangle works specifying the Blockhead's stem:[x] and stem[y] coordinate along with its width and height makes sense:
+In keeping with the way drawing rectangle works specifying the Blockhead's stem:[x] and stem:[y] coordinate along with its width and height makes sense:
 
 [source,python,numbered]
 ----
@@ -4027,7 +4033,7 @@ But lets use an image of particle (as a soccer ball) rather than a circle.
 image::ball.png[align="center"]
 
 Assume that the particle is in an image file `ball.png`. We can load that image into
-Pygamewith `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a Pygame surface of the image.
+Pygame with `pygame.image.load` function. This function has one argument that is the name of the image file as a string constant. It returns a Pygame surface of the image.
 
 [source,python,numbered]
 ----

@@ -907,7 +907,7 @@ The <em>console</em> is a text window where Python sends the output of <code>pri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In programming, a string literal is also called a <em>string constant</em>
+In programming, a string literal is also called a <em>string constant</em>.
 </td>
 </tr>
 </table>
@@ -990,13 +990,13 @@ In mathematics a <em>function</em> maps values in a <em>domain</em> to values in
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Don&#8217;t start an integer literal with a leading 0, such as 09. This is an error in Python.
+Don&#8217;t start an integer literal with a leading <code>0</code>, such as <code>09</code>. This is an error in Python.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Floating-point literals include a decimal place, and include numbers such as 0.3, -0.3, .3, 3., -3.14159.</p>
+<p>Floating-point literals include a decimal place, and include numbers such as <code>0.3</code>, <code>-0.3</code>, <code>.3</code>, <code>3.</code>, <code>-3.14159</code>.</p>
 </div>
 <div class="paragraph">
 <p>Python (as do most programming languages) supports specifying numbers using <em>scientific notation</em>. For example, in Chemistry and Physics, Avagadro&#8217;s number is \(6.022140857 \times 10^{23}\). Writing this out as <code>602214085700000000000000</code> is not very readable. In Python we can instead write Avagadro&#8217;s number as <code>6.022140857e23</code>.</p>
@@ -1143,8 +1143,8 @@ Variable names are not string literals.
 <div class="title">What is the difference between the two statements&#8230;&#8203;</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
-2</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-n">pi_squared</span><span class="tok-p">)</span> <span class="tok-c1">#   </span><i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-s2">&quot;pi_squared&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
+2</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-n">pi_squared</span><span class="tok-p">)</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The value of pi squared is&quot;</span><span class="tok-p">,</span> <span class="tok-s2">&quot;pi_squared&quot;</span><span class="tok-p">)</span>  <i class="conum" data-value="2"></i><b>(2)</b>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -1336,7 +1336,7 @@ In integer division the result is always an integer.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Integer division will plays a key role in many applications in computer science.</p>
+<p>As we will see, integer division plays an important role in many applications in computer science.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example 4</div>
@@ -1366,8 +1366,8 @@ In integer division the result is always an integer.</p>
 <pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
 2
 3</div></td><td class="code"><span></span><span class="tok-n">two_pi</span> <span class="tok-o">=</span> <span class="tok-mf">3.14159</span> <span class="tok-o">*</span> <span class="tok-mi">2</span> <i class="conum" data-value="1"></i><b>(1)</b>
-<span class="tok-n">two_pi</span> <span class="tok-o">*</span> <span class="tok-n">two_pi</span> <i class="conum" data-value="2"></i><b>(2)</b>
-<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">two_pi</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">two_pi</span> <span class="tok-o">*</span> <span class="tok-n">two_pi</span>      <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">two_pi</span><span class="tok-p">)</span>        <i class="conum" data-value="3"></i><b>(3)</b>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -2744,7 +2744,7 @@ If <code>x</code> is an integer then convert it to a float. If <code>x</code> is
 <h2 id="_pygame_intro"><a class="anchor" href="#_pygame_intro"></a>2. Pygame Intro</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A fun way to learn to program is through graphics, images, and animation.  <a href="https://www.pygame.org/news">Pygame</a> is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.</p>
+<p>A fun way to learn to program is through graphics, images, and animation.  <a href="https://www.pygame.org/news">Pygame</a> is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.</p>
 </div>
 <div class="paragraph">
 <p>To use Pygame there is some standard code we need at the start of every program (but only in programs that use Pygame).</p>
@@ -2777,7 +2777,7 @@ If <code>x</code> is an integer then convert it to a float. If <code>x</code> is
 </table>
 </div>
 <div class="paragraph">
-<p>When we run the program above a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don&#8217;t want the window to disappear right away and we will fix this in a bit.</p>
+<p>When we run the program above, a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don&#8217;t want the window to disappear right away and we will fix this in a bit.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2811,11 +2811,13 @@ A <em>pixel</em>, short for <em>picture element</em>, represents a single dot on
 </td>
 <td class="content">
 Most of the variables we have encountered so far have held integers or floats. The variable <code>win</code> above represents a <em>reference</em> to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.
-<code>x</code> is primitive and <code>win</code> is <em>reference</em><br>
-<span class="image"><img src="./images/references.png" alt="references" width="500"></span>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>In the statement <code>x = 73</code> we say that <code>x</code> is <em>primitive</em> and <code>win</code> is <em>reference</em> to an object.<br>
+<span class="image"><img src="./images/references.png" alt="references" width="500"></span></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2872,7 +2874,7 @@ An <em>object</em> in Python is a value (not unlike an integer or a float) that 
 <div class="sect2">
 <h3 id="_colors"><a class="anchor" href="#_colors"></a>2.1. Colors</h3>
 <div class="paragraph">
-<p>Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, short for Red-Green-Blue. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. <strong class="red">Red</strong> is (255,0,0), <strong class="green">green</strong> is (0,255,0), and <strong class="blue">blue</strong> is (0,0,255). Yellow is red and green, so that would be (255,255,0).</p>
+<p>Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, for <em>Red-Green-Blue</em>. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. <strong class="red">Red</strong> is (255,0,0), <strong class="green">green</strong> is (0,255,0), and <strong class="blue">blue</strong> is (0,0,255). Yellow is red and green, so that would be (255,255,0).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3176,12 +3178,11 @@ drawn relative to the window and an eye would be drawn relative to a head. A pup
 </table>
 </div>
 <div class="paragraph">
-<p>Contrast this with using <em>absolute dimensions</em> and <em>absolute pixel coordinates</em>. For example, if we draw a yellow rectangle at coordinate (100,200) with a width of 300 px and a height of 200 px.</p>
+<p>Contrast this with using <em>absolute dimensions</em> and <em>absolute pixel coordinates</em>. For example, if we draw a yellow rectangle at coordinate <code>(100,200)</code> with a width of 300px and a height of 200px.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">,</span><span class="tok-mi">300</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">))</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">,</span><span class="tok-mi">300</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">))</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3231,8 +3232,7 @@ pygame.draw.circle(<i>surface</i>, <i>color</i>, <i>xy</i>, radius, <i>optional-
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">4</span>   <span class="tok-c1"># ul_c_x is short for upper left circle x coordinate</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">4</span>   <span class="tok-c1"># ul_c_x is short for upper left circle x coordinate</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3240,8 +3240,7 @@ pygame.draw.circle(<i>surface</i>, <i>color</i>, <i>xy</i>, radius, <i>optional-
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3250,8 +3249,7 @@ diameter of the circle is 1/3 the width of the quadrant. We know the width of th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-c1"># or r_width // 12</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-c1"># or r_width // 12</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3264,7 +3262,7 @@ diameter of the circle is 1/3 the width of the quadrant. We know the width of th
 3
 4</div></td><td class="code"><span></span><span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
 <span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
-<span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <span class="tok-c1"># width of quadrant is r_width//2 then 1/3 of that</span>
+<span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>
 <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ul_c_x</span><span class="tok-p">,</span><span class="tok-n">ul_c_y</span><span class="tok-p">),</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">)</span>
 </td></tr></table></code></pre>
 </div>
@@ -3397,7 +3395,7 @@ some getting used to it that the <code>(x,y)</code> coordinate of the ellipse is
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The <em>bounding box</em> is the rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon.
+The <em>bounding box</em> is the invisible rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon.
 </td>
 </tr>
 </table>
@@ -3417,7 +3415,7 @@ pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-
 </dd>
 <dt class="hdlist1"><em>color</em></dt>
 <dd>
-<p>An RGB triple</p>
+<p>An RGB triple.</p>
 </dd>
 <dt class="hdlist1"><em>xywh</em></dt>
 <dd>
@@ -3921,6 +3919,15 @@ pygame.draw.line(<i>surface</i>, <i>color</i>, <i>start-xy</i>, <i>end-xy</i>, <
 </div>
 </div>
 </div>
+<div class="paragraph">
+<div class="title">Exercise 3 - Smiley</div>
+<p>Write a Python/pygame program that reproduces the smiley below.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/smiley.png" alt="smiley" width="300" height="200">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_terminology_2"><a class="anchor" href="#_terminology_2"></a>2.4. Terminology</h3>
@@ -4344,7 +4351,7 @@ A function that returns a value is not the same thing as the function printing a
 <p>What if we wanted to draw two or more blockheads on the display surface? One way is to make another copy of the code, and change lots of variable names etc. This is a perfect situation where we can write a function <code>blockhead</code> that we can call more than once.</p>
 </div>
 <div class="paragraph">
-<p>In keeping with the way drawing rectangle works specifying the Blockhead&#8217;s \(x\) and stem[y] coordinate along with its width and height makes sense:</p>
+<p>In keeping with the way drawing rectangle works specifying the Blockhead&#8217;s \(x\) and \(y\) coordinate along with its width and height makes sense:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8359,7 +8366,7 @@ But lets use an image of particle (as a soccer ball) rather than a circle.</p>
 </div>
 <div class="paragraph">
 <p>Assume that the particle is in an image file <code>ball.png</code>. We can load that image into
-Pygamewith <code>pygame.image.load</code> function. This function has one argument that is the name of the image file as a string constant. It returns a Pygame surface of the image.</p>
+Pygame with <code>pygame.image.load</code> function. This function has one argument that is the name of the image file as a string constant. It returns a Pygame surface of the image.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15641,7 +15648,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-07 15:11:43 EDT
+Last updated 2018-07-10 23:21:19 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
