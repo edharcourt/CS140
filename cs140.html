@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.7.1">
-<meta name="author" content="[big]*Ed Harcourt* &lt;edharcourt@stlawu.edu&gt;">
+<meta name="author" content="Ed Harcourt">
 <title>An Introduction to Computer Science and Programming with Python</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -581,7 +581,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="header">
 <h1>An Introduction to Computer Science and Programming with Python</h1>
 <div class="details">
-<span id="author" class="author">[big]*Ed Harcourt* &lt;edharcourt@stlawu.edu&gt;</span><br>
+<span id="author" class="author">Ed Harcourt</span><br>
+<span id="email" class="email"><a href="mailto:edharcourt@stlawu.edu">edharcourt@stlawu.edu</a></span><br>
 <span id="revnumber">version 0.2,</span>
 <span id="revdate">July 2018</span>
 <br><span id="revremark"></span>
@@ -591,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <ul class="sectlevel1">
 <li><a href="#_preface">Preface</a>
 <ul class="sectlevel2">
-<li><a href="#_acknowledgements">Acknowledgements</a></li>
+<li><a href="#_acknowledgments">Acknowledgments</a></li>
 </ul>
 </li>
 <li><a href="#_introduction">1. Introduction</a>
@@ -791,7 +792,7 @@ Canton, NY 13625</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="_acknowledgements"><a class="anchor" href="#_acknowledgements"></a>Acknowledgements</h3>
+<h3 id="_acknowledgments"><a class="anchor" href="#_acknowledgments"></a>Acknowledgments</h3>
 <div class="paragraph">
 <p>These notes were written using <a href="http://asciidoctor.org/">asciidoctor</a>. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using <a href="https://tscanlin.github.io/tocbot/">Tocbot</a> and an asciidoctor integration <a href="https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137">described in this thread</a>.<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> Dan also wrote the
 <a href="https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb">view-result plugin</a>. Mathematics is typeset using <a href="https://www.mathjax.org/">MathJax</a><sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup>. The Python syntax highlighter is <a href="http://pygments.org/">pygments</a>.<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.</p>
@@ -4907,7 +4908,7 @@ We will often use the term <em>particle</em> to represent a moving object such a
 <p>Erase the background</p>
 </li>
 <li>
-<p>Update the an object&#8217;s position (for example, the particle&#8217;s \(x\) coordinate).</p>
+<p>Update the an object&#8217;s position (for example, the particle&#8217;s \(x\)-coordinate).</p>
 </li>
 <li>
 <p>Redraw the object</p>
@@ -4945,7 +4946,7 @@ We will often use the term <em>particle</em> to represent a moving object such a
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>moving 1 pixel at a time makes motion look smooth</td>
+<td>moving 1 pixel at a time makes the motion look smooth</td>
 </tr>
 </table>
 </div>
@@ -5076,7 +5077,7 @@ side length.</p>
 <div class="exampleblock result">
 <div class="content">
 <div class="paragraph">
-<p>While the particle&#8217;s \(y\) coordinate is greater than 0.</p>
+<p>While the particle&#8217;s \(y\)-coordinate is greater than 0.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5459,7 +5460,7 @@ we have \(94^{10}/10^9\) seconds. Dividing by  \(60\)  to get minutes then anoth
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-a <em>brute force attack</em> is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
+A <em>brute force attack</em> is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
 </td>
 </tr>
 </table>
@@ -5654,17 +5655,28 @@ The mathematically inclined will notice that if we just keep iterating the state
 <div class="sect2">
 <h3 id="_checksums_detecting_network_communication_errors"><a class="anchor" href="#_checksums_detecting_network_communication_errors"></a>4.7. Checksums; detecting network communication errors</h3>
 <div class="paragraph">
-<p>A <em>checksum</em> is an integer derived from a larger integer and is used to detect communications errors in a network.  There are many different checksum techniques but one of the easiest to program is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.</p>
+<p>A <em>checksum</em> is an integer derived from a larger integer and is used to detect communication errors in a network.  There are many different checksum techniques but one of the easiest to understand is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.</p>
 </div>
 <div class="paragraph">
 <p>If a network was transmitting the number \(51623\) we would compute the checksum by computing \((5+1+6+2+3)\% 10 = 7\) and we would then transmit the number \(516237\). We call \(7\) the <em>checksum digit</em>, or just <em>checksum</em> for short. What would happen if there was an error in the transmission and the number transmitted was \(596237\). We remove the checksum digit \(7\), and compute
 the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7 \neq 5\) so there must have been an error in the transmission.</p>
 </div>
 <div class="paragraph">
-<p>Why does this work? First this only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if there were two errors in the original communication such as \(526137\) the checksum is still \(7\). If there is only single error it makes sense that a change in any single digit would change the final checksum mod \(10\).</p>
+<p>Why does this work? This only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if we were transmitting the value \(516237\) and there were two errors in the original communication such as \(526137\) the checksum is \(7\) in both. If there is only single error it makes sense that a change in any single digit would change the final checksum mod \(10\).</p>
 </div>
 <div class="paragraph">
-<p>How do we write program to compute a checksum? If we have an integer such as \(51623\) we can peel of the last digit using % 10, \(51623 % 10 = 3\). Then we need to the remaining digits \(5162\). We can get that using <em>integer division</em> by 10, \(51623 // 10 = 3\). We just keep repeating this process adding up the remainder until the number has been reduced to 0.</p>
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the checksum digit for the integer \(198723\)?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>It is \(0\) because \((1 + 9 + 8 + 7 + 2 + 3) \% 10 = 30 \% 10 = 0\).</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>How can we write a program to compute a checksum? If we have an integer such as \(51623\) we can get the last digit using \(\% 10\); for example, \(51623 % 10 = 3\). Then we need to do the same to the remaining digits \(5162\). We can get that using <em>integer division</em> by 10, \(51623 // 10 = 5162\). We just keep repeating this process adding up the remainder until the number has been reduced to \(0\).</p>
 </div>
 <div class="paragraph">
 <p>We can put this in a function that takes an integer to compute the checksum of and return the checksum.</p>
@@ -5681,11 +5693,23 @@ the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7
     <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
 
     <span class="tok-k">while</span> <span class="tok-n">n</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
-        <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">+</span> <span class="tok-p">(</span><span class="tok-n">n</span> <span class="tok-o">%</span> <span class="tok-mi">10</span><span class="tok-p">)</span>
-        <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">n</span> <span class="tok-o">//</span> <span class="tok-mi">10</span>
+        <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">+</span> <span class="tok-p">(</span><span class="tok-n">n</span> <span class="tok-o">%</span> <span class="tok-mi">10</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">n</span> <span class="tok-o">//</span> <span class="tok-mi">10</span>               <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="tok-k">return</span> <span class="tok-n">total</span> <span class="tok-o">%</span> <span class="tok-mi">10</span>
 </td></tr></table></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>or `total += n % 10</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>or <code>n //= 10</code></td>
+</tr>
+</table>
 </div>
 <div class="olist arabic">
 <div class="title">Review</div>
@@ -15647,7 +15671,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-10 23:30:02 EDT
+Last updated 2018-07-11 23:00:30 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

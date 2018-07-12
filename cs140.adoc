@@ -45,7 +45,7 @@ Goals of the course include:
   (the Python programming language).
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
-=== Acknowledgements
+=== Acknowledgments
 
 These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
 https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax]footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.
@@ -2218,7 +2218,7 @@ Note: `True` and `False` are values in Python, just like the integer `1` and the
 One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
 
 . Erase the background
-. Update the an object's position (for example, the particle's stem:[x] coordinate).
+. Update the an object's position (for example, the particle's stem:[x]-coordinate).
 . Redraw the object
 . introduce a slight delay to model (mimic or simulate) the passage of time
 
@@ -2233,7 +2233,7 @@ while px + radius < side:
 ----
 <1> erase the screen, effectively erasing the particle
 <2> delay 5 milliseconds
-<3> moving 1 pixel at a time makes motion look smooth
+<3> moving 1 pixel at a time makes the motion look smooth
 
 NOTE: A _sprite_ is a more general computer graphics term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
 
@@ -2303,7 +2303,7 @@ Animate moving the particle to the top of the screen.
 
 [.result]
 ====
-While the particle's stem:[y] coordinate is greater than 0.
+While the particle's stem:[y]-coordinate is greater than 0.
 
 [source,python,numbered]
 ----
@@ -2519,7 +2519,7 @@ For a ten character password,
 we have stem:[94^{10}/10^9] seconds. Dividing by  stem:[60]  to get minutes then another stem:[60] for hours, then  stem:[24] to get days, then stem:[365.25] to get years, we have stem:[94^{10}/10^9/60/60/24/365.25 = 1706] years! Again, this is to try them all, so on average we would find it after looking at half of the passwords, so it would only take about 
 stem:[850] years.
 
-NOTE: a _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
+NOTE: A _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
 
 === Exponential Growth (Example: Population)
 
@@ -2626,14 +2626,22 @@ print("Final population: ", int(p))
 
 === Checksums; detecting network communication errors
 
-A _checksum_ is an integer derived from a larger integer and is used to detect communications errors in a network.  There are many different checksum techniques but one of the easiest to program is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.
+A _checksum_ is an integer derived from a larger integer and is used to detect communication errors in a network.  There are many different checksum techniques but one of the easiest to understand is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.
 
 If a network was transmitting the number stem:[51623] we would compute the checksum by computing stem:[(5+1+6+2+3)\% 10 = 7] and we would then transmit the number stem:[516237]. We call stem:[7] the _checksum digit_, or just _checksum_ for short. What would happen if there was an error in the transmission and the number transmitted was stem:[596237]. We remove the checksum digit stem:[7], and compute 
 the checksum of stem:[59623] which is stem:[(5+9+6+2+3) \% 10 = 5] and we see that stem:[7 \neq 5] so there must have been an error in the transmission.
 
-Why does this work? First this only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if there were two errors in the original communication such as stem:[526137] the checksum is still stem:[7]. If there is only single error it makes sense that a change in any single digit would change the final checksum mod stem:[10].
+Why does this work? This only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if we were transmitting the value stem:[516237] and there were two errors in the original communication such as stem:[526137] the checksum is stem:[7] in both. If there is only single error it makes sense that a change in any single digit would change the final checksum mod stem:[10].
 
-How do we write program to compute a checksum? If we have an integer such as stem:[51623] we can peel of the last digit using % 10, stem:[51623 % 10 = 3]. Then we need to the remaining digits stem:[5162]. We can get that using _integer division_ by 10, stem:[51623 // 10 = 3]. We just keep repeating this process adding up the remainder until the number has been reduced to 0.
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the checksum digit for the integer stem:[198723]?
+
+[.result]
+====
+It is stem:[0] because stem:[(1 + 9 + 8 + 7 + 2 + 3) \% 10 = 30 \% 10 = 0].
+====
+
+How can we write a program to compute a checksum? If we have an integer such as stem:[51623] we can get the last digit using stem:[\% 10]; for example, stem:[51623 \% 10 = 3]. Then we need to do the same to the remaining digits stem:[5162]. We can get that using _integer division_ by 10, stem:[51623 // 10 = 5162]. We just keep repeating this process adding up the remainder until the number has been reduced to stem:[0].
 
 We can put this in a function that takes an integer to compute the checksum of and return the checksum.
 
@@ -2643,10 +2651,12 @@ def checksum(n):
     total = 0                    
                              
     while n > 0:                 
-        total = total + (n % 10) 
-        n = n // 10              
+        total = total + (n % 10)  <1> 
+        n = n // 10               <2>
     return total % 10            
 ----
+<1> or `total += n % 10
+<2> or `n //= 10`
 
 .Review
 
