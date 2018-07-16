@@ -5676,7 +5676,7 @@ the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7
 </div>
 </div>
 <div class="paragraph">
-<p>How can we write a program to compute a checksum? If we have an integer such as \(51623\) we can get the last digit using \(\% 10\); for example, \(51623 % 10 = 3\). Then we need to do the same to the remaining digits \(5162\). We can get that using <em>integer division</em> by 10, \(51623 // 10 = 5162\). We just keep repeating this process adding up the remainder until the number has been reduced to \(0\).</p>
+<p>How can we write a program to compute a checksum? If we have an integer such as \(51623\) we can get the last digit using \(\% 10\); for example, \(51623 \% 10 = 3\). Then we need to do the same to the remaining digits \(5162\). We can get that using <em>integer division</em> by 10, \(51623 // 10 = 5162\). We just keep repeating this process adding up the remainder until the number has been reduced to \(0\).</p>
 </div>
 <div class="paragraph">
 <p>We can put this in a function that takes an integer to compute the checksum of and return the checksum.</p>
@@ -6153,7 +6153,7 @@ else:
 <div class="sect2">
 <h3 id="_if_elif_else"><a class="anchor" href="#_if_elif_else"></a>5.1. if-elif-else</h3>
 <div class="paragraph">
-<p>Lets take an example of tossing a single die.<sup class="footnote">[<a id="_footnoteref_18" class="footnote" href="#_footnotedef_18" title="View footnote.">18</a>]</sup>. We will print <code>one</code> if we rolled a one, <code>two</code> if we rolled a two, etc. One way to write this:</p>
+<p>Lets take an example of tossing a single die <sup class="footnote">[<a id="_footnoteref_18" class="footnote" href="#_footnotedef_18" title="View footnote.">18</a>]</sup>. We will print <code>one</code> if we rolled a one, <code>two</code> if we rolled a two, etc. One way to write this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6664,7 +6664,7 @@ problem.</p>
 </div>
 <div class="paragraph">
 <div class="title">Exercise 3</div>
-<p>Write a function <code>median</code> that returns median of three numbers (the middle number).</p>
+<p>Write a function <code>middle</code> that returns middle of three numbers. Calling <code>print(middle(4,1,9))</code> would print <code>4</code>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -6741,7 +6741,7 @@ A computer program is <em>deterministic</em> if it produces the same exact resul
 </table>
 </div>
 <div class="paragraph">
-<p>Lets simulate tossing a coin\(n\)times counting the number of ooccurrences of a head or a tail. We will have\(n\)be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable <code>heads</code> to keep track of the number times heads appeared and a variable <code>tails</code> for the number of times tails appeared.</p>
+<p>Lets simulate tossing a coin \(n\) times counting the number of occurrences of a head or a tail. We will have \(n\) be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable <code>heads</code> to keep track of the number times heads appeared and a variable <code>tails</code> for the number of times tails appeared.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6772,7 +6772,7 @@ A computer program is <em>deterministic</em> if it produces the same exact resul
 </table>
 </div>
 <div class="paragraph">
-<p>This is the loop body, all we need to do now is to get\(n\)from the user, initialize the <code>heads</code> and tails` variables, and use a counting loop to toss the die\(n\)times.</p>
+<p>This is the loop body, all we need to do now is to get \(n\) from the user, initialize the <code>heads</code> and tails` variables, and use a counting loop to toss the die \(n\)times.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -6864,11 +6864,11 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 </table>
 </div>
 <div class="paragraph">
-<p>As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?</p>
+<p>As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on <em>during</em> the simulation?</p>
 </div>
 <div class="paragraph">
-<div class="title">Check Yourself</div>
-<p>Modify the coint toss program to count the number of times we toss ten heads in a row. if we ever toss ten heads in a row. How big do you have to make\(n\)in order to get ten heads in a row?</p>
+<div class="title">Check Yourself<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the coin toss program to count the number of times we toss ten heads in a row. If we ever toss ten heads in a row. How big do you have to make \(n\) in order to get ten heads in a row?</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -7048,7 +7048,8 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 <div class="sect3">
 <h4 id="_a_one_dimensional_random_walk"><a class="anchor" href="#_a_one_dimensional_random_walk"></a>6.1.1. A One Dimensional Random Walk</h4>
 <div class="paragraph">
-<p>Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width\(w\)and height <em>h</em>, if we let the center \(y\) coordinate of the window represent 0 chips then <code>0 - chips</code> will be the \(y\) coordinate of where we need to draw a pixel. If we keep a counter <code>i</code> for each toss of the coin then <code>i</code> will represent the <code>x</code> coordinate.</p>
+<p>Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width \(w\) and height \(h\), if we let the center \(y\)-coordinate of the window represent \(0\) chips then <code>0 - chips</code> will be the \(y\)
+coordinate of where we need to draw a pixel. If we keep a counter <code>i</code> for each toss of the coin then <code>i</code> will represent the <code>x</code> coordinate.</p>
 </div>
 <div class="paragraph">
 <p>The Pygame command</p>
@@ -7191,7 +7192,7 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The Gambler&#8217;s Ruin is an example of a <em>random walk</em>. Random walks are useful for building models in many disciplines including economics.<sup class="footnote">[<a id="_footnoteref_21" class="footnote" href="#_footnotedef_21" title="View footnote.">21</a>]</sup> and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as <em>Brownian Motion</em>.</p>
+<p>The Gambler&#8217;s Ruin is an example of a <em>random walk</em>. Random walks are useful for building models in many disciplines including economics.<sup class="footnote">[<a id="_footnoteref_21" class="footnote" href="#_footnotedef_21" title="View footnote.">21</a>]</sup> and physics.  In economics random walks are often used to model fluctuations in random processes such as the stock market. In physics, a random walk can model random motions such as <em>Brownian Motion</em>.</p>
 </div>
 <div class="paragraph">
 <p>Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.</p>
@@ -7213,7 +7214,7 @@ eight possible neighboring locations that it can move to )forgetting, for the ti
 </div>
 </div>
 <div class="paragraph">
-<p>In this case we will have two random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that variables <code>x</code> and <code>y</code> are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random number from <code>0</code> to <code>7</code> with <code>0</code> correspnding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+<p>In this case we will have two random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that variables <code>x</code> and <code>y</code> are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random number from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7274,7 +7275,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 </div>
 <div class="paragraph">
-<p>This is essentially the process we need to repeat overand over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function <code>move</code> that takes a particle&#8217;s current <code>x</code> and <code>y</code> cordinate and returns its new <code>x</code> and <code>y</code>. Pictorially,</p>
+<p>This is essentially the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function <code>move</code> that takes a particle&#8217;s current <code>x</code> and <code>y</code> coordinate and returns its new <code>x</code> and <code>y</code>. Pictorially,</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -7327,7 +7328,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 <p>The parenthese are not strictly necessary but aid in clarity.</p>
 </div>
 <div class="paragraph">
-<p>Python allows for a more concise mathematical way to describe inequalitites. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as</p>
+<p>Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7572,7 +7573,7 @@ Hints:
 <div class="sect3">
 <h4 id="_improvements_to_the_brownian_program"><a class="anchor" href="#_improvements_to_the_brownian_program"></a>6.2.2. Improvement&#8217;s to the Brownian Program</h4>
 <div class="paragraph">
-<p>That big if-statement in the <code>move</code> function is rather clunky and error prone. If you misstype a <code>-</code> or <code>+</code> sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 tothe particle <code>x</code> and <code>y</code> coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate.</p>
+<p>That big if-statement in the <code>move</code> function is rather clunky and error prone. If you mistype a <code>-</code> or <code>+</code> sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 to the particle <code>x</code> and <code>y</code> coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate.</p>
 </div>
 <div class="paragraph">
 <p>A better and more concise <code>move</code> function.</p>
@@ -7625,7 +7626,7 @@ Python (version 3) actually does allow Greek alphabeteic letters in identifier n
 </div>
 <div class="paragraph">
 <div class="title">A particle on a torus</div>
-<p>Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the boounds of the window. For example, when it hits an edge just make sure we don&#8217;t adjust the coordinate to go off the display.</p>
+<p>Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don&#8217;t adjust the coordinate to go off the display.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -7634,7 +7635,7 @@ Python (version 3) actually does allow Greek alphabeteic letters in identifier n
 <div class="exampleblock result">
 <div class="content">
 <div class="paragraph">
-<p>The only thing you need to add is an if-statemtn that checks the bounds of the particle. An appropriate place to put this is the <code>move</code> function, since it is related to moving the particle.</p>
+<p>The only thing you need to add is an if-statement that checks the bounds of the particle. An appropriate place to put this is the <code>move</code> function, since it is related to moving the particle.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7901,7 +7902,7 @@ to get a new random tower every iteration. If this were before the loop then we 
 <p>This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (<em>e.g.</em> the midpoint) is informally called  the <em>chaos game</em>, named by the branch of mathematics called <em>chaos theory</em>.</p>
 </div>
 <div class="paragraph">
-<p>The Gambler&#8217;s Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski&#8217;s Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensaional random walk, but ore than one dimensional. It is a <em>fractional dimension</em> random walk, or a <em>fractal</em>.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book <em>The Fractal Geometry of Nature</em>.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup></p>
+<p>The Gambler&#8217;s Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski&#8217;s Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but ore than one dimensional. It is a <em>fractional dimension</em> random walk, or a <em>fractal</em>.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book <em>The Fractal Geometry of Nature</em>.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup></p>
 </div>
 <div class="paragraph">
 <div class="title">Exercise</div>
@@ -7918,10 +7919,10 @@ to get a new random tower every iteration. If this were before the loop then we 
 <p>The <em>Monty Hall Problem</em> dates back to a game show on American television called <em>Let&#8217;s Make a Deal</em>, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The <em>Monty Hall Problem</em> is whether the contestant should switch or not.</p>
 </div>
 <div class="paragraph">
-<p>This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant&#8217;s weekly Parade column presented her with the problem.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup> Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarassing for &#8230;&#8203; the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well know mathematicians, and to this day, many of us still fumble around when we try to explain it.</p>
+<p>This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant&#8217;s weekly Parade column presented her with the problem.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup> Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for &#8230;&#8203; the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it.</p>
 </div>
 <div class="paragraph">
-<p>Probability is often counter intuitive, we saw this with the Gambler&#8217;s Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.</p>
+<p>Probability is often counter-intuitive, we saw this with the Gambler&#8217;s Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.</p>
 </div>
 <div class="paragraph">
 <p>Lets lay out the process of playing the game outlined above:</p>
@@ -8096,7 +8097,7 @@ it without using a loop. Hint: Think of a simple expression involving th door nu
 <p><code>car</code> the location of the car</p>
 </li>
 <li>
-<p><code>choice</code> the dr the contestant chose</p>
+<p><code>choice</code> the door the contestant chose</p>
 </li>
 </ol>
 </div>
@@ -8275,7 +8276,7 @@ You won a car!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random door instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
+<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
 </div>
 <div class="paragraph">
 <p>Probability is often counterintuitive.</p>
@@ -8555,7 +8556,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 <p>Now all that is left is to write the main program and call the <code>move</code> function.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll start the particle off at the center of the display. For now, we&#8217;ll also initialize the velocity to very small numbers, les than 1. We&#8217;ll expaplin that later.</p>
+<p>We&#8217;ll start the particle off at the center of the display. For now, we&#8217;ll also initialize the velocity to very small numbers, less than 1. We will explain that later.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8632,7 +8633,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 <div class="sect2">
 <h3 id="_understanding_the_frame_rate"><a class="anchor" href="#_understanding_the_frame_rate"></a>7.1. Understanding the <em>Frame Rate</em></h3>
 <div class="paragraph">
-<p>One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animcation will slow down. One isse is that our velocity <code>ball_dx</code> and <code>ball_dy</code> are in pixels? But pixels per what? Velocity is always something like <em>miles per hour</em> or <em>feet per second</em>, or <em>kilometers per hour</em>. Our velocity does not have time associated with it. It is just, for example, <code>.04</code> pixels per loop iteration.</p>
+<p>One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One isse is that our velocity <code>ball_dx</code> and <code>ball_dy</code> are in pixels? But pixels per what? Velocity is always something like <em>miles per hour</em> or <em>feet per second</em>, or <em>kilometers per hour</em>. Our velocity does not have time associated with it. It is just, for example, <code>.04</code> pixels per loop iteration.</p>
 </div>
 <div class="paragraph">
 <p>A <em>frame</em> is one still image, a snapshot, of an animation. A standard <em>frame rate</em> for movies is 24 frames per second (<em>fps</em>). The movie <em>The Hobbit: The Desolation of Smaug</em> was filmed at 48 <em>fps</em>.</p>
@@ -8690,7 +8691,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </table>
 </div>
 <div class="paragraph">
-<p>We can then compute how far the particle has travelled in both the \(x\) and \(y\) direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled \((13/60)55 = 14.67\) miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.</p>
+<p>We can then compute how far the particle has traveled in both the \(x\) and \(y\) direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have traveled \((13/60)55 = 14.67\) miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8715,7 +8716,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </table>
 </div>
 <div class="paragraph">
-<p>The logic for boucing the particle off of the wall is exactly the same as before. We now have enough to rewrite our <code>move</code> function to account for the frame rate.</p>
+<p>The logic for bouncing the particle off of the wall is exactly the same as before. We now have enough to rewrite our <code>move</code> function to account for the frame rate.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9562,7 +9563,7 @@ exact number of times. Recall the pattern &#8230;&#8203;</p>
 <h2 id="_event_handling"><a class="anchor" href="#_event_handling"></a>9. Event Handling</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the <code>input</code> function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.</p>
+<p>Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the <code>input</code> function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clocking on the screen.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -9733,7 +9734,7 @@ somewhere in the Pygame display. This function should behave a little differentl
 </table>
 </div>
 <div class="paragraph">
-<p>Function <code>wait_for_click</code> does actually return (unlike <code>wait_for_quit</code>). It also does not return a value (OK, it returns the special value <code>None</code>).  We should alsoput <code>wait_for_click</code> in <code>util.py</code>.</p>
+<p>Function <code>wait_for_click</code> does actually return (unlike <code>wait_for_quit</code>). It also does not return a value (OK, it returns the special value <code>None</code>).  We should also put <code>wait_for_click</code> in <code>util.py</code>.</p>
 </div>
 </div>
 </div>
@@ -10225,7 +10226,7 @@ multiplication table on the console:</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Recall that the character <code>\t</code> represents the tab character. The third argument <code>end=""</code> is what we call a <em>named parameter</em> in Python. The <code>print</code> function takes an optional argument whose corresponding paramater name is <code>end</code>. The <code>end</code> parameter specifies how we should handle the end of line. In this case we don&#8217;t want the <code>print</code> statement to print the end-of-line character <code>\n</code>, so we suppress it with <code>end=""</code>.</td>
+<td>Recall that the character <code>\t</code> represents the tab character. The third argument <code>end=""</code> is what we call a <em>named parameter</em> in Python. The <code>print</code> function takes an optional argument whose corresponding parameter name is <code>end</code>. The <code>end</code> parameter specifies how we should handle the end of line. In this case we don&#8217;t want the <code>print</code> statement to print the end-of-line character <code>\n</code>, so we suppress it with <code>end=""</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -10436,7 +10437,7 @@ to \((255 + 255 + 0)/3 = 170\), or the light gray <code>(170,170,170)</code>. We
 </div>
 <div class="paragraph">
 <p>What is cool with digital images is that we can do whatever we want to the pixel values.
-The term <em>photographic negative</em> comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becoes white. For colors, the photographic negative of a pixel means to subtract each color component from 255.</p>
+The term <em>photographic negative</em> comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becomes white. For colors, the photographic negative of a pixel means to subtract each color component from 255.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -10570,11 +10571,11 @@ For example, for every pixel \((r,g,b)\) change it to \((g,b,r)\)? Sometimes the
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Compute the ratio of the orginal image&#8217;s width to the new scaled image&#8217;s width.</td>
+<td>Compute the ratio of the original image&#8217;s width to the new scaled image&#8217;s width.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Compute the ratio of the orginal image&#8217;s height to the new scaled image&#8217;s height.</td>
+<td>Compute the ratio of the original image&#8217;s height to the new scaled image&#8217;s height.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -10844,11 +10845,11 @@ We say that an image is <em>pixelated</em> when an image is enlarged and we can 
 <div class="sect2">
 <h3 id="_smoothing_an_image"><a class="anchor" href="#_smoothing_an_image"></a>10.5. Smoothing an Image</h3>
 <div class="paragraph">
-<p>Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straighforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.</p>
+<p>Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straightforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.</p>
 </div>
 <div class="paragraph">
 <p>One technique is called a <em>mean filter</em>. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
-consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for thegreenandblue components.</p>
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for the green and blue components.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -11095,7 +11096,7 @@ The <em>neighborhood</em> of a pixel is comprised of the eight pixels that surro
 <div class="sect2">
 <h3 id="_image_file_formats"><a class="anchor" href="#_image_file_formats"></a>10.6. Image file formats</h3>
 <div class="paragraph">
-<p>Computer and software manuafactures have defined various techniques for storing images in files. These technique usually allow the image to be <em>compressed</em> so that it uses less storage space.</p>
+<p>Computer and software manufactures have defined various techniques for storing images in files. These technique usually allow the image to be <em>compressed</em> so that it uses less storage space.</p>
 </div>
 <div class="paragraph">
 <div class="title">Lossy Compression</div>
@@ -11245,7 +11246,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.</td>
+<td>Because we want to animate this process we are modifying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -11276,7 +11277,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="sect3">
 <h4 id="_hiding_a_message_in_an_image"><a class="anchor" href="#_hiding_a_message_in_an_image"></a>10.7.1. Hiding a message in an image</h4>
 <div class="paragraph">
-<p>This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the <em>odd red pixels</em>. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticible visible effect on the image. Even if we ended up changing every pixel.</p>
+<p>This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the <em>odd red pixels</em>. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -11330,12 +11331,12 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 </table>
 </div>
 <div class="paragraph">
-<p>Notice that <code>make_red_even</code> does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface <code>image</code>) are really a <em>reference</em> to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the orginal image unmodified. When we should create a new surface object or  modify an exisiting one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.</p>
+<p>Notice that <code>make_red_even</code> does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface <code>image</code>) are really a <em>reference</em> to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the original image unmodified. When we should create a new surface object or  modify an existing one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain&#8217;s a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmaticaly, directly in pygame.</p>
+<p>Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain&#8217;s a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in pygame.</p>
 </div>
 <div class="paragraph">
 <p>The following two lines create a surface with the text <code>Attack At Dawn</code> rendered on it.</p>
@@ -11371,7 +11372,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 </table>
 </div>
 <div class="paragraph">
-<p>You can see the difference with antialiasing in the image below. The text on top does not use antialiasing while the text on the botton does. You notice the difference the most where the edges of the letters are either curved or at an angle.</p>
+<p>You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the button does. You notice the difference the most where the edges of the letters are either curved or at an angle.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -11380,7 +11381,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="title">Figure 20. Antialiasing</div>
 </div>
 <div class="paragraph">
-<p>Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate \((0,0)\) in the image corresonds with coordinate \((0,0)\) in the secret message surface. We can thnk of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fitin the image. That is, both the message width and height are less than the image width and height.</p>
+<p>Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate \((0,0)\) in the image corresponds with coordinate \((0,0)\) in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -11470,7 +11471,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
-<td><code>pygame.image.save</code> is a new Pygame function that saves a surface in a new file in the image format specifed by the file suffix. In this case is saves the surface <code>image</code> in the file named <code>new_image.png</code> as a PNG file because the file name ends with <code>.png</code>.</td>
+<td><code>pygame.image.save</code> is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case is saves the surface <code>image</code> in the file named <code>new_image.png</code> as a PNG file because the file name ends with <code>.png</code>.</td>
 </tr>
 </table>
 </div>
@@ -11527,7 +11528,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="title">Figure 22. Segregation map of NYC.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup></div>
 </div>
 <div class="paragraph">
-<p>In this map each red dot represents a caucasian household, blue represents a black household, yellow a latino household, and green an asian household. The segregation is obvious.</p>
+<p>In this map each red dot represents a Caucasian household, blue represents a black household, yellow a Latino household, and green an Asian household. The segregation is obvious.</p>
 </div>
 <div class="paragraph">
 <p>Reasons for segregation are varied and complex.  Schelling tried to abstract away (that&#8217;s what a model does) details and propose something much more simple. People are agents living on a grid and follow some simple rules. People generally have choices of where they might live; if they don&#8217;t like where they are currently living they can move.</p>
@@ -11792,7 +11793,7 @@ We always need to watch out for dividing by zero.
 <p>When an agent moves it needs to find an empty cell to move to. We could search for an empty cell in one of several ways, we could just start looking for an empty cell in the grid starting at the top and working our way down using our nested <code>for</code>-loop pattern. This would give preference to empty cells towards the top and slowly fill in the grid entirely from the top.</p>
 </div>
 <div class="paragraph">
-<p>Alternativiely, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.</p>
+<p>Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.</p>
 </div>
 <div class="paragraph">
 <p>Function <code>find_empty</code> randomly searches for an empty cell in the grid returning its coordinate when it has found one.</p>
@@ -11819,7 +11820,7 @@ We always need to watch out for dividing by zero.
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>It looks like thiis loop will run forever, the function retrns breaking out of the loop when an empty cell is found.</td>
+<td>It looks like this loop will run forever, the function retrns breaking out of the loop when an empty cell is found.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -11835,7 +11836,7 @@ We always need to watch out for dividing by zero.
 <div class="sect3">
 <h4 id="_putting_it_all_together"><a class="anchor" href="#_putting_it_all_together"></a>10.8.4. Putting it all together</h4>
 <div class="paragraph">
-<p>With function <code>randomly_populate</code>, <code>count_like_neighbors</code>, and <code>find_empty</code> we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will kep it at a sqaure greed 400 on a side.</p>
+<p>With function <code>randomly_populate</code>, <code>count_like_neighbors</code>, and <code>find_empty</code> we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will keep it as a square grid 400 on a side.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11905,11 +11906,11 @@ We always need to watch out for dividing by zero.
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Go through the entore grid using our normal nested `for`0loop pattern.</td>
+<td>Go through the entire grid using our normal nested `for`0loop pattern.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Get the agent at the cell, which could beno agent (empty cell).</td>
+<td>Get the agent at the cell, which could be no agent (empty cell).</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -11917,7 +11918,7 @@ We always need to watch out for dividing by zero.
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>If the proportion is less than the theshold then the agent needs to move.</td>
+<td>If the proportion is less than the threshold then the agent needs to move.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
@@ -11995,7 +11996,7 @@ We always need to watch out for dividing by zero.
 <div class="sect3">
 <h4 id="_schelling_summary"><a class="anchor" href="#_schelling_summary"></a>10.8.5. Schelling Summary</h4>
 <div class="paragraph">
-<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup>.</p>
+<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup>.</p>
 </div>
 </div>
 </div>
@@ -12388,7 +12389,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>A <em>palindrome</em> is a word that reads backwards and forwards such as <em>racecar</em>, <em>kayak</em>, and <em>madam</em>.  Write a function <code>palindrome</code> that takes a string as an argument and returns true if the argumnt is a palindrome, false otherwise. Hint: use the <code>reverse</code> function.</p>
+<p>A <em>palindrome</em> is a word that reads backwards and forwards such as <em>racecar</em>, <em>kayak</em>, and <em>madam</em>.  Write a function <code>palindrome</code> that takes a string as an argument and returns true if the argument is a palindrome, false otherwise. Hint: use the <code>reverse</code> function.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -12549,7 +12550,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 <h4 id="_string_slices"><a class="anchor" href="#_string_slices"></a>11.1.4. String Slices</h4>
 <div class="paragraph">
 <p>The bracket notation picks out individual characters in a string;
-<code>s[i]</code> is the charater at index <code>i</code>.  The bracket notation is also used to pick out consecutive portions of a string, a <em>substring</em>, using what Python calls a <em>slice</em> operation. The notation <code>s[x:y]</code> extracts the portion of the string starting at index <code>x</code> and up to but not including the character at index <code>y</code>.</p>
+<code>s[i]</code> is the character at index <code>i</code>.  The bracket notation is also used to pick out consecutive portions of a string, a <em>substring</em>, using what Python calls a <em>slice</em> operation. The notation <code>s[x:y]</code> extracts the portion of the string starting at index <code>x</code> and up to but not including the character at index <code>y</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12680,7 +12681,7 @@ Average: 15.86</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Similar to the way we counted the number of times we search for a subtring in a string</p>
+<p>Similar to the way we counted the number of times we search for a substring in a string</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -12859,7 +12860,7 @@ so on line 13 <code>comma</code> becomes <code>-1</code> and when we go back to 
 <div class="sect3">
 <h4 id="_example_word_scramble"><a class="anchor" href="#_example_word_scramble"></a>11.1.6. Example: Word scramble</h4>
 <div class="paragraph">
-<p>Lets say we were implementing an word scramble game where we present the user with an <em>anagram</em> and ask them to to try and guess the word.  For now we will hardcode the word they are trying to guess in the game.</p>
+<p>Lets say we were implementing an word scramble game where we present the user with an <em>anagram</em> and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -12884,7 +12885,7 @@ An <em>anagram</em> is a rearrangement of the characters in a word.
 </td>
 <td class="content">
 What are the chances that <code>scramble</code> will return the original word? Well for <code>python</code> there
-are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remadining 5. The third character any of the tremaining 4, etc. This gives us \(6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720\) different possibilities for the word <code>python</code>. In general if a word has \(n\) distinct characters then there are at least \(n\) <em>factorial</em> (denoted as \(n!\)) permutations of the characters in the word. So the probability is \(1/n!\).
+are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remaining 5. The third character any of the remaining 4, etc. This gives us \(6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720\) different possibilities for the word <code>python</code>. In general if a word has \(n\) distinct characters then there are at least \(n\) <em>factorial</em> (denoted as \(n!\)) permutations of the characters in the word. So the probability is \(1/n!\).
 </td>
 </tr>
 </table>
@@ -13244,7 +13245,7 @@ incorrect</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This is a little tricky. We need to remove the end of line character <code>'\n'</code>, but the last line in the file doesn&#8217;t have an end-of-line chracter but an <em>end of file</em> character.</td>
+<td>This is a little tricky. We need to remove the end of line character <code>'\n'</code>, but the last line in the file doesn&#8217;t have an end-of-line character but an <em>end of file</em> character.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -13273,7 +13274,7 @@ incorrect</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It doesn&#8217;t look like this means much but this sequence of nucleotides mean something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis.</p>
+<p>It doesn&#8217;t look like this means much but this sequence of nucleotides means something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -13346,7 +13347,7 @@ Bioinformatics is the computational branch of molucular biology.
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Download this file by clicking onthe link above in the sequence.</td>
+<td>Download this file by clicking on the link above in the sequence.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -13363,7 +13364,7 @@ Bioinformatics is the computational branch of molucular biology.
 </table>
 </div>
 <div class="paragraph">
-<p>After we execute the program we get the follwing results.</p>
+<p>After we execute the program we get the following results.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13435,12 +13436,12 @@ t: 1140824, 24.6%</code></pre>
 <div class="exampleblock result">
 <div class="content">
 <div class="paragraph">
-<p>The highlighted region starts with the codon <code>atg</code>, the start codon. It ends with one of the stop codons <code>tga</code>. The region between the start and stop codons is <code>cattggagc</code>, which has nine base-pairs, a multiple of three.  Since the gene must also start with a <code>atg</code> and end with a stop-codon that has three base-pairs, the length of the enitre sequence must also be a multiple of three.</p>
+<p>The highlighted region starts with the codon <code>atg</code>, the start codon. It ends with one of the stop codons <code>tga</code>. The region between the start and stop codons is <code>cattggagc</code>, which has nine base-pairs, a multiple of three.  Since the gene must also start with a <code>atg</code> and end with a stop-codon that has three base-pairs, the length of the entire sequence must also be a multiple of three.</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Lets write a program to find all of the <em>potential</em> genes in the ecoli bacteria. The program should
+<p>Lets write a program to find all of the <em>potential</em> genes in the <em>E.coli</em> bacteria. The program should
 print the starting location and the ending location of each potential gene location. For example the
 digram below shows that the first possible gene location starts at location 29 and ends at location 95.</p>
 </div>
@@ -13450,7 +13451,7 @@ digram below shows that the first possible gene location starts at location 29 a
 </div>
 </div>
 <div class="paragraph">
-<p>The yellow highlightes are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon <code>atg</code> and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.</p>
+<p>The yellow highlights are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon <code>atg</code> and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14293,7 +14294,7 @@ alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  Wit
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Write a function <code>GenOneTimePad</code> that takes an integer <code>n</code> and returns a random string of characters of langth <code>n</code>.</p>
+<p>Write a function <code>GenOneTimePad</code> that takes an integer <code>n</code> and returns a random string of characters of length <code>n</code>.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -14603,7 +14604,7 @@ alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  Wit
 </div>
 </div>
 <div class="paragraph">
-<p>Like strings, tuples are <em>immutable</em>. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we migh twant to try</p>
+<p>Like strings, tuples are <em>immutable</em>. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we might want to try</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15266,7 +15267,7 @@ we have not already checked.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Now wejust asdd the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.</p>
+<p>Now we just add the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -15623,7 +15624,7 @@ modules we have encountered in this text.</p>
 <a href="#_footnoteref_21">21</a>. One of the best known books on investing is <em>A Random Walk Down Wall Street</em> by Burton Malkiel.
 </div>
 <div class="footnote" id="_footnotedef_22">
-<a href="#_footnoteref_22">22</a>. <em>The Factal Geometry of Nature</em>, Benoit Mandelbot, W.H. Freeman and Company, 1982
+<a href="#_footnoteref_22">22</a>. <em>The Factal Geometry of Nature</em>, Benoit Mandelbrot, W.H. Freeman and Company, 1982
 </div>
 <div class="footnote" id="_footnotedef_23">
 <a href="#_footnoteref_23">23</a>. <a href="http://marilynvossavant.com/game-show-problem/" class="bare">http://marilynvossavant.com/game-show-problem/</a>
@@ -15671,7 +15672,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-11 23:00:30 EDT
+Last updated 2018-07-15 23:08:17 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

@@ -2897,7 +2897,7 @@ else:
 
 === if-elif-else
 
-Lets take an example of tossing a single die.footnote:[_die_ is the singular of the plural _dice_, one die, pair of dice.]. We will print `one` if we rolled a one, `two` if we rolled a two, etc. One way to write this:
+Lets take an example of tossing a single die footnote:[_die_ is the singular of the plural _dice_, one die, pair of dice.]. We will print `one` if we rolled a one, `two` if we rolled a two, etc. One way to write this:
 
 [source,python,numbered]
 ----
@@ -3179,7 +3179,7 @@ print(max(2,10,4,1))
 ====
 
 .Exercise 3 
-Write a function `median` that returns median of three numbers (the middle number).
+Write a function `middle` that returns middle of three numbers. Calling `print(middle(4,1,9))` would print `4`.
 
 === Terminology 
 
@@ -3208,7 +3208,7 @@ NOTE: A computer program is _deterministic_ if it produces the same exact result
 
 NOTE: "A random process models the progression of a system over time, where the evolution is random rather than deterministic."footnote:[https://reference.wolfram.com/language/guide/RandomProcesses.html]
 
-Lets simulate tossing a coinstem:[n]times counting the number of ooccurrences of a head or a tail. We will havestem:[n]be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+Lets simulate tossing a coin stem:[n] times counting the number of occurrences of a head or a tail. We will have stem:[n] be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
 
 [source,python,numbered]
 ----
@@ -3222,7 +3222,7 @@ else:
 <1> This is actually a syntax error because `heads` is not yet defined.
 <2> Same comment. `tails` is not yet defined.
 
-This is the loop body, all we need to do now is to getstem:[n]from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the diestem:[n]times.
+This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the die stem:[n]times.
 
 TIP: Don't try and write the program all at once. Break into parts.
 
@@ -3256,10 +3256,10 @@ TIP: If you think you need a loop try and figure out what the process is that ne
 
 NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some real-world process. 
 
-As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on during all of tossing?
+As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
 
-.Check Yourself
-Modify the coint toss program to count the number of times we toss ten heads in a row. if we ever toss ten heads in a row. How big do you have to makestem:[n]in order to get ten heads in a row?
+.Check Yourself+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the coin toss program to count the number of times we toss ten heads in a row. If we ever toss ten heads in a row. How big do you have to make stem:[n] in order to get ten heads in a row?
 
 [.result]
 ====
@@ -3348,7 +3348,8 @@ We don't even need to run the program to see what will happen here. This is the 
 
 ==== A One Dimensional Random Walk
 
-Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of widthstem:[w]and height _h_, if we let the center stem:[y] coordinate of the window represent 0 chips then `0 - chips` will be the stem:[y] coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width stem:[w] and height stem:[h], if we let the center stem:[y]-coordinate of the window represent stem:[0] chips then `0 - chips` will be the stem:[y]    
+coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
 
 The Pygame command 
 
@@ -3426,7 +3427,7 @@ TBD
 ----
 ====
 
-The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluxuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
+The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluctuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
 
 Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
 
@@ -3439,7 +3440,7 @@ eight possible neighboring locations that it can move to )forgetting, for the ti
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have two random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` correspnding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have two random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
@@ -3468,7 +3469,7 @@ else:            # top left
     y = y - 1
 ----
 
-This is essentially the process we need to repeat overand over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` cordinate and returns its new `x` and `y`. Pictorially, 
+This is essentially the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` coordinate and returns its new `x` and `y`. Pictorially, 
 
 image::2D_move.png[width=362,height=130,align="center"]
 
@@ -3500,7 +3501,7 @@ Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
 
 The parenthese are not strictly necessary but aid in clarity. 
 
-Python allows for a more concise mathematical way to describe inequalitites. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
+Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
 [source,python,numbered]
 ----
 (0 <= x < w) and (0 <= y < h)
@@ -3624,7 +3625,7 @@ image::brownian2.png[width=292,height=208,align="center"]
 
 ==== Improvement's to the Brownian Program
 
-That big if-statement in the `move` function is rather clunky and error prone. If you misstype a `-` or `+` sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 tothe particle `x` and `y` coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
+That big if-statement in the `move` function is rather clunky and error prone. If you mistype a `-` or `+` sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 to the particle `x` and `y` coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
 
 A better and more concise `move` function.
 
@@ -3647,14 +3648,14 @@ TIP: Python (version 3) actually does allow Greek alphabeteic letters in identif
 
 .A particle on a torus
 
-Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the boounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
+Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Modify the Brownian particle simulation so that a particle stays within the bounds of the window as if the edges of the window were an impermeable wall.
 
 [.result]
 ====
-The only thing you need to add is an if-statemtn that checks the bounds of the particle. An appropriate place to put this is the `move` function, since it is related to moving the particle.
+The only thing you need to add is an if-statement that checks the bounds of the particle. An appropriate place to put this is the `move` function, since it is related to moving the particle.
 
 [source,python,numbered]
 ----
@@ -3790,7 +3791,7 @@ image::sierpinski.png[width=500,height=500,align="center"]
 
 This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (_e.g._ the midpoint) is informally called  the _chaos game_, named by the branch of mathematics called _chaos theory_.
 
-The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensaional random walk, but ore than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbot, W.H. Freeman and Company, 1982] 
+The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but ore than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbrot, W.H. Freeman and Company, 1982] 
 
 .Exercise
 Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
@@ -3802,9 +3803,9 @@ Rather than using a triangle make use four cell towers, where each tower is plac
 
 The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
 
-This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem.footnote:[http://marilynvossavant.com/game-show-problem/] Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarassing for ... the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well know mathematicians, and to this day, many of us still fumble around when we try to explain it. 
+This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem.footnote:[http://marilynvossavant.com/game-show-problem/] Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for ... the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it. 
 
-Probability is often counter intuitive, we saw this with the Gambler's Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.
+Probability is often counter-intuitive, we saw this with the Gambler's Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.
 
 Lets lay out the process of playing the game outlined above:
 
@@ -3894,7 +3895,7 @@ So now we have four variables set up:
 . `goat1` the location of the first goat
 . `goat2` the location of the second goat
 . `car` the location of the car
-. `choice` the dr the contestant chose
+. `choice` the door the contestant chose
 
 In the third step of the game we reveal one of the two goats being careful not to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch at all. 
 
@@ -3992,7 +3993,7 @@ else:
 ----
 ====
 
-What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a ranomd choice. So we could have the computer choose a random door instead. Also, rather than ask wheter the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
+What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
 
 Probability is often counterintuitive.
 
@@ -4132,7 +4133,7 @@ return: new x, y, dx, and dy.
 
 Now all that is left is to write the main program and call the `move` function.
 
-We'll start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, les than 1. We'll expaplin that later.
+We'll start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, less than 1. We will explain that later.
 
 [source,python,numbered]
 ----
@@ -4174,7 +4175,7 @@ The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. 
 
 === Understanding the _Frame Rate_
 
-One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animcation will slow down. One isse is that our velocity `ball_dx` and `ball_dy` are in pixels? But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
+One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One isse is that our velocity `ball_dx` and `ball_dy` are in pixels? But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
 
 A _frame_ is one still image, a snapshot, of an animation. A standard _frame rate_ for movies is 24 frames per second (_fps_). The movie _The Hobbit: The Desolation of Smaug_ was filmed at 48 _fps_. 
 
@@ -4205,7 +4206,7 @@ dt = pygame.time.tick() <1>
 ---- 
 <1> let `dt` mean _delta time_ or _the change in time_. In this case milliseconds.
 
-We can then compute how far the particle has travelled in both the stem:[x] and stem:[y] direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have travelled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixles we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
+We can then compute how far the particle has traveled in both the stem:[x] and stem:[y] direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have traveled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
 
 [source,python,numbered]
 ----
@@ -4216,7 +4217,7 @@ ball_y = ball_y + dt * ball_dy <2>
 <1> The particle's new stem:[x] coordinate is the old stem:[x] coordinate plus the time passed times the ball's stem:[x] velocity. This should make intuitive sense.
 <2> Similarly for the change in the stem:[y]component.
 
-The logic for boucing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
+The logic for bouncing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
 
 [source,python,numbered]
 ----
@@ -4679,7 +4680,7 @@ a|
 
 == Event Handling
 
-Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygmae display or clocking on the screen.
+Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clocking on the screen.
 
 NOTE: An _event_ is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
 
@@ -4754,7 +4755,7 @@ def wait_for_click():
 <5> Setting `done` to `True` will cause the `while`-loop to terminate.
 <6> Again, this is to be user friendly and let other programs run and not chew up CPU (or battery).
 
-Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also does not return a value (OK, it returns the special value `None`).  We should alsoput `wait_for_click` in `util.py`.
+Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also does not return a value (OK, it returns the special value `None`).  We should also put `wait_for_click` in `util.py`.
 
 ====
 
@@ -5054,7 +5055,7 @@ for i in range(1,10):              <1>
 ----
 <1> We call this the _outer_ `for`-loop. It constructs the rows in the table.
 <2> We call this the _inner_ `for`-loop. It is responsible for construction a single row.
-<3> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding paramater name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
+<3> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding parameter name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
 <4> This starts a new line.
 
 NOTE: A _matrix_ is a rectangular table of numbers. The branch of mathematics that deals with matrices is called _linear algebra_.
@@ -5169,7 +5170,7 @@ The result is ...
 image::gray_bug.jpg[width=500]
 
 What is cool with digital images is that we can do whatever we want to the pixel values. 
-The term _photographic negative_ comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becoes white. For colors, the photographic negative of a pixel means to subtract each color component from 255. 
+The term _photographic negative_ comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becomes white. For colors, the photographic negative of a pixel means to subtract each color component from 255. 
 
 .Grayscale Bug with weighted RGB
 image::gray_weighted_rgb_bug.jpg[width=500]
@@ -5252,8 +5253,8 @@ def scale(original, scaled_w, scaled_h):
     return scaled                                 <8>
 ----
 <1> Create the new empty surface that will contain our scaled image.
-<2> Compute the ratio of the orginal image's width to the new scaled image's width. 
-<3> Compute the ratio of the orginal image's height to the new scaled image's height.
+<2> Compute the ratio of the original image's width to the new scaled image's width. 
+<3> Compute the ratio of the original image's height to the new scaled image's height.
 <4> For every pixel in the scaled image ...
 <5> Compute the stem:[x] and stem:[y] coordinates of the pixel we need to grab in the original image.
 <6> Get the pixel in the original image.
@@ -5370,10 +5371,10 @@ NOTE: We say that an image is _pixelated_ when an image is enlarged and we can s
 
 === Smoothing an Image
 
-Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straighforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.
+Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straightforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.
 
 One technique is called a _mean filter_. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
-consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for thegreenandblue components.
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for the green and blue components.
 
 .Mean of the Neighborhood
 image::mean_filter.png[width=500]
@@ -5507,7 +5508,7 @@ util.wait_for_click()
 
 === Image file formats
 
-Computer and software manuafactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
+Computer and software manufactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
 
 .Lossy Compression
 We have already seen one way we can compress an image - just make it smaller. Our `scale` function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it _loses information_.
@@ -5565,7 +5566,7 @@ util.wait_for_click()
 ----
 <1> Show the image of the fox.
 <2> If the red component is odd make the pixel black, otherwise white.
-<3> Because we want to animate this process we are modifiying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
+<3> Because we want to animate this process we are modifying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
 <4> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
 <5> This delay is for dramatic effect only.
 
@@ -5581,7 +5582,7 @@ image::png/secret.png[width=450]
 
 ==== Hiding a message in an image
 
-This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticible visible effect on the image. Even if we ended up changing every pixel.
+This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Why is it important that we subtract one and not add one to make a pixel even?
@@ -5611,10 +5612,10 @@ def make_red_even(image):
 <2> This checks to see of the red component is odd.
 <3> If it is odd, then decrease the red value by one and set it.
 
-Notice that `make_red_even` does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface `image`) are really a _reference_ to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the orginal image unmodified. When we should create a new surface object or  modify an exisiting one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.
+Notice that `make_red_even` does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface `image`) are really a _reference_ to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the original image unmodified. When we should create a new surface object or  modify an existing one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.
 ====
 
-Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain's a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmaticaly, directly in pygame.
+Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain's a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in pygame.
 
 The following two lines create a surface with the text `Attack At Dawn` rendered on it.
 
@@ -5628,12 +5629,12 @@ secret = my_font.render("Attack At Dawn", False, color.black) <2>
 
 NOTE: _Antialiasing_ uses shades of a color to smooth edges. 
 
-You can see the difference with antialiasing in the image below. The text on top does not use antialiasing while the text on the botton does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
+You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the button does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
 
 .Antialiasing
 image::png/antialias.png[width=600]
 
-Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresonds with coordinate stem:[(0,0)] in the secret message surface. We can thnk of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fitin the image. That is, both the message width and height are less than the image width and height.
+Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresponds with coordinate stem:[(0,0)] in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.
 
 .Overlaying a secret on image
 image::png/panda_overlay_secret.png[]
@@ -5671,7 +5672,7 @@ pygame.image.save(image, "new_image.png")                  <9>
 <6> Check if it is black.
 <7> If it is black then we need to get the corresponding pixel in the image and ...
 <8> make the red component f the image pixel odd. Hence the `ir+1`.
-<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specifed by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
+<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
 
 WARNING: The above program can crash if the image containing the message is larger than the image that is hiding the message.
 
@@ -5704,7 +5705,7 @@ Consider the following map of New York City.
 .Segregation map of NYC.footnote:[Creative Commons `https://www.flickr.com/photos/walkingsf/4981444199/`]
 image::nyc_segregation.jpg[]
 
-In this map each red dot represents a caucasian household, blue represents a black household, yellow a latino household, and green an asian household. The segregation is obvious. 
+In this map each red dot represents a Caucasian household, blue represents a black household, yellow a Latino household, and green an Asian household. The segregation is obvious. 
 
 Reasons for segregation are varied and complex.  Schelling tried to abstract away (that's what a model does) details and propose something much more simple. People are agents living on a grid and follow some simple rules. People generally have choices of where they might live; if they don't like where they are currently living they can move.  
 
@@ -5822,7 +5823,7 @@ Function `count_like_neighbors` is a little subtle. We had to be careful about d
 
 When an agent moves it needs to find an empty cell to move to. We could search for an empty cell in one of several ways, we could just start looking for an empty cell in the grid starting at the top and working our way down using our nested `for`-loop pattern. This would give preference to empty cells towards the top and slowly fill in the grid entirely from the top.
 
-Alternativiely, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.
+Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.
 
 Function `find_empty` randomly searches for an empty cell in the grid returning its coordinate when it has found one.
 
@@ -5836,14 +5837,14 @@ def find_empty():
         if (r,g,b) == color.white:                <3>
             return (x,y)
 ----
-<1> It looks like thiis loop will run forever, the function retrns breaking out of the loop when an empty cell is found.
+<1> It looks like this loop will run forever, the function retrns breaking out of the loop when an empty cell is found.
 <2> Generate a random coordinate.
 <3> White means empty, so return the coordinate.
 
 
 ==== Putting it all together
 
-With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will kep it at a sqaure greed 400 on a side.
+With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will keep it as a square grid 400 on a side.
 
 [source,python,linenums,options="nowrap"]
 ----
@@ -5877,10 +5878,10 @@ while not done:
 util.wait_for_click()
 ----
 <1> Keep processing the grid until there are no more moves (every agent is happy)
-<2> Go through the entore grid using our normal nested `for`0loop pattern.
-<3> Get the agent at the cell, which could beno agent (empty cell).
+<2> Go through the entire grid using our normal nested `for`0loop pattern.
+<3> Get the agent at the cell, which could be no agent (empty cell).
 <4> If the cell is not empty then we have an agent and get the proportion of their like neighbors.
-<5> If the proportion is less than the theshold then the agent needs to move.
+<5> If the proportion is less than the threshold then the agent needs to move.
 <6> Find an empty cell for the agent to move to.
 <7> Put the current agent at the empty location.
 <8> Make the agent's old coordinate empty.
@@ -5915,7 +5916,7 @@ If, however, we make agents very intolerant by having, say a 70% threshold, and 
 
 ==== Schelling Summary
 
-The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neghboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specificaly for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
+The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
 
 === Exercises
 
@@ -6119,7 +6120,7 @@ It just rebuilds the original string and does not build the reverse.
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-A _palindrome_ is a word that reads backwards and forwards such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argumnt is a palindrome, false otherwise. Hint: use the `reverse` function.
+A _palindrome_ is a word that reads backwards and forwards such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argument is a palindrome, false otherwise. Hint: use the `reverse` function.
 
 [.result]
 ====
@@ -6220,7 +6221,7 @@ As is often the case, Python's built-in set of functions and libraries will ofte
 ==== String Slices 
 
 The bracket notation picks out individual characters in a string; 
-`s[i]` is the charater at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, a _substring_, using what Python calls a _slice_ operation. The notation `s[x:y]` extracts the portion of the string starting at index `x` and up to but not including the character at index `y`.
+`s[i]` is the character at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, a _substring_, using what Python calls a _slice_ operation. The notation `s[x:y]` extracts the portion of the string starting at index `x` and up to but not including the character at index `y`.
 
 [source,python]
 ----
@@ -6302,7 +6303,7 @@ Enter numbers separated by a comma
 Average: 15.86
 ----
 
-Similar to the way we counted the number of times we search for a subtring in a string
+Similar to the way we counted the number of times we search for a substring in a string
 
 NOTE: A list of numbers separated by commas are called _comma separated values_. Files that contain comma separated values are often use a `.csv` file suffix.
 
@@ -6388,14 +6389,14 @@ This makes sense, Python does not know how to convert `rumpelstiltskin` to an in
 
 ==== Example: Word scramble
 
-Lets say we were implementing an word scramble game where we present the user with an _anagram_ and ask them to to try and guess the word.  For now we will hardcode the word they are trying to guess in the game.
+Lets say we were implementing an word scramble game where we present the user with an _anagram_ and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.
 
 NOTE: An _anagram_ is a rearrangement of the characters in a word.
 
 Like always, lets break this up in to subproblems. Lets write a function `scramble` that takes a string and returns a random anagram of that string. For example `scramble('python')` might return `'hotpyn'` or `toyhpn`.
 
 NOTE: What are the chances that `scramble` will return the original word? Well for `python` there 
-are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remadining 5. The third character any of the tremaining 4, etc. This gives us stem:[6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720] different possibilities for the word `python`. In general if a word has stem:[n] distinct characters then there are at least stem:[n] _factorial_ (denoted as stem:[n!]) permutations of the characters in the word. So the probability is stem:[1/n!].
+are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remaining 5. The third character any of the remaining 4, etc. This gives us stem:[6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720] different possibilities for the word `python`. In general if a word has stem:[n] distinct characters then there are at least stem:[n] _factorial_ (denoted as stem:[n!]) permutations of the characters in the word. So the probability is stem:[1/n!].
 
 We repeatedly pick a random character from the word, append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don't choose it again. So something like, the following process. Assume our word is in a string `word` and our new scrambled word is being constructed in a variable `tmp`. Lets also assume the a variable `i` contains a random index into `word`.
 
@@ -6597,7 +6598,7 @@ for word in words:                                            <2>
 ----
 <1> The variable that refers to the file object does not have to be named `f`, in this case we are calling it `words`.
 <2> And the `for`-loop variable does not have to be named `line`, in this case `word` makes sense.
-<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't have an end-of-line chracter but an _end of file_ character.
+<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't have an end-of-line character but an _end of file_ character.
 <4> The `break` statement causes the `for`-loop to terminate. More specifically it breaks out of the _innermost_ enclosing `for` or `while` loop.
 
 
@@ -6613,7 +6614,7 @@ DNA in one respect can be consider a _digital code_ because a DNA strand can be 
 .link:python/ecoli.txt[_E. coli_]
  agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaagagtg ...
  
-It doesn't look like this means much but this sequence of nucleotides mean something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis. 
+It doesn't look like this means much but this sequence of nucleotides means something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis. 
 
 NOTE: Bioinformatics is the computational branch of molucular biology.
 
@@ -6646,12 +6647,12 @@ print('c: ', c_count, ', ', round(c_count/total * 100, 1), '%', sep='')
 print('g: ', g_count, ', ', round(g_count/total * 100, 1), '%', sep='')
 print('t: ', t_count, ', ', round(t_count/total * 100, 1), '%', sep='')
 ----
-<1> Download this file by clicking onthe link above in the sequence.
+<1> Download this file by clicking on the link above in the sequence.
 <2> For each line in the file. (It turns out there is only one in this example)
 <3> Count the base pairs in the current line.
 <4> We are controlling the spaces in the line manually by indicating that the separator should be the empty string. That is don't print a space after the comma separated items in the `print` statement.
 
-After we execute the program we get the follwing results.
+After we execute the program we get the following results.
 
 [source]
 ----
@@ -6686,16 +6687,16 @@ Verify that the first highlighted region above matches the criteria for a potent
 
 [.result]
 ====
-The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.  Since the gene must also start with a `atg` and end with a stop-codon that has three base-pairs, the length of the enitre sequence must also be a multiple of three.
+The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.  Since the gene must also start with a `atg` and end with a stop-codon that has three base-pairs, the length of the entire sequence must also be a multiple of three.
 ====
 
-Lets write a program to find all of the _potential_ genes in the ecoli bacteria. The program should 
+Lets write a program to find all of the _potential_ genes in the _E.coli_ bacteria. The program should 
 print the starting location and the ending location of each potential gene location. For example the 
 digram below shows that the first possible gene location starts at location 29 and ends at location 95.
 
 image::gene.png[align="center"]
 
-The yellow highlightes are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
+The yellow highlights are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
 
 [source,python,numbered]
 ----
@@ -7142,7 +7143,7 @@ If the One Time Pad is truly unbreakable then why aren't all of our communicatio
 How does one go about generating a one time pad? This is relatively easy. Keep randomly picking characters from the alphabet and appending them to the pad.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a function `GenOneTimePad` that takes an integer `n` and returns a random string of characters of langth `n`.
+Write a function `GenOneTimePad` that takes an integer `n` and returns a random string of characters of length `n`.
 
 [.result]
 ====
@@ -7313,7 +7314,7 @@ avg = total / len(grades)
 print("The average is", round(avg,2))
 ----
 
-Like strings, tuples are _immutable_. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we migh twant to try 
+Like strings, tuples are _immutable_. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we might want to try 
 
 [source,python]
 ----
@@ -7700,7 +7701,7 @@ for i in range(len(x) - 1):          <1>
 <1> for every particle `i` except the last
 <2> for every particle from `i+1` to the last
 
-Now wejust asdd the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.
+Now we just add the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.
 
 [source,python,numbered]
 ----
