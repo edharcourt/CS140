@@ -6772,7 +6772,7 @@ A computer program is <em>deterministic</em> if it produces the same exact resul
 </table>
 </div>
 <div class="paragraph">
-<p>This is the loop body, all we need to do now is to get \(n\) from the user, initialize the <code>heads</code> and tails` variables, and use a counting loop to toss the die \(n\)times.</p>
+<p>This is the loop body, all we need to do now is to get \(n\) from the user, initialize the <code>heads</code> and <code>tails</code> variables, and use a counting loop to toss the die \(n\) times.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -6832,12 +6832,12 @@ Don&#8217;t try and write the program all at once. Break into parts.
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>A common mistake is to put this statement before the loop.</td>
+<td>A common mistake is to put this statement before the loop. Why is that incorrect?</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>One of the benefits of writing a program like this, a <em>simulation</em>, is that we can simulate tossing a coing thousands, millions, or even billions of times. Something that is not possible if we were to try and do this by hand with a real coin.</p>
+<p>One of the benefits of writing a program like this, a <em>simulation</em>, is that we can simulate tossing a coin thousands, millions, or even billions of times. This is not possible if we were to try and do this by hand with a real coin.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -6864,11 +6864,11 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 </table>
 </div>
 <div class="paragraph">
-<p>As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on <em>during</em> the simulation?</p>
+<p>As you might expect when you run this program, the number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on <em>during</em> the simulation?</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Modify the coin toss program to count the number of times we toss ten heads in a row. If we ever toss ten heads in a row. How big do you have to make \(n\) in order to get ten heads in a row?</p>
+<p>Modify the coin toss program to count the number of times it takes to toss ten heads in a row. Run the program a few times. How big do you have to make \(n\) in order to get ten heads in a row?</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -6964,10 +6964,10 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 <div class="sect2">
 <h3 id="_the_gamblers_ruin"><a class="anchor" href="#_the_gamblers_ruin"></a>6.1. The Gambler&#8217;s Ruin</h3>
 <div class="paragraph">
-<p>Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance each time (better odds than a real real casino.)</p>
+<p>Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance chance of winning each toss (better odds than a real real casino.)</p>
 </div>
 <div class="paragraph">
-<p>How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as double your chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over long stretches. Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program just always chose heads (or tails) for the guess.</p>
+<p>How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6982,8 +6982,8 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
  9
 10
 11</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
-<span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-mi">1000</span>
-<span class="tok-k">while</span> <span class="tok-n">chips</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">chips</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2000</span><span class="tok-p">:</span>
+<span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-mi">1000</span>                        <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">while</span> <span class="tok-n">chips</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">chips</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2000</span><span class="tok-p">:</span>   <i class="conum" data-value="2"></i><b>(2)</b>
     <span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
 
     <span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
@@ -6991,7 +6991,7 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
     <span class="tok-k">else</span><span class="tok-p">:</span>
         <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
 
-<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">chips</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">chips</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 </td></tr></table></code></pre>
 </div>
 </div>
@@ -6999,6 +6999,14 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We start with 1000 chips.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We play until we double our chips or lose them all.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>Will print either 0 or 2000.</td>
 </tr>
 </table>
@@ -7115,7 +7123,7 @@ coordinate of where we need to draw a pixel. If we keep a counter <code>i</code>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Rather than drawing only one point for each x-coordinate, we can fit more points if we plot multiple points at each coordinate. The <code>scale</code> variable is used for this.</td>
+<td>Rather than drawing only one point for each \(x\)-coordinate, we can fit more points if we plot multiple points at each coordinate. The <code>scale</code> variable is used for this.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -7144,7 +7152,7 @@ coordinate of where we need to draw a pixel. If we keep a counter <code>i</code>
 </table>
 </div>
 <div class="paragraph">
-<p>The random walk on the left plots 10 points per x-coordinate <code>scale = 10</code>. The plot on the right
+<p>The random walk on the left plots 10 points per \(x\)-coordinate <code>scale = 10</code>. The plot on the right
 plots 100 points per pixel <code>scale = 100</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -7179,7 +7187,7 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low plot a red circle at the location.</p>
+<p>Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low, plot a red circle at the location.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -7198,7 +7206,7 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 <p>Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.</p>
 </div>
 <div class="paragraph">
-<p>The Gambler&#8217;s Ruin is an example of a _one dimensional random walk. One dimensional becuase there is only one random variable.</p>
+<p>The Gambler&#8217;s Ruin is an example of a _one dimensional random walk. One dimensional because there is only one random variable, the coin toss.</p>
 </div>
 </div>
 </div>
@@ -7206,7 +7214,7 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 <h3 id="_brownian_motion"><a class="anchor" href="#_brownian_motion"></a>6.2. Brownian Motion</h3>
 <div class="paragraph">
 <p>Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the \(x\) or \(y\) direction.  In terms of a graphic display, the particle&#8217;s coordinate \((x,y)\) has
-eight possible neighboring locations that it can move to )forgetting, for the time being, about a particle that is on an edge of the display).</p>
+eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -7214,7 +7222,7 @@ eight possible neighboring locations that it can move to )forgetting, for the ti
 </div>
 </div>
 <div class="paragraph">
-<p>In this case we will have two random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that variables <code>x</code> and <code>y</code> are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random number from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that variables <code>x</code> and <code>y</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7293,7 +7301,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 </div>
 <div class="paragraph">
-<p>This <code>move</code> function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could</p>
+<p>Calling the <code>move</code> function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could</p>
 </div>
 <div class="ulist">
 <ul>
@@ -7310,7 +7318,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Write a logical condition that is true if the particle as coordinate <code>(x,y)</code> is on the display window. Assume that variable <code>w</code> and <code>h</code> refer to the width and height of the display.</p>
+<p>Write a logical condition that is true if the particle at coordinate <code>(x,y)</code> is on the display window. Assume that variable <code>w</code> and <code>h</code> refer to the width and height of the display.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -7325,7 +7333,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 </div>
 <div class="paragraph">
-<p>The parenthese are not strictly necessary but aid in clarity.</p>
+<p>The parentheses are not strictly necessary but aid in clarity.</p>
 </div>
 <div class="paragraph">
 <p>Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as</p>
@@ -7447,34 +7455,28 @@ Because we are using two random variables this Brownian Motion simulation is oft
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Start the particle in the middle of the x axis</td>
+<td>Start the particle in the middle of the x axis.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Start the particle in the middle of the y axis</td>
+<td>Start the particle in the middle of the y axis.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Here is one sample run of the program</p>
-</div>
-<div class="imageblock" style="text-align: center">
-<div class="content">
-<img src="./images/brownian.png" alt="brownian" width="190" height="133">
-</div>
+<p>Here is one sample run of the program
+:
+image::brownian.png[width=190,height=133,align="center"]</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
 <p>Add a second particle (use a different color) to the simulation. Stop the simulation when <em>both</em> particle have gone off the window.
-Hints:
-* add properties for a second particle
-* Don&#8217;t modify the <code>move</code> function or make a copy of the <code>move</code> function. Just <em>reuse</em> it by calling it again with the properties of the second particle. (That is the whole point of using functions).
-* Modify the loop condition so the simulation terminates properly.</p>
+Hints:-Add properties for a second particle. Don&#8217;t modify the <code>move</code> function or make a copy of the <code>move</code> function. Just <em>reuse</em> it by calling it again with the properties of the second particle. (That is the whole point of using functions). Finally modify the loop condition so the simulation terminates properly.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
 <div class="paragraph">
-<p>Like alaways, there are many solutions. Here is one.</p>
+<p>Like always, there are many solutions. Here is one.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7573,7 +7575,7 @@ Hints:
 <div class="sect3">
 <h4 id="_improvements_to_the_brownian_program"><a class="anchor" href="#_improvements_to_the_brownian_program"></a>6.2.2. Improvement&#8217;s to the Brownian Program</h4>
 <div class="paragraph">
-<p>That big if-statement in the <code>move</code> function is rather clunky and error prone. If you mistype a <code>-</code> or <code>+</code> sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 to the particle <code>x</code> and <code>y</code> coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate.</p>
+<p>That big if-statement in the <code>move</code> function is rather clunky and error prone. If you mistype a <code>-</code> or <code>+</code> sign then the particle goes off in a seemingly nonrandom direction. Notice that all we are doing is either subtracting 1 or adding 1 to the particle&#8217;s \(x\) and/or \(y\) coordinate. We could just generate a random integer in the range -1 to 1 and add that to the coordinate.  We have to be careful to generate a different random integer for each coordinate.</p>
 </div>
 <div class="paragraph">
 <p>A better and more concise <code>move</code> function.</p>
@@ -7604,11 +7606,11 @@ Hints:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Why the <code>2</code> as opposued to <code>1</code> as the second argument to <code>randrange</code>?</td>
+<td>Why <code>2</code> instead of <code>1</code> as the second argument to <code>randrange</code>?</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The Greek letter \(\Delta\) (pronounced <em>delta</em>) is often used to reprent a change in some quantity. In this case a change in the <code>x</code> coordinate.</td>
+<td>The Greek letter \(\Delta\) (pronounced <em>delta</em>) is often used to represent a change in some quantity. In this case a change in the <code>x</code> coordinate.</td>
 </tr>
 </table>
 </div>
@@ -7619,7 +7621,7 @@ Hints:
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Python (version 3) actually does allow Greek alphabeteic letters in identifier names.
+Python (version 3) actually does allow Greek alphabetic letters in identifier names.
 </td>
 </tr>
 </table>
@@ -15672,7 +15674,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-15 23:08:17 EDT
+Last updated 2018-07-23 23:25:40 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

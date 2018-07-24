@@ -3222,7 +3222,7 @@ else:
 <1> This is actually a syntax error because `heads` is not yet defined.
 <2> Same comment. `tails` is not yet defined.
 
-This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and tails` variables, and use a counting loop to toss the die stem:[n]times.
+This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and `tails` variables, and use a counting loop to toss the die stem:[n] times.
 
 TIP: Don't try and write the program all at once. Break into parts.
 
@@ -3248,18 +3248,18 @@ while i < n:
 print("Heads: ", heads)
 print("Tails: ", tails)
 ----
-<1> A common mistake is to put this statement before the loop.
+<1> A common mistake is to put this statement before the loop. Why is that incorrect?
 
-One of the benefits of writing a program like this, a _simulation_, is that we can simulate tossing a coing thousands, millions, or even billions of times. Something that is not possible if we were to try and do this by hand with a real coin.
+One of the benefits of writing a program like this, a _simulation_, is that we can simulate tossing a coin thousands, millions, or even billions of times. This is not possible if we were to try and do this by hand with a real coin.
 
 TIP: If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
 
 NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some real-world process. 
 
-As you might expect when you run this program that number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
+As you might expect when you run this program, the number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
 
 .Check Yourself+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Modify the coin toss program to count the number of times we toss ten heads in a row. If we ever toss ten heads in a row. How big do you have to make stem:[n] in order to get ten heads in a row?
+Modify the coin toss program to count the number of times it takes to toss ten heads in a row. Run the program a few times. How big do you have to make stem:[n] in order to get ten heads in a row?
 
 [.result]
 ====
@@ -3306,15 +3306,15 @@ print("Number of ten in a row: ", in_a_row_count)
 
 === The Gambler's Ruin
 
-Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance each time (better odds than a real real casino.)
+Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance chance of winning each toss (better odds than a real real casino.)
 
-How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as double your chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over long stretches. Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program just always chose heads (or tails) for the guess.
+How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
 
 [source,python,numbered]
 ----
 import random
-chips = 1000
-while chips > 0 and chips < 2000:
+chips = 1000                        <1>
+while chips > 0 and chips < 2000:   <2>
     toss = random.randrange(2)
 
     if toss == 0:  
@@ -3322,9 +3322,11 @@ while chips > 0 and chips < 2000:
     else:
         chips = chips - 1
 
-print(chips) <1>
+print(chips) <3>
 ----
-<1> Will print either 0 or 2000.
+<1> We start with 1000 chips.
+<2> We play until we double our chips or lose them all.
+<3> Will print either 0 or 2000.
 
 As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can't quit, even when they are ahead. What might the program look like now?  
 
@@ -3385,14 +3387,14 @@ while i < win.get_width()*scale:  <2>
     pygame.display.update()
     i = i + 1
 ----
-<1> Rather than drawing only one point for each x-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
+<1> Rather than drawing only one point for each stem:[x]-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
 <2> Only draw until we fill the screen. This is also the first time we have seen this function call `win.get_width()`. See the note below.
 <3> Plot our current chip count. Notice the use of the `scale` variable to plot multiple points at each x-coordinate.
 <4> Keep redrawing a red line in the middle to represent zero chips. 
 
 NOTE: `win.get_width()`. Need to finish discussing
 
-The random walk on the left plots 10 points per x-coordinate `scale = 10`. The plot on the right
+The random walk on the left plots 10 points per stem:[x]-coordinate `scale = 10`. The plot on the right
 plots 100 points per pixel `scale = 100`. 
 
 .Two random walks
@@ -3417,7 +3419,7 @@ TBD
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low plot a red circle at the location.
+Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low, plot a red circle at the location.
 
 [.result]
 ====
@@ -3431,16 +3433,16 @@ The Gambler's Ruin is an example of a _random walk_. Random walks are useful for
 
 Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
 
-The Gambler's Ruin is an example of a _one dimensional random walk. One dimensional becuase there is only one random variable.
+The Gambler's Ruin is an example of a _one dimensional random walk. One dimensional because there is only one random variable, the coin toss.
 
 === Brownian Motion
 
 Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the stem:[x] or stem:[y] direction.  In terms of a graphic display, the particle's coordinate stem:[(x,y)] has 
-eight possible neighboring locations that it can move to )forgetting, for the time being, about a particle that is on an edge of the display). 
+eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display. 
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have two random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` are the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random number from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
@@ -3480,7 +3482,7 @@ def move(x,y):
     return (x,y)
 ----
 
-This `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could
+Calling the `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could
 
 - run for a certain number of iterations, 10, 100, 10000, etc.
 - run until we the particle moves off of the display
@@ -3488,7 +3490,7 @@ This `move` function is the heart of our loop body. We can start a particle in t
 The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, _while the particle is on the display_?
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a logical condition that is true if the particle as coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
+Write a logical condition that is true if the particle at coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
 
 [.result]
 ====
@@ -3499,7 +3501,7 @@ Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
 (0 <= x and x < w) and (0 <= y and y < h)
 ----
 
-The parenthese are not strictly necessary but aid in clarity. 
+The parentheses are not strictly necessary but aid in clarity. 
 
 Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
 [source,python,numbered]
@@ -3563,24 +3565,21 @@ while (0 <= x < w) and (0 <= y < h):
 
 input("Hit enter")
 ----
-<1> Start the particle in the middle of the x axis
-<2> Start the particle in the middle of the y axis
+<1> Start the particle in the middle of the x axis.
+<2> Start the particle in the middle of the y axis.
 
 Here is one sample run of the program
-
+:
 image::brownian.png[width=190,height=133,align="center"]
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Add a second particle (use a different color) to the simulation. Stop the simulation when _both_ particle have gone off the window. 
-Hints: 
-* add properties for a second particle
-* Don't modify the `move` function or make a copy of the `move` function. Just _reuse_ it by calling it again with the properties of the second particle. (That is the whole point of using functions).
-* Modify the loop condition so the simulation terminates properly.
+Hints:-Add properties for a second particle. Don't modify the `move` function or make a copy of the `move` function. Just _reuse_ it by calling it again with the properties of the second particle. (That is the whole point of using functions). Finally modify the loop condition so the simulation terminates properly.
 
 [.result]
 ====
-Like alaways, there are many solutions. Here is one.
+Like always, there are many solutions. Here is one.
 [source,python,numbered]
 ----
 import pygame, random, color
@@ -3625,7 +3624,7 @@ image::brownian2.png[width=292,height=208,align="center"]
 
 ==== Improvement's to the Brownian Program
 
-That big if-statement in the `move` function is rather clunky and error prone. If you mistype a `-` or `+` sign then the particle goes off in seemingly nonrandom direction. Notice that all we are doing is with subtracting 1 or adding 1 to the particle `x` and `y` coordinate. We could just generate a random integer in the range -1 to 1 and at that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
+That big if-statement in the `move` function is rather clunky and error prone. If you mistype a `-` or `+` sign then the particle goes off in a seemingly nonrandom direction. Notice that all we are doing is either subtracting 1 or adding 1 to the particle's stem:[x] and/or stem:[y] coordinate. We could just generate a random integer in the range -1 to 1 and add that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
 
 A better and more concise `move` function.
 
@@ -3641,10 +3640,10 @@ def move(x,y):
 
     return (x,y)
 ----
-<1> Why the `2` as opposued to `1` as the second argument to `randrange`?
-<2> The Greek letter stem:[\Delta] (pronounced _delta_) is often used to reprent a change in some quantity. In this case a change in the `x` coordinate. 
+<1> Why `2` instead of `1` as the second argument to `randrange`?
+<2> The Greek letter stem:[\Delta] (pronounced _delta_) is often used to represent a change in some quantity. In this case a change in the `x` coordinate. 
 
-TIP: Python (version 3) actually does allow Greek alphabeteic letters in identifier names.
+TIP: Python (version 3) actually does allow Greek alphabetic letters in identifier names.
 
 .A particle on a torus
 
