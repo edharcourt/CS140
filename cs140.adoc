@@ -3412,21 +3412,37 @@ Modify the random walk above so that whenever we have a positive chip count we p
 
 [.result]
 ====
+Replace the line that plots a point with the condition:
 [source,python,numbered]
 ----
-TBD
+if cash > 0:
+    win.set_at((i//scale, h//2-cash), color.green)
+else:
+    win.set_at((i//scale, h//2-cash), color.red)
+
 ----
+What color pixel gets plotted when cash equals 0? Does it matter? No, drawing the red line erases whatever pixel that would have been drawn at stem:[y]-coordinate stem:[0].
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low, plot a red circle at the location.
+Modify the random walk so that whenever we hit a new high we mark the location by printing a small green circle (slightly bigger than a single pixel).  Also, when we hit a new low, plot a red circle at the location.
 
 [.result]
 ====
+The trick here is to use two variables, one to keep track of the current high, and the other to keep track of the current low. Call these `high` and `low` and should be initialized to the starting `cash` amount at the beginning. Whenever the `cash` variable exceeds `high`, set `high` to cash. Similarly when `cash` is less than `low` set `low` to `cash`. 
+
 [source,python,numbered]
 ----
-TBD
+if cash > high:
+	high = cash
+	pygame.draw.circle(win, color.green, (i//scale, h//2-cash), 2)
+elif cash < low:
+	low = cash
+	pygame.draw.circle(win, color.red, (i//scale, h//2-cash), 2)
 ----
+Here is an example run. Early in the simulation we generate lots of new highs and lows, and whenever we hit a new high or low we tend to generate several nearby, but these becaome rare as the simulation progresses. This was done with `scale` set to `100`.
+
+image:hi-low-1d-rand-walk.png[width=300,height=300]
 ====
 
 The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluctuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
@@ -3442,7 +3458,7 @@ eight possible neighboring locations that it can move to. Forgetting, for the ti
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that variables `x` and `y` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that `x` and `y` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
@@ -3478,7 +3494,7 @@ image::2D_move.png[width=362,height=130,align="center"]
 [source,python,numbered]
 ----
 def move(x,y):
-    # insert code from above
+    # insert if-elif above
     return (x,y)
 ----
 
@@ -3569,8 +3585,8 @@ input("Hit enter")
 <2> Start the particle in the middle of the y axis.
 
 Here is one sample run of the program
-:
-image::brownian.png[width=190,height=133,align="center"]
+
+image:brownian.png[width=285,height=200,align="center"]
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -3647,7 +3663,7 @@ TIP: Python (version 3) actually does allow Greek alphabetic letters in identifi
 
 .A particle on a torus
 
-Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
+Right now our particle simulation terminates when a particle hits the edge of the display. One modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Modify the Brownian particle simulation so that a particle stays within the bounds of the window as if the edges of the window were an impermeable wall.
@@ -3675,7 +3691,7 @@ elif y < 0:
 <4> Could we have also said `x == -1`? Yes.
 ====
 
-Another more interesting solution migh be to pretend that the display _wraps around_ on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom. 
+Another more interesting solution might be to pretend that the display _wraps around_ on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom. 
 
 An obvious way to do this is similar to the above _check yourself_ solution and check if the particle has gone off an edge and reset its coordinate accordingly. 
 
@@ -3689,7 +3705,7 @@ elif x < 0:
 ---- 
 <1> Why `w - 1` and not `w`?
 
-Modifying the y-cooordinate is similar.
+Modifying the stem:[y]-coordinate is similar.
 
 If we think of the display as a sheet of paper and curl the paper around on the x-axis then we curl it again around the y-axis we end up with the topological shape of a _torus_, or a donut.
 
@@ -3716,7 +3732,7 @@ Lets look at the left edge. When the particle `x` is on the left edge then `x` i
 
 === A Fractional Dimension Random Walk (or Fractal)
 
-Imagine you are out for a hike and got lost. Off in the distance you see three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it on a stright line. Half way there he changes his mind, and marks the spot with a rock (a thumb tack in the image below). He then chooses another tower at random (maybe the same towser) and walks towards it, gets half way there and has a change of heart. He once again marks the spot with a rock, and chooses another cell tower. He continues this process until, well, ... forever. The image drawn bymarking the rocks is an interesting sort of random walk. 
+Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it on a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, ... forever. The image drawn by marking the rocks is an interesting sort of random walk. 
 
 image::lost_hiker.png[width=711,height=400,align="center"]
 
@@ -3736,7 +3752,7 @@ Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, 
 
 ----
 
-TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what coputer scientists call _pseudocode_.
+TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what computer scientists call _pseudocode_.
 
 NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
 the average of the stem:[x]-coordinates and the average of the stem:[y]-coordinates, or 

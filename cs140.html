@@ -7177,25 +7177,56 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
+<div class="paragraph">
+<p>Replace the line that plots a point with the condition:</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">TBD</span>
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">cash</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">red</span><span class="tok-p">)</span>
 </td></tr></table></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>What color pixel gets plotted when cash equals 0? Does it matter? No, drawing the red line erases whatever pixel that would have been drawn at \(y\)-coordinate \(0\).</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Modify the random walk so that whenever we hit a new high we mark the location by printing a small red circle (slightly bigger than a single pixel).  When we hit a new low, plot a red circle at the location.</p>
+<p>Modify the random walk so that whenever we hit a new high we mark the location by printing a small green circle (slightly bigger than a single pixel).  Also, when we hit a new low, plot a red circle at the location.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
+<div class="paragraph">
+<p>The trick here is to use two variables, one to keep track of the current high, and the other to keep track of the current low. Call these <code>high</code> and <code>low</code> and should be initialized to the starting <code>cash</code> amount at the beginning. Whenever the <code>cash</code> variable exceeds <code>high</code>, set <code>high</code> to cash. Similarly when <code>cash</code> is less than <code>low</code> set <code>low</code> to <code>cash</code>.</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">TBD</span>
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">cash</span> <span class="tok-o">&gt;</span> <span class="tok-n">high</span><span class="tok-p">:</span>
+	<span class="tok-n">high</span> <span class="tok-o">=</span> <span class="tok-n">cash</span>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">cash</span> <span class="tok-o">&lt;</span> <span class="tok-n">low</span><span class="tok-p">:</span>
+	<span class="tok-n">low</span> <span class="tok-o">=</span> <span class="tok-n">cash</span>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">red</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
 </td></tr></table></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Here is an example run. Early in the simulation we generate lots of new highs and lows, and whenever we hit a new high or low we tend to generate several nearby, but these becaome rare as the simulation progresses. This was done with <code>scale</code> set to <code>100</code>.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/hi-low-1d-rand-walk.png" alt="hi low 1d rand walk" width="300" height="300"></span></p>
 </div>
 </div>
 </div>
@@ -7222,7 +7253,7 @@ eight possible neighboring locations that it can move to. Forgetting, for the ti
 </div>
 </div>
 <div class="paragraph">
-<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that variables <code>x</code> and <code>y</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that <code>x</code> and <code>y</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7295,7 +7326,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 <pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
 2
 3</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
-    <span class="tok-c1"># insert code from above</span>
+    <span class="tok-c1"># insert if-elif above</span>
     <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
 </td></tr></table></code></pre>
 </div>
@@ -7464,9 +7495,10 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </table>
 </div>
 <div class="paragraph">
-<p>Here is one sample run of the program
-:
-image::brownian.png[width=190,height=133,align="center"]</p>
+<p>Here is one sample run of the program</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/brownian.png" alt="brownian" width="285" height="200"></span></p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -7628,7 +7660,7 @@ Python (version 3) actually does allow Greek alphabetic letters in identifier na
 </div>
 <div class="paragraph">
 <div class="title">A particle on a torus</div>
-<p>Right now our particle simulation terminates when a particle hits the edge of the display. On modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don&#8217;t adjust the coordinate to go off the display.</p>
+<p>Right now our particle simulation terminates when a particle hits the edge of the display. One modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don&#8217;t adjust the coordinate to go off the display.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -7686,7 +7718,7 @@ Python (version 3) actually does allow Greek alphabetic letters in identifier na
 </div>
 </div>
 <div class="paragraph">
-<p>Another more interesting solution migh be to pretend that the display <em>wraps around</em> on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom.</p>
+<p>Another more interesting solution might be to pretend that the display <em>wraps around</em> on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom.</p>
 </div>
 <div class="paragraph">
 <p>An obvious way to do this is similar to the above <em>check yourself</em> solution and check if the particle has gone off an edge and reset its coordinate accordingly.</p>
@@ -7714,7 +7746,7 @@ Python (version 3) actually does allow Greek alphabetic letters in identifier na
 </table>
 </div>
 <div class="paragraph">
-<p>Modifying the y-cooordinate is similar.</p>
+<p>Modifying the \(y\)-coordinate is similar.</p>
 </div>
 <div class="paragraph">
 <p>If we think of the display as a sheet of paper and curl the paper around on the x-axis then we curl it again around the y-axis we end up with the topological shape of a <em>torus</em>, or a donut.</p>
@@ -7758,7 +7790,7 @@ Python (version 3) actually does allow Greek alphabetic letters in identifier na
 <div class="sect2">
 <h3 id="_a_fractional_dimension_random_walk_or_fractal"><a class="anchor" href="#_a_fractional_dimension_random_walk_or_fractal"></a>6.3. A Fractional Dimension Random Walk (or Fractal)</h3>
 <div class="paragraph">
-<p>Imagine you are out for a hike and got lost. Off in the distance you see three cell towers, call them \(t_0\), \(t_1\), and \(t_2\). The hiker picks a cell tower at random and heads off to it on a stright line. Half way there he changes his mind, and marks the spot with a rock (a thumb tack in the image below). He then chooses another tower at random (maybe the same towser) and walks towards it, gets half way there and has a change of heart. He once again marks the spot with a rock, and chooses another cell tower. He continues this process until, well, &#8230;&#8203; forever. The image drawn bymarking the rocks is an interesting sort of random walk.</p>
+<p>Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them \(t_0\), \(t_1\), and \(t_2\). The hiker picks a cell tower at random and heads off to it on a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, &#8230;&#8203; forever. The image drawn by marking the rocks is an interesting sort of random walk.</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -15674,7 +15706,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-23 23:25:40 EDT
+Last updated 2018-07-28 15:49:11 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
