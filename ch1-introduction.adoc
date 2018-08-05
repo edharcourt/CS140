@@ -1,0 +1,1053 @@
+== Introduction
+
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacologists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.
+
+A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
+
+The https://developer.mozilla.org/en-US/docs/Web/JavaScript[Javascript programming language] (not to be confused with the https://www.oracle.com/java/index.html[Java programming language]) is part of every web browser and just about every web site makes use of Javascript in some way. It might be the most heavily used programming language in the world. Most computer games are written in https://en.wikipedia.org/wiki/The_C_Programming_Language[C] or https://en.wikipedia.org/wiki/C%2B%2B[C++]. Native iPhone apps are written in https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html[Objective-C] or https://developer.apple.com/swift/[Swift], while native Android apps use  https://developer.android.com/studio/index.html[Google's version of Java] or 
+https://kotlinlang.org[Kotlin]. Statisticians and data scientists frequently use https://www.r-project.org/[R]. Scientists and engineers are partial towards https://www.mathworks.com/[MATLAB] or https://www.wolfram.com/mathematica/[Mathematica]. https://processing.org/[Processing] is a special purpose language for the visual arts. https://en.wikipedia.org/wiki/Verilog[Verilog] and https://en.wikipedia.org/wiki/VHDL[VHDL] are well established languages for designing electronic circuits. Another list that could go on. The https://www.tiobe.com/tiobe-index/[TIOBE Index] attempts to measure programming language popularity.
+
+NOTE: A _programming language_ is precise notation used for describing computations to be carried out by a computing device (_e.g.,_ a computer, smartphone, tablet, etc.). Like a natural language such as English or German, a programming language has an alphabet, words, grammar (syntax), and meaning (semantics).
+
+=== Software is taking over 
+
+Think about each of the following, what has changed, and if there is software behind that change.
+
+* How often do you go into a bank and interact with a teller? What do you use instead?
+
+* What has happened to book stores, from your local book store to large chain stores such as Barnes and Noble and Borders? 
+
+* When was the last time you used a travel agent to purchase an airline ticket?
+
+* What has happened to DVD stores such as Blockbuster? What has taken its place?
+
+* What is disrupting the hotel and taxi industry?
+
+* What has happened to music stores where we used to purchase albums and CDs?
+
+* When was the last time you took a roll of film to get developed?
+
+* When was the last time you wrote a letter and mailed it using the post office?
+
+* Your smart phone is a powerful computing device, how often do you look at in a day, and what do you use it for?
+
+* Thinking a little further in to the future what could happen to the millions of people who drive a vehicle for a living, from taxi drivers to truck drivers? 
+
+So why study computer science?  Software impacts almost all aspects of our life, it might be good to learn something about it. https://en.wikipedia.org/wiki/Marc_Andreessen[Marc Andreesen] developed Mosaic, one of the original web browsers, wrote a now somewhat dated but important article in the Wall Street Journal, https://a16z.com/2016/08/20/why-software-is-eating-the-world/[_Why Software Is Eating the World_].
+
+=== Hello World
+
+https://www.python.org/[Python] is a popular programming language used widely in industry and academia. It is used for everything from web programming, scientific computing, data science, to developing games. It is a powerful general purpose programming language and is often used in introductory programming courses because it is relatively easy to learn and get started with.  So lets get started.
+
+It is almost obligatory that https://en.wikipedia.org/wiki/%22Hello,_World!%22_program[Hello World] be the first program one writes in any programming language. Here is our first Python program:
+
+[source,python,numbered]
+----
+print("Hello, World!")
+----
+
+That is it, just the one line. And it does as you might expect, it prints the message `Hello, World!` on the _console_. But there is a lot going on in that one line, so lets break it down. 
+
+NOTE: The _console_ is a text window where Python sends the output of `print` statements and where the user can also enter data from `input` statements. 
+
+The _built-in function_ `print` prints, to the console, the values between the parentheses. In this case the value being printed is the _string literal_ `"Hello World"`.  A string literal in Python is a sequence of characters between double quotes or single quotes. More on string literals later.
+
+NOTE: In programming, a string literal is also called a _string constant_.
+
+The `print` function can take multiple values separated by commas.
+
+[source,python,numbered]
+----
+print("The value of pi squared is", 3.14159 * 3.14159)
+----
+produces the output 
+
+[source]
+----
+The value of pi squared is 9.869587728099999
+----
+
+And we can see right here that 1) `*` is part of Python, 2) that a value is on each side of the `*` (syntax), and 3) that `*` must mean _multiplication_ (semantics).
+
+NOTE: In mathematics a _function_ maps values in a _domain_ to values in a _range_. For example, the function stem:[f(x) = x^2] maps the input 2 to the output 4, 3 to 9,  1.5 to 2.25, etc. 
+
+Pictorially we can think of a function as a black box (we may not know how it works) where values come in (represented by the arrow coming in on the left) and the function produces values (the return results represented by the arrow coming out of the box on the right).  
+
+image::function-fx.png[align="center"]
+
+Values that are passed to a function are called _arguments_. The second argument in the call to the `print` function above is the mathematical expression `3.14159 * 3.14159`. In just about every programming language the asterisk character `*` represents multiplication. A value such as `3.14159` in mathematics is called a _real number_ (a number with a decimal point). For reasons I wont go into now, in computer science and programming we call real numbers _floating-point_ numbers, or _floats_ for short.
+
+There is a big difference between the string literal `"3.0"` and the floating-point literal `3.0`. 
+
+.What would get printed by the following print statement?
+[source,python,numbered]
+----
+print("3.0 * 3.0", 3.0 * 3.0)
+----
+
+[.result]
+====
+[source]
+----
+3.0 * 3.0 9.0
+----
+====
+
+Numbers without decimal points are called _integers_ or _ints_ for short. 
+
+=== Integer and floating-point literals
+
+Valid _integer literals_ include numbers such as 0, 1, 2, ... and also negative integers -1, -2, -3, ...
+
+IMPORTANT: Don't start an integer literal with a leading `0`, such as `09`. This is an error in Python.
+
+Floating-point literals include a decimal place, and include numbers such as `0.3`, `-0.3`, `.3`, `3.`, `-3.14159`. 
+
+Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write Avagadro's number as `6.022140857e23`.
+
+We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is not helpful. We should instead write `9.10938356e-31`.
+
+TIP: We will often also use the term _constant_ instead of _literal_. An integer literal is also called an _integer constant_. A floating-point literal is also called a _floating-point constant_. A string literal is also called a _string constant_.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The radius of an electron is _0.00000000000000281792_ meters. Express this number using Python's scientific notation.
+
+[.result]
+====
+`2.81792e-15  # meters`
+====
+
+=== Variables
+
+Let's return to our simple program ...
+
+[source,python,numbered]
+----
+print("The value of pi squared is", 3.14159 * 3.14159)
+----
+
+It would be convenient to give the value `3.14159` a name. An obvious choice being `pi`.  We do that in Python by defining a _variable_ using an _assignment statement_.
+
+[source,python,numbered]
+----
+pi = 3.14159
+----
+And we can rewrite our program as 
+
+[source,python,numbered]
+----
+pi = 3.14159
+print("The value of pi squared is", pi * pi)
+----
+
+To the left of the `=` sign is a _variable name_ and we read the assignment statement above as `pi` _gets the value of_ the value on the right of `=`, in this case `3.14159`.
+
+Variable names in Python should be meaningful. We could have said
+
+[source,python,numbered]
+----
+rumpelstiltskin = 3.14159
+print("The value of pi squared is", rumpelstiltskin * rumpelstiltskin)
+----
+
+but this makes the code less understandable.
+
+Variable names must start with either an alphabetic character (a - z, A - Z) or underscore, and may also contain digits. Variable names are also _case sensitive_, so `pi`, `Pi`, and `PI` are all different variable names.footnote:[In reality Python 3 is much more flexible on what characters can be used in variables names including Greek characters such as `α`,`β`,`γ`,`δ`,`Γ`,`Δ`. Maybe a better variable name than `pi` is `π`.]
+
+The value on the right of `=` can also be an _expression_.
+
+IMPORTANT: Students often confuse `=` with mathematical equality and think `3.14159 = pi` is the same thing as `pi = 3.14159`. The former is not valid Python.
+
+[source,python,numbered]
+----
+pi = 3.14159
+pi_squared = pi * pi
+print("The value of pi squared is", pi_squared)
+----
+
+IMPORTANT: Variables must be defined before they are used.
+
+The Python program 
+
+[source,python]
+----
+print(x)
+----
+
+would produce an error because the variable `x` does not have a value.
+
+IMPORTANT: Variable names are not string literals.
+
+.What is the difference between the two statements...
+[source,python,numbered]
+----
+print("The value of pi squared is", pi_squared)    <1>
+print("The value of pi squared is", "pi_squared")  <2>
+----
+
+[.result]
+====
+<1> prints `The value of pi squared is 9.869587728099999`
+<2> prints `The value of pi squared is pi_squared` +
+Almost certainly not what was intended.
+====
+
+=== Comments
+
+We can add notes to our program using a _comment_. In Python a one line comment starts 
+with a hashtag and continues to the end of the line.
+
+[source,python,numbered]
+----
+# define a variable pi
+pi = 3.14159
+----
+
+You can also use a comment to finish a line.
+
+[source,python,numbered]
+----
+pi = 3.14159   # define a variable named pi
+----
+
+=== Mathematical Expressions
+
+The arithmetic operators we will be using most are:
+
+[cols="1,8", width="50%", options="header"]
+.Mathematical Operators
+|===
+|Operator | operation
+|`+`
+|addition
+|`-`
+|subtraction
+|`*`
+|multiplication
+|`/`
+|floating-point division
+|`//`
+|integer division
+|`%`
+|remainder (modulus)
+|`**`
+|exponentiation
+|===
+
+Python has many more operators than shown in this table, but this is all we will need for now.  You can combine these operations in complicated ways including using parentheses. The _normal 
+order of operations_ you learned in grade school apply.
+
+. parentheses
+. exponentiation
+. multiplication, division (include remainder)
+. addition and subtraction
+
+If there are two operators at the same precedence then they should be evaluated from left to right.
+For example `4 - 5 + 3` should be evaluated as `(4 - 5) + 3` (which is `2`) and not `4 - (5 + 3)` 
+(which is `-4`).
+
+==== Examples
+
+What is the output of each of the examples below?
+
+.Example 1
+[source,python,numbered]
+----
+x = 3 + 5 * 9
+print(x)
+----
+
+[.result]
+====
+`48`
+====
+
+.Example 2
+[source,python,numbered]
+----
+x = 1/2 <1>
+print(x)
+----
+
+[.result]
+====
+`0.5`
+====
+<1> Recall that the single slash `/` is _floating-point division_, meaning the result is 
+a floating-point number.
+
+Contrast this with _integer division_ using the double slash operator `//`. 
+In integer division the result is always an integer.
+
+.Example 3
+[source,python,numbered]
+----
+w = 1 // 2
+x = 3 // 7
+y = 3 // 2
+z = 77 // 5
+print(w,x,y,z)
+----
+
+[.result]
+====
+`0 0 1 15`
+====
+ 
+As we will see, integer division plays an important role in many applications in computer science.
+
+.Example 4
+[source,python,numbered]
+----
+x = 7
+y = 9
+z = x + y // 4 * x - 2 ** 3
+print(z)
+----
+
+[.result]
+====
+`13`
+====
+
+Expressions produce a value. Something must be done with that value such as assign it to a variable or use it as an argument in a function call (such as `print`).  Consider the following Python program.
+
+[source,python,numbered]
+----
+two_pi = 3.14159 * 2 <1>
+two_pi * two_pi      <2>  
+print(two_pi)        <3>
+----
+<1> compute 2&pi; and store the result in the variable `two_pi`
+<2> multiply `two_pi` times `two_pi` _and do nothing with the result_ so Python just throws the value away. *This line is pointless*, it has no effect, but it is legal.
+<3> print `two_pi`
+
+=== Modular Arithmetic
+
+_Modular arithmetic_ is important in computer science.  Modular arithmetic is just arithmetic that uses the remainder after finding a quotient. For example, `7 // 3` is `2` with a remainder of `1`. The remainder operator is `%`. In this case `7 % 3` is `1`.
+
+.Check Yourself
+[source,python,numbered]
+----
+# What gets printed by the following?
+w = 1 % 2
+x = 3 % 7
+y = 3 % 2
+z = 77 % 5
+print(w,x,y,z)
+----
+
+[.result]
+====
+`1 3 1 2`
+====
+
+A couple of important properties to remember. If we are computing `n % m` and we know that `n` is less than `m` and they are both positive, then the result is always `n`. For example `278 % 455` is `278`.
+
+TIP: In mathematics we sometimes refer to modular arithmetic as _clock arithmetic_. You perform modular arithmetic all the time, you just don't know it. For example, if it is 2PM and we wanted to figure out what time it will be 14 hours from now, we can compute `(2 + 14) % 12`, which is 4. So it would be 4AM.  
+
+Computing the modulus of a negative number is also important, for example `-1 % 12`. Think of computing the modulus of a negative number as going _counter clockwise_ around the clock. For example, `-1 % 12` is `11`, and `-5 % 12` is `7`.  
+
+`-14 % 12` would be to go counter clockwise one full revolution leaving s with `-2 % 12`, which is `10`. 
+
+.Check Yourself
+[source,python,numbered]
+----
+# What gets printed by the following?
+w = -1 % 2
+x = -3 % 7
+y = -3 % 2
+z = -77 % 5
+print(w,x,y,z)
+----
+
+[.result]
+====
+`1 4 1 3`
+====
+
+TIP: We will see a use of computing the modulus of a negative number in cryptography.
+
+=== More on String Literals
+
+Strings are an important part of programming. Strings often seem boring but they are part of every piece of software and are often central to applications such web searching, texting, email, DNA sequence analysis, and cryptography.
+
+A string literal is a sequence of characters between double quotes. 
+
+[source,python]
+"This is a valid string literal"
+
+Or single quotes.
+
+[source,python]
+'and so is this'
+
+IMPORTANT: The opening and closing quotes in a string literal must match.
+
+[source,python]
+"but this string literal has an error, why?'
+
+[source,python]
+'and so does this, why?"
+
+But what if we want to include a single quote as one of the characters in our string literal? One way to do it is to use double quotes for the string literal.
+
+[source,python]
+"This isn't an error"
+
+This works because the outer double quotes demarcate the string literal and the single quote in `don't` is just a single quote character because it is inside the double quotes.
+
+The following is incorrect.
+
+[source]
+'It isn't easy to see that this is an error, why?'
+
+Python can't tell that the second single quote in `isn't` is part of the word but recognizes it as the closing quote matching the open quote.
+
+.What would get printed by the following print statement?
+[source,python,numbered]
+----
+print('He said "Do it!"') 
+----
+
+[.result]
+====
+`He said "Do it!"`
+====
+
+Things can get pretty crazy. How about if we wanted to print the string _He said "Don't do it!"_.  The issue here is that the string we are printing contains a mix of double and single quotes. The trick is that we need to _escape_ one of the quote characters. For example, if we need a single quote to be the single quote character and not the start or end of a string literal we can put a backslash character in front of it. 
+
+The statement
+
+[source,python,numbered]
+print('He said "don\'t" do it!') 
+
+produces the output 
+
+[source]
+He said "don't do it!"
+
+=== A note about spaces
+
+Spaces, like in writing, are used to separate words in Python and are often used to make code more legible. For example, in a `print` statement you can put a space after the comma that is separating values to print.
+
+[source,python,numbered]
+print(a, b, c, d) 
+
+which might look slightly less cramped than
+ 
+[source,python,numbered]
+print(a,b,c,d) 
+
+Spaces can also make code less readable,
+
+[source,python,numbered]
+print(a      ,           b,c,                       d) 
+
+is also valid -- but ugly.
+
+WARNING: Spacing at the start of a line that changes indentation can cause problems. See the next section.
+
+=== A note about indentation
+
+We will see later that indentation plays an important role in Python. For now just be aware that all Python statements that are _at the same level_ (and we wont really know what that means until we get to more complicated Python) should be indented exactly the same. 
+
+Here is an example. The following program is in error because the second statement is indented one space.
+
+[source,python,numbered]
+x = 4
+ print(x*x)
+
+TIP: Python is unique in the way that it treats indentation and spacing. Most other programming languages are not sensitive to the way that indentation is handled and programmers are free to indent 
+as they see fit to make their programs more legible. Not so in Python. Indentation is part of the syntax of the language.
+
+=== Syntax Errors
+
+We've already encountered ways in which we can violate the rules of the language. In computer programming we call these _syntax errors_. 
+
+NOTE: A _syntax error_ is an error that violates the rules of of how you put together the tokens (words) of the language. Syntax errors
+can be detected _before_ the program executes. 
+
+Find the syntax error in each of the following:
+
+.Example 1
+----
+print("Hello)
+----
+
+[.result]
+====
+Missing double quote closing the string lteral `"Hello"`.
+====
+
+.Example 2
+----
+print("Hello')
+----
+
+[.result]
+====
+Mismatched quotes.
+====
+
+.Example 3
+----
+print("Hello"
+----
+
+[.result]
+====
+Missing closing parentheses.
+====
+
+.Example 4
+----
+print("Hello" 77)
+----
+
+[.result]
+====
+Missing comma between `Hello` and `77`.
+====
+
+.Example 5
+----
+print(x)
+----
+
+[.result]
+====
+Variable `x` is not defined.
+====
+
+.Example 6
+----
+ x = 5
+print(x)
+----
+
+[.result]
+====
+Indentation error
+====
+
+.Example 7
+----
+x = 5 9
+print(x)
+----
+
+[.result]
+====
+Python expects there to be something _between_ the `5` and the `9` such as a mathematical operator `+` or `*`. Unless the programmer meant the integer `59` 
+in which case there should be no space at all.
+====
+
+.Example 8
+----
+5 = x
+print(x)
+----
+
+[.result]
+====
+Python expects there to be a variable to the left of `=`, not an expression.
+====
+
+.Example 9
+----
+x = 8 @ 7
+print(x)
+----
+
+[.result]
+====
+Python does not have an operator named `@`.
+====
+
+Some syntax errors are just nasty and difficult to find. The following one line program looks like it should have a syntax error. It is nonsensical but shows a common mistake of leaving off the parentheses when calling a function. But the program actually runs.
+
+.Example 8
+----
+print
+----
+
+[.result]
+----
+<built-in function print>
+----
+
+As you gain practice you will be able to quickly find syntax errors.
+
+NOTE: A _built-in function_ is a function that is predefined by Python and is part
+of the Python programming language. 
+
+=== Keyboard Input
+
+Python's `input` function allows the user to enter input from the keyboard. It takes a string as an argument and uses it as a prompt to display on the Python console. The `input` function is a different kind of function than the `print` function. The `print` function puts values on the Python console window whereas the `input` function produces a string value of the characters that the user typed.
+
+[source,python,numbered]
+name = input('Enter your name: ')
+print("Hello", name)
+
+ Enter your name: Hermione <1>
+ Hello Hermione
+ 
+<1> `Hermione` is what the user typed and then hit _enter_ on the keyboard.
+ 
+It is common to have users enter numbers and then use the values in mathematical expressions. The formula to convert a temperature in Fahrenheit to Celsius is 
+stem:[5/9(f-32)]
+
+[source,python,numbered]
+f = input('Enter a temperature (F): ')
+c = 5/9*(f - 32)
+print(f, "Fahrenheit is", c, "Celsius")
+
+Unfortunately `f` contains a string, not a number, and `(f - 32)` has an error because you can't subtract 32 from a string. For example, if the user typed `75` it would be like trying to 
+compute `"75" - 32`, which is as bad as trying to compute `"hello" - 32`. You need to first convert the value in the variable `f` to either 
+an integer or a floating-point number using either the `int` or `float` function.
+
+WARNING: The `input` function returns a string value, even if the user entered a number. You must convert the string to a number using the `int` or `float` function if you intend to use the input in a mathematical expression.
+
+.The `int` function
+
+The function `int` takes a string argument and attempts to convert it to an integer and return the resulting integer. For example `int("-36")` would return the integer `-36`. The `int` function is also used to convert a floating-point number to an integer by truncating the decimal point. For example `int(3.14159)` would return `3`. Sometimes `int` can result in a _run-time error_. For example `int("3.14159")` causes an error because the string cannot converted to an integer. What about `int('hello')`?
+
+NOTE: A _run-time error_ is an error that can only be detected when the program executes and not before. A run-time error is often called a _crash_. You'll often hear programmers say "The program is crashing" or "the program crashes on this line of code".
+
+.The `float` function
+NOTE: The function `float` takes a string argument and attempts to convert it to a floating-point number and return the resulting float. For example `int("-3.14")` would return the float `-3.14`. The `float` function is also used to convert an integer to a float. For example `float(3)` is `3.0`. Similar to `int` if the argument cannot be converted then a run-time error will result. For example `float('hello')`.
+
+
+Here is our modified program:
+
+[source,python,numbered]
+f = float(input('Enter a temperature (F): ')) <1>
+c = 5/9*(f - 32)
+print(f, "degrees Fahrenheit is", c, "degrees Celsius")
+
+<1> Notice the use of the function `float` to convert the string in `f` to a floating-point number. 
+
+Here is a sample run of the Fahrenheit to Celsius conversion program.
+
+ Enter a temperature (F): 83.5 <1>
+ 83.5 degrees Fahrenheit is 28.61111111111111 degrees Celsius
+
+<1> The user entered `83.5`
+
+The result `28.61111111111111` has an unhelpful number of digits. It looks ridiculous. Python has a built-in function `round` that rounds a floating-point number to a certain number of decimal places. For example, `round(3.157, 2)` will round `3.157` to two decimal places, producing the value `3.16`. Using this in our temperature conversion program:
+
+[source,python,numbered]
+f = float(input('Enter a temperature (F): '))
+c = 5/9*(f - 32)
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius") <1>
+
+<1> Use `round` to round the value in`c` to one decimal place.
+
+Here is a sample run of the Fahrenheit to Celsius conversion program.
+
+ Enter a temperature (F): 83.5
+ 83.5 degrees Fahrenheit is 28.6 degrees Celsius
+ 
+NOTE: There are two different kinds of functions in Python, those that _return_ values, and those that do not return a value but perform some other side effect. `print` is an example of a function that does not return a value but has the the side effect of printing a value on the console window. Contrast this to the `round` function which returns a rounded result.
+
+image::round.png[align="center"]
+
+==== Program Flow
+
+Python programs execute line-by-line top-to-bottom. Variables must be defined and assigned 
+values before those values can be used. Consider the previous Celsius-to-Fahrenheit conversion program. 
+
+The first assignment statement that executes defines the variable `f`. 
+
+----
+f = float(input('Enter a temperature (F): '))
+----
+
+The second statement execute defines `c` by _using_ the variable `f`
+
+----
+c = 5/9*(f - 32)
+----
+
+Finally, the third statement executed prints the result _using_ both `c` and `f`.
+----
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")
+----
+
+=== The `math` module
+ 
+Python has many support libraries that we can use. Think of 
+a support library as predefined functions and definitions that you can use. One such support library is called the _math module_. The math module contains many math related functions and some predefined constants. For example `math.sin(x)` computes the _sin_ of the argument stem:[x] (where stem:[x] is in radians).   
+
+NOTE: A _module_ is a named collection of related functions and definitions. Modules can be hierarchical, that is we can have modules defined inside other modules. Much like on your computer where you can have folders inside folders to organize your documents.
+
+To use the functions and definitions in the math module your program first needs to tell Python that we need it using an _import statement_.
+
+[source,python,numbered]
+----
+import math
+----
+
+One way to compute the square root of a number would be just to raise to the 1/2 power. 
+
+[source,pyhon]
+----
+print(2**.5)
+----
+
+Another way would be to use the math module's square root function.
+
+[source,python,numbered]
+----
+print(math.sqrt(2))
+----
+
+TIP: `import` is a Python _keyword_. A keyword is a word reserved for use by Python. 
+As such you should never use a keyword as a variable name (in fact that is an error). 
+
+A constant defined in the math module is `math.pi`
+
+[source,python,numbered]
+----
+print(math.pi)
+----
+
+[source,console]
+----
+3.141592653589793
+----
+
+NOTE: To reference functions and definitions in a module use _dot notation_. For example, `math.pi` or `math.sqrt(x)`.
+
+==== Function Composition
+
+A powerful programming technique is to call a function and use its return result as an argument in another function call. This is called _function composition_. Mathematically if stem:[f] and stem:[g] are functions that return a result we can _compose_ them as stem:[f(g(x))]. 
+
+For example, if we needed to compute stem:[sin(\sqrt{\pi/4})] ...
+
+image::function-composition.png[align="center"]
+
+.Version 1
+[source,python,numbered]
+----
+result = math.sin(math.sqrt(math.pi/4)) <1>
+print(round(result, 2)) <2>
+----
+<1> This is the function composition of `math.sin` and `math.sqrt`.
+<2> Here we are composing `print` and `round`
+
+We could have done all this in one (albeit less readable) line ...
+
+.Version 2
+[source,python,numbered]
+----
+print(round(math.sin(math.sqrt(math.pi/4)), 2))
+----
+
+Or we could have also broken it up into more statements ...
+
+.Version 3
+[source,python,numbered]
+----
+result1 = math.sqrt(math.pi/4)
+result2 = math.sin(result1)
+result3 = round(result2, 2) 
+print(result3)
+----
+
+These are all equivalent and one is not necessarily better than the other. A fourth version reuses the `result` variable in each statement and does not define new variables.
+
+.Version 4
+[source,python,numbered]
+----
+result = math.sqrt(math.pi/4)
+result = math.sin(result)
+result = round(result, 2) 
+print(result)
+----
+
+We will see over and over that there are many ways to express the same computation, some may be better than others because they are more readable or more efficient.
+
+https://docs.python.org/3/library/math.html[Python math module documentation]
+ 
+=== Kinds of Program Errors
+
+We have already discussed _syntax errors_ and _run-time errors_. 
+
+Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
+
+A _run-time_ error is an error that cannot be detected _before_ program execution but only while the program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple program:
+
+[source,python,numbered]
+----
+s = int(input("Enter a number: "))
+print("1000 divided by", s, "is", 1000/s) 
+----
+
+What would happen if the user entered a 0 at the input prompt? There is no way for Python to know what the user is going to type, and if they enter a `0`, then the program will _crash_ on line 2. If the user enters the word `"hello"` then the program will crash on line 1 when Python tries to convert `"hello"` to an integer.
+
+==== Logic Errors
+There are even more insidious and difficult to find errors. At least with a syntax error the IDE will tell you where in the code the error is, and when you have a run-time error Python will tell you exactly which line caused the crash. 
+
+Lets revisit our Celsius to Fahrenheit conversion program.  The program below does not contain a syntax error nor does it contain a run-time error. There is, however, a problem with it. Can you see it?
+
+.Logic error
+[source,python,numbered]
+----
+f = float(input('Enter a temperature (F): '))
+c = 5/9 * f-32
+print(f, "degrees Fahrenheit is", round(c,1), "degrees Celsius")
+----
+
+[.result]
+====
+There are parentheses missing around the `f-32`. This program executes just fine and produces a result, it is just the wrong result. This kind of error is a _logic error_. A logic error is an error where the program produces an incorrect result when it executes. 
+====
+
+=== Bits, CPUs, Interpreters, and Compilers
+
+At its most basic level everything about modern computing boils down to, at some base level, ones and zeros, true/false, on/off, yes/no, black/white. All information is _binary_. All decimal (base-10) numbers are expressed in binary (base-2). Digital images are just numbers, which are binary. Digital music on Spotify or Pandora, are numbers (hence binary) that represent sampled sound waves. Characters, letters, punctuation, all have a numeric equivalent, and are binary. Internet communication - binary, web pages - binary. Even computer programs get converted to binary. _All information is binary_.
+
+An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _byte_. We often talk of sizes of data in bytes. A megabyte (MB) is one million bytes. Strictly speaking when we use the term megabyte it usually means stem:[2^{20}] bytes rather then stem:[10^6] bytes. Below is a table of sizes, kilobytes, megabytes, ...
+
+.Sizes of data
+[cols="3"]
+|===
+
+| kilobyte (KB)
+| stem:[10^{3} = 1000]  (one thousand)
+| stem:[2^{10}] 
+
+| megabyte (MB)
+| stem:[10^{6} = 1,000,000] (one million) 
+| stem:[2^{20}] 
+
+| gigabyte (GB)
+| stem:[10^{9}] (one billion) 
+| stem:[2^{30}] 
+
+| terabyte (TB)
+| stem:[10^{12}] (one trillion)
+| stem:[2^{40}] 
+
+| petabyte (TB)
+| stem:[10^{15}] (one quadrillion) 
+| stem:[2^{50}] 
+
+| exabyte  (EB)
+| stem:[10^{18}] (one quintillion) 
+| stem:[2^{60}] 
+
+|===
+
+
+The CPU, (_Central Processing Unit_) or _processor_, carries out basic mathematical operations such as addition and multiplication. The CPU is connected to _main memory_ where it can store numbers (bits). Main memory is fast and _volatile_. That is, when the power is turned off main memory loses any information that was stored. Also connected to the CPU and memory are other hardware components such as hard drives, graphics card, and network hardware. Hard drives are _non-volatile_ memory. Turn off the power and they remember what was stored, they are also musch slower than main memory.
+
+Here is a high level layout of a computer.
+
+.Computer Organization
+image::comp_org.png[width=500]
+
+The basic operations of the CPU are called _instructions_, and the binary representation of instructions is called _machine code_. Many programming languages are compiled languages are translated to machine code by a _compiler_, C being the most common compiled language, where the program is converted straight to machine code that is then directly executed by the CPU.
+
+.C Program Compilation
+image::compiler.png[width=400]
+
+Python is a little different, it is not a compiled language but an _interpreted_ language. What that means is that there is another program called the _interpreter_ that reads the Python program and executes it directly. The Python interpreter itself is written in C.
+
+.Python Interpreter
+image::interpreter.png[width=600]
+
+NOTE: Python is actually a bit more complicated. The Python interpreteter actually compiles Python programs to a CPU independent intermediate language called 
+_byte code_. It is the Python program's byte code that is then executed the Python interpreter.
+
+
+=== Exercises
+
+.Exercise 1
+Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
+[source,python]
+----
+t = x
+x = y
+y = t
+----
+
+.Exercise 2 (Multiple choice questions)
+Consider the following code fragment.
+[source,python]
+----
+x = 2.0
+y = math.sqrt(x)
+----
+
+. `math` is a ...
+.. function
+.. module
+.. variable
+.. literal
+
+. `sqrt` is a ...
+.. function
+.. module
+.. variable
+.. literal
+
+. The line `x = 2.0` is an example of a/an
+.. variable
+.. floating-point literal
+.. function call
+.. assignment statement
+
+. The line `math.sqrt(x)` in the second line is an example of
+.. function composition
+.. a function call
+.. an argument
+.. a module call 
+
+. The line `y = math.sqrt(x)` in the second line `x` is an example of a
+.. variable
+.. module
+.. argument
+.. floating-point literal
+
+
+.C2F 
+Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
+
+.Windchill
+Write a Python program that calculates the wind chill temperature stem:[W] given the current temperature stem:[t] (in Fahrenheit) and the wind velocity stem:[v] (in MPH). The current temperature and the wind velocity should be entered by the user from the keyboard. +
+The https://www.weather.gov/media/epz/wxcalc/windChill.pdf[formula the National Weather Service uses] to calculate wind chill temperature is:
+
+stem:[W = 35.74 + 0.6215t + (0.4275t - 35.75)v^{0.16}]
+
+ Enter temperature (F): 32.0
+ Enter wind velocity (MPH): 10.0
+
+ The wind chill for 32.0 degrees with a
+ wind velocity of 10.0 MPH is 23.7 degrees.
+
+Print the result rounded to one decimal place, like the `23.7` above.
+
+.Area of circle
+The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a program that prompts the user for a radius and computes and prints the area of the circle rounded to 3 decimal places.
+
+.Volume of a Cone
+The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Python program that will read the radius and the height from the user and computes and prints the volume of the cone.
+
+.Population Growth
+In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will promt the user for a number of years and print the estimated population that many years from now.
+
+.Compound Interest
+Assume that stem:[C] is an initial amount of an investment, stem:[r] is the yearly rate of interest (e.g., stem:[.02] is stem:[2\%]), stem:[t] is the number of years until maturation, stem:[n] is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads stem:[C], stem:[r], stem:[n], and stem:[t] from the user and computes and then prints the final value of the investment to the nearest penny.
+
+.Change Making 
+Write a prgram that reads an amount of money that we need to make change for, and dispenses
+the correct amount of change (in U.S. currency). Assume that the 20 dollar bill is the largest denomination.  Here is an example execution of the program ...
+
+----
+Enter an amount to make change for: 78.98
+
+Your change is...
+
+3 twenties
+1 ten
+1 five
+3 ones
+3 quarters
+2 dimes
+0 nickels
+3 pennies
+
+---- 
+
+.Distance from origin
+The distance stem:[d] of a point stem:[(x,y)] from the origin, by the Pythagorean theorem, is stem:[d=\sqrt{x^2+y^2}]. Write a program that reads an stem:[x] and a stem:[y] from the user and computes the distance of the point from the origin.
+
+.Distance between two points
+The distance _between_ two points _(x~1~,y~1~)_ and _(x~2~,y~2~)_ is also easily derived using the Pythagorean theorem. It is stem:[d=\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}]. Write a program that reads two points from the user and computes and prints the distance between the two points.
+
+=== Terminology
+
+Every discipline has its own terminology (or _nomenclature_). Terminology is what allows us to _communicate intelligently with accuracy and precision_ about a discipline both amongst other programmers and to the lay-person. 
+
+TIP: Master the terminology. Every term below is defined somewhere in this text. Just search for it in the browser.
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* computer science
+* string literal (constant)
+* integer literal (constant)
+* floating-point literal (constant)
+* built-in function
+* function call
+* variable
+* _Hello World_ program
+* scientific notation
+* programming language
+* comment
+* crash
+* prompt
+* CPU
+* interpreter
+* domain (of a function)
+* binary
+* volatile memory
+* bit
+* compiler
+* range (of a function)
+* console
+* non-volatile memory
+* byte
+
+a|
+* argument
+* expression
+* value
+* syntax error
+* run-time error
+* function
+* keyword
+* module
+* escape character
+* assignment statement
+* function composition
+* logic error
+* kilobyte (KB)
+* megabyte (MB)
+* gigabyte (GB)
+* terabyte (TB)
+* petabyte (PB)
+* exabyte (EB)
+
+
+|===
+
+.Functions
+
+We have encountered several functions this chapter.
+
+* `print(arg1, arg2, ...)` +
++
+`print` does not produce a value but has the side effect of printing the values `arg1`, `arg2`, ... to the console.
++
+* `round(v, n)` -> `float` 
++
+`round` expects a float to that will be rounded to `n` decimal places. The rounded float is returned.
++
+* `math.sqrt(v : float)` +
++
+`math.sqrt` in the math module computes and returns the square root of `v`.
++
+* `int(x)`
++
+If `x` is a float then return the integer part of `x` by truncating the decimal part. If `x` is a string then attempt to convert the string to an integer. If it can't then error.
+* `float(x)`
+If `x` is an integer then convert it to a float. If `x` is a string then attempt to convert it to a float. If it can't then error.
+* `input(prompt)` + 
++
+print the string `prompt` to the console and wait for keyboard input. Return the string the user entered. No type conversion takes place. For example if the user types 3.14 then the string "3.14" is returned.

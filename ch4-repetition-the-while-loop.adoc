@@ -1,0 +1,650 @@
+== Repetition - The While Loop
+
+Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a Pygame display surface drawn halfway down the display and all the way to the left.
+
+NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc. The term https://en.wikipedia.org/wiki/Particle[_particle_] comes from physics and is an abstract representation of some object.
+
+When the particle is obviously something like a soccer ball I will often use the term _particle_ and _ball_ interchangeably. 
+
+[source,python,linenums]
+----
+import color, pygame
+
+pygame.init()
+side = 500
+win = pygame.display.set_mode((side,side))
+
+# properties of the particle
+radius = side//20
+px = radius   # particle is all the way to the left <1>
+py = side//2  # and halfway down display
+win.fill(color.white)
+
+# draw the particle
+pygame.draw.circle(win, color.blue, (px, py), radius)
+pygame.display.update()
+----
+<1> Where would the particle show up of we set `px = 0`
+
+What if we wanted to draw another particle right next to the first? The next particle's stem:[x] coordinate will be one diameter (or 2 radii) past the first particle's stem:[x] coordinate.
+
+[source,python,linenums]
+----
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+----
+
+How about a third particle?
+
+[source,python,numbered]
+----
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+----
+
+And a fourth particle? ... well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. This should feel wrong. And it is. What we want to do is repeat those two lines until the display is filled with particles.
+
+image::particles.png[align="center"]
+
+The _while loop_ repeats a body of code (indented) as long as some condition is true. The syntax is ...
+
+[source,python,subs="quotes"]
+----
+while (*_condition_*):
+    stmt
+----
+
+We want to keep repeating the two lines of code 
+
+[source,python,numbered]
+----
+px = px + 2 * radius
+pygame.draw.circle(win, color.blue, (px, py), radius)
+----
+
+as long as some condition is true. As long as the particle's right edge is to the left of the right side of the display.
+
+[source,python,numbered]
+----
+while px + radius < side:
+    px = px + 2 * radius
+    pygame.draw.circle(win, color.blue, (px, py), radius)
+----
+
+Eventually `px + radius` will become greater than `side` and the loop condition becomes false and then the loop _terminates_.
+
+Note: `True` and `False` are values in Python, just like the integer `1` and the float `3.14159`. `True` an `False are called _boolean_ values.
+
+
+=== Animation 
+
+One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
+
+. Erase the background
+. Update the an object's position (for example, the particle's stem:[x]-coordinate).
+. Redraw the object
+. introduce a slight delay to model (mimic or simulate) the passage of time
+
+[source,python,numbered]
+----
+while px + radius < side:
+    win.fill(color.white)                                    <1>
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)                                     <2>
+    px = px + 1                                              <3>
+----
+<1> erase the screen, effectively erasing the particle
+<2> delay 5 milliseconds
+<3> moving 1 pixel at a time makes the motion look smooth
+
+NOTE: A _sprite_ is a more general computer graphics term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
+
+=== Relational Operators
+
+So far we have only used the  _less than_ relational operator `<`, that compares two values. Table <<relops>> lists them all.
+
+[cols="1,8", width="50%", options="header"]
+.Relational Operators
+[[relops]]
+|===
+|Operator | operation
+|`<`
+|less than
+|`<=`
+|less than or equal to
+|`>`
+|greater than
+|`>=`
+|greater than or equal to
+|`==`
+|equal to
+|`!=`
+|not equal to
+|===
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Animate moving the particle to the bottom of the screen.
+
+[.result]
+====
+While the particle's stem:[y]-coordinate plus the radius is less than the 
+side length.
+
+[source,python,numbered]
+----
+while py + radius < side:  <1>
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    py = py + 1
+----
+<1> What would happen if we simply had `while py < side`?
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Animate moving the particle from right to left.
+
+[.result]
+====
+While the particle's stem:[x]-coordinate is greater than 0.
+
+[source,python,numbered]
+----
+while px > 0:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    px = px - 1
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Animate moving the particle to the top of the screen.
+
+[.result]
+====
+While the particle's stem:[y]-coordinate is greater than 0.
+
+[source,python,numbered]
+----
+while py > 0:
+    win.fill(color.white)
+    pygame.draw.circle(win, color.blue, (px,py), radius)
+    pygame.display.update()
+    pygame.time.delay(5)
+    py = py - 1
+----
+====
+
+TIP: Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
+
+=== Counting Loops
+A common loop pattern is to repeat a body of code an exact number of times.
+
+.Example
+Lets print a table of powers of two up to _2^10^_.
+
+[listing]
+----
+i   2^i
+==========
+0  | 1
+1  | 2
+2  | 4
+3  | 8
+...
+10 | 1024
+----
+
+[source,python,numbered]
+----
+# table header
+print("i     2^i")
+print("=========")
+
+i = 0                       <1>
+while i <= 10:              <2>
+    print(i, '\t|', 2**i)   <3>
+    i = i + 1               <4>
+----
+<1> In a counting loop we almost always initialize a variable to 0. It is a _convention_ to use `i`, `j`, and `k` as a name for a counting variable.
+<2> We want to include `10` in our table so we use `<=` here. Could we have also said `i < 11`? Yes.
+<3> `'\t'` represents the tab character. Without it the table columns would not be lined up neatly. Recall our discussion of _escape_ characters back in the section on string literals.
+<4> This increments the value of `i` by 1.  
+
+Lets be careful how we interpret the statement `i = i + 1`. This is an _assignment statement_, not a statement in mathematics (which would be nonsense). The way to read this is _the new value of `i` gets the old value of `i` plus one_. 
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What would happen if we forgot the line `i = i + 1`? 
+
+[.result]
+====
+Since `i` would never increment, the loop condition would never become false and the loop would never terminate. This is called an _infinite loop_. Furthermore,
+the program would keep printing the line `0  |  1`
+====
+
+TIP: A _convention_ is something that is common practice. Stick with conventions as it makes code more readable.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a while-loop that prints the integers from 1 to 10, one integer per line. 
+
+[.result]
+====
+Here is one way to do it.
+
+[source,python,numbered]
+----
+i = 1
+while i <= 10:
+    print(i)
+    i = i + 1
+----
+
+Does the following program work? If not, fix it.
+[source,python,numbered]
+----
+i = 1
+while i < 10:
+    i = i + 1
+    print(i)
+----
+
+You could fix it by starting `i` at `0` instead of `1`.
+
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Print the integers counting down from 10 to 0. When you are done print "Blast off!". Add a one second delay in between integers. Hint: use the `pygame.time.delay(n)` function where `n` is the number of 
+milliseconds to delay.
+
+[.result]
+====
+There is a 1000 milliseconds in a second.
+
+[source,python,numbered]
+----
+import pygame
+
+i = 10
+while i > -1:
+    print(i)
+    i = i - 1
+    pygame.time.delay(1000)
+print("Blast off!")
+
+----
+====
+
+=== Accumulating Loops
+Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where stem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
+
+[source,python,numbered]
+----
+n   = int(input("Enter n: "))   
+i   = 1                          <1>
+total = 0                        <2>                        
+
+while i <= n:                    <3>
+    total = total + i            <4>
+    i = i + 1                    <5>
+
+print("The sum from 1 to", n, "is", total)
+----
+<1> The loop counter. This could have started at 0 but including 0 in the total doesn't change it.
+<2> Keep track of the running total in `total`. I have purposefully avoided
+usng the variable named `sum` because `sum` is also the name of a built-in function.
+<3> Make sure to include `n`
+<4> This adds the current value of `i` to the running total in `total`. Again, interpret this as the assignment statement _the new value of_ `total` _gets the old value of_ `total` _plus_ `i`.
+<5> Increment the loop counter
+
+[TIP]
+====
+Programmers often use assignment statements such as `x = x + 1`. Most programming languages, Python included, has a `+=` operator and we can write
+`x = x + 1` as the more pithy `x += 1`.footnote:[The operator `+=` is really called the _in place add_ operator and can have a different behavior than one might expect.] The while loop in the example above could be rewritten to be 
+[source,python]
+----
+while i <= n:                   
+    total += i               
+    i += 1                   
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a program that computes the average of non-negative numbers (for example quiz grades) entered by the user. Quit reading numbers when the user has entered a negative number. Be careful, make sure you don't include the negative number in the average. Here is an example run of the program.
+----
+Enter a number: 3
+Enter a number: 9
+Enter a number: 7
+Enter a number: 8
+Enter a number: -1
+The average is  6.75
+----
+
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python,numbered]
+----
+n   = float(input("Enter a number: "))
+i   = 0
+total = 0
+
+while n >= 0:
+    i += 1
+    total += n
+    n = float(input("Enter a number: "))
+
+average = total / i
+print("The average is ", round(average, 2))
+----
+
+This is actually a little tricky. Notice the first line. We read our first number _before_ the loop. Once we get into the loop we know that we must have entered a non-negative number. 
+
+There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?footnote:[Hint: What if the very first number the user entered was negative?]
+====
+
+=== Exponential Growth (Example: Password Length)
+
+Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But how much harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possible alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters `~!@#$%^&*()_-+={[}]"':;>.<,?/|\`. That is 94 possible distinct characters that can be used in a password.footnote:[A rather arbitrary number, 94, but it is probably close]  
+
+There are stem:[94] one character passwords, stem:[94^2 = 8836] two character passwords, stem:[94^3 = 830584] three character passwords, and so on, so that if a password was ten characters long there are stem:[94^{10} = 53861511409489970176] possible passwords or approximately stem:[5 \times 10^{19}]. 
+
+Plotting stem:[94^i], where stem:[i] is the number of characters in the password, gives us the graph:
+
+image::94_to_the_i.png[width=480,height=360,align="center"]
+
+This is an example of _exponential growth_ in the number of characters in the password. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+What is the total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum stem:[94^1 + 94^2 + 94^3 + \cdots + 94^{10}].
+
+[source,python,numbered]
+----
+i = 1
+total = 0
+while i <= 10:
+    total += 94**i
+    i += 1
+
+print(total)
+----
+
+which would print `54440667446151152650`, which is also just bigger than stem:[5.4 \times 10^{19}]. 
+
+To emphasize the difference between a six character password and a ten character password, let's assume a malicious hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could attempt 1 billion passwords per second. 
+
+For a six character password that's stem:[94^6/10^9/60 \approx 11.5] minutes to try all possibilities. On average we will search about half the passwords, so on average it would take about  stem:[6]  minutes.
+
+For a ten character password,
+we have stem:[94^{10}/10^9] seconds. Dividing by  stem:[60]  to get minutes then another stem:[60] for hours, then  stem:[24] to get days, then stem:[365.25] to get years, we have stem:[94^{10}/10^9/60/60/24/365.25 = 1706] years! Again, this is to try them all, so on average we would find it after looking at half of the passwords, so it would only take about 
+stem:[850] years.
+
+NOTE: A _brute force attack_ is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
+
+=== Exponential Growth (Example: Population)
+
+Exponential growth arises in more subtle ways. In the previous example we were raising the base of the exponent, _94_, to a fairly large power.  What if the base were small, but still greater than one? Lets use an example of world population growth rate, which is currently estimated to be _1.11_% (or .011) per year in 2017.footnote:[https://www.census.gov] 
+
+Let stem:[t] be the current year and stem:[P_t] be the current population  at the beginning of year stem:[t]. So stem:[P_{t+1} = P_t + 0.011P_t] or, factoring out the stem:[P_t] then stem:[P_{t+1} = P_t(1.011)]. 
+
+One way of interpreting the formula stem:[P_{t+1} = P_t(1.011)] is to see that _the new value of stem:[P] is the old value of stem:[P] times 1.011_. We have seen this pattern before in code. It is just an assignment statement:
+
+[source,python]
+----
+P = P * 1.011
+----
+
+We can just keep iterating this statement after we give it an initial population.
+
+[source,python,numbered]
+----
+P = 7.5e9      # initial population
+P = P * 1.011  # population after year 1
+P = P * 1.011  # population after year 2
+P = P * 1.011  # population after year 3
+# and so on
+----
+
+Of course if we want to compute the population _P_ after stem:[n] years we should use a loop.
+
+[source,python,numbered]
+----
+P = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+n = int(input("Enter a number of years: "))
+
+while i < n:
+    P = P * (1 + r)
+    i = i + 1
+
+print("Final population: ", int(P))
+---- 
+
+Assume we have current population of roughly 7.5 billion.footnote:[https://www.census.gov] If we look at plots over a 10 year (top left), 100 year (top right), 1000 year (bottom left), and 5000 year (bottom right) time horizon then the year plot looks nearly _linear_. But as we progress up to 5000 years we see that this seemingly linear growth is a mirage and we have a curve that is definitely exponential.
+
+[cols="2"]
+|===
+| image:pop-10-year.png[width=300,height=300]
+| image:pop-100-year.png[width=300,height=300]
+
+| image:pop-1000-year.png[width=300,height=300]
+| image:pop-5000-year.png[width=300,height=300]
+|===
+
+NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where stem:[m] is the slope and stem:[b] is the stem:[y]-intercept.
+
+NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituting once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n], and the exponential is obvious. 
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+When using a loop like this we can easily ask alternative questions such as _how many years will it take to reach a population of 10 billion_? This is just a simple matter of rephrasing the loop condition.
+
+[.result]
+====
+[source,python,numbered]
+----
+p = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+
+while p < 10e9:
+    p = p * (1 + r)
+    i = i + 1
+
+print(i, "years to 10 billion") 
+----
+====
+
+.Check Yourself 
+The population growth rate is not constant. It fluctuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about _.025%_ per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximately stem:[9.5 \times 10^9].
+
+image:pop-decreasing-growth.png[align"center"]
+
+If the growth rate decreases long enough it will eventually become negative. Correspondingly the population will start shrinking. 
+
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python,numbered]
+----
+p = 7.5e9    # initial population 7.5 billion
+i = 0        # counter
+r = .011     # growth rate 1.1%
+n = int(input("Enter a number of years: "))
+
+while i < n:
+    p = p * (1 + r)
+    i = i + 1
+    r = r - .00025 <1>
+
+print("Final population: ", int(p))
+----
+<1> This is the only line that has changed from the original solution. The rate decreases by _.025%_ every year.
+====
+
+=== Checksums; detecting network communication errors
+
+A _checksum_ is an integer derived from a larger integer and is used to detect communication errors in a network.  There are many different checksum techniques but one of the easiest to understand is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.
+
+If a network was transmitting the number stem:[51623] we would compute the checksum by computing stem:[(5+1+6+2+3)\% 10 = 7] and we would then transmit the number stem:[516237]. We call stem:[7] the _checksum digit_, or just _checksum_ for short. What would happen if there was an error in the transmission and the number transmitted was stem:[596237]. We remove the checksum digit stem:[7], and compute 
+the checksum of stem:[59623] which is stem:[(5+9+6+2+3) \% 10 = 5] and we see that stem:[7 \neq 5] so there must have been an error in the transmission.
+
+Why does this work? This only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if we were transmitting the value stem:[516237] and there were two errors in the original communication such as stem:[526137] the checksum is stem:[7] in both. If there is only single error it makes sense that a change in any single digit would change the final checksum mod stem:[10].
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the checksum digit for the integer stem:[198723]?
+
+[.result]
+====
+It is stem:[0] because stem:[(1 + 9 + 8 + 7 + 2 + 3) \% 10 = 30 \% 10 = 0].
+====
+
+How can we write a program to compute a checksum? If we have an integer such as stem:[51623] we can get the last digit using stem:[\% 10]; for example, stem:[51623 \% 10 = 3]. Then we need to do the same to the remaining digits stem:[5162]. We can get that using _integer division_ by 10, stem:[51623 // 10 = 5162]. We just keep repeating this process adding up the remainder until the number has been reduced to stem:[0].
+
+We can put this in a function that takes an integer to compute the checksum of and return the checksum.
+
+[source,python,numbered]
+----
+def checksum(n):                 
+    total = 0                    
+                             
+    while n > 0:                 
+        total = total + (n % 10)  <1> 
+        n = n // 10               <2>
+    return total % 10            
+----
+<1> or `total += n % 10
+<2> or `n //= 10`
+
+.Review
+
+. Does the `checksum` function use any local variables?
+. `n` on line 1 is a pass:[________________________]
+. Line 1 is the function pass:[________________________] 
+. Lines 2-7 constitute the function pass:[________________________]
+. `total` on line is defined a pass:[______________________] variable.
+. What is the value of `checksum(91242)`
+
+How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
+
+[source,python,numbered]
+----
+check = checksum(x)   <1>
+data = x * 10 + check <2>
+----
+<1> Compute the checksum of `x`, the integer we want to transmit
+<2> Multiply `x` by 10 shifting it left, and then add in the checksum digit `check`.
+
+=== While-Loop Exercises
+
+.Exercise 0 
+If you haven't done the _Check Yourself_ exercises in this chapter do those now.
+
+.Exercise 1+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+_The Fibonacci Sequence_ is the sequence of integers stem:[0,1,1,2,3,5,8,13\cdots]. Each Fibonacci number is the sum of the previous two Fibonacci numbers. By definition the first two Fibonacci numbers are stem:[0] and stem:[1]. If the first Fibonacci number is stem:[0] then the seventh Fibonacci number is stem:[8]. Write a while-loop to compute the one-hundredth Fibonacci number. Hint: This is a little tricky. Use two variables, one to keep track of the current Fibonacci number and one for the previous Fibonacci number. 
+
+[.result]
+====
+The answer you get should be `218922995834555169026`.  This is a surprisingly large number. The Fibonacci sequence actually exhibits exponential growth. 
+====
+
+.Exercise 2
+Write a while loop to compute the sum of squares from stem:[1] to stem:[100], or stem:[1^2 + 2^2 + 3^2 + \cdots + 100^2].
+
+.Exercise 3
+How many times will `hello` be printed by the code below?
+
+[source,python,numbered]
+----
+i = 2
+while i < 11:
+    print("hello")
+	i = i + 2
+----
+
+.Exercise 4
+How many times will `hello` be printed by the code below?
+
+[source,python,numbered]
+----
+i = 12
+while < 18:
+    print("hello")
+	i = i + 1
+----
+
+.Exercise 4
+What is the output the code below?
+
+[source,python,numbered]
+----
+i = 1
+n = 10
+while i < n:
+    i = i * 2
+print(i)
+----
+
+.Exercise 5
+Write a function `num_digits` that will return the number of digits in an integer. For example,
+if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
+
+.Exercise 6
+The `*` operator can be applied to a string and an integer. For example, `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that reads an integer from the user and prints a triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisk and the sixth row has six asterisks as in the sample output below.
+----
+Enter n: 6
+*
+**
+***
+****
+*****
+******
+----
+
+.Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+[source,python,numbered]
+----
+n = int(input("Enter n: "))
+
+i = 1
+while i <= n:
+    print('*' * i) <1>
+    i = i + 1
+----
+<1> Print `i` asterisks and an end-of-line character.
+====
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* particle
+* loop condition
+* convention
+* counting loop
+* brute force attack
+* linear growth
+* boolean
+
+a|
+* loop body
+* sprite
+* accumulating loop
+* infinite loop
+* exponential growth
+* checksum
+
+|===
+

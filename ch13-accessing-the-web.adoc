@@ -1,0 +1,76 @@
+== Accessing the Web
+
+- geonames example
+
+[source,python,numbered]
+----
+import util
+
+# a module for making HTTP requests
+import urllib.request
+
+# have user enter a zipcode
+zipcode = input('Enter zipcode:')
+
+# construct URL for postalCodeSearch
+url = 'http://api.geonames.org/postalCodeSearch' + \
+      '?postalcode=' + zipcode + \
+      '&username=edharcourt' + \
+      '&country=US'
+
+# make the HTTP request
+data = urllib.request.urlopen(url)
+
+# for each line in the data
+for line in data:
+    line = str(line)
+
+    # extract the latitude
+    if line.find('<lat>') > -1:
+        start = line.find('<lat>') + len('<lat>')
+        end = line.find('</lat>')
+        lat = line[start:end]
+
+    # extract the longitude
+    if line.find('<lng>') > -1:
+        start = line.find('<lng>') + len('<lng>')
+        end = line.find('</lng>')
+        lng = line[start:end]
+
+    # extract the location name
+    if line.find('<name>') > -1:
+        start = line.find('<name>') + len('<name>')
+        end = line.find('</name>')
+        name = line[start:end]
+
+
+# Print basic infor extracted
+print('Latitude:', lat)
+print('Longitude:', lng)
+print('City:', name)
+
+# Look up weather data based on the latitude and
+# longitude that we just got from postalCodeSearch
+url = 'http://api.geonames.org/findNearByWeather' + \
+      '?lat=' + lat + \
+      '&lng=' + lng + \
+      '&username=edharcourt'
+
+# Make the HTTP request to get the weather data
+weatherdata = urllib.request.urlopen(url)
+
+# For every line in the weather data
+for line in weatherdata:
+    line = str(line)
+    if line.find('<temperature>') > -1:
+        start = line.find('<temperature>') + \
+                len('<temperature>')
+        end = line.find('</temperature>')
+        temp = line[start:end]
+
+# print the temperature in both celsius and fahrenheit
+print('Celsius:', temp)
+print('Fahrenheit', round(util.c2f(float(temp)), 1))
+----
+
+

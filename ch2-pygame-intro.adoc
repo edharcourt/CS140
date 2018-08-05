@@ -1,0 +1,647 @@
+== Pygame Intro
+
+A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
+
+To use Pygame there is some standard code we need at the start of every program (but only in programs that use Pygame).
+
+.hello_pygame.py
+[source,python,numbered]
+----
+import Pygame <1>
+pygame.init() <2>
+win = pygame.display.set_mode((600,600)) <3>
+----
+
+<1> import the Pygame module
+<2> Call a Pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
+<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a Pygame _display surface_.
+
+When we run the program above, a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
+
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
+
+NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (stem:[1024] pixels wide by stem:[768] pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometimes abbreviated _px_.
+
+NOTE: Most of the variables we have encountered so far have held integers or floats. The variable `win` above represents a _reference_ to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.  
+
+In the statement `x = 73` we say that `x` is _primitive_ and `win` is _reference_ to an object. +
+image:references.png[width=500,align="center"]
+
+NOTE: An _object_ in Python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
+
+For example, the Pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
+
+.Keeping the window from disappearing +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?
+
+[.result]
+====
+The `input` function waits for the user to type something on the keyboard and hit enter.
+
+.hello_pygame.py
+[source,python,numbered]
+----
+import Pygame 
+pygame.init() 
+win = pygame.display.set_mode((600,600)) 
+dummy = input("Hit <enter> to quit.") <1>
+----
+<1> We don't need the `dummy` variable since we aren't going to use what the user typed. We could have just said ...
+
+[source,python]
+----
+input("Hit <enter> to quit.")
+----
+====
+
+=== Colors
+
+Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, for _Red-Green-Blue_. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. [red]*Red* is (255,0,0), [green]*green* is (0,255,0), and [blue]*blue* is (0,0,255). Yellow is red and green, so that would be (255,255,0).
+
+NOTE: There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.footnote:[A popular _Integerated Development Environmnet_ is https://www.jetbrains.com/pycharm/[Pycharm] from https://www.jetbrains.com[Jetbrains]. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.  ]
+
+One common thing many of our Pygame programs will do is to define some colors. 
+
+.color.py
+[source,python,numbered]
+----
+# file color.py
+red         = (255,0,0)
+green       = (0,255,0)
+blue        = (0,0,255)
+yellow      = (255,255,0)
+white       = (255,255,255)
+black       = (0,0,0)
+aqua        = (0,255,255)
+burntsienna = (138,54,15)
+lightgray   = (200,200,200)
+----	
+
+We will soon get tired of retyping color definitions in our Pygame programs. We can place these definitions in their own file and name it `color.py`.
+We can then import `color.py` into our Pygame program with `import color` and voila! we have created our own Python module named `color` and we can reuse our color definitions without having to retype them every time.
+
+TIP: Put commonly used code in a separate file and import that file into each program that needs it. This allows you to _reuse_ code you have already written rather than duplicate it. 
+
+WARNING: Don't name your Python programs the same name as modules you commonly import. For example, if you name your program `pygame.py` and then in your program you have `import pygame` you are in the embarrassing situation of your program trying to import itself.
+
+.hello_pygame.py
+[source,python,numbered]
+----
+import color   # this is the color.py file we just wrote above
+import pygame
+
+pygame.init() 
+width = 600
+height = 500
+win = pygame.display.set_mode((width,height)) <1> 
+win.fill(color.burntsienna)                   <2>
+pygame.display.update()                       <3>
+input("Hit <enter> to quit.")                 <4>
+----
+<1> `win` (short for window) is a _display surface_ in pygame. We did not have to call it `win`. We could have called it any legal variable name.
+
+<2> Our first Pygame drawing command `win.fill` takes one argument that is an RGB color triple and fills the window with the color `burntsienna` from our color module.
+
+<3> When Pygame functions draw on the display the window is not actally updated until we call the Pygame function `pygame.display.update()`. 
+
+<4> Wait for the user to hit enter so the window doesn't disappear right away.
+
+=== Shapes
+
+In this section we learn how to draw basic shapes; a circle, ellipse, rectangle, line, and a single pixel on a surface.
+
+==== Rectangle 
+
+The Pygame function `pygame.draw.rect` draws a rectangle on a surface and takes either three or four arguments.
+
+NOTE: Pygame programs only ever have one display surface. We will see later on that our Pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
+
++++
+<code class="listingblock">
+pygame.draw.rect(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the rectangle on. For now we will just use the display surface `win` that was constructed using the `set_mode` function.
+
+_color_:: An RGB triple such as (0, 255, 255) or `color.yellow` (from our color module)
+
+_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner of the rectangle and the width stem:[w] and the height stem:[h] of the rectangle. All units are in pixels.
+
+_optional-line-width_:: If this argument is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle. 
+
+CAUTION: The upper left coordinate of a Pygame surface is the origin `(0,0)`. 
+
+.Example +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Place a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.
+
+[.result]
+====
+[source,python,numbered]
+----
+import pygame, color
+
+pygame.init()
+width = 600   # display surface 600 pixels wide
+height = 400  # display surface is 400 pixels high
+win = pygame.display.set_mode((width,height))
+
+win.fill(color.lightgray)
+
+# set up some variable for the rectangle
+r_width = width//3
+r_height = height//3
+r_x = width//2 - r_width//2
+r_y = height//2 - r_height//2
+pygame.draw.rect(win, color.yellow, (r_x,r_y,r_width,r_height))
+pygame.display.update()
+
+input("Hit <enter> when done")
+----
+====
+
+image::pygame-rect-window.png[width=533,height=367,align="center"]
+
+Notice the use of _integer division_ `//`. All of the Pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't mak sense to do this in fractions of a pixel. 
+
+.Self Check
+
+Assume we have a 600 X 400 Pygame display.
+
+.Top Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top left pixel in the Pygame window?
+
+[.result]
+====
+(0,0)
+====
+
+.Top Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the top right pixel in the Pygame window?
+
+[.result]
+====
+(599,0)
+
+Now, most likely what you said was (600,0). This is a common mistake, Remember
+the window is 600 pixels wide and we are starting counting at 0. So the 600th pixel
+is column 599. This mistake of being off by one, computer scientists quite literally call an _off by one error_.
+====
+
+.Bottom Left+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the bottom left pixel in the Pygame window?
+
+[.result]
+====
+(0,399)
+====
+
+.Bottom Right+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the coordinate of the bottom right pixel in the Pygame window?
+
+[.result]
+====
+(599,399)
+====
+
+.Proportional Graphics
+The yellow square is _proportional_ and relative to the size of the main Pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
+
+TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be 
+drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
+
+Contrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate `(100,200)` with a width of 300px and a height of 200px.
+
+[source,python]
+pygame.draw.rect(win, color.yellow, (100,200,300,200))
+
+then this would draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display. 
+
+Graphics using individual pixels only called _raster graphics_.
+
+==== Circle
+
+The Pygame function `pygame.draw.circle` draws a circle on a surface and takes either four or five arguments.
+
++++
+<code class="listingblock">
+pygame.draw.circle(<i>surface</i>, <i>color</i>, <i>xy</i>, radius, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the rectangle on. 
+
+_color_:: An RGB triple
+
+_xy_:: A tuple that represents the stem:[x] and stem:[y] coordinate of the _center_ of the circle.
+
+_optional-line-width_:: If this argument is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.
+
+Lets draw a dark gray circle centered in the upper left quadrant of the yellow square. We will do this proportionally, making the diameter of the circle 1/3 width of the quadrant. Calculating the `x` and `y` coordinates of the circle can be a little tricky. The width of the quadrant is `r_width//2`
+
+The stem:[x] coordinate of the circle is relative to `r_x`, the stem:[x] coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get
+ 
+[source,python]
+ul_c_x = r_x + r_width//4   # ul_c_x is short for upper left circle x coordinate
+
+Similarly the stem:[y] coordinate is 
+
+[source,python]
+ul_c_y = r_y + r_height // 4
+
+Remember that the circle function requires the radius but the problem stated that the 
+diameter of the circle is 1/3 the width of the quadrant. We know the width of the quadrant is `r_width//2` and 1/3 of that is `r_width//2//3` and a radius is still 1/2 of that, so we are left with
+
+[source,python]
+ul_c_radius = r_width//2//3//2 # or r_width // 12 
+
+Defining a new color `darkgray = (100,100,100)` in our color module and putting it all together we have 
+
+[source,python,numbered]
+ul_c_x = r_x + r_width // 4
+ul_c_y = r_y + r_height // 4
+ul_c_radius = r_width//2//3//2
+pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
+
+And we should get something that looks like
+
+image::upper-left-circle.png[width=300,height=200,align="center"]
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Draw another dark gray circle with the same radius centered in the upper right quadrant of the yellow rectangle.
+
+[.result]
+====
+The only thing that changes is the stem:[x] coordinate. The stem:[y] coordinate and the radius
+of the upper right circle are the same as the stem:[y] coordinate and radius f the upper left circle. One way to think about the stem:[x] coordinate is that it is 3/4 of the width of the rectangle. 
+
+[source,python,numbered]
+----
+ur_c_x = r_x + 3*r_width//4
+ur_c_y = r_y + r_height // 4    # same as upper left circle
+ur_c_radius = r_width//2//3//2  # same as upper left circle
+pygame.draw.circle(win, color.darkgray, (ur_c_x, ur_c_y), ur_c_radius)
+----
+
+image::upper-right-circle.png[width=300,height=200,align="center"]
+
+====
+ 
+.Complete program +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Here is the complete program so far with the two circles in the rectangle.
+
+[.result]
+====
+[source, python]
+----
+pygame.init()
+width = 600   # display surface 600 pixels wide
+height = 400  # display surface is 400 pixels high
+win = pygame.display.set_mode((width,height))
+
+win.fill(color.lightgray)
+
+# set up some variable for the rectangle
+r_width = width//3
+r_height = height//3
+r_x = width//2 - r_width//2
+r_y = height//2 - r_height//2
+pygame.draw.rect(win, color.yellow, (r_x,r_y,r_width,r_height))
+
+ul_c_x = r_x + r_width // 4
+ul_c_y = r_y + r_height // 4
+
+# width of quadrant is r_width//2 then 1/3 of that is
+# the diameter, then 1/2 of that for the radius
+ul_c_radius = r_width//2//3//2  
+pygame.draw.circle(win, color.darkgray, (ul_c_x,ul_c_y), ul_c_radius)
+
+ur_c_x = r_x + 3 * r_width // 4
+ur_c_y = r_y + r_height // 4
+ur_c_radius = r_width//2//3//2  # or r_width//12
+pygame.draw.circle(win, color.darkgray, (ur_c_x,ur_c_y), ur_c_radius)
+
+pygame.display.update()
+
+input("Hit <enter> when done")
+----
+====
+ 
+[WARNING]
+====
+Notice the line for calculating the stem:[x]-coordinate of the upper right circle
+
+ ur_c_x = r_x + 3 * r_width // 4
+
+where we specified that it three-fourths thw width of the rectangle. You might be tempted to write
+
+ ur_c_x = r_x + 3 // 4 * r_width
+
+Why is the incorrect? Because `3//4` is 0!
+====
+ 
+ 
+==== Ellipse
+
+An ellipse is an oval shape with a width and a height. In graphics an ellipse is very similar to a rectangle. In fact the function to draw an ellipse is almost exactly the same as the function to draw a rectangle.  The one part of drawing an ellipse that takes
+some getting used to it that the `(x,y)` coordinate of the ellipse is the `(x,y)` coordinate of the rectangle (or _bounding box_) that surrounds the ellipse.
+
+image::ellipse.png[align="center"]
+
+NOTE: The _bounding box_ is the invisible rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon. 
+
++++
+<code class="listingblock">
+pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to draw the ellipse on.
+
+_color_:: An RGB triple.
+
+_xywh_:: A four tuple (quadruple) that represents the stem:[x] and stem:[y] coordinate of the upper left hand corner _bounding box_, and the width stem:[w] and the height stem:[h] of the ellipse.
+
+_optional-line-width_:: same as rectangle and circle functions.
+
+These are, in fact, the same arguments for drawing a rectangle.
+
+Continuing our program from before, lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add `pink = (255, 20, 147)` to our `color.py` module.
+
+
+[source,python,numbered]
+----
+e_width = r_width // 2
+e_height = r_height // 4
+e_x = r_x + r_width // 2 - e_width // 2
+e_y = r_y + 2 * r_height // 3
+pygame.draw.ellipse(win, color.pink, (e_x,e_y,e_width,e_height))
+----
+
+Adding this code to our running example we should get something like ...
+
+image::ellipse2.png[width=300,height=200,align="center"]
+
+You have probably guessed by now that what is taking shape is a face, a Mr. or Mrs. Blockhead.
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Use an ellipse to add a nose above the mouth. +
+image:nose.png[width=300,height=200,align="center"]
+
+[.result]
+====
+There are lots of ways to do this, but you need to make it relative to the head. 
+[source,python,numbered]
+----
+n_width = r_width // 10  # 1/10th width of head
+n_height = r_height // 4 # 1/4 height of head
+n_x = r_x + r_width // 2 - n_width // 2  # centered horizontally
+n_y = r_y + r_height // 2 - n_height//2  # centered vertically
+pygame.draw.ellipse(win, color.blue, (n_x,n_y,n_width,n_height))
+----
+====
+
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+You can give the Blockhead a smile by drawing an ellipse over the top of the mouth shifted up slightly, and make it the same color as the background head. +
+image:smile.png[width=300,height=200,align="center"]
+
+[.result]
+====
+This is one line, drawing an ellipse shifted up, say 20% of the width of the mouth.
+[source,python,numbered]
+----
+pygame.draw.ellipse(win, color.yellow, (e_x, e_y, e_width, e_height - .2*e_height))
+----
+====
+
+.Exercise
+Give the Blockhead pupils by drawing a circle or ellipse in each eye. Make sure it is proportional!
+
+TIP: You can always check to see if you are making your shapes proportional if you change the dimensions of the Pygame display at the start of the program and make sure the image resizes appropriately.
+
+==== Lines
+
+You can draw a line in Pygame using the function `pygame.draw.line`.
+
++++
+<code class="listingblock">
+pygame.draw.line(<i>surface</i>, <i>color</i>, <i>start-xy</i>, <i>end-xy</i>, <i>optional-line-width</i>)
+</code>
++++
+
+_surface_:: The surface we are going to drawing the line on.
+
+_color_:: An RGB triple
+
+_start-xy_:: The stem:[(x,y)] coordinate of one endpoint of the line
+
+_end-xy_:: The stem:[(x,y)] coordinate of the other endpoint of the line
+
+_optional-line-width_:: The width of the line in pixels
+
+.Exercise  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Draw a cross through the left eye. +
+image:eye-cross.png[width=300,height=200,align="center"]
+
+[.result]
+====
+[source,python,numbered]
+----
+pygame.draw.line(win, color.white,
+                 (ul_c_x, ul_c_y - ul_c_radius),
+                 (ul_c_x, ul_c_y + ul_c_radius))
+
+pygame.draw.line(win, color.white,
+                 (ul_c_x - ul_c_radius, ul_c_y),
+                 (ul_c_x + ul_c_radius, ul_c_y))
+----
+====
+
+There are other Pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
+
+.Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Variables have been renamed to be more meaningful. For example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
+
+[.result]
+====
+include::python/blockhead.py[]
+====
+
+.Exercise
+Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional. 
+
+==== Sample Blockheads
+
+To give you some ideas here are some of the blockheads that have been turned in over the years as assignments.footnote:[Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, Jack Pattison, Dakota Golde, Tim Jones, and Dong Hae Jang for allowing me to use their Blockhead submissions.]
+
+.Example 1 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::sbh.png[width=300,height=200,align="center"]
+====
+
+.Example 2 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::minion.png[width=300,height=200,align="center"]
+====
+
+.Example 3 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::pumpkin.png[width=300,height=200,align="center"]
+====
+
+.Example 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::spongebob.png[width=300,height=200,align="center"]
+====
+
+.Example 5 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::grumpy.png[width=300,height=200,align="center"]
+====
+
+.Example 6 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::doodlebug.png[width=300,height=200,align="center"]
+====
+
+.Example 7 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::twjone16.png[width=300,height=200,align="center"]
+====
+
+.Example 8 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::dlgold16.png[width=300,height=200,align="center"]
+====
+
+.Example 9 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
++++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+
+[.result]
+====
+image::djang16.png[width=300,height=200,align="center"]
+====
+
+=== Exercises
+
+.Exercise 1 - Multiple Choice
+Answer questions about the following code fragment.
+[source,python,numbered]
+----
+import color   # this is the color.py file we just wrote above
+import pygame
+
+pygame.init()
+width = 600
+height = 500
+win = pygame.display.set_mode((width,height)) 
+win.fill(color.burntsienna)                   
+pygame.display.update()                       
+input("Hit <enter> to quit.")                 
+----
+
+. In the statement `win.fill(color.burntsienna)`, `win` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `win.fill(color.burntsienna)`, `fill` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `pygame.display.update()`, `update` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+. In the statement `pygame.display.update()`, `pygame` is an example of a/an (choose _the best_ answer)
+.. variable
+.. object reference
+.. function 
+.. method
+.. module
+
+.Exercise 2 - Python Values +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+So far we have encountered six different kinds of Python values. For example, integers are one. Name the others.
+
+[.result]
+====
+integers, floating-point numbers, strings, `None`, tuples, and object references 
+====
+
+.Exercise 3 - Smiley
+Write a Python/pygame program that reproduces the smiley below.
+
+image::smiley.png[width=300,height=200,align="center"]
+ 
+
+
+=== Terminology
+
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* pixel
+* reference
+* display surface
+* off-by-one error
+* vector graphics
+* object
+* bounding box
+
+a|
+* tuple
+* Integrated Development Environment (IDE)
+* surface
+* proportional graphics
+* raster graphics
+* method
+
+|===
+
+
+=== Pygame Functions
+
+* `pygame.init`
+* `pygame.display.set_mode`
+* `surface.fill`
+* `pygame.display.update`
+* `pygame.draw.rect`
+* `pygame.draw.circle`
+* `pygame.draw.ellipse`
+* `pygame.draw.line`
+* `pygame.draw.arc`

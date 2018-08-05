@@ -1,0 +1,937 @@
+== Image Processing
+
+There are many useful application for processing images. All of your smartphones have image processing software to related to the camera, and the fingerprint sensor on the device has image processing software for fingerprint matching. The software I'm using to write these notes has image processing capabilities to resize images.
+
+From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
+
+If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 30%? Theoretically this should make the image darker.
+
+To do this we need a systematic way to go through every pixel in the image so we don't miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way toprocess an image is row-by-row and top to bottom. 
+
+=== Interlude - processing rectangular data
+
+Processing a rectangular table of numbers is common in computer science. We have
+a systematic way in which we can go through each number using two nested for
+loops. For example, lets say we wanted to produce the following _9 X 9_
+multiplication table on the console:
+
+.Multiplication Table
+....
+1	2	3	4	5	6	7	8	9
+2	4	6	8	10	12	14	16	18
+3	6	9	12	15	18	21	24	27
+4	8	12	16	20	24	28	32	36
+5	10	15	20	25	30	35	40	45
+6	12	18	24	30	36	42	48	54
+7	14	21	28	35	42	49	56	63
+8	16	24	32	40	48	56	64	72
+9	18	27	36	45	54	63	72	81
+....	
+
+[source,python,numbered]
+----
+for i in range(1,10):              <1>
+    for j in range(1,10):          <2>
+        print(i * j, "\t", end="") <3>
+    print()                        <4>
+----
+<1> We call this the _outer_ `for`-loop. It constructs the rows in the table.
+<2> We call this the _inner_ `for`-loop. It is responsible for construction a single row.
+<3> Recall that the character `\t` represents the tab character. The third argument `end=""` is what we call a _named parameter_ in Python. The `print` function takes an optional argument whose corresponding parameter name is `end`. The `end` parameter specifies how we should handle the end of line. In this case we don't want the `print` statement to print the end-of-line character `\n`, so we suppress it with `end=""`.
+<4> This starts a new line.
+
+NOTE: A _matrix_ is a rectangular table of numbers. The branch of mathematics that deals with matrices is called _linear algebra_.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Rewrite the two nested `for`-loops above using two nested `while` loops. 
+
+[.result]
+====
+
+[source,python,numbered]
+----
+i = 1
+while i < 10:
+    j = 1
+    while j < 10:
+        print(i * j, "\t", end="")
+        j = j + 1
+    print()
+    i = i + 1
+----
+
+====
+
+=== Darken an Image
+
+In pseudocode we need something like ...
+
+[source]
+----
+for each row r in the image
+   for each column c in row r
+      get the RGBA components of pixel (c,r)
+	  reduce each component by 10%
+	  reset the pixel at (c,r) with the new RGBA values
+----
+
+A new Pygame function will assist us, `surface.get_at( (x,y) )` returns the RGBA tuple at column `x` and row `y`. For example, if `win` was our surface, we could get the pixel in the upper left corner of the image with ...
+
+[source,python]
+----
+(r,g,b,a) = win.get_at((0,0)) <1>
+----
+<1> To be more precise recall that functions like `get_at` _methods_ because they are called using an _object_.
+
+The Pygame function `surface.set_at( (x,y), RGBA)` modifies the pixel at coordinate `(x,y)` to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black ...
+
+[source,python]
+----
+win.set_at((0,0), (0,0,0)) <1>
+----
+<1> The `set_at` function does not return a value. Recall that functions that do not return a value really return the special value `None`.
+
+Here's a program that darkens the image below by 30%. We will review it line by line.
+
+[#img-bug]
+.https://500px.com/martinamm[Amm, Martin  `https://500px.com/martinamm` accessed 7/27/2017], found at  https://www.reddit.com/r/pics/comments/x503f/absolutely_stunning_picture_of_a_dragonfly_in_all/[reddit link]
+image::bug.jpg[align="left",width=500]
+
+[source,python,numbered]
+----
+import pygame, util
+pygame.init()
+
+image = pygame.image.load("bug.jpg")  <1>
+win = pygame.display.set_mode((image.get_width(), image.get_height()))  <2>
+image = image.convert_alpha()  <3>
+
+for y in range(image.get_height()):
+    for x in range(image.get_width()):
+        (r,g,b,a) = image.get_at((x,y))
+        r = r * .7  <4>
+        g = g * .7
+        b = b * .7
+        image.set_at((x,y), (r,g,b))
+
+win.blit(image, (0,0))
+pygame.display.update()
+util.wait_for_click()  <5>
+----
+<1> Load the image _before_ we construct the display so we know how large to make the display.
+<2> Construct a display surface that is the same size as the image.
+<3> Call the `convert_alpha()` method _after_ we load the image on line 4 and construct the display on line 5.  This is because the the `convert_alpha` function is making the format of the image compatible with the format of the display.
+<4> Decreasing a value by 30% is the same as multiplying it by `.7`.
+<5> Recall that the `wait_for_click()` function was defined in the section on event handling.
+
+And here is the result of darkening the image of the bug.
+
+.Darker Bug
+image::darker_bug.jpg[width=500]
+
+=== Converting an image to Grayscale (and more)
+
+The code for darking an image gives us a useful template for doing a variety of image processing examples. The pixels in a grayscale image (_i.e.,_ black-and-white) are
+always a shaed of gray. Recall that in a grey pixel the RGB values are all equal.
+
+Lets say in our color image we had a pixel that was a very dark color, `(93,15,13)`, 
+a dark maroon. We would expect the corresponding grayscale pixel to be dark as well, a dark gray. Conversely, we would expect a bright color such as yellow `(255,255,0)` to be a light gray. One technique is to average the pixels of the color and use the average for all thre color components. For example dark maroon would get converted to 
+stem:[(93 + 15 + 13)/3 = 40.3], or the dark gray `(40,40,40)`.  Yellow would get converted
+to stem:[(255 + 255 + 0)/3 = 170], or the light gray `(170,170,170)`. We can almost reuse the entire program for darkening an image. Just change the inner loop body to ...
+
+[source,python,numbered]
+----
+(r,g,b,a) = image.get_at((x,y))
+gray = (r+g+b)//3
+image.set_at((x,y), (gray,gray,gray))
+----
+
+The result is ...
+
+.Grayscale Bug
+image::gray_bug.jpg[width=500]
+
+What is cool with digital images is that we can do whatever we want to the pixel values. 
+The term _photographic negative_ comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becomes white. For colors, the photographic negative of a pixel means to subtract each color component from 255. 
+
+.Grayscale Bug with weighted RGB
+image::gray_weighted_rgb_bug.jpg[width=500]
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Compute and display the _photographic negative_ of the bug.
+
+[.result]
+====
+Just change the inner loop body to ...
+
+[source,python]
+----
+(r,g,b,a) = image.get_at((x,y))
+image.set_at((x,y), (255 - r, 255 - g, 255 - b))
+----
+
+The result is pretty cool looking.
+
+.Negative Insect
+image::negative_bug.jpg[width=500]
+====
+
+The possibilities are endless. What hapens if we switch the color components around? 
+For example, for every pixel stem:[(r,g,b)] change it to stem:[(g,b,r)]? Sometimes the effects are surprising and beautiful.
+
+[source,python]
+----
+(r,g,b,a) = image.get_at((x,y))
+image.set_at((x,y), (g,b,r))
+----
+
+.RGB to GBR Insect
+image::gbr_bug.jpg[width=500]
+
+=== Scaling an Image
+
+A common image processing operation is to resize an image so that it is larger or smaller. Lets think of this operation as a function that takes an image to resize along with the new width and new height of the resulting image.
+
+.Scaling an image
+image::scale.png[width=600]
+
+Until now we have had two ways to create a surface; the first is to use the `pygame.display.set_mode` function to create the special display surface. The second way was to use the `pygame.image.load` function to create a surface for an image. But our `scale` function will need to create an initially blank surface of an arbitrary width and height.
+
+The Pygame following line
+
+[source,python]
+----
+surf = pygame.Surface((w,h))
+----
+
+creates a new empty surface `surf` with width `w` and height `h` and assigns it to the variable `surf`. 
+
+Lets assume we have an image we want to scale and it is in a surface `image`. Furthermore assume we have an empty surface `surf` that will be the new scaled image. We have to go through every pixel in `surf` and find a picel in `image` to copy in to `surf`.
+
+.Computing coordinates in scaled image
+image::scale_xy.png[width=600]
+
+Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The stem:[x] coordinate 10 in the scaled image should correspond to stem:[x] coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.  
+
+In general if the width of the original image is stem:[w] and the width of the scaled image is stem:[w'] then an stem:[x] coordinate in the scaled image will correspond to the stem:[x] coordinate stem:[xw/w'] in the original image. The reasoning is the same for the stem:[y] coordinate.
+
+Here is the function `scale`.
+
+[source,python,numbered]
+----
+def scale(original, scaled_w, scaled_h):
+
+    scaled = pygame.Surface((scaled_w, scaled_h)) <1>
+    w_ratio = original.get_width() / scaled_w     <2>
+    h_ratio = original.get_height() / scaled_h    <3>
+
+    for row in range(scaled_h):                   <4>
+        for col in range(scaled_w):
+            x = int(col * w_ratio)                <5>
+            y = int(row * h_ratio)                     
+            (r,g,b,_) = original.get_at((x,y))    <6>
+            scaled.set_at((col,row), (r,g,b))     <7>
+
+    return scaled                                 <8>
+----
+<1> Create the new empty surface that will contain our scaled image.
+<2> Compute the ratio of the original image's width to the new scaled image's width. 
+<3> Compute the ratio of the original image's height to the new scaled image's height.
+<4> For every pixel in the scaled image ...
+<5> Compute the stem:[x] and stem:[y] coordinates of the pixel we need to grab in the original image.
+<6> Get the pixel in the original image.
+<7> And copy it to the new scaled image.
+<8> Don't forget this is a function that _returns_ a new image.
+
+CAUTION: Notice that we use floating-point division on lines 4-5. This is because we might be shrinking an image by a non-integral amount. For example, to shrink an image from _200 X 200_ pixels to _150 X 150_ then `w_ratio` and `h_ratio` need to be `1.33` and not `1`. When enlarging an image from _150 X 150_ to _200 X 200_ then `w_ratio` and `h_ratio` need to be `0.75` and not `0`.  On lines 9-10 we need to convert back to integer coordinates.
+
+==== Shrinking an image
+
+If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The caling ratios `w_ratio` and `h_ratio` are bth `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixel _(1,0)_.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Use the `scale` function to shrink an image 1/3 of its orgiginal height and width. Display the original image and center the smaller image in the original.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+import pygame, util
+pygame.init()
+
+image = pygame.image.load("bug.jpg")
+
+win = pygame.display.set_mode((image.get_width(), 
+                               image.get_height()))         <1>
+
+image = image.convert_alpha()                               <2>
+
+scaled_image = scale(image, image.get_width()//3,   
+                     image.get_height()//3)                 <3>
+
+
+win.blit(image, (0,0))                                      <4>
+
+tmp_x = win.get_width()//2 - scaled_image.get_width()//2    <5>  
+tmp_y = win.get_height()//2 - scaled_image.get_height()//2
+win.blit(scaled_image, (tmp_x, tmp_y)                       <6>
+
+pygame.display.update()
+util.wait_for_click()
+----
+<1> Create a display the size of the original image.
+<2> Always a good idea, but not always necessary.
+<3> Scale the original image.
+<4> Blit the original image on to the display.
+<5> Calculate the coordinates where `scaled_image` will be blitted.
+<6> Blit the scaled image.
+
+.Bug centered in a bug
+image::bug_in_a_bug.png[width=500]
+
+====
+
+Notice how we scaled the width and height of the image by the same proportion. That is, we kept the _aspect ratio_ of the image the same.
+
+NOTE: The _aspect ratio_ of an image is the ratio of an image's width divided by its height.
+
+We didn't have to keep the aspect ratio the same. The `scale` function will elongate, or stretch, an image along its horizontal or vertical axis.
+
+==== Enlarging an image
+
+Does our scale function work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a _200 X 200_ image to _400 X 400_. In this case the scaling ratios `w_ratio` and `h_ratio` are both `0.5`.  Pixel _(0,0)_ in the scaled image still maps to pixel _(0,0)_ in the original image. However, pixel _(1,0)_ in the scaled image also maps to pixel _(0,0)_ in the original image. In this case we end up duplicating pixels from the original image in the scaled image.
+
+Here is a small image of a rainbow toad that we will enlarge.
+
+.Rainbow Toad footnote:[`http://www.bbc.co.uk/nature/14151541` _Lost rainbow toad is rediscovered_, BBC Nature News, accssed on 7/27/2017]
+image::rainbow_toad_small.jpg[]
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Enlarge the image of the rainbow toad to 3 times its width and height.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+import pygame, util,color
+pygame.init()
+
+image = pygame.image.load("rainbow_toad_small.jpg")      <1>
+win = pygame.display.set_mode((image.get_width() * 3, 
+                               image.get_height() * 3))  <2>
+image = image.convert_alpha()                            <3>
+
+scaled_image = scale(image, image.get_width() * 3,       <4>
+                     image.get_height() * 3)
+
+win.blit(scaled_image, (0,0))
+
+pygame.display.update()
+util.wait_for_click()
+----
+<1> Or whatever you named your image.
+<2> Create a display 3 times the size of the original image.
+<3> Always a good idea, but not always necessary.
+<4> Scale the image.
+
+Here is the enlarged image of the rainbow toad.
+
+image::rainbow_toad_enlarged.png[]
+
+====
+
+Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixels. This is why an image often becomes blurry when enlarged past the point of its resolution.
+
+NOTE: For a digital image the _pixel resolution_ (or just _resolution_) is usually specified by the numbers of pixels wide and the number of pixels high. There also needs to be some indication of a physical dimension, often the dimensions of the display, or the number of pixels that will fit in a linear inch. 
+
+.Example
+The specification for the display on the Samsung Galazy S7 Edge smartphone is _1440 X 2560_ pixels at 534 pixels per linear inch (ppi). That means the width of the display should be stem:[1440/534 \approx 2.7 ] inches. The rear camera on the smartphone is 12MP (_i.e._ 12 megapixels, 12 million pixels) with an image dimension of _4032 px X 3024 px_. 
+
+NOTE: We say that an image is _pixelated_ when an image is enlarged and we can see the individual pixels in the original image.
+
+=== Smoothing an Image
+
+Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straightforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.
+
+One technique is called a _mean filter_. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for the green and blue components.
+
+.Mean of the Neighborhood
+image::mean_filter.png[width=500]
+
+NOTE: The _neighborhood_ of a pixel is comprised of the eight pixels that surround it.
+
+This is probably best handled by writing a function that takes a surface and an stem:[(x,y)] coordinate and returns an RGB triple that is the average color of stem:[(x,y)] and all of its neighbors. Using our box and arrow notation we have ...
+
+.Function `neighborhood_mean` of a pixel
+image::neighborhood_mean.png[width=500]
+
+The function header should be ...
+
+[source,python,numbered]
+----
+def neighborhood_mean(surf, x, y):
+    pass <1>
+----
+<1> Recall that we use the `pass` statement as a placeholder for the function body.
+
+We could, write nine separate `get_at` calls to get the color of each pixel, this is a bit tedious and not very general. What if we wanted to expand the neighborhood to go two pixels on each side? Notice how the nine pixels form a _3 X 3_ grid. If stem:[(x,y)] represents the center pixel in the grid, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can use our nested `for`-loop pattern.
+ 
+[source,python,numbered]
+----
+def neighborhood_mean(surf, x, y):
+
+    red_sum = 0                                   <1>
+    green_sum = 0
+    blue_sum = 0
+
+    for ny in range(y-1,y+2):                     <2>    
+        for nx in range(x-1,x+2):                 <3>
+            (r,g,b,_) = surf.get_at((nx,ny))      <4>
+            red_sum += r                          <5>
+            green_sum += g
+            blue_sum += b
+
+    red_avg = int(round(red_sum/9))               <6>
+    green_avg = int(round(green_sum/9))
+    blue_avg = int(round(blue_sum/9))
+
+    return (red_avg, green_avg, blue_avg)
+----
+<1> Local variables to keep the sum of each color component.
+<2> For each row in the _3 X 3_ grid. Why `y+2` and not `y+1`?
+<3> For each column in the _3 X 3_ grid. Why `x+2` and not `x+1`?
+<4> Get the neighborhood pixel color components.
+<5> The notation `var1 += var2` is shorthand for `var1 = var1 + var2`. So `red_sum += r` means `red_sum = red_sum + r`.
+<6> A color component must be an integer and averages are not integers; so round and convert to the closest integer.
+
+Now all that is left is to call `neighborhood_mean` for every pixel in the image, and write each pixel to an initially empty surface.  We might best think of this as a function `mean_filter` that takes a surface and returns a new surface.
+
+.Mean filter function
+image::mean_filter_func.png[width=500]
+
+There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don't have any neighborson the left and if the `neighborhood_mean` functions tries to access a negative _x_ coordinate the program will crash. 
+
+There are several ways we could handle this. We could modify `neighborhood_mean` to not access pixels outside of the boundary of the image, and only compute the mean of the neighbors the pixel does have. Pixels along the left edge (except the corners) would only have five neighbors. Corner pixels only have three neighbors, etc. We would have to keep a count of the number of actual neighbors because we can't always divide by nine.
+
+An easier way is to skip over the border pixels and skip the first and last row and column.
+
+[source,python,numbered]
+----
+def mean_filter(orig):
+    surf = pygame.Surface((orig.get_width(),        <1>
+	                       orig.get_height()))
+
+    for y in range(1,orig.get_height()-1):          <2>
+        for x in range(1, orig.get_width()-1):      <3>
+            (r,g,b) = neighborhood_mean(orig, x,y)  <4>
+            surf.set_at((x,y), (r,g,b))             <5>
+    return surf                                     <6>
+----
+<1> Create the new surface for the filtered image
+<2> Check the loop bounds. We are skipping the first and last row of pixels.
+<3> Skipping the first column and last column of pixels.
+<4> Call the `nighborhood_mean` function from above.
+<5> Wrte the new pixel to the new surface.
+<6> Don't forget to return the new surface.
+
+Here is the original enlarged, pixelated, image.
+
+.Pixelated Rainbow Toad
+image:rainbow_toad_enlarged.png[]
+
+And here is the filtered version.
+
+.Rainbow Toad after mean filtering
+image:filtered_toad.png[]
+
+The beautiful thing about writing this as a fuction is that if we wanted to filter theimage twice we can just use our trusty old _function composition_ and call `mean filter` two or ever three times.
+
+
+[source,python]
+----
+filtered_image = mean_filter(
+                     mean_filter(
+					     mean_filter(image)))
+----
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Complete the main program that calls `mean_filter` on an image.
+
+[.result]
+====
+
+[source,python]
+----
+import pygame, util
+pygame.init()
+
+image = pygame.image.load("rainbow_toad_enlarged.png")
+
+win = pygame.display.set_mode((image.get_width(), image.get_height()))
+win.blit(image, (0,0))
+pygame.display.update()
+
+print("Click to continue")
+util.wait_for_click()
+
+surf = mean_filter(image)
+
+win.blit(surf, (0,0))
+
+pygame.display.update()
+
+print("Click to continue")
+util.wait_for_click()
+----
+====
+
+=== Image file formats
+
+Computer and software manufactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
+
+.Lossy Compression
+We have already seen one way we can compress an image - just make it smaller. Our `scale` function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it _loses information_.
+
+NOTE: With _lossy compression_ data is either discarded or modified and cannot be reconstructed from the compressed data.
+
+Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also uses lossy compression.
+
+TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses advanced mathematics to achieve good, but lossy, compression.  
+
+.Lossless Compression
+Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word processing document. We couldn't have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called _non-lossy_ or _lossless_.
+
+The _Portable Network Graphics_ image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as stem:[255(300)]. This lossless scheme is called _run length encoding_, because to encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated. 
+
+TIP: PNG  footnote:[https://www.w3.org/TR/PNG/] One of the techniques used in PNG's lossless compression is called _Huffman Encoding_, a common technique discussed in a _Data Structures_ text.
+
+PNG and JPEG are probably the two most important image file formats, but there are other popular formates including GIF (_Graphics Interchange Format_), and BMP (_Bitmap file format_).
+
+WARNING: The moral of the story is that image file formats that use lossy compression (_i.e._, JPEG) will change the values of the colors in your file. For example, if you set a pixel to the color value `(23,99,140)` if might get changed when the file is saved as a JPEG to some other "nearby" value such as `(24,98,141)`. 
+
+=== Secrets
+
+As an exercise lets go through every pixel in the image of the red panda below, and if the red component of the pixel is odd, then color the pixel black. If it is even then color the pixel white. 
+
+.Red Panda (Ailurus Fulgens) `https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG`
+image::png/red_panda.png[width=450]
+
+CAUTION: When you right click on the image and save it, note that it is a PNG file. Make sure to save it as a PNG file.
+
+In previous examples we have loaded the image on a surface, processed the surface, and then blitted the image surface on the display surface. In this particular case let me suggest that we immediately blit the image to the display, and process the display surface. This will add a bit of dramatic effect.  
+
+[source,python,numbered]
+----
+import pygame, util, color
+pygame.init()
+image = pygame.image.load("red_panda.png")
+
+win = pygame.display.set_mode((image.get_width(),
+                               image.get_height()))
+win.blit(image, (0,0))                                      <1>  
+pygame.display.update()
+
+for y in range(win.get_height()):
+    for x in range(win.get_width()):
+        (r,g,b,_) = win.get_at((x, y))
+        if r % 2 == 1:                                      <2>
+            win.set_at((x, y), color.black)                 <3>
+        else:
+            win.set_at((x, y), color.white)                 
+    pygame.display.update()                                 <4>
+	pygame.time.delay(5)                                    <5>
+
+util.wait_for_click()
+----
+<1> Show the image of the fox.
+<2> If the red component is odd make the pixel black, otherwise white.
+<3> Because we want to animate this process we are modifying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
+<4> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
+<5> This delay is for dramatic effect only.
+
+After running this code on the image of the red panda you'll see a secret hidden message. 
+
+.The secret message +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+&nbsp;
+
+[.result]
+====
+image::png/secret.png[width=450]
+====
+
+==== Hiding a message in an image
+
+This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Why is it important that we subtract one and not add one to make a pixel even?
+
+[.result]
+====
+The red component could be 255, adding one would make it 256, which would cause a run-time error indicating that a color value was out of range.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function that takes a surface and sets all of the red pixels to even values that are at most one less than their orginal value. 
+
+[.result]
+====
+
+[source,python, numbered]
+----
+def make_red_even(image):                             
+    for y in range(image.get_height()):               <1>
+        for x in range(image.get_width()):
+            (r, g, b, _) = image.get_at((x, y))
+            if r % 2 == 1:                            <2>
+                image.set_at((x, y), (r - 1, g, b))   <3>
+    return image
+----
+<1> We should be getting comfortable with this nested `for`-loop pattern for accessing each pixel on a surface.
+<2> This checks to see of the red component is odd.
+<3> If it is odd, then decrease the red value by one and set it.
+
+Notice that `make_red_even` does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface `image`) are really a _reference_ to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the original image unmodified. When we should create a new surface object or  modify an existing one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.
+====
+
+Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain's a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in pygame.
+
+The following two lines create a surface with the text `Attack At Dawn` rendered on it.
+
+[source,python]
+----
+my_font = pygame.font.SysFont("Veranda", 48)                  <1>
+secret = my_font.render("Attack At Dawn", False, color.black) <2>
+----
+<1> Create a _font object_, with 48pt text size. If the font Veranda is not on the system Pygame will use a default font.
+<2> Create a surface with the text `Attack At Dawn` on it using the color black (the third argument). The boolean value `False` means do not use _antialiasing_ to smooth the edges on the text, but we want the image to be pure black-and-white, so we don't antialias.
+
+NOTE: _Antialiasing_ uses shades of a color to smooth edges. 
+
+You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the button does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
+
+.Antialiasing
+image::png/antialias.png[width=600]
+
+Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresponds with coordinate stem:[(0,0)] in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.
+
+.Overlaying a secret on image
+image::png/panda_overlay_secret.png[]
+
+The following program for hiding a message in an image puts it all together.
+
+.Hiding a message in an image `encrypt.py`
+[source,python, numbered]
+----
+import pygame,util,color
+pygame.init()
+
+# Main Program
+image = pygame.image.load("some_image.png")                <1>
+
+image = make_red_even(image)                               <2>
+
+font = pygame.font.SysFont("Veranda", 40)
+msg = font.render("Python is Awesome", False, color.black) <3>
+
+for y in range(msg.get_height()):                          <4>
+    for x in range(msg.get_width()):
+        (r,g,b,_) = msg.get_at((x,y))                      <5>
+        if (r,g,b) == color.black:                         <6>
+            (ir,ig,ib,_) = image.get_at((x,y))             <7>
+            image.set_at((x,y), (ir+1,ig,ib))              <8>
+
+pygame.image.save(image, "new_image.png")                  <9>
+----
+<1> Make sure the image is a PNG. Why? Because of lossless compression.
+<2> Call the `make_red_even` function.
+<3> Create a secret message `Python is Awesome`
+<4> Go through each pixel in the secret message.
+<5> Get the message pixel and ...
+<6> Check if it is black.
+<7> If it is black then we need to get the corresponding pixel in the image and ...
+<8> make the red component f the image pixel odd. Hence the `ir+1`.
+<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
+
+WARNING: The above program can crash if the image containing the message is larger than the image that is hiding the message.
+
+Look at how we check if a color is black on line 15.
+
+[source,python]
+----
+if (r,g,b) == color.black:
+    ...
+----
+
+This is checking using _tuple equality_ by comparing each value in the `(r,g,b)` tuple againast the tuple specified in `color.black` which is `(0,0,0)`.
+
+Comparing tuples like this is handy, but if you didn't know you could do this another way would be to use _logical and_.
+
+[source,python]
+----
+if r == 0 and g == 0 and b == 0:
+    ...
+----
+
+Finally, since we are certain that the message contains only black `(0,0,0)` or white `(255,255,255)` pixels, we could probably get away with just compairing one of them.
+
+=== Case Study: Schelling's Segregation Model
+
+In 1969 and 1971 the economist Thomas Schelling published two now famous papers _Models of Segregation_.footnote:[Schelling, Thomas. _Models of Segregation_, American Economic Review, 1969, 59(2)] and _Dynamic Models of Segregation_.footnote:[Schelling, Thomas, _Dynamic Models of Segregation_, Journal of Mathematical Sociology, 1(2)]. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn't just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background. 
+
+Consider the following map of New York City.
+
+.Segregation map of NYC.footnote:[Creative Commons `https://www.flickr.com/photos/walkingsf/4981444199/`]
+image::nyc_segregation.jpg[]
+
+In this map each red dot represents a Caucasian household, blue represents a black household, yellow a Latino household, and green an Asian household. The segregation is obvious. 
+
+Reasons for segregation are varied and complex.  Schelling tried to abstract away (that's what a model does) details and propose something much more simple. People are agents living on a grid and follow some simple rules. People generally have choices of where they might live; if they don't like where they are currently living they can move.  
+
+.Schelling Agent Grid
+image::schelling_grid.jpg[]
+
+In this grid we have green agents and blue agents. White represents empty locations on the grid where agents can move.  Schelling suggested that there is a threshold of the number of unlike neighbors an agent might tolerate before they decide to move. In this case we have a green agent marked with an X who is deciding if they should move. There are two empty cells, so X has six neighbors, two of which are like them, or stem:[2/6 = 1/3 = \overline{.33}]. If the threshold were _if less than stm[1/3] of my neighbors are like me then I'll move_. In this case X would stay put. On the otherhand if the threshold were stem:[1/2] then X would move.
+
+How should we pick a place to move? In this case there are two choices, the lower left cell or upper right cell.  We could be smart about it and search for an empty cell that meets the threshold in which case the lower left cell would be the place.
+
+If *X* moves to the lower left we have 
+
+.Moving to lower left
+image::schelling_grid1.jpg[]
+
+In this case *X* now has stem:[1/2] half its neighbors like them. But what if they moved to the upper right?
+
+.Moving to upper right
+image::schelling_grid2.jpg[]
+
+Here *X* now has 0 neighbors like them, and they will most likely move again in the next round.
+
+Keeping in mind that empty cells could be far away on a large grid and not necessarily a neighboring cell, we might try for something simpler and search for an empty cell at random. It turns out either method will work. But from what Python we know now choosing a cell at random is the easier solution.
+
+The scenario just discussed for *X* is just one cell. We need to repeat this process for every cell in the grid. But when should we stop the process? When all agents are "happy" and we have no more agents moving. The question is what do we think will happen in the long run? Even with a relaive low threshold such as stem:[1/3]? 
+
+In pseudocode here is the process we outlined:
+
+. Randomly populate a grid with roughly equal numbers of green and blue agents and empty cells.
+. Repeate until no more cells move
+  .. For each cell stem:[(x,y)] in the grid 
+    ... if stem:[(x,y)] is an empty cell then continue on to the next cell
+	
+    ... Otherwise count the like neighbors of cell stem:[(x,y)]
+	
+	... if the threshold is not met then otherwise search for an empty cell and move there
+	
+To tackle the complexity of writing this program lets try and break this down into some functions. For step 1 lets write a function `randomly_populate` that takes a surface and randomly assigns each cell to be one of green, blue, or empty (white) with equal probability. (We could also modify this so that one color is less populated than another).
+
+For step 2.a.ii we can write a function `like_neighbors` that, given an agent's coordinate, counts the number of neighbors that are like that agent. This should feel familiar; reminiscent of the `neighborhood_mean` function where we looked at the neighbors of a pixel.
+
+For step 2.a.iii lets write a function `find_empty` that finds an empty cell.
+
+==== Step 1: Randomly populate
+
+The function `randomly_populate` fills the grid with blue, green, or empty (white) agents (pixels).
+
+[source,python,numbered]
+----
+def randomly_populate(grid):                      <1>
+    for y in range(grid.get_height()):            
+        for x in range(grid.get_width()):
+            r = random.random()                   <2>
+            if r < 1/3:                           <3>
+                grid.set_at((x, y), color.blue)
+            elif r < 2/3:                         <4>
+                grid.set_at((x, y), color.green)
+            else:                                 <5>
+                grid.set_at((x, y), color.white)
+----
+<1> Modify `grid` through its reference rather than create a new empty surface. 
+<2> A random float between 0 and 1. There is a reason we are using `random()` here
+and not `randrange()`. Later on it will be easier to make the populations of agents different, for example 25% green and 50% blue.
+<3> Cell is a blue agent with 1/3 probability stem:[(0 < r < 1/3)].
+<4> Cell is a green agent with 1/3 probability stem:[(1/3 < r < 2/3)].
+<5> The remaining stem:[1/3] are empty cells.
+
+If we were to run `randomly_populate` we will end up with a starting grid that might look something like the following, equal parts green, blue, and white.
+
+.Initial randomly populated grid
+image::schelling_initial.jpg[]
+
+==== Step 2: Count like neighbors
+
+In the Schelling model we need to count the number of neighbors of an agent that are _like_ (the same color as) that agent. For a given agent at coordinate stem:[(x,y)] we will have `count_like_neighbors` return the proportion of the eight neighboring agents that are like agent at coordinate stem:[(x,y)]. What should we do about empty cells? Presumably an agent neither likes nor objects to being adjacent to an empty cell, so we will not count themas a neighbor. Consequently, if there is one empty neighbor, and there are two like neighbors our function should return return stem:[2/7].
+
+[source,python,numbered]
+----
+def count_like_neighbors(x,y,c,grid):                   <1>
+  like = 0                                              <2>
+  nc = 0                                                <3>
+  size = grid.get_width()                               <4>
+  for row in range(y-1, y+2):                           <5>
+    for col in range(x-1, x+2):                         <6>
+      (r,g,b,_) = grid.get_at((row % size, col % size)) <7> 
+	
+      if (r,g,b) != color.white:                        <8>
+        nc = nc + 1
+          
+      if (r,g,b) == c:                                  <9>
+        like = like + 1
+
+  if nc == 0:                                           <10>
+    return 0
+  else:
+    return (like-1)/nc                                  <11>
+----
+<1> `(x,y)` is the coordinate of the current agent. Presumably `c` is blue or green becuase we should not be counting the neighbors of an empty cell.
+<2> Local variable `like` will be the count of the number of like nightbors.
+<3> Local variable `nc`, or _neighbor count_, will be the count the number of non-empty neighbors.
+<4> Local variable `size` is the width and height of `grid`.
+<5> This loop pattern we have seen before for looking at the _neighbordhood_ of a cell. `row` ranges from the row above the agent to the row below. 
+<6> `col` ranges from the column to the left of the agent to the column to the right.
+<7> We are calculating the coordinate mod `size` which means we are wrapping around the edges. This is just an easy way to avoid checking for out of bounds conditions.
+<8> If the neighbor is not empty then increment the neighbor count.
+<9> If the neighbor color is the same as the agent then increment the like count.
+<10> If there are no neighbors then return zero, otherwise we run the risk of dividing by zero.
+<11> We are subtracting one from `like` because the agent at `(x,y)` counted itself.
+
+WARNING: We always need to watch out for dividing by zero.
+
+Function `count_like_neighbors` is a little subtle. We had to be careful about divinding by zero and and an agent not counting itself as a _like_ neighbor.
+
+==== Step 3: Finding an empty cell
+
+When an agent moves it needs to find an empty cell to move to. We could search for an empty cell in one of several ways, we could just start looking for an empty cell in the grid starting at the top and working our way down using our nested `for`-loop pattern. This would give preference to empty cells towards the top and slowly fill in the grid entirely from the top.
+
+Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.
+
+Function `find_empty` randomly searches for an empty cell in the grid returning its coordinate when it has found one.
+
+[source,python,numbered]
+----
+def find_empty():
+    while True:                                   <1>
+        x = random.randrange(grid.get_width())    <2>
+        y = random.randrange(grid.get_height())   
+        (r,g,b,_) = grid.get_at((x,y))
+        if (r,g,b) == color.white:                <3>
+            return (x,y)
+----
+<1> It looks like this loop will run forever, the function retrns breaking out of the loop when an empty cell is found.
+<2> Generate a random coordinate.
+<3> White means empty, so return the coordinate.
+
+
+==== Putting it all together
+
+With function `randomly_populate`, `count_like_neighbors`, and `find_empty` we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will keep it as a square grid 400 on a side.
+
+[source,python,linenums,options="nowrap"]
+----
+pygame.init()
+n = 400
+grid = pygame.display.set_mode((n,n))
+randomly_populate()
+threshhold = 1/3
+done = False
+
+while not done:
+    moved = 0                                            <1>
+	
+    for y in range(grid.get_height()):                   <2>
+        for x in range(grid.get_width()): 
+            (r,g,b,_) = grid.get_at((x,y))               <3>
+
+            if (r,g,b) != color.white:                 
+                like = count_like_neighbors(x,y,(r,g,b)) <4>
+
+                if like < threshold:                     <5>
+                    (ex,ey) = find_empty()               <6>
+                    grid.set_at((ex,ey), (r,g,b))        <7>
+                    grid.set_at((x,y), color.white)      <8>
+                    moved = moved + 1                    <9>
+
+    pygame.display.update()                              <10>
+    print(moved)                                         <11>
+    done = (moved == 0)                                  <12>
+
+util.wait_for_click()
+----
+<1> Keep processing the grid until there are no more moves (every agent is happy)
+<2> Go through the entire grid using our normal nested `for`0loop pattern.
+<3> Get the agent at the cell, which could be no agent (empty cell).
+<4> If the cell is not empty then we have an agent and get the proportion of their like neighbors.
+<5> If the proportion is less than the threshold then the agent needs to move.
+<6> Find an empty cell for the agent to move to.
+<7> Put the current agent at the empty location.
+<8> Make the agent's old coordinate empty.
+<9> Increment the `moved` count
+<10> Update the display to animate the progress of the model
+<11> print the number of agents that moved. This should be decreasing.
+<12> A little trick, but this sets `done` to `True` if `moved` is `0`. Could have used an if-statement.
+
+When we run the Schelling model with equal proportions of agents and a threshold of stem:[1/3] we notice that there is segregation. 
+
+.Schelling model with 1/3 threshold and equal agent proportion
+image::schelling_1_3.jpg[]
+
+If we make one of the agents a minority the results are even more pronounced. Below we have 25% of the agents are blue, 50% are green, and 25% empty cells.
+
+.Schelling model with 1/3 threshold and 25% blue, 50% green agents
+image::schelling_25_50_25.jpg[]
+
+These results were pretty surprising. If fewer than 33% of an agent's neighbors are like them then the agent moves with the end result being a fair amount of segregation. That is, with fairly tolerant agents, we see segregation.
+
+One thing to check with any model is to see if it matches our intuition. If we lower the threshold, that is we make the agents even more tolerant, then we should see less segregation. This is indeed the case.
+
+.Schelling model with 15% threshold and equal proportion agents.
+image::schelling_thresh_15.jpg[]
+
+If we increased the threshold to say 50% and also introduce a minority agent population we should see even more dramatic segregation. And we do.
+
+.Schelling model with 50% threshold and 25% blue 50% green agents.
+image::schelling_50_25_50_25.jpg[]
+
+If, however, we make agents very intolerant by having, say a 70% threshold, and we have enough diversity in the population it can be very hard to please an agent and the simulation doesn't every really settle down. 
+
+==== Schelling Summary
+
+The Schelling Model was one of the early models in an area called _Agent Based Modeling_.footnote:[Nigel Gilbert, _Agent Based Models_, SAGE Publications, 2008] In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.footnote:[https://ccl.northwestern.edu/netlogo/].
+
+=== Exercises
+
+. Collage
+
+. Add a third color agent to the Schelling model
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * grayscale
+ * default parameter
+ * alpha transparency
+ * neighborhood
+ * resolution
+ * MP
+ * JPEG
+ * BMP
+ * antialiasing
+
+a|
+ * named parameter
+ * matrix
+ * pixelated
+ * aspect ratio
+ * ppi
+ * PNG
+ * lossy compression
+ * non-lossy (or lossless) compression
+
+|===
+

@@ -1,0 +1,18 @@
+[preface]
+== Preface
+
+I have been teaching the _Introduction to Computer Programming_ course at St. Lawrence University since 2003. This course at St. Lawrence is the first course in the Computer Science major sequence and also satisfies a general education requirement called _Quantitaive and Logical Reasoning_. As such, it assumes no prior programming  experience, and students from across campus in a variety of disciplines take this course. These notes reflect the topics and content I have been teaching the past several years and are meant to be a companion for my lectures. For the time being these notes do not necessarily hold together as a standalone resource for learning programming in Python, though that is my ultimate goal. These notes are by no means complete with regards to the Python programming language. The examples and topics covered are only a small subset of what could be covered. I have chosen them because they are fun, engaging, and relevant to a liberal arts education and are drawn from a variety of disciplines including art, biology, physics, mathematics, and of course, computer science.
+
+If you happen upon these notes outside of my course and you find them useful I would appreciate hearing about it. 
+
+Goals of the course include:
+
+* Appreciate the complexity of the software systems we encounter every day.
+* Emphasize problem soving in a precise and logical framework
+  (the Python programming language).
+* Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
+
+=== Acknowledgments
+
+These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
+https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax]footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.

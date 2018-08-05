@@ -804,7 +804,7 @@ Canton, NY 13625</p>
 <h2 id="_introduction"><a class="anchor" href="#_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em>Computer Science</em> is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, &#8230;&#8203; a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (<em>e.g.,</em> Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacolgists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.</p>
+<p><em>Computer Science</em> is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, &#8230;&#8203; a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (<em>e.g.,</em> Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacologists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.</p>
 </div>
 <div class="paragraph">
 <p>A <em>computer program</em> (<em>i.e.,</em> software) is developed and written in a <em>programming language</em>. There are, literally, thousands of programming languages, mostly dead now, <a href="https://en.wikipedia.org/wiki/List_of_programming_languages">but there are many hundreds still in active use</a>.<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.</p>
@@ -8341,7 +8341,7 @@ one and itself.  If a number is not prime then it has <em>factor</em> that is no
 <p>modifications to gamblers ruin</p>
 </li>
 <li>
-<p>modify brownian</p>
+<p>modify Brownian</p>
 </li>
 <li>
 <p>modify fractal</p>
@@ -8365,7 +8365,7 @@ one and itself.  If a number is not prime then it has <em>factor</em> that is no
 <p>random process</p>
 </li>
 <li>
-<p>determinstic</p>
+<p>deterministic</p>
 </li>
 <li>
 <p>Gambler&#8217;s Ruin</p>
@@ -11609,7 +11609,7 @@ The above program can crash if the image containing the message is larger than t
 <p>The scenario just discussed for <strong>X</strong> is just one cell. We need to repeat this process for every cell in the grid. But when should we stop the process? When all agents are "happy" and we have no more agents moving. The question is what do we think will happen in the long run? Even with a relaive low threshold such as \(1/3\)?</p>
 </div>
 <div class="paragraph">
-<p>In pseudcode here is the process we outlined:</p>
+<p>In pseudocode here is the process we outlined:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -11688,7 +11688,7 @@ The above program can crash if the image containing the message is larger than t
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>A random float between 0 and 1. There is a reason we are using <code>random()</code> here
-and not <code>randrange()</code>. Later on it will be easier to make the populations of agents different, for xample 25% green and 50% blue.</td>
+and not <code>randrange()</code>. Later on it will be easier to make the populations of agents different, for example 25% green and 50% blue.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -13710,7 +13710,7 @@ are in the file we will have to keep a count of the number of grades.  We also n
 <div class="sectionbody">
 <div class="paragraph">
 <p>Cryptography is the science and related mathematics of sending messages from a sender to a receiver
-<em>securely</em> such that someone listening in (an evesdropper) cannot understand the message.
+<em>securely</em> such that someone listening in (an eavesdropper) cannot understand the message.
 In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
 some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we wil study one cryptographic system, that is known to be completely secure and is relatively easy to understand and implement.</p>
 </div>
@@ -14360,7 +14360,7 @@ alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  Wit
 <p>Random number generators found in programming languages are really <em>pseudorandom</em>. That is the numbers generated are not really random but only appear to be random. They are fine for use in simulations such as Brownian motion or computer games, but their predictability make them unsuitable for cryptography or even games used in casinos. We say that they are not <em>cryptographically secure</em>. The acronyms we use for a <em>pseudo random number generator</em> is <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> and the tounge twister <em>cryptographically secure pseudo random number generator</em> is <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator">CSPRNG</a>.</p>
 </div>
 <div class="paragraph">
-<p>Fortunately the Python module <a href="https://docs.python.org/3/library/secrets.html"><code>secrets</code></a> provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called <em>entropy</em>. Entropy is built up over time, for example, times between ketboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.</p>
+<p>Fortunately the Python module <a href="https://docs.python.org/3/library/secrets.html"><code>secrets</code></a> provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called <em>entropy</em>. Entropy is built up over time, for example, times between keyboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.</p>
 </div>
 </div>
 <div class="sect2">
@@ -15708,7 +15708,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-04 23:48:54 EDT
+Last updated 2018-08-05 14:40:43 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

@@ -1,0 +1,398 @@
+== Cryptography
+
+Cryptography is the science and related mathematics of sending messages from a sender to a receiver 
+_securely_ such that someone listening in (an eavesdropper) cannot understand the message. 
+In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
+some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we wil study one cryptographic system, that is known to be completely secure and is relatively easy to understand and implement. 
+
+In cryptography we always use three actors. Alice and Bob are trying to communicate in secret with Eve the evesdropper from listening. The framework is outlined in the figure below.
+
+.Cryptography
+image::alice_eve_bob.png[align="center"]
+
+Alice (the sender) _encrypts_ the message _attack at dawn_ using a special key (similar to a password) to Bob (the receiver) without Eve being able to intercept the message and understand it.  Bob _decrypts_ the encrypted cleartext (the _ciphertext_) using the very same key. This implies that Alice and Bob had to get together first to agree on a key.
+
+=== The Caesar cipher
+
+The first cryptosystem we will study is really silly, and is easy to break. However, there are some good ideas in this system that we can use later to make a more secure cryptosystem.  For simplicity, assume that we are communicating using lower case characters from the Latin alphabet (_i.e.,_ a-z). We can relax those conditions later. The idea of the Caesar cipher is that for each character in the plaintext we _shift_ the character some distance down the alphabet. For example, if we used a shift of three, then an `a` in the plaintext would turn into a `d`. A `b` would become an `e`, etc., and a `w` becomes `z`. What about `x`, `y`, and `z`? These wrap around to `a`, `b`, and `c`. If we index each character in the alphabet by its position then shifting a character amounts to adding the position of the character to the shift mod 26.
+
+Why 26? Well 26 s the number of characters in our alphabet.
+
+----
+a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+----
+
+For example, to encrypt _attack_ by a shift of ten we take the position of `a`, which is 0 and add 10 mod 26 = 10. The tenth letter of the alphabet is `k`.  
+
+.Encrypting _"attack"_ with a shift of ten.
+[cols="20,10,50,20", width="60%", options="header"]
+|===
+| Plaintext | _i_ | `(i + 10) % 26` | Ciphertext
+| `a` | 0   | `(0 + 10) % 26 = 10` | `k` 
+| `t` | 19  | `(19 + 10) % 26 = 3` | `d`
+| `t` | 19  | `(19 + 10) % 26 = 3` | `d`
+| `a` | 0   | `(0 + 10) % 26 = 10` | `k`
+| `c` | 2   | `(2 + 10) % 26 = 12` | `m`
+| `k` | 10  | `(10 + 10) % 26 = 20` | `u`
+|===
+
+TIP: Adding a random number to a numeric representation of the cleartext characters is a key operation in cryptography. 
+
+In the Caesar cipher the random number is the shift, and the numeric representation of the cleartext character is its position in the alphabet. 
+
+NOTE: The Caesar cipher is sometimes called the _rotation cipher_ or the _shift cipher_.
+
+The process of decrypting is exactly the same, except rather than add the shift, we subtract the shift.
+For example, given the ciphertext _"kddkmu"_ and a shift of ten we compute `("k" - 10) % 26 = 0`, and `0` is of course the letter `a`.
+
+.Decrypting _"kddkmu"_ with a shift of ten.
+[cols="20,10,50,20", width="60%", options="header"]
+|===
+| Ciphertext | _i_ | `(i - 10) % 26` | Cleartext
+| `k` | 0   | `(10 - 10) % 26 = 0` | `a` 
+| `d` | 19  | `(3 - 10) % 26 = 19` | `t`
+| `d` | 19  | `(3 - 10) % 26 = 19` | `t`
+| `k` | 0   | `(10 - 10) % 26 = 0` | `a`
+| `m` | 2   | `(12 - 10) % 26 = 2` | `c`
+| `u` | 10  | `(20 - 10) % 26 = 10` | `k`
+|===
+
+One important aspect of this cipher is that Alice and Bob must get together and agree on a private key (the shift) beforehand.
+
+To implement the Caesar cipher we need to be able to turn a character into its position in the alphabet. For example, the letter `m` into `12`. We also need to be able to perform the inverse operation. Given the position in the alphabet what is the chaacter at that position? For example, turning `12` back into `m`.
+
+.Think About +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+How can you turn a letter into its position in the alphabet?
+
+[.result]
+====
+Hint: Set up a variable `alphabet` initialized to the string `"abcd...z"`.
+What would the following print?
+
+[source,python]
+----
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+print(alphabet.find('a'))
+print(alphabet.find('z'))
+print(alphabet.find('m'))
+----
+Turning a letter into its position in the alphabet is a matter of calling the 
+`find` method on the string object `alphabet`.
+
+.Answer
+[source,python]
+----
+0  <1>
+25 <2>
+12 <3>
+----
+<1> The position of `a`
+<2> The position of `z`
+<3> The position of `m`
+====
+
+.Think About +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+How can you turn an integer from 0 to 25 into the corresponding letter?
+
+[.result]
+====
+Hint: What is the opposite of calling `find`?  What would get printed by the following?
+
+.Answer
+[source,python]
+----
+print(alphabet[0], alphabet[25], alphabet[12])
+print(alphabet[alphabet.find('x')], alphabet.find(alphabet[23]))
+----
+
+[source,python]
+----
+a z m <1>
+x 23  <2>
+----
+<1> The characters at positions 0, 25, and 12.
+<2> Indexing and `find` are inverses of each other in this case.
+====
+
+Lets put this all together to implement a function encrypt that takes sme cleartext and a shift and produces a ciphertext as showin in the figure below.
+
+.Function `encrypt`
+image::encrypt.png[width=500]
+
+[source,python]
+----
+import string
+def encrypt(cleartext,shift):
+
+    alphabet = string.printable                        <1>
+    ciphertext = ''                                    <2>
+    for ch in cleartext:                               <3>
+        chpos = alphabet.find(ch)                      <4>
+        cipherpos = (chpos + shift) % len(alphabet)    <5>
+        ciphertext += alphabet[cipherpos]              <6>
+    return cipher
+----
+<1> This is where we make it more general and handle any printable character. Not just lower case `a` to `z`.
+<2> Ciphertext is initially empty
+<3> for each character in the cleartext
+<4> Find the position of the character in the alphabet
+<5> Compute the position of the ciphertext character
+<6> Convert that position into a character
+
+Calling
+
+```
+print(encrypt("Attack at dawn!", 13))
+```
+prints `NGGnpx7nG7qnJA.` (including the period).
+
+How do we write decrypt?  Recall that decrypting is just subtracting the shift rather than adding. So the line 
+```
+cipherpos = (chpos + shift) % len(alphabet)
+```
+would change to
+```
+cipherpos = (chpos - shift) % len(alphabet)
+```
+
+Or, rather than rewrite the entire function, we just notice that we could call encrypt with a negative shift.
+```
+print(encrypt("NGGnpx7nG7qnJA.", -13))
+```
+and we get the original `Attack at dawn!` message.
+
+So what is wrong with the Caesar cipher? Just about everything. But the main problem is that there are only as many different shift possibilities as there are characters in the alphabet, and it would be pretty easy to write a program to try them all.
+
+=== Substitution Cipher
+
+Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet to? For example
+
+[source,python]
+----
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+key = scramble(alphabet)
+print(key)
+----
+
+Might print `thubrwfzqpcjeovkmsgdxailny`. In the _substitution cipher_ an `a` would map to a `t` and a `b` would map to an `h`, and so on.
+
+----
+0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+t  h  u  b  r  w  f  z  q  p  c  j  e  o  v  k  m  s  g  d  x  a  i  l  n  y
+---- 
+
+Then to convert from a cleartext character to a ciphertext character it is as straightforward as finding the position of the cleartext character in the alphabet and returning the corresponding ciphertext character at that position. For example, using th key above, the expression `key[alphabet.find('h')]` would evaluate to the character `z`.   The inverse operation needed for decrypting is, given a ciphertext character, find the the corresponding cleartext character. 
+This is easy too. The expression `alphabet[key.find('z')]` would evaluate to `h`.
+
+The function `encrypt` now takes a cleartext message and a key (i.e., a scrambled alphabet) and returns 
+the ciphertext. The function `decrypt` takes a ciphertext message _and the same key that was used to generate the ciphertext_, and returns the cleartext.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write the functions `encrypt` and `decrypt` for the substitution cipher. Assume you can call the `scramble` function to generate a key that can be shared between `encrypt` and `decrypt`.
+
+[.result]
+====
+Here is encrypt.
+
+[source,python]
+----
+def encrypt(cleartext, key):
+
+    alphabet = string.printable
+    ciphertext = ''
+
+    for ch in cleartext:
+        ciphertext += key[alphabet.find(ch)]
+
+    return ciphertext
+
+----
+
+And here is `decrypt`.
+
+[source,python]
+----
+def decrypt(ciphertext, key):
+    alphabet = string.printable
+
+    cleartext = ''
+
+    for ch in ciphertext:
+        cleartext += alphabet[key.find(ch)]
+
+    return cleartext
+
+----
+
+Here's a main program that can be used to test `encrypt` and `decrypt`.
+
+[source,python]
+----
+import string
+key = scramble(string.printable)           <1>
+secret = encrypt("Attack at dawn!", key)   <2>
+print(decrypt(secret, key))                <3>
+----
+<1> Create the key by scrambling all of the printable characters in python.
+<2> Encrypt _Attack at dawn!_. 
+<3> Verify that what decrypt returns is indeed _Attack at dawn!_.
+====
+
+Of course, once again, Alice and Bob must share the secret key, which this time is a little more difficult that sharing an integer shift.  How many possible keys are there? A lot! Lets assume our alphabet is just the 26 lower case characters. The first character of the key can be any one of the 26 characters. The second character of the key can be any one of the 25 remaining characters, and so on. The number of possible keys is then stem:[26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 ]. In mathematics this is _26 factorial_, denoted as stem:[26!].  This is a very large number.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a simple Python program to compute 26 factorial.
+
+[.result]
+====
+There are lots of ways to do this. Here is one that matches the order of the operations 
+stem:[26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 ]
+
+[source,python]
+----
+prod = 1
+
+for i in range(26,0,-1):
+    prod = prod * i <1>
+
+print(prod)
+----
+<1> You could also write `prod *= i`
+
+Of course, since multiplication is comptative we dont have to start at 26 and count down. We could start at 1 and count up to 26.
+
+[source,python]
+----
+prod = 1
+
+for i in range(1,27): <1>
+    prod = prod * i
+
+print(prod)
+----
+<1> What would happen if our loop header was `for i in range(27):`
+====
+
+Needless to say 26 factorial is `403291461126605635584000000`. This number is larger than `4e26`. 
+Surely the massive number of possible keys must mean that the substitution cipher is impossible 
+to break? Sadly, no. The substitution cipher is easy to break using a technique called _frequency 
+analysis_. To illustrate, lets once again assume we are dealing with the lower case Latin 
+alphabet and that Eve see's the ciphertext `hcchtrhclhyu`.  With a standard table of letter frequencies  from https://en.wikipedia.org/wiki/Letter_frequency [Wikipedia] and a little patience a cryptanalyst could figure out that `hcchtrhclhyu` was `attackatdawn`.   The weakness in the substitution cipher (and the Caesar cipher, as well as many other ciphers) is that letters repeat.  
+
+=== The One Time Pad - an Unbreakable Cipher
+
+The One time pad combines the good idea of using addition modulo a random number with the randomness of a string characters from the substitution cipher. Assume we can generate a random string of characters that is as long as the message being encrypted. This random string of characters is the _One Time Pad_, which we will call the key. One again, for illustration, we will assume the lower case Latin alphabet.
+
+To encrypt a message using a one time pad we line up the cleartext and the key (_i.e.i._, the one time pad) and add the positions of each character modulo 26.  For example, encrypting `apple` using the one time pad `lzksj` results in the ciphertext `lozdn`. 
+
+.One Time Pad Encryption
+image::OTP_encrypt.png[width=500]
+
+The process of decrypting using a one time pad is exactly the opposite. We line up the ciphertext with the key and then _subtract_ modulo 26. For example, given the ciphertext `lozdn` we subtract the one time pad `lzjsj` to get `apple` back.
+
+.One Time Pad Decryption
+image::OTP_decrypt.png[width=500]
+
+The one tricky aspect is to remember how to compute mod using negative numbers. For example, `(14 - 25) % 26` is equal to `-11 % 26` which is `15`.
+
+Implementing the `encrypt` and `decrypt` functions are straighforward.
+
+.One Time Pad Encrypt
+[source, python]
+----
+def encrypt(cleartext, otp):                                            <1>
+
+    alphabet = string.printable
+    ciphertext = ''
+
+    for i in range(len(cleartext)):                                     <2>
+        ciphertext += alphabet[(alphabet.find(cleartext[i]) +
+                                alphabet.find(otp[i])) % len(alphabet)] <3>
+
+    return ciphertext
+----
+<1> The variable `otp` is the one time pad. Its length must be greater than or equal to the length of the cleartext.
+<2> Are using his version of the for-loop becuase we need to get the i^th^ character from _both_ the cleartext and the one time pad.
+<3> There is a lot packed in to this one line, but it simply looks up the position of a cleartext character and the corresponding one time pad character, adds them together mod the length of the alphabet to get the position of the ciphertext character, and extracts that character from the alphabet and concatenates it to the ciphertext. Note the use of the `+=` operator.
+
+.One Time Pad Decrypt
+[source,python]
+----
+def decrypt(ciphertext, otp):
+
+    alphabet = string.printable
+    cleartext = ''
+
+    for i in range(len(ciphertext)):
+        cleartext += alphabet[(alphabet.find(ciphertext[i]) -          <1>
+                               alphabet.find(otp[i])) % len(alphabet)]
+
+    return cleartext
+----
+<1> The only real difference between `encrypt` and `decrypt` is the `-` on this line.
+
+Why is the one time pad considered completely secure (unbreakable)? Recall that the pad must be as long as the cleartext being encrypted and that each character in the one time pad is truely random. Lets say we are presented with the ciphertext `lozdn`. In order to decrypt the first characters `l` we would have to correctly guess the first character in the pad. We have a stem:[1/26 = .038] chance of guessing correctly. To decrypt the first two characters we would have to correctly guess the first two characters of the pad, or stem:[1/26 \cdot 1/26 = .0015] chance. To correctly guess the entire key of length five is stem:[1/26^5 = .000000084]. Message will be much longer than five characters to the probability very quickly approaches zero.
+
+If the One Time Pad is truly unbreakable then why aren't all of our communications completely secure? Well, as you might expect the One Time Pad has a downside.
+
+- as the name suggests, the pad _can only be used once_. If you ever reuse a pad on a different cleartext, then the message is no longer secure because an attacker can now use frequency analysis to break the pad.
+- Since a one time pad must be as long as the cleartext message the pads could be really lon. And since Alice and Bob both need to share a copy of the pad in advance then this could be cumbersome. 
+
+How does one go about generating a one time pad? This is relatively easy. Keep randomly picking characters from the alphabet and appending them to the pad.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function `GenOneTimePad` that takes an integer `n` and returns a random string of characters of length `n`.
+
+[.result]
+====
+
+[source,python]
+----
+def GenOneTimePad(n):
+    pad = ''
+    alphabet = string.printable
+
+    for i in range(n):
+        pad += alphabet[random.randrange(len(string.printable))] <1>
+
+    return pad
+----
+<1> There is actually a fatal flaw in our use of the standard random number generators in the `random` module. 
+====
+
+Random number generators found in programming languages are really _pseudorandom_. That is the numbers generated are not really random but only appear to be random. They are fine for use in simulations such as Brownian motion or computer games, but their predictability make them unsuitable for cryptography or even games used in casinos. We say that they are not _cryptographically secure_. The acronyms we use for a _pseudo random number generator_ is https://en.wikipedia.org/wiki/Pseudorandom_number_generator[PRNG] and the tounge twister _cryptographically secure pseudo random number generator_ is https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator[CSPRNG].
+
+Fortunately the Python module https://docs.python.org/3/library/secrets.html[`secrets`] provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called _entropy_. Entropy is built up over time, for example, times between keyboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.  
+
+=== Exercises
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * Casear Cipher
+ * Substitution Cipher
+ * cleartext
+ * key
+ * encrypt
+ * Alice, Bob, Eve
+ * Entropy
+ * factorial
+
+a|
+ * Shift Cipher 
+ * One Time Pad
+ * plaintext
+ * ciphertext
+ * decrypt
+ * PRNG
+ * CSPRNG
+ * Frequency Analysis
+
+|===
+

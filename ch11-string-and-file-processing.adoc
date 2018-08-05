@@ -1,0 +1,845 @@
+== String and File Processing
+
+Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines such as google store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
+
+TIP: A _byte_ (8 bits) is enough to store a single character. 
+
+We have already used text in our programs; strings are text. We hardcode text into our programs using string constants ...
+
+[source,python]
+----
+s = 'antidisestablishmentarianism'
+----
+
+or enter them from the keyboard
+
+[source,python]
+----
+s = input("Enter a string: ")
+----
+
+For the following discussion lets assume that `s` is the string `'antidisestablishmentarianism'`
+
+We can get the length of a string using the function `len`. The statement
+
+[source,python]
+----
+print(len(s))
+----
+
+would print `28` on the console.
+
+We can also access individual characters in a string. The characters in a string are numbered starting with `0`. We use a bracket notation for accessing individual characters. `s[0]` is the first character or `'a'` and `s[27]` is the last character, or `'m'`.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+[source,python,numbered]
+----
+# What would get printed?
+s = 'antidisestablishmentarianism'
+print(s[0], s[11], s[len(s)-1])
+----
+
+[.result]
+====
+[source,python]
+----
+a b m 
+----
+====
+
+You need to be careful about _off-by-one_ errors. 
+
+[source,python,numbered]
+----
+print(s[len(s)])
+----
+
+would create an _index out of range_ error, because it is trying to print character `s[28]` but that character does not exist. Oddly enough you can index from that end of the string. `s[-1]` is the last character, `s[-2]` is the second to last character, etc.
+
+=== String operations
+
+There are typically two ways we will loop through and examine each character in a string. 
+
+Assume that the variable `s` contains a string value. Back when we introduced the `for` loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
+
+[source,python,nymbered]
+----
+for ch in s:
+    # loop body
+----
+
+The variable `ch` (for _character_) will take on each each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
+
+[source,python,nmbered]
+----
+a_count = 0
+
+for ch in s:                   <1>
+    if ch == 'a':
+        a_count += 1
+----
+<1> `ch` will take on each character in the string `s`.
+
+The way of looping through a string works great if you only need to look at each character independent of all the other characters.
+
+The second way to loop through a string is to remember that each character in a string has an integer _index_. So another way to count the numbers of times the character `a` occurs is:
+
+[source,python,numbered]
+----
+a_count = 0
+for i in range(len(s)):         <1>
+    if s[i] == 'a':             <2>
+        a_count = a_count + 1
+----
+<1> `i` will take on the integer values `0` up to but not including `28`.
+<2> `s` is a string, `i` is an integer, so `s[i]` is the character at index `i`.
+
+For example, lets say we wanted to count the number of double characters in a string. For example `Mississippi` has three sets of double characters; the first `ss`, the second `ss`, and the `pp`.
+
+==== Strings are _immutable_
+
+Once a variable has been assigned a string value that string cannot be changed. For example, if `s` is a string we can't change the value of `s[0]`. 
+
+[source,python]
+----
+s[0] = 'Z'
+----
+
+This causes an error `'str' object does not support item assignment`. 
+
+NOTE: In Python strings are _immutable_. This means that the components of the string cannot be changed.
+
+The way to modify a string is to build a new one. If `s1` and `s2` are two strings then you can _concatenate_ the two strings with `+`.
+
+[source,python,]
+----
+s1 = "hello"
+s2 = "world"
+s3 = s1 + s2
+print(s3)     <1>
+----
+<1> Will print `helloworld`
+ 
+NOTE: To _concatenate_ strings means to join two or more strings into one. 
+ 
+==== Reversing a string
+
+To illustrate building a string lets write a function that takes a string as an argument and returns the reverse of the string; `reverse('python')` is `'nohtyp'`.
+
+[source,python,numbered]
+----
+def reverse(s):
+    tmp = ""            <1>
+    for ch in s:        <2>
+        tmp = ch + tmp  <3>
+
+    return tmp          <4>
+----
+<1> An initially empty string that we will use to build up the reversed string (there is no space between the double quotes).
+<2> For each character `ch` in the string `s`.
+<3> This is a little tricky. We will discuss below.
+<4> Return the reversed string
+
+Why does this work? Lets take an example of the string `'abcd'` and lets follow the values of `ch` and `tmp` after each loop iteration.
+
+[source]
+----
+ch     tmp
+--     ---
+a      a     <1>
+b      ba    <2>
+c      cba   <3>
+d      dcba  <4>
+----
+<1> `tmp` is initially empty so the new value of `tmp` is `ch + tmp` or `'a'`
+<2> `ch` is `'b'` and `tmp` is `'a'` so the new value of `tmp` is `ch + tmp` or `'ba'`
+<3> `ch` is `'c'` and `tmp` is `'ba'` so the new value of `tmp` is `ch + tmp` or `'cba'`
+<4> finally `ch` is `'d'` and `tmp` is `'cba'` so the new value of `tmp` is `ch + tmp` or `'dcba'`
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What would happen if the loop body in the function `reverse` were `tmp = tmp + ch` instead of `tmp = ch + tmp`.
+
+[.result]
+====
+It just rebuilds the original string and does not build the reverse.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+A _palindrome_ is a word that reads backwards and forwards such as _racecar_, _kayak_, and _madam_.  Write a function `palindrome` that takes a string as an argument and returns true if the argument is a palindrome, false otherwise. Hint: use the `reverse` function.
+
+[.result]
+====
+This is kind of easy if we can use the `reverse` function.
+
+[source,python]
+----
+def palindrome(s):
+   if s == reverse(s):
+       return True
+   else:
+       return False
+----
+
+There is an even more concise way to write the `palindrome` function.
+
+[source,python]
+----
+def palindrome(s):
+   return s == reverse(s) 
+----
+
+The way to think about this is that if is `s` is equal to `reverse(s)` then that is the value `True`, which is then returned. If they are not equal then it evaluates to `False` which is then returned. This is the same exact behavior as the first version of `palindrome`.
+====
+
+==== Searching a String
+
+Often we will want to search a string for a _substring_. For example, does the string `'establish'` appear somewhere in the string `s`. The string function `s1.find(s2)` returns the starting location of the first occurrence of the string `s2` in `s1`. It returns `-1` if it is not there.
+
+[source,python]
+----
+s1 = 'antidisestablishmentarianism'
+s2 = 'hippopotomonstrosesquipedaliophobia'
+print(s1.find('establish')) <1>
+print(s1.find('hippo'))     <2>
+print(s2.find('po'))        <3>
+----
+<1> prints `7`
+<2> prints `-1`
+<3> prints `3`, the first occurrence of `'po'`
+
+A second version of the `find` function takes a starting location for the search; `s1.find(s2,start)` will retrn the location of `s2` in `s1` starting at index `start`.
+
+[source,python]
+----
+print(s2.find('po', 4)) <1>
+----
+<1> prints `5`
+
+If we didn't know to start search at `4` and we wanted to find the second location of `po` we can search fr the first occurrence and se that as a starting point for a search for the second occrurrence.
+
+[source,python]
+----
+start = s2.find('po')           <1>
+print(s2.find('po', start+1))   <2>
+----
+<1> index of first occurrence of `po`
+<2> start searching for the second ccurrence at `start+1` and not `start`, otherwise we would just find the first occurrence all over again.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a program that reads a string from the user and counts the number of times the substring `'is'` appears. Print a user friendly answer. Use the `find` function but do not use the built-in string function `count`.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+s = input("Enter a string: ")                
+count = 0                                    
+loc = s.find('is')                           <1>
+
+while loc != -1:                             <2>
+    count += 1   
+    loc = s.find('is',loc+1)                 <3>
+
+print('"is" appears', count, "times in",s)
+----
+<1> Find the first occurrence
+
+Here is an example execution.
+
+[source,python]
+----
+Enter a string: antidisestablishmentarianism
+"is" appears 3 times in antidisestablishmentarianism
+----
+
+Okay, so we could have used the built-in string function `count` to do this.
+
+[source,python]
+----
+print(s.count('is'))
+----
+
+As is often the case, Python's built-in set of functions and libraries will often have what you are looking for.  
+====
+
+==== String Slices 
+
+The bracket notation picks out individual characters in a string; 
+`s[i]` is the character at index `i`.  The bracket notation is also used to pick out consecutive portions of a string, a _substring_, using what Python calls a _slice_ operation. The notation `s[x:y]` extracts the portion of the string starting at index `x` and up to but not including the character at index `y`.
+
+[source,python]
+----
+s = 'antidisestablishmentarianism'
+----
+
+The slice `s[0:4]` is the string `'anti'`. The slice `s[7:16]` is the string `'establish'`. 
+
+Leaving off the ending index then the slice is to the end of the string.
+
+[source,python]
+----
+print(s[7:])
+----
+
+will print `establishmentarianism`.
+
+Leaving off the starting index then the slice starts at index 0.
+
+[source,python]
+----
+print(s[:4])
+----
+
+will print `anti`.
+
+A common use for combining `find` and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like `'39,88'`. But this will be a string, so we need bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers
+
+[source,python]
+----
+print("Enter two numbers separated by a comma.")  <1>
+s = input("> ")                                   <2>
+comma = s.find(',')                               <3>
+num1 = int(s[:comma])                             <4>
+num2 = int(s[comma+1:])                           <5>
+
+avg = (num1 + num2) / 2
+print("Average:", round(avg,2))
+----
+<1> Prompt on a separate line because it is a little long.
+<2> Prompt is short and sweet, just ">".
+<3> Find the position of the comma.
+<4> The first number is before the comma.
+<5> The second number is after the comma.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Ask the user to enter three numbers separated by a comma. Print their average.
+
+[.result]
+====
+There are lots of ways to tackle this. Here is one.
+
+[source,python]
+----
+print("Enter three numbers separated by a comma") 
+s = input("> ")
+comma1 = s.find(',')            <1>
+comma2 = s.find(',', comma1+1)  <2>
+num1 = int(s[:comma1])          <3>
+num2 = int(s[comma1+1:comma2])  <4>
+num3 = int(s[comma2+1:])        <5>
+
+avg = (num1 + num2 + num3) / 3
+print("Average:", round(avg,2))
+----
+<1> Index of first comma.
+<2> Index of the second comma.
+<3> First number is before first comma.
+<4> Second number is _between_ the first and second comma.
+<5> Third number is after the second comma.
+====
+
+Finally, lets take this one step further  and handle an arbitrary number of integers each separated by a comma. We will need to loop through the numbers some how.
+
+[source]
+----
+Enter numbers separated by a comma
+> 2,9,12,-33,15,7,99
+Average: 15.86
+----
+
+Similar to the way we counted the number of times we search for a substring in a string
+
+NOTE: A list of numbers separated by commas are called _comma separated values_. Files that contain comma separated values are often use a `.csv` file suffix.
+
+Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `total` and `count` for that.
+
+[source]
+----
+s               total  count
+-----------     ---    -----
+23,19,46,57      0       0      <1>
+19,46,57         23      1      <2>
+46,57            42      2      <3>
+57               88      3      <4>
+                 145     4      <5>
+----
+<1> `s` is the original input CSV list.
+<2> Extract the first number `23`, add it to `total`, increment `count`, and delete `23`.
+<3> Extract the first number `19`, add it to `total`, increment `count`, and delete `19`
+<4> Extract the first number `46`, add it to `total`, increment `count`, and delete `46`.
+<5> We should be seeing a pattern here. Extract the first number `57`, add it to `total`, increment `count`, and delete `57. Compute a final average of stem:[145/4 = 36.25]
+
+[source,python,numbered]
+----
+print("Enter a comma separated list of numbers")
+s = input("> ")
+
+comma = s.find(',')
+total = 0                     <1>
+count = 0                   <2>
+
+while comma != -1:          <3>
+    num = int(s[:comma])    <4>
+    total += num         
+    count += 1       
+    s = s[comma+1:]         <5>
+    comma = s.find(',')     <6>
+
+avg = total/count
+print("Average: ", round(avg, 2))
+----
+<1> To hold the running total of the numbers.
+<2> Keep a count of the integers entered.
+<3> Keep processing the list of numbers until there are no more commas.
+<4> Extract the leading number in the list, add it to `total`, and increment `count`.
+<5> Delete the leading number in the list.
+<6> Get the location of the next comma.
+
+There is actually a subtle bug in the code above; a classic off-by-one error. There are no syntax errors and the code doesn't necessarily crash (more on that later) but it does produce an incorrect result. For example, if we enter `23,19,46,57` we get an average of `29.33`. Recall the answer should be `36.25`.  
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Find and fix the bug in the above code.
+
+[.result]
+====
+The problem is that we skip the last number. For example, if we have the original list 
+`23,19,46,57` eventually the list becomes `57` after line 12. There are no more commas in the list
+so on line 13 `comma` becomes `-1` and when we go back to check the loop condition the loop will quit having not processed the `57`. An easy fix is to realize that after the loop terminates `s` now contains the final number in the list. Add it to `total`, and don't forget to increment `count`.  The code after the loop becomes:
+
+[source,python]
+----
+total = total + int(s)   <1>
+count += 1           <2>
+avg = total/count
+print("Average: ", round(avg, 2))
+----
+<1> Add the final number to `total`. COuld we have used `num` here and not `s`? No. Why?
+<2> And increment `count`.
+
+One more thing to check is to make sure the code works if we only have a single number to start with. This was also a problem before we fixed the bug, but now works.
+====
+
+==== Error Checking
+
+The term _hacker_ used to be a badge of honor. It just meant you were a sharp programmer. The term now has a negative connotation and usually refers to someone using there technical skills unethically and possibly illegally. Hackers either break into systems to steal information, plant virus' or cause an organization's software systems to crash. 
+
+We will talk a little bit about breaking in to systems when we discuss cryptography so lets talk about possibly causing software to crash. One way to try and cause a software system to crash is to enter bogus data in the input. We have all seen this before when we enter data into a web form. If we forget to enter a zip code in our address then the system will generally not let us proceed. Up until we know we haven't talked about checking the input data for errors, or _error checking_, but it is worth a cursory discussion. 
+
+Lets look at our above example of computing the average of a list of numbers. What if instead of a list of numbers we entered an ill-formed line such as `rumpelstiltskin`, or `23,16,fred,11`. We get a run-time error (what I have also been calling a _crash_).
+
+ ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'
+
+This makes sense, Python does not know how to convert `rumpelstiltskin` to an integer. I'd be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for erroneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid.  
+
+==== Example: Word scramble
+
+Lets say we were implementing an word scramble game where we present the user with an _anagram_ and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.
+
+NOTE: An _anagram_ is a rearrangement of the characters in a word.
+
+Like always, lets break this up in to subproblems. Lets write a function `scramble` that takes a string and returns a random anagram of that string. For example `scramble('python')` might return `'hotpyn'` or `toyhpn`.
+
+NOTE: What are the chances that `scramble` will return the original word? Well for `python` there 
+are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remaining 5. The third character any of the remaining 4, etc. This gives us stem:[6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720] different possibilities for the word `python`. In general if a word has stem:[n] distinct characters then there are at least stem:[n] _factorial_ (denoted as stem:[n!]) permutations of the characters in the word. So the probability is stem:[1/n!].
+
+We repeatedly pick a random character from the word, append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don't choose it again. So something like, the following process. Assume our word is in a string `word` and our new scrambled word is being constructed in a variable `tmp`. Lets also assume the a variable `i` contains a random index into `word`.
+
+[source]
+----
+word    i    tmp
+-----   -    ---
+python  5    n          <1>
+pytho   3    nh
+pyto    0    nhp
+yto     1    nhpt
+yo      1    nhpto
+y       0    nhptoy
+                        <2>
+----
+<1> `tmp` initially starts out as the empty string
+<2> At this point the `len(word)` is 0 so the loop terminates.
+
+Here is the function `scramble`.
+
+[source,python,numbered]
+----
+def scramble(word):
+    tmp = ''
+
+    while len(word) > 0:
+        i = random.randrange(len(word)) <1>
+        tmp += word[i]                  <2>
+        word = word[:i] + word[i+1:]    <3>
+
+    return tmp
+----
+<1> Choose a random index into the word.
+<2> Concatenate the character at that index into our temprary string `tmp`.
+<3> Deletes the character at index `i` by rebuilding the word with all of the characters before index `i` (`word[:i]`) concatenated with all of the characters after index `i` (`word[i+1:]`).
+
+Putting it all together we have:
+
+[source,python,numbered]
+----
+word = 'python'               <1>
+anagram = scramble(word)
+print(anagram)
+guess = input('Enter word: ')
+
+if guess == word:
+    print("Correct")
+else:
+    print("Incorrect. The word is", '"' + word + '"')
+----
+<1> Okay, it is a little silly to have a word scramble game with one word. We will fix that next.
+
+=== Files
+
+Up until know all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named `words.txt`. We'll keep it relative short for now, but file can be enormous and could have hundreds of thousands of lines it.
+
+.link:python/words.txt[`words.txt`]
+[source,indent=0]
+----
+apple
+banana
+interpreter
+racoon
+zombie
+example
+incorrect
+----
+
+The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. _newline_ character. We often call spaces, tabs, andnelinw character _whitespace_ characters.  In most programming languages the newline character is written `\n`.
+
+We tell Python the name of a file we want to read using the https://docs.python.org/3.6/library/functions.html#open[`open`] function.footnote:[https://docs.python.org/3.6/library/functions.html#open]
+
+[source,python]
+----
+f = open('words.txt') <1>
+
+# process the file
+
+f.close()             <2>
+
+----
+<1> If `words.txt` doesn't exist then you will get an error indicating that the file was not found.
+<2> After we are done with the file it is a good practice to close the file by calling the function `close` on the file object returned from `open`.
+
+Function `open` takes a string as an argument that is the filename to be opened and it returns a reference to a file object. In this case being assigned to the variable `f` (like always we could have used any variable name here).
+
+There are various ways we can read the data in a file, probably the most straightforward is to read it line-by-line using a `for`-loop.  Recall that in a `for`-loop we need a variable that represents a _sequence type_, and it turns out a file object is such a type. For instance,
+
+[source,python,numbered]
+----
+for line in f: <1>
+    print(line)
+----
+<1> `f` should be the variable from the call to `open`.
+
+This will read and print each line in the file to console. But the output is not what you might expect for `words.txt`.
+
+[source]
+----
+apple
+
+banana
+
+interpreter
+
+racoon
+
+zombie
+
+example
+
+incorrect
+----
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Why is there a blank line between each word?
+
+[.result]
+====
+Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.
+
+We can fix this in two ways. The first way is to slice off the last character in the line (the newline character) before we print it.
+
+[source,python]
+----
+for line in f:
+    print(line[:len(line)-1]) <1>
+----
+<1> Why `len(line)-1` instead of `len(line)`?
+
+Or we can tell the print function to suppress printing a newline character using a _named parameter_.
+
+[source,python]
+----
+for line in f:
+    print(line, end='') <1>
+----
+<1> Instead of printing a newline character print the empty string. The documentation for https://docs.python.org/3.6/library/functions.html#print[`print`] is a little complicated.footnote:[https://docs.python.org/3.6/library/functions.html#print]
+====
+
+==== Counting the lines in a file
+
+How can we count the lines a file? 
+
+[source,python,numbered]
+----
+f = open('words.txt')
+
+count = 0
+for line in f:         <1>
+    count += 1
+
+f.close()              <2>
+print("words.txt has", count, "lines")
+----
+<1> Notice that we are not even using the variable `line` in the code.
+<2> Recall that it is a good practice to close the file when we are done.
+
+Once again, this is probably better provided as a reusable function.
+
+[source,python,numbered]
+----
+def linecount(fname):       
+    f = open(fname)
+    count = 0
+    for line in f:
+        count += 1
+    f.close()
+    return count
+
+# Main program
+name = 'words.txt'
+print('File', name, 'has', linecount(name), 'lines')
+----
+
+Function `linecount` takes the name of a file as a parameter and returns the number of lines in that file.
+
+==== Word Scramble using a file
+
+Our previous version of word scamble used a single hard coded word that the user had to guess.  Not very interesting. We can now go through the file of words and let the user play multiple times.
+
+.Word Scramble
+[source,python,numbered]
+----
+words = open('words.txt')                                     <1>
+
+for word in words:                                            <2>
+    if word[len(word)-1] == '\n':                             <3>
+        word = word[:len(word)-1]
+    anagram = scramble(word)
+    print("What word is this an anagram of?", anagram)
+    guess = input('Enter word: ')
+
+    if guess == word:
+        print("Correct")
+    else:
+        print("Incorrect. The word is", '"' + word + '"')
+		break                                                 <4>
+----
+<1> The variable that refers to the file object does not have to be named `f`, in this case we are calling it `words`.
+<2> And the `for`-loop variable does not have to be named `line`, in this case `word` makes sense.
+<3> This is a little tricky. We need to remove the end of line character `'\n'`, but the last line in the file doesn't have an end-of-line character but an _end of file_ character.
+<4> The `break` statement causes the `for`-loop to terminate. More specifically it breaks out of the _innermost_ enclosing `for` or `while` loop.
+
+
+=== Example: Bioinformatics
+
+DNA, _Deoxyribonucleic Acid_, is a molecule that caries the genetic information of all living organisms. DNA has a helical structure famously described by Watson and Crick.footnote:[James Watson and Francis Crick, Molecular Structure of Nucleic Acids, _Nature_. *171*, April 1953.]
+ 
+.Double Helix Structure of DNA.footnote:[https://commons.wikimedia.org/wiki/File%3ADna-split.png, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons]
+image:double_helix.png[width=300]
+ 
+DNA in one respect can be consider a _digital code_ because a DNA strand can be abstractly represented as a string of characters `a`, `c`, `g`, and `t`. These stand for the nucleotides (sometimes called _base pairs_) _adenine_, _cytosine_, _guanine_, and _thymine_ respectively. For example the start of the DNA sequence for the _Escherichia coli_ (abbreviated _E. coli_) bacteria is 
+
+.link:python/ecoli.txt[_E. coli_]
+ agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaagagtg ...
+ 
+It doesn't look like this means much but this sequence of nucleotides means something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis. 
+
+NOTE: Bioinformatics is the computational branch of molucular biology.
+
+We can start with a simple example. One quick question we could answer are some basic statistics about the sequence. How many occurrences of each nucleotide are there? What are the relative frequencies of the nucleotides in _E. coli_ as a percentage?
+
+[source,python,numbered]
+----
+ecoli = open("ecoli.txt")            <1>
+
+a_count = 0
+c_count = 0
+g_count = 0
+t_count = 0
+
+for line in ecoli:                   <2>
+    for bp in line:
+        if bp == 'a':                <3>
+            a_count += 1
+        elif bp == 'c':
+            c_count += 1
+        elif bp == 'g':
+            g_count += 1
+        elif bp == 't':
+            t_count += 1
+
+total = a_count + c_count + g_count + t_count
+print('length:', total)
+print('a: ', a_count, ', ', round(a_count/total * 100, 1), '%', sep='') <4>
+print('c: ', c_count, ', ', round(c_count/total * 100, 1), '%', sep='')
+print('g: ', g_count, ', ', round(g_count/total * 100, 1), '%', sep='')
+print('t: ', t_count, ', ', round(t_count/total * 100, 1), '%', sep='')
+----
+<1> Download this file by clicking on the link above in the sequence.
+<2> For each line in the file. (It turns out there is only one in this example)
+<3> Count the base pairs in the current line.
+<4> We are controlling the spaces in the line manually by indicating that the separator should be the empty string. That is don't print a space after the comma separated items in the `print` statement.
+
+After we execute the program we get the following results.
+
+[source]
+----
+length: 4638690   
+a: 1142069, 24.6%
+c: 1179222, 25.4%
+g: 1176575, 25.4%
+t: 1140824, 24.6%
+----
+
+A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This might indicate that there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we didn't know that it came from _E. coli_ we can use _GC Content_ to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of _E. Coli_ is 50.7% and that of humans is 41%.
+
+NOTE: _GC Content_ is the ratio of the number `g` and `c` base pairs to the total number of pase pairs. GC Content is stem:[(g + c)/(a + c + g + t)]
+
+GC Content is a simple example of how strings are used to analyze DNA.  Many of the algorithms used in bioinformatics are too advanced to describe in an introductory course.
+
+NOTE: _Genomics_ is the branch of bioinformatics that uses string algorithms to study DNA (and RNA) sequences.
+
+==== Searching a DNA Sequence
+
+The _central dogma_ describes how DNA is converted to RNA to make proteins. A _gene_ is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequences contain genes and are sometimes referred to a _protein-coding_ genes. A _codon_ is three consective base-pairs such as `GCA` or `AAT`. Protein coding genes obey the following constraints.
+
+ . Start with the codon `ATG`, (sometimes called a _start codon_)
+ . End with one of the _stop codons_ `TAA`, `TAG`, or `TGA`. 
+ . The number of base-pairs (nucleotides) between the start and stop codons must be a multiple of three.
+ . None of the intervening codons is one of the stop codons.
+
+For example the sequence [mono]#ac##atgcattggagctga##acca# contains a potential gene (highlighted) while the sequence [mono]#ac##atagttggagctga##acca# is not. The reason is that starting at index three we have `ata` and not `atg`.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Verify that the first highlighted region above matches the criteria for a potential gene.
+
+[.result]
+====
+The highlighted region starts with the codon `atg`, the start codon. It ends with one of the stop codons `tga`. The region between the start and stop codons is `cattggagc`, which has nine base-pairs, a multiple of three.  Since the gene must also start with a `atg` and end with a stop-codon that has three base-pairs, the length of the entire sequence must also be a multiple of three.
+====
+
+Lets write a program to find all of the _potential_ genes in the _E.coli_ bacteria. The program should 
+print the starting location and the ending location of each potential gene location. For example the 
+digram below shows that the first possible gene location starts at location 29 and ends at location 95.
+
+image::gene.png[align="center"]
+
+The yellow highlights are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon `atg` and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.
+
+[source,python,numbered]
+----
+f = open('ecoli.txt')
+dna = f.readline()
+start = dna.find('atg')                               <1>
+
+if start > -1:                                        <2>
+    for i in range(start+3, len(dna)-3, 3):           <3>
+	    if dna[i:i+3] in ['taa', 'tag', 'tga'] and \  <4>
+		   (i - start) % 3 == 0:                      <5>
+		    print(start, i)                
+		    break                                     <6>
+----
+<1> Find the location of the start codon
+<2> Only look for a stop codon if we found a start codon.
+<3> Look for a stop codon starting from `start+3` being careful not to go off of then end of the DNA string and a potential index out of bounds error.
+<4> This is a nice way to check for the stop codon instead of a complicated logical expression sch as `dna[i:i+3] == 'taa' or dna[i:i+3] == 'tag'` etc.
+<5> Make sure the length of the region is divisible by three.
+<6> As soon as we find a possible gene location stop looking bcause the rule is that there cannot be an intervening stop codon.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The above code only finds the first possible gene location. Modify the program to find all of the possible gene locations.
+
+[.result]
+====
+Rather than use an if-statement to check only the first site we need to keep 
+iterating until we don't find any more start codons.
+
+[source,python]
+----
+f = open('ecoli.txt')
+dna = f.readline()
+start = dna.find('atg')                               
+
+while start > -1:                                     <1>
+    for i in range(start+3, len(dna)-3, 3):           
+	    if dna[i:i+3] in ['taa', 'tag', 'tga'] and \ 
+		   (i - start) % 3 == 0:                      
+		    print(start, i)                
+		    break  
+    start = dna.find('atg',start+1)                   <2>
+			
+----
+<1> Keep looking until we don't find any more start codons.
+<2> Look for the next start codon _after_ the previous start codon.
+====
+
+NOTE: The sequence of base-pairs between the start and stop codons are called
+_coding regions_. The sequence of base-pairs not part of a coding region are called, _non-coding regions_.
+
+=== Example: Files of numbers
+Often we have files of numbers that we need to process in some way. Lets say we had 
+a file of integers that represented grades and we need to compute the average grade. We know that we need to read the file line-by-line adding each grade to a total, and then finally dividing by the total numbers of grades. Since we may not know in advance how many grades 
+are in the file we will have to keep a count of the number of grades.  We also need to be careful to convert the line read to an integer 
+
+[source,python,numbered]
+----
+f = open("grades.txt")
+
+total = 0
+count = 0
+
+for grade in f:
+    total += int(grade) <1>
+    count += 1
+
+print("The average is", round(total/count, 1))
+----
+<1> Make sure to convert the string read from the file to an integer.
+
+=== Exercises
+
+
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * index
+ * palindrome
+ * slice
+ * factorial
+ * whitespace
+ * start codon
+ * stop codon
+
+a|
+ * byte 
+ * concatenate
+ * substring
+ * anagram
+ * newline
+ * bioinformatics
+ * gene
+
+|===
+

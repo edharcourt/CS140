@@ -1,0 +1,854 @@
+== A Random Walk 
+
+The real power in programming comes from how we can combine loops, conditional statements, and functions in creative ways to solve or explore a problem.  We will continue our investigations in 
+programming by exploring the nature of _randomness_.footnote:[Randomness plays an important role in many areas of computer science, including cryptography, networking, and simulation and modeling.]
+
+NOTE: A computer program is _deterministic_ if it produces the same exact results every time it executes.
+
+NOTE: "A random process models the progression of a system over time, where the evolution is random rather than deterministic."footnote:[https://reference.wolfram.com/language/guide/RandomProcesses.html]
+
+Lets simulate tossing a coin stem:[n] times counting the number of occurrences of a head or a tail. We will have stem:[n] be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+
+[source,python,numbered]
+----
+toss = random.randrange(2)
+
+if toss == 0:
+    heads = heads + 1 <1>
+else:
+    tails = tails + 1 <2>
+----
+<1> This is actually a syntax error because `heads` is not yet defined.
+<2> Same comment. `tails` is not yet defined.
+
+This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and `tails` variables, and use a counting loop to toss the die stem:[n] times.
+
+TIP: Don't try and write the program all at once. Break into parts.
+
+[source,python,numbered]
+----
+import random
+
+n = int(input("Enter number of times to toss coin: "))
+
+i = 0       # loop counter
+heads = 0   # number of heads tossed
+tails = 0   # number of tails tossed
+
+while i < n:
+    toss = random.randrange(2) <1>
+
+    if toss == 0:
+        heads = heads + 1
+    else:
+        tails = tails + 1
+    i = i + 1
+
+print("Heads: ", heads)
+print("Tails: ", tails)
+----
+<1> A common mistake is to put this statement before the loop. Why is that incorrect?
+
+One of the benefits of writing a program like this, a _simulation_, is that we can simulate tossing a coin thousands, millions, or even billions of times. This is not possible if we were to try and do this by hand with a real coin.
+
+TIP: If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
+
+NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some real-world process. 
+
+As you might expect when you run this program, the number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
+
+.Check Yourself+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the coin toss program to count the number of times it takes to toss ten heads in a row. Run the program a few times. How big do you have to make stem:[n] in order to get ten heads in a row?
+
+[.result]
+====
+This is just one possible solution.
+
+[source,python,numbered]
+----
+import random
+
+n = int(input("Enter number of times to toss coin: "))
+
+i = 0
+heads = 0
+tails = 0
+in_a_row = 0         <1>
+in_a_row_count = 0   <2>
+
+while i < n:
+    toss = random.randrange(2)
+
+    if toss == 0:
+        heads = heads + 1
+        in_a_row = in_a_row + 1 <3>
+    else:
+        tails = tails + 1
+        in_a_row = 0            <4>
+
+    if in_a_row == 10:          <5>
+        in_a_row_count = in_a_row_count + 1
+
+    i = i + 1
+
+print("Heads: ", heads)
+print("Tails: ", tails)
+print("Number of ten in a row: ", in_a_row_count)
+----
+<1> A counter for keeping track of number of heads in a row.
+<2> Keep track of the number of times we roll heads ten in a row.
+<3> When we roll heads, increment the counter.
+<4> If we roll tails, reset the counter.
+<5> Check to see if we hit ten in a row.
+
+====
+
+=== The Gambler's Ruin
+
+Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance chance of winning each toss (better odds than a real real casino.)
+
+How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
+
+[source,python,numbered]
+----
+import random
+chips = 1000                        <1>
+while chips > 0 and chips < 2000:   <2>
+    toss = random.randrange(2)
+
+    if toss == 0:  
+        chips = chips + 1
+    else:
+        chips = chips - 1
+
+print(chips) <3>
+----
+<1> We start with 1000 chips.
+<2> We play until we double our chips or lose them all.
+<3> Will print either 0 or 2000.
+
+As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can't quit, even when they are ahead. What might the program look like now?  
+
+[source,python,numbered]
+----
+import random
+chips = 1000
+while chips > 0:  <1>
+    toss = random.randrange(2)
+
+    if toss == 0:  
+        chips = chips + 1
+    else:
+        chips = chips - 1
+print(chips) <2>
+----
+<1> The only change is to remove the condition that the loop terminate when `chips` reaches 2000.
+<2> What will always get printed?
+
+We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gambles long enough will always lose everything!
+
+==== A One Dimensional Random Walk
+
+Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width stem:[w] and height stem:[h], if we let the center stem:[y]-coordinate of the window represent stem:[0] chips then `0 - chips` will be the stem:[y]    
+coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
+
+The Pygame command 
+
+[source,python,numbered]
+----
+win.set_at( (x,y), RGB)
+----
+
+draws a single pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
+
+[source,python,numbered]
+----
+import random,pygame,color
+pygame.init()
+win = pygame.display.set_mode((600,600))
+win.fill(color.white)
+
+i = 0
+chips = 0
+scale = 100                       <1>
+
+while i < win.get_width()*scale:  <2>
+    n = random.randrange(2)
+
+    if n % 2 == 0:
+        chips = chips + 1
+    else:
+        chips = chips - 1
+
+    win.set_at((i//scale, h//2 - chips), color.black) <3>
+
+    pygame.draw.line(win, color.red, (0,h//2), (h-1,h//2)) <4>
+    pygame.display.update()
+    i = i + 1
+----
+<1> Rather than drawing only one point for each stem:[x]-coordinate, we can fit more points if we plot multiple points at each coordinate. The `scale` variable is used for this.
+<2> Only draw until we fill the screen. This is also the first time we have seen this function call `win.get_width()`. See the note below.
+<3> Plot our current chip count. Notice the use of the `scale` variable to plot multiple points at each x-coordinate.
+<4> Keep redrawing a red line in the middle to represent zero chips. 
+
+NOTE: The window object `win` has methods `get_width()` and `get_height()` that returns 
+the width and the height of the window, in pixels. Recall that _methods_ are special functions 
+that are defined on objects.
+
+The random walk on the left plots 10 points per stem:[x]-coordinate `scale = 10`. The plot on the right
+plots 100 points per pixel `scale = 100`. 
+
+.Two random walks
+[cols="2"]
+|===
+| image:rand_walk1.png[width=300,height=300]
+| image:rand_walk2.png[width=300,height=300]
+
+|===
+
+Even though we have a 50-50 chance of increasing our decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. For a negative chip count plot a red pixel.
+
+[.result]
+====
+Replace the line that plots a point with the condition:
+[source,python,numbered]
+----
+if cash > 0:
+    win.set_at((i//scale, h//2-cash), color.green)
+else:
+    win.set_at((i//scale, h//2-cash), color.red)
+
+----
+What color pixel gets plotted when cash equals 0? Does it matter? No, drawing the red line erases whatever pixel that would have been drawn at stem:[y]-coordinate stem:[0].
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the random walk so that whenever we hit a new high we mark the location by printing a small green circle (slightly bigger than a single pixel).  Also, when we hit a new low, plot a red circle at the location.
+
+[.result]
+====
+The trick here is to use two variables, one to keep track of the current high, and the other to keep track of the current low. Call these `high` and `low` and should be initialized to the starting `cash` amount at the beginning. Whenever the `cash` variable exceeds `high`, set `high` to cash. Similarly when `cash` is less than `low` set `low` to `cash`. 
+
+[source,python,numbered]
+----
+if cash > high:
+	high = cash
+	pygame.draw.circle(win, color.green, (i//scale, h//2-cash), 2)
+elif cash < low:
+	low = cash
+	pygame.draw.circle(win, color.red, (i//scale, h//2-cash), 2)
+----
+Here is an example run. Early in the simulation we generate lots of new highs and lows, and whenever we hit a new high or low we tend to generate several nearby, but these becaome rare as the simulation progresses. This was done with `scale` set to `100`.
+
+image:hi-low-1d-rand-walk.png[width=300,height=300]
+====
+
+The Gambler's Ruin is an example of a _random walk_. Random walks are useful for building models in many disciplines including economics.footnote:[One of the best known books on investing is _A Random Walk Down Wall Street_ by Burton Malkiel.] and physics.  In economics random walks are often used to model fluctuations in random processes such as the stock market. In physics, a random walk can model random motions such as _Brownian Motion_. 
+
+Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.
+
+The Gambler's Ruin is an example of a _one dimensional random walk. One dimensional because there is only one random variable, the coin toss.
+
+=== Brownian Motion
+
+Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the stem:[x] or stem:[y] direction.  In terms of a graphic display, the particle's coordinate stem:[(x,y)] has 
+eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display. 
+
+image::pixel_neighbors.png[width=214,height=200,align="center"]
+
+In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that `(x,y)` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+
+NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
+
+[source,python,numbered]
+----
+dir = random.randrange(8)
+if dir == 0:     # top middle 
+    y = y - 1
+elif dir == 1:   # top right
+    x = x + 1
+    y = y - 1
+elif dir == 2:   # right middle
+    x = x + 1
+elif dir == 3:   # lower right
+    x = x + 1
+    y = y + 1
+elif dir == 4:   # botton middle
+    y = y + 1
+elif dir == 5:   # bottom left
+    y = y + 1
+    x = x - 1
+elif dir == 6:   # left middle
+    x = x - 1
+else:            # top left
+    x = x - 1
+    y = y - 1
+----
+
+This is essentially the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` coordinate and returns its new `x` and `y`. Pictorially, 
+
+image::2D_move.png[width=362,height=130,align="center"]
+
+[source,python,numbered]
+----
+def move(x,y):
+    # insert if-elif above
+    return (x,y)
+----
+
+Calling the `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could
+
+- run for a certain number of iterations, 10, 100, 10000, etc.
+- run until we the particle moves off of the display
+
+The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, _while the particle is on the display_?
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a logical condition that is true if the particle at coordinate `(x,y)` is on the display window. Assume that variable `w` and `h` refer to the width and height of the display. 
+
+[.result]
+====
+Well ... `x` must be between `0` and `w` (including 0, but excluding `w`) and
+`y` must be between `0` and `h` (including 0, but excluding `h`).
+[source,python,numbered]
+----
+(0 <= x and x < w) and (0 <= y and y < h)
+----
+
+The parentheses are not strictly necessary but aid in clarity. 
+
+Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say stem:[0 \le x \lt w]. Python allows something similar and we can write `0 <= x < w`. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as
+[source,python,numbered]
+----
+(0 <= x < w) and (0 <= y < h)
+----
+====
+
+==== The complete Brownian program
+
+Putting this altogether we have ...
+
+[source,python,numbered]
+----
+import pygame, random, color
+
+#
+# move a particle with coordinates (x,y) to
+# a new random location, one of its eight neighbors.
+#
+def move(x,y):
+    dir = random.randrange(8)
+    if dir == 0:
+        y = y - 1
+    elif dir == 1:
+        x = x + 1
+        y = y - 1
+    elif dir == 2:
+        x = x + 1
+    elif dir == 3:
+        x = x + 1
+        y = y + 1
+    elif dir == 4:
+        y = y + 1
+    elif dir == 5:
+        y = y + 1
+        x = x - 1
+    elif dir == 6:
+        x = x - 1
+    else:
+        x = x - 1
+        y = y - 1
+
+    return (x,y)
+
+# main program
+pygame.init()
+
+win = pygame.display.set_mode((600,600))
+w = win.get_width()
+h = win.get_height()
+x = w//2  <1>
+y = h//2  <2>
+
+win.fill(color.white)
+
+while (0 <= x < w) and (0 <= y < h):
+    win.set_at((x,y), color.blue)
+    (x,y) = move(x,y)
+    pygame.display.update()
+
+input("Hit enter")
+----
+<1> Start the particle in the middle of the x axis.
+<2> Start the particle in the middle of the y axis.
+
+Here is one sample run of the program
+
+image:brownian.png[width=285,height=200,align="center"]
+
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a second particle (use a different color) to the simulation. Stop the simulation when _both_ particle have gone off the window. 
+Hints:-Add properties for a second particle. Don't modify the `move` function or make a copy of the `move` function. Just _reuse_ it by calling it again with the properties of the second particle. (That is the whole point of using functions). Finally modify the loop condition so the simulation terminates properly.
+
+[.result]
+====
+Like always, there are many solutions. Here is one.
+[source,python,numbered]
+----
+import pygame, random, color
+
+# same move function goes here.
+
+# main program
+pygame.init()
+
+win = pygame.display.set_mode((600,600))
+w = win.get_width()
+h = win.get_height()
+x1 = w//2  <1>
+y1 = h//2
+x2 = w//2  <2>
+y2 = h//2
+
+win.fill(color.white)
+
+while (0 <= x1 < w) and (0 <= y1 < h) or \  <3>
+      (0 <= x2 < w) and (0 <= y2 < h):
+    win.set_at((x1,y1), color.blue)
+    win.set_at((x2,y2), color.green) <4>
+    (x1,y1) = move(x1,y1)
+    (x2,y2) = move(x2,y2)   <5>
+    pygame.display.update()
+
+input("Enter")
+----
+<1> Coordinates of the first particle.
+<2> Coordinates of the second particle.
+<3> Why logical `or`?
+<4> Don't forget to draw the second particle.
+<5> Notice how we just call the `move` function a second time with different arguments?
+
+How hard is it to add a third particle? A fourth? As we progress we will learn more advanced techniques so we don't have to keep defining new variables for each particle.
+====
+
+A two particle system might look like
+
+image::brownian2.png[width=292,height=208,align="center"]
+
+==== Improvement's to the Brownian Program
+
+That big if-statement in the `move` function is rather clunky and error prone. If you mistype a `-` or `+` sign then the particle goes off in a seemingly nonrandom direction. Notice that all we are doing is either subtracting 1 or adding 1 to the particle's stem:[x] and/or stem:[y] coordinate. We could just generate a random integer in the range -1 to 1 and add that to the coordinate.  We have to be careful to generate a different random integer for each coordinate. 
+
+A better and more concise `move` function.
+
+[source,python,numbered]
+----
+def move(x,y):
+
+    delta_x = random.randrange(-1,2) <1> <2>
+    x = x + delta_x
+
+    delta_y = random.randrange(-1,2)
+    y = y + delta_y
+
+    return (x,y)
+----
+<1> Why `2` instead of `1` as the second argument to `randrange`?
+<2> The Greek letter stem:[\Delta] (pronounced _delta_) is often used to represent a change in some quantity. In this case a change in the `x` coordinate. 
+
+TIP: Python (version 3) actually does allow Greek alphabetic letters in identifier names.
+
+.A particle on a torus
+
+Right now our particle simulation terminates when a particle hits the edge of the display. One modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don't adjust the coordinate to go off the display.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the Brownian particle simulation so that a particle stays within the bounds of the window as if the edges of the window were an impermeable wall.
+
+[.result]
+====
+The only thing you need to add is an if-statement that checks the bounds of the particle. An appropriate place to put this is the `move` function, since it is related to moving the particle.
+
+[source,python,numbered]
+----
+# add this to the bottom of the move function.
+if x >= w:     <1> <2>
+    x = w - 1  <3>
+elif x < 0:    <4>
+    x = 0
+	
+if y >= h:
+    y = h - 1
+elif y < 0:
+    y = 0
+----
+<1> Why `>=`? 
+<2> Could we have also said `x > w - 1` or even `x == w`? Yes to both.
+<3> Why `w - 1`?
+<4> Could we have also said `x == -1`? Yes.
+====
+
+Another more interesting solution might be to pretend that the display _wraps around_ on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom. 
+
+An obvious way to do this is similar to the above _check yourself_ solution and check if the particle has gone off an edge and reset its coordinate accordingly. 
+
+[source,python,numbered]
+----
+# wrap the x-coordinate around the x-axis.
+if x >= w:
+    x = 0
+elif x < 0:
+    x = w - 1 <1>
+---- 
+<1> Why `w - 1` and not `w`?
+
+Modifying the stem:[y]-coordinate is similar.
+
+If we think of the display as a sheet of paper and curl the paper around on the x-axis then we curl it again around the y-axis we end up with the topological shape of a _torus_, or a donut.
+
+image:brownian_on_torus.png[width=240,height=226,align="center"]
+
+The concept of a variable _wrapping around_ should be familiar. This is modular arithmetic. So rather than the if-statement above we can simply add or subtract 1 modulo the width or height of the window. In which case our `move` function becomes ... 
+
+[source,python,numbered]
+----
+def move(x,y):
+
+    delta_x = random.randrange(-1,2)
+    x = (x + delta_x) % w
+
+    delta_y = random.randrange(-1,2)
+    y = (y + delta_y) % h
+
+    return (x,y)
+----
+
+Lets see what happens when the particle is on the right edge. Lets assume that the width of the window is 600 pixels (`w` is `600`), `x` is `599`. Lets further assume that `delta_x` is `1`, then the new value of `x` is `(599 + 1) % 600` or `0`, which becomes the new value of `x`, effectively wrapping around to the left edge.
+
+Lets look at the left edge. When the particle `x` is on the left edge then `x` is `0` and let `delta_x` be `-1`. Then `(0 + -1) % 600` is `-1 % 600` which is `599`, effectively wrapping back to the right edge.
+
+=== A Fractional Dimension Random Walk (or Fractal)
+
+Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it on a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, ... forever. The image drawn by marking the rocks is an interesting sort of random walk. 
+
+image::lost_hiker.png[width=711,height=400,align="center"]
+
+Let variables `(x0,y0)`, `(x1,y1)`, `(x2,y2)` be the coordinates of the towers, and 
+`(x,y)` be the coordinates of the hiker. Lets right down the process described in the paragraph above in _pseudocode_.
+
+[source]
+----
+1) create a Pygame display window
+2) Assign the coordinates of the towers to variables
+3) Assign the hiker random coordinates anywhere within the display
+4) Forever
+   a) choose a tower at random
+   b) compute the mid-point between the hiker and the chosen tower and 
+      update the hiker's coordinates with the midpoint.
+   c) plot a pixel at the hikers coordinate (similar to marking with a rock)
+
+----
+
+TIP: Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what computer scientists call _pseudocode_.
+
+NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
+the average of the stem:[x]-coordinates and the average of the stem:[y]-coordinates, or 
+stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})]
+
+[source,python,numbered]
+----
+import pygame, random, color
+side = 500
+win = pygame.display.set_mode((side,side))
+
+x0 = side // 2  # tower 0 coordinates
+y0 = 0
+
+x1 = side - 1   # tower 1 coordinates
+y1 = side - 1
+
+x2 = 0          # tower 2 coordinates
+y2 = side - 1
+
+x = random.randrange(side) # hiker coordinates
+y = random.randrange(side)
+
+win.fill(color.white)
+
+while True:
+
+    #choose a tower at random
+    t = random.randrange(3) <1>
+
+	# which tower is it?
+    if (t == 0):
+        x = (x + x0) // 2
+        y = (y + y0) // 2
+    elif (t == 1):
+        x = (x + x1) // 2
+        y = (y + y1) // 2
+    else:
+        x = (x + x2) // 2
+        y = (y + y2) // 2
+
+    win.set_at((x, y), color.blue)
+    pygame.display.update()
+----
+<1> It is important that the random number is in the loop body. We need
+to get a new random tower every iteration. If this were before the loop then we would always be choosing the same tower.
+
+The shape rendered by the code is called _Sierpinski's Triangle_.
+
+image::sierpinski.png[width=500,height=500,align="center"]
+
+This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (_e.g._ the midpoint) is informally called  the _chaos game_, named by the branch of mathematics called _chaos theory_.
+
+The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but ore than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbrot, W.H. Freeman and Company, 1982] 
+
+.Exercise
+Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
+
+.Exercise
+Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable `prev` that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
+
+=== The Monty Hall Problem
+
+The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
+
+This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem.footnote:[http://marilynvossavant.com/game-show-problem/] Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for ... the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it. 
+
+Probability is often counter-intuitive, we saw this with the Gambler's Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.
+
+Lets lay out the process of playing the game outlined above:
+
+. The contestant is presented with three doors, two with goats, and one with a new car. The goats and car are randomly assigned.
+. The contestant chooses a door to be revealed later.
+. The host shows a goat behind one of the other doors (not the contestant's door). 
+. The contestant is given th choice whether to switch to the other unopened door.
+. The contestant's door is revealed.
+
+We'll tackle each of these in turn.
+
+We can assign goats and a car to doors in any order. One thing we need to be careful about is that we do not assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
+
+[source,python,numbered]
+----
+goat1 = random.randrange(1,4) <1>
+----
+<1> Assign goat 1 to a random door.
+
+Now how about the second goat?
+
+[source,python,numbered]
+----
+goat2 = random.randrange(1,4)
+----
+
+This doesn't quit work because we might accidentally get the same 
+random number as `goat1`.  Here is another attempt.
+
+[source,python,numbered]
+----
+goat2 = random.randrange(1,4)
+
+if goat1 == goat2:
+    goat2 = random.randrange(1,4) <1>
+----
+<1> Try again if we generated the same random door as `goat1`.
+
+This is a common mistake. Why is it incorrect? Well, while it is less likely, we can still
+get the same random number twice in a row. We need to keep trying as long as they are the same.
+
+[source,python,numbered]
+----
+goat2 = random.randrange(1,4)
+
+while goat1 == goat2:
+    goat2 = random.randrange(1,4) <1>
+# What is true at this point after the loop terminates? <2>
+----
+<1> Keep trying as long as we keep getting the same random number as `goat1`. We know from the Gambler's Ruin that we can sometimes get the same number several times in a row.
+<2>`goat1 != goat2`
+
+We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
+
+[source,python,numbered]
+----
+car = random.randrange(1,4)
+while car == goat1 or car == goat2:
+    car = random.randrange(1,4)
+----
+
+This is one way to do it. 
+ 
+.Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Since there is only one door remaining for the car we should be able to calculate
+it without using a loop. Hint: Think of a simple expression involving th door numbers.
+
+[.result]
+====
+[source,python,numbered]
+----
+car = 6 - goat1 + goat2 <1>
+----
+<1> Try it for various values of `goat1` and `goat2`
+====
+
+In the second part of the game we need to have the contestant choose a door. We can simply ask them to input it from the keyboard.
+
+[source,python,numbered]
+----
+choice = int(input("Choose a door: ")) <1>
+----
+<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking, though error checking is an import part of writing reliable, robust computer programs. Indeed many computer security vulnerabilities come from software developers not properly validating input data causing program to behave in unexpected and sometimes dangerous ways.
+
+So now we have four variables set up:
+
+. `goat1` the location of the first goat
+. `goat2` the location of the second goat
+. `car` the location of the car
+. `choice` the door the contestant chose
+
+In the third step of the game we reveal one of the two goats being careful not to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch at all. 
+
+If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
+
+[source,python,numbered]
+----
+if choice == goat1:    <1>
+    show = goat2
+    switch = car
+elif choice == goat2:  <2>
+    show = goat1
+    switch = car
+else:                  <3>
+    show = goat1
+    switch = goat2
+---- 
+<1> If the contestant chose the same door as `goat1` then we will show `goat2` and if they choose to switch it will be to the car.
+<2> Similar to <1>
+<3> Finally, if the contestant chose the car then it doesn't matter which goat to show. In this cae we pick `goat1` and we will show the `goat2`.
+
+Now, we haven't even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.
+
+.Check Yourself
+Finish the Monty Hall Program. Here are some sample runs of what the program might look like.
+[source]
+----
+Choose a door: 1
+There is a goat in door 3
+Do you want to switch?(y/n): y
+You won a goat!
+
+Choose a door: 2
+There is a goat in door 1
+Do you want to switch?(y/n): y
+You won a car!
+----
+
+.Answer +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Below is just one version based on the code we've been developing.
+
+[.result]
+====
+[source,python,numbered]
+----
+import random
+
+# place a goat behind door one.
+goat1 = random.randrange(1,4)
+
+# place the second goat, making sure
+# that it is not the same door as the first goat.
+goat2 = random.randrange(1,4)
+
+while goat1 == goat2:
+    goat2 = random.randrange(1,4)
+
+# how did the loop terminate?
+
+# assign a car to the door that is not the
+# same a goat 1 or goat 2
+car = random.randrange(1,4)
+
+while car == goat1 or car == goat2:
+    car = random.randrange(1,4)
+
+# What is true?
+# car != goat1 != goat2
+# print(goat1,goat2,car)
+choice = int(input("Choose a door: "))
+
+# figure out how to show a goat
+# to the contestant
+if choice == goat1:
+    show = goat2
+    switch = car
+elif choice == goat2:
+    show = goat1
+    switch = car
+else:
+    show = goat1
+    switch = goat2
+
+print("There is a goat in door", show)
+
+switch_doors = input("Do you want to switch?(y/n): ")
+if switch_doors == 'y' or switch_doors == 'Y':
+    choice = switch
+
+# Did they win?
+if choice == car:
+    print("You won a car!")
+else:
+    print("You won a goat!")
+----
+====
+
+What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
+
+Probability is often counterintuitive.
+
+=== Exercises
+
+.Exercise 1 - Prime Numbers
+Prime numbers play an important role in cryptography. A prime number is only divisible by 
+one and itself.  If a number is not prime then it has _factor_ that is not one or itself. For example, 
+stem:[16517] has factors stem:[83] and stem:[199] because stem:[16517 = 83 \times 199].
+
+. prime
+. euler problem
+. count 7s
+. modifications to gamblers ruin
+. modify Brownian 
+. modify fractal
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a| 
+* random process
+* deterministic
+* Gambler's Ruin
+* Brownian Motion
+* torus
+* pseudocode
+* The Monty Hall Problem
+
+a|
+* computer simulation
+* one dimensional random walk
+* two dimensional random walk
+* The Drunkard's Walk
+* fractal
+* midpoint of a line
+
+|===
+

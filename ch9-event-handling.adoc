@@ -1,0 +1,337 @@
+== Event Handling
+
+Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clocking on the screen.
+
+NOTE: An _event_ is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
+
+One event we can check for is to see if the user has clicked the X in the Pygame
+window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the Pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
+
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
+
+Here is a snippet to check for the `QUIT` event and stop the program if the user
+has clicked on the X. The Pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
+
+[source,python,numbered]
+----
+for event in pygame.event.get():   <1>
+	if event.type == pygame.QUIT:  <2>
+		pygame.quit()              <3>
+		exit()                     <4>
+----
+<1> For each event in the event queue
+<2> See if is the `QUIT` event. If it is then ...
+<3> stop Pygame (this is a new function)
+<4> exit out of the program
+
+We could place this code in the outer while loop of our particle simulation.
+
+=== A Handy Utility Function
+
+The above event processing code checks for a `QUIT` event while the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the `input()` function to cause a Pygame program to actually pause so the display didn't just disappear when the program terminated. Lets modify the above event processing code and write a function `wait_for_quit()` that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.
+
+.`util.py`
+[source,python,numbered]
+----
+def wait_for_quit():
+   
+    while True:
+        for event in pygame.event.get():   <1>
+            if event.type == pygame.QUIT:
+                pygame.quit()              
+				exit()                     <2>
+		pygame.time.wait(100)              <3>
+----
+<1> Same event code as before.
+<2> `wait_for_quit` never returns, it just kills the program right here.
+<3> While this is line not absolutely necessary forcing a delay keeps the `while` loop from spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
+
+TIP: Function `pygame.time.wait` waits for a number of milliseconds. It is similar to `pygame.time.delay` except that `pygame.time.wait` relinquishes the CPU so that other programs may run whereas `pygame.time.delay` continues to use the processor during the delay. 
+
+Function `wait_for_quit` assumes that if the user closes the window they want the program to terminate as well. Function `wait_for_quit()` is so useful that we might consider putting it in a separate file `util.py` so we can import it in other Pygame programs.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a function `wait_for_click()` that _pauses_ the program until the user clicks 
+somewhere in the Pygame display. This function should behave a little differently than `wait_for_quit()` in that the program should not exit, but just continue.
+
+[.result]
+====
+
+[source,python,numbered]
+----
+def wait_for_click():
+    done = False                                   <1>
+    while not done:                                <2>
+        for e in pygame.event.get():               <3>
+            if e.type == pygame.MOUSEBUTTONDOWN:   <4>
+                done = True                        <5>
+        pygame.time.wait(100)                     <6>
+
+----
+<1> Local variable used to control loop
+<2> This loop does not terminate until the user has clicked in the Pygame display.
+<3> Standard code to get events in event queue.
+<4> Check for the `MOUSEBUTTONDOWN` event. This will check for either left or right mouse button and even clicking the scrolling wheel on the mouse.
+<5> Setting `done` to `True` will cause the `while`-loop to terminate.
+<6> Again, this is to be user friendly and let other programs run and not chew up CPU (or battery).
+
+Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also does not return a value (OK, it returns the special value `None`).  We should also put `wait_for_click` in `util.py`.
+
+====
+
+=== Pong
+
+One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games, if you will.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
+
+image::paddle.png[caption="Our Pong Paddle", align="center"]
+
+Next we need to set up some properties of the paddle and `blit` it to the display inside of the outer `while`.  We'll offset the paddle a little padding on the left and start it in the middle of the stem:[y] axis of the display.
+
+[source,python,numbered]
+----
+# properties of the paddle
+paddle = pygame.image.load("../images/paddle.png")
+paddle_w = paddle.get_width()
+paddle_h = paddle.get_height()
+paddle_x = 10
+paddle_y = height // 2 - paddle_h // 2
+paddle_dy = 8
+---- 
+
+and add the following line right after we `blit` the ball in the outer `while` loop. (Okay, so we are playing pong with a soccer ball).
+
+[source,python]
+----
+win.blit(paddle, (paddle_x, paddle_y))
+----
+
+We need to figure out how to make the paddle responsive to the up and down arrow on the keyboard. The `KEYDOWN` event means that some key on the keyboard is being pressed. We can look at some data associated with the event to determine which key it is.  We can
+check to see if `event.key` is `K_UP` or `K_DOWN`, the constants for the up and down  arrow keys and add or sbtract to `paddle_y` as appropriate.
+
+Our code to process events is a little more complicated.
+
+[source,python,numbered]
+----
+for event in pygame.event.get():
+	if event.type == pygame.QUIT:
+		pygame.quit()
+		exit()
+	elif event.type == pygame.KEYDOWN:         <1>
+		if event.key == pygame.K_UP:           <2>
+			paddle_y = paddle_y - paddle_dy
+		elif event.key == pygame.K_DOWN:       <3>
+			paddle_y = paddle_y + paddle_dy
+----
+<1> Do we have a key press event?
+<2> If so, then is it the up-arrow ...
+<3> or the down-arrow key?
+
+When you add this to the outer `while` loop you will notice that you need to keep hitting the up or down arrow key just to move the paddle one pixel. That is because when you press the down arrow key you generate only one event. What we would like to have happen is that when we press the key we continue to generate `KEYDOWN` events at a regular interval as long as it stays pressed. We can do this at the start of the program using the Pygame function:
+
+[source,python]
+----
+pygame.key.set_repeat(initial,interval)
+----
+
+What this says is to generate an initial event after `initial` milliseconds and then at regular intervals of `interval` milliseconds as the key is pressed.  Reasonable values for
+`initial` and `interval` are `1` millisecond.
+
+[source,python]
+----
+pygame.key.set_repeat(1,1)
+----
+
+Moving the paddle one pixel at a time is still slow, so we'll set up another variable `paddle_dy` to move it eight pixels every event.
+
+In order to make this a complete Pong game we need some way to lose. In Pong this is by not hitting the ball and having go off the left edge. IN the `move` function we need to remove the code that bounces the particle off of the left wall. And in the outer `while` loop we can simply check the stem:[x] coordinate of the ball and exit the program much like we did for the `QUIT` event.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the `move` function so the particle does not bounce off of the left wall.
+
+[.result]
+====
+Simply delete the part of the condition where we check if stem:[x] is less than 0. The new `move` function is below.
+
+[source,python,numbered]
+----
+def move(x, y, dx, dy):
+
+    dt = clock.tick(60) / 1000.0   # time elapsed since last frame
+
+    x = x + dt * ball_dx           # new x and y coordinates      
+    y = y + dt * ball_dy
+
+	# code to bounce off of left wall was deleted here.
+	
+    if x + ball_w >= width:        # right wall
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                      # top wall
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:     # bottom wall
+        y = height - ball_h
+        dy = -dy
+
+    return (x,y,dx,dy)
+----
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the outer `while` loop so that the game ends (rather abruptly) when the ball
+goes off the left hand side of the window.
+
+[.result]
+====
+To check to see if the player lost we could add the following code 
+to the outer `while` loop. 
+
+[source,python,numbered]
+----
+# check to see if we lst.
+if ball_x < 0:
+	pygame.quit()
+	exit()
+----
+
+Here is the entire outer while loop including our event code to check for the
+`QUIT` event and the paddle movement.
+
+[source,python,numbered]
+----
+pygame.key.set_repeat(1,1)
+
+while True:
+    win.fill(color.lightgray)
+
+    (ball_x,ball_y,ball_dx,ball_dy) = \
+          move(ball_x,ball_y,ball_dx,ball_dy)
+
+    # check to see if we lost.
+    if ball_x < 0:
+        pygame.quit()
+        exit()
+
+    # handle events
+    for event in pygame.event.get():  <1>
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                paddle_y = paddle_y - paddle_dy
+            elif event.key == pygame.K_DOWN:
+                paddle_y = paddle_y + paddle_dy
+
+    win.blit(ball, (ball_x, ball_y))
+    win.blit(paddle, (paddle_x, paddle_y))
+
+    pygame.display.update()
+----
+<1> This is the same as the event processing `for` loop we just covered above.
+
+====
+
+TIP: The outer loop in our case the `while` loop throttled by the frame rate) is often call _the game loop_.
+
+We also need to bounce the ball off of the paddle. To do this lets make sure we understand all of the coordinates and widths and heights.
+
+image::ball_hitting_paddle.png[align="center", width=600]
+
+With the paddle on the left hand side of the display, the ball is always coming in from the right. One common mistake is to check if the stem:[x] coordinate of the right side of the paddle (`paddle_x + paddle_w`) is equal to the left edge of the ball, `ball_x`. 
+
+[source,python,numbered]
+----
+if paddle_x + paddle_w == ball_x:
+    dx = -dx
+----
+
+But remember that the particle travels a certain distance each frame and the left edge of the ball will most likely overlap the right edge of the paddle and rarely be equal. We should check if the left edge of the ball is less than or equal to the right edge of the paddle.
+
+[source,python,numbered]
+----
+if ball_x <= paddle_x + paddle_w:
+    dx = -dx
+----
+
+That's closer. Bt this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the stem:[y] coordinates of the paddle.
+
+[source,python,numbered]
+----
+if x <= paddle_x + paddle_w and \
+   paddle_y <= ball_y <= paddle_y + paddle_h: <1>
+	dx = -dx
+----
+<1> Using Python's more mathematical notation for inequality stem:[x \le y \le z]
+
+It probably makes sense for this to go in the `move` function for the ball to keep the body of the main loop less cluttered.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Modify the `move` function so that it properly checks to see if the ball bounces off of the paddle.
+
+[.result]
+====
+
+[source,python]
+----
+def move(x, y, dx, dy):
+
+    dt = clock.tick(60) / 1000.0
+
+    x += dt * ball_dx
+    y += dt * ball_dy
+
+    if x + ball_w >= width:     # right wall
+        x = width - ball_w
+        dx = -dx
+
+    if y < 0:                   #top wall
+        y = 0
+        dy = -dy
+    elif y + ball_h >= height:  # bottom wall
+        y = height - ball_h
+        dy = -dy
+
+    # check if particle hits paddle.          <1>
+    if x <= paddle_x + paddle_w and \         <2>
+       paddle_y <= y <= paddle_y + paddle_h:
+        dx = -dx
+
+    return (x,y,dx,dy)
+
+----
+<1> This `if`-statement is the only modification to the `move` function.
+<2> We are using the parameters `x` and `y` and not `ball_x` and `ball_y`. Why? See the next _check yourself_.
+====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Add a second ball to the pong game. Lose when both balls have gone off the screen.
+
+[.result]
+====
+TBD
+
+[source,python]
+----
+# TBD
+----
+====
+
+
+
+=== Exercises
+
+=== Terminology 
+
+.Terminology
+[cols="2"]
+|===
+
+a|
+ * event
+
+a|
+ * event queue
+
+|===
