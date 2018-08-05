@@ -9,7 +9,7 @@ cash = 0
 win.fill(color.white)
 xscale = 1
 yscale = 10
-bet = 1
+bet = .0001
 
 while i < win.get_width()*xscale:
     n = random.randrange(2)
@@ -19,12 +19,12 @@ while i < win.get_width()*xscale:
         bet = 1
     else:
         cash = cash - bet
-        bet = bet * 2
-
+        bet = 10
     i = i + 1
 
     # plot cash at time i//scale
-    win.set_at((i // xscale, (h // 2 - cash)), color.black)
+    #win.set_at((i // xscale, (h // 2 - cash)), color.black)
+    pygame.draw.line(win, color.black, (i // xscale, (h // 2 - cash)), (i // xscale, h//2))
 
     pygame.draw.line(win, color.red, (0,h//2), (w-1,h//2))
     pygame.display.update()

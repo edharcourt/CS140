@@ -3392,7 +3392,9 @@ while i < win.get_width()*scale:  <2>
 <3> Plot our current chip count. Notice the use of the `scale` variable to plot multiple points at each x-coordinate.
 <4> Keep redrawing a red line in the middle to represent zero chips. 
 
-NOTE: `win.get_width()`. Need to finish discussing
+NOTE: The window object `win` has methods `get_width()` and `get_height()` that returns 
+the width and the height of the window, in pixels. Recall that _methods_ are special functions 
+that are defined on objects.
 
 The random walk on the left plots 10 points per stem:[x]-coordinate `scale = 10`. The plot on the right
 plots 100 points per pixel `scale = 100`. 
@@ -3458,7 +3460,7 @@ eight possible neighboring locations that it can move to. Forgetting, for the ti
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that `x` and `y` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that `(x,y)` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 

@@ -7146,7 +7146,9 @@ coordinate of where we need to draw a pixel. If we keep a counter <code>i</code>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>win.get_width()</code>. Need to finish discussing
+The window object <code>win</code> has methods <code>get_width()</code> and <code>get_height()</code> that returns
+the width and the height of the window, in pixels. Recall that <em>methods</em> are special functions
+that are defined on objects.
 </td>
 </tr>
 </table>
@@ -7253,7 +7255,7 @@ eight possible neighboring locations that it can move to. Forgetting, for the ti
 </div>
 </div>
 <div class="paragraph">
-<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that <code>x</code> and <code>y</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? We can simulate tossing an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that <code>(x,y)</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7820,7 +7822,7 @@ Python (version 3) actually does allow Greek alphabetic letters in identifier na
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what coputer scientists call <em>pseudocode</em>.
+Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what computer scientists call <em>pseudocode</em>.
 </td>
 </tr>
 </table>
@@ -15706,7 +15708,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-07-28 15:49:11 EDT
+Last updated 2018-08-04 23:48:54 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
