@@ -2835,7 +2835,7 @@ An <em>object</em> in Python is a value (not unlike an integer or a float) that 
 <p>For example, the Pygame window above has two methods <code>get_height()</code> and <code>get_width()</code> that return the height and width in pixels of the window. Methods are always called using a <em>dot notation</em> of the object name followed by the methods. For example <code>win.get_height()</code>.</p>
 </div>
 <div class="paragraph">
-<div class="title">Keeping the window from disappearing <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
 <p>Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?</p>
 </div>
 <div class="exampleblock result">
@@ -6712,6 +6712,17 @@ problem.</p>
 <div class="sect1">
 <h2 id="_a_random_walk"><a class="anchor" href="#_a_random_walk"></a>6. A Random Walk</h2>
 <div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Computer Simulations are really just virtual time machines.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Edmond Kirsch in Origin: A Novel<br>
+<cite>by Dan Brown</cite>
+</div>
+</div>
 <div class="paragraph">
 <p>The real power in programming comes from how we can combine loops, conditional statements, and functions in creative ways to solve or explore a problem.  We will continue our investigations in
 programming by exploring the nature of <em>randomness</em>.<sup class="footnote">[<a id="_footnoteref_19" class="footnote" href="#_footnotedef_19" title="View footnote.">19</a>]</sup></p>
@@ -7351,30 +7362,34 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Write a logical condition that is true if the particle at coordinate <code>(x,y)</code> is on the display window. Assume that variable <code>w</code> and <code>h</code> refer to the width and height of the display.</p>
+<p>Write a logical condition that is true if the particle at coordinate <code>(x,y)</code> is within the bounds of  the display window. Assume that variable <code>w</code> and <code>h</code> refer to the width and height of the display.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
 <div class="paragraph">
 <p>Well &#8230;&#8203; <code>x</code> must be between <code>0</code> and <code>w</code> (including 0, but excluding <code>w</code>) and
-<code>y</code> must be between <code>0</code> and <code>h</code> (including 0, but excluding <code>h</code>).</p>
+<code>y</code> must be between <code>0</code> and <code>h</code> (including 0, but excluding <code>h</code>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The parentheses are not strictly necessary but aid in clarity.</p>
-</div>
-<div class="paragraph">
-<p>Python allows for a more concise mathematical way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the entire logical expression as</p>
+<p>The parentheses are not strictly necessary but aid in clarity. Contrast this same expression
+without parentheses.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span> <span class="tok-ow">and</span> <span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Python allows for a more concise way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the logical expression as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 </div>
@@ -15708,7 +15723,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-05 14:40:43 EDT
+Last updated 2018-08-05 14:47:14 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

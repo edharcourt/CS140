@@ -31,7 +31,7 @@ NOTE: An _object_ in Python is a value (not unlike an integer or a float) that c
 
 For example, the Pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
 
-.Keeping the window from disappearing +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?
 
 [.result]
