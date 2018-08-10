@@ -6752,7 +6752,7 @@ A computer program is <em>deterministic</em> if it produces the same exact resul
 </table>
 </div>
 <div class="paragraph">
-<p>Lets simulate tossing a coin \(n\) times counting the number of occurrences of a head or a tail. We will have \(n\) be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable <code>heads</code> to keep track of the number times heads appeared and a variable <code>tails</code> for the number of times tails appeared.</p>
+<p>Lets simulate tossing a coin \(n\) times counting the number of occurrences of a head or a tail. We will have \(n\) be input by the user. We will start by tossing a coin once and checking if it is heads or tails using a variable <code>heads</code> to keep track of the number times heads appeared and a variable <code>tails</code> for the number of times tails appeared.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6975,10 +6975,10 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 <div class="sect2">
 <h3 id="_the_gamblers_ruin"><a class="anchor" href="#_the_gamblers_ruin"></a>6.1. The Gambler&#8217;s Ruin</h3>
 <div class="paragraph">
-<p>Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance chance of winning each toss (better odds than a real real casino.)</p>
+<p>Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand.</p>
 </div>
 <div class="paragraph">
-<p>How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.</p>
+<p>How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7023,7 +7023,7 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 </table>
 </div>
 <div class="paragraph">
-<p>As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can&#8217;t quit, even when they are ahead. What might the program look like now?</p>
+<p>If you run this program many times, as you might expect, about half the time the player loses everything and half the time they double their money. But a player with a gambling problem typically can&#8217;t quit, even when they are ahead. What might the program look like now?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7062,12 +7062,12 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 </table>
 </div>
 <div class="paragraph">
-<p>We don&#8217;t even need to run the program to see what will happen here. This is the <em>Gambler&#8217;s Ruin</em>. A gambler who gambles long enough will always lose everything!</p>
+<p>We don&#8217;t even need to run the program to see what will happen here. The only way the program terminates is when the number of chips reaches zero. This will always happen and is called <em>The Gambler&#8217;s Ruin</em>. A gambler who gambles long enough will always lose everything.</p>
 </div>
 <div class="sect3">
 <h4 id="_a_one_dimensional_random_walk"><a class="anchor" href="#_a_one_dimensional_random_walk"></a>6.1.1. A One Dimensional Random Walk</h4>
 <div class="paragraph">
-<p>Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width \(w\) and height \(h\), if we let the center \(y\)-coordinate of the window represent \(0\) chips then <code>0 - chips</code> will be the \(y\)
+<p>How can we visualize this random process, plotting the number of chips the gambler has over time. It is instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width \(w\) and height \(h\), if we let the center \(y\)-coordinate of the window represent \(0\) chips then <code>0 - chips</code> will be the \(y\)
 coordinate of where we need to draw a pixel. If we keep a counter <code>i</code> for each toss of the coin then <code>i</code> will represent the <code>x</code> coordinate.</p>
 </div>
 <div class="paragraph">
@@ -7075,8 +7075,7 @@ coordinate of where we need to draw a pixel. If we keep a counter <code>i</code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">(</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">RGB</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">RGB</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7257,7 +7256,7 @@ plots 100 points per pixel <code>scale = 100</code>.</p>
 <div class="sect2">
 <h3 id="_brownian_motion"><a class="anchor" href="#_brownian_motion"></a>6.2. Brownian Motion</h3>
 <div class="paragraph">
-<p>Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the \(x\) or \(y\) direction.  In terms of a graphic display, the particle&#8217;s coordinate \((x,y)\) has
+<p>Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. In this case, the particle can move randomly in either the \(x\) or \(y\) direction.  In terms of a graphic display, the particle&#8217;s coordinate \((x,y)\) has
 eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display.</p>
 </div>
 <div class="imageblock" style="text-align: center">
@@ -7266,7 +7265,7 @@ eight possible neighboring locations that it can move to. Forgetting, for the ti
 </div>
 </div>
 <div class="paragraph">
-<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  Assuming that <code>(x,y)</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  If <code>(x,y)</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7327,7 +7326,7 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 </div>
 <div class="paragraph">
-<p>This is essentially the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function <code>move</code> that takes a particle&#8217;s current <code>x</code> and <code>y</code> coordinate and returns its new <code>x</code> and <code>y</code>. Pictorially,</p>
+<p>This block of code is the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function <code>move</code> that takes a particle&#8217;s current <code>x</code> and <code>y</code> coordinate and returns its new <code>x</code> and <code>y</code>. Pictorially,</p>
 </div>
 <div class="imageblock" style="text-align: center">
 <div class="content">
@@ -7345,7 +7344,8 @@ Because we are using two random variables this Brownian Motion simulation is oft
 </div>
 </div>
 <div class="paragraph">
-<p>Calling the <code>move</code> function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could</p>
+<p>Calling the <code>move</code> function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run.
+But when should the simulation stop? That is, what is the loop condition? We have several options. We could</p>
 </div>
 <div class="ulist">
 <ul>
@@ -7897,7 +7897,7 @@ the average of the \(x\)-coordinates and the average of the \(y\)-coordinates, o
 <span class="tok-n">side</span> <span class="tok-o">=</span> <span class="tok-mi">500</span>
 <span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">side</span><span class="tok-p">,</span><span class="tok-n">side</span><span class="tok-p">))</span>
 
-<span class="tok-n">x0</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># tower 0 coordinates</span>
+<span class="tok-n">x0</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># tower 0 coordinates  </span><i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-n">y0</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
 
 <span class="tok-n">x1</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>   <span class="tok-c1"># tower 1 coordinates</span>
@@ -7913,8 +7913,8 @@ the average of the \(x\)-coordinates and the average of the \(y\)-coordinates, o
 
 <span class="tok-k">while</span> <span class="tok-bp">True</span><span class="tok-p">:</span>
 
-    <span class="tok-c1">#choose a tower at random</span>
-    <span class="tok-n">t</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-c1"># choose a tower at random</span>
+    <span class="tok-n">t</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
 
 	<span class="tok-c1"># which tower is it?</span>
     <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">t</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">):</span>
@@ -7936,6 +7936,10 @@ the average of the \(x\)-coordinates and the average of the \(y\)-coordinates, o
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Another way to write this is to use <em>tuple assignment</em> as <code>(x0,y0) = (side//2, 0)</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>It is important that the random number is in the loop body. We need
 to get a new random tower every iteration. If this were before the loop then we would always be choosing the same tower.</td>
 </tr>
@@ -7961,16 +7965,25 @@ to get a new random tower every iteration. If this were before the loop then we 
 </div>
 <div class="paragraph">
 <div class="title">Exercise</div>
-<p>Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window&#8217;s edge. For example, tower 0 is in the middle of the top edge at coordinate <em>(side//2, 0)</em>, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable <code>prev</code> that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn&#8217;t the same as <code>prev</code>.</p>
+<p>Rather than using a triangle use four cell towers, where each tower is placed in the middle of the window&#8217;s edge. For example, tower 0 is in the middle of the top edge at coordinate <em>(side//2, 0)</em>, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: Keep an extra variable <code>prev</code> that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn&#8217;t the same as <code>prev</code>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_the_monty_hall_problem"><a class="anchor" href="#_the_monty_hall_problem"></a>6.4. The Monty Hall Problem</h3>
 <div class="paragraph">
-<p>The <em>Monty Hall Problem</em> dates back to a game show on American television called <em>Let&#8217;s Make a Deal</em>, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The <em>Monty Hall Problem</em> is whether the contestant should switch or not.</p>
+<p>The <em>Monty Hall Problem</em> dates back to a game show on American television called <em>Let&#8217;s Make a Deal</em>, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/doorsandgoat.png" alt="doorsandgoat" width="251">
+</div>
+<div class="title">Figure 6. The Monty Hall Problem.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup></div>
 </div>
 <div class="paragraph">
-<p>This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant&#8217;s weekly Parade column presented her with the problem.<sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup> Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for &#8230;&#8203; the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it.</p>
+<p>The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The <em>Monty Hall Problem</em> is whether the contestant should switch or not.</p>
+</div>
+<div class="paragraph">
+<p>This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant&#8217;s weekly Parade column presented her with the problem.<sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup> Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for &#8230;&#8203; the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it.</p>
 </div>
 <div class="paragraph">
 <p>Probability is often counter-intuitive, we saw this with the Gambler&#8217;s Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.</p>
@@ -8005,8 +8018,7 @@ to get a new random tower every iteration. If this were before the loop then we 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">goat1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8022,8 +8034,7 @@ to get a new random tower every iteration. If this were before the loop then we 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8032,14 +8043,10 @@ random number as <code>goat1</code>.  Here is another attempt.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
-2
-3
-4</div></td><td class="code"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
 
 <span class="tok-k">if</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
-    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</td></tr></table></code></pre>
+    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8063,7 +8070,7 @@ get the same random number twice in a row. We need to keep trying as long as the
 5</div></td><td class="code"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
 
 <span class="tok-k">while</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
-    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>                       <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-c1"># What is true at this point after the loop terminates? </span><i class="conum" data-value="2"></i><b>(2)</b>
 </td></tr></table></code></pre>
 </div>
@@ -8073,7 +8080,7 @@ get the same random number twice in a row. We need to keep trying as long as the
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>Keep trying as long as we keep getting the same random number as <code>goat1</code>. We know from the Gambler&#8217;s Ruin that we can sometimes get the same number several times in a row.
-&lt;2&gt;<code>goat1 != goat2</code></td>
+&lt;2&gt;that <code>goat1 != goat2</code></td>
 </tr>
 </table>
 </div>
@@ -8096,7 +8103,7 @@ get the same random number twice in a row. We need to keep trying as long as the
 <div class="paragraph">
 <div class="title">Exercise <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
 <p>Since there is only one door remaining for the car we should be able to calculate
-it without using a loop. Hint: Think of a simple expression involving th door numbers.</p>
+it without using a loop. Hint: Think of a simple expression involving the door numbers.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -8121,8 +8128,7 @@ it without using a loop. Hint: Think of a simple expression involving th door nu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">choice</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Choose a door: &quot;</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">choice</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Choose a door: &quot;</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8327,10 +8333,7 @@ You won a car!</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
-</div>
-<div class="paragraph">
-<p>Probability is often counterintuitive.</p>
+<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, it is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
 </div>
 </div>
 <div class="sect2">
@@ -8338,17 +8341,16 @@ You won a car!</code></pre>
 <div class="paragraph">
 <div class="title">Exercise 1 - Prime Numbers</div>
 <p>Prime numbers play an important role in cryptography. A prime number is only divisible by
-one and itself.  If a number is not prime then it has <em>factor</em> that is not one or itself. For example,
-\(16517\) has factors \(83\) and \(199\) because \(16517 = 83 \times 199\).</p>
+one and itself.  If a number is not prime then it has a <em>factor</em> that is neither one or itself. For example,
+\(16517\) has factors \(83\) and \(199\) because \(16517 = 83 \times 199\).
+Write a program <code>prime.py</code>, that reads an integer from the user and prints whether the number is prime or not.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2 - Adding multiples of 3 or 5</div>
+<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Write a program to print find and print the sum of all the multiples of 3 or 5 below 1000.<sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
-<li>
-<p>prime</p>
-</li>
-<li>
-<p>euler problem</p>
-</li>
 <li>
 <p>count 7s</p>
 </li>
@@ -10379,7 +10381,7 @@ A <em>matrix</em> is a rectangular table of numbers. The branch of mathematics t
 <div class="content">
 <img src="./images/bug.jpg" alt="bug" width="500">
 </div>
-<div class="title">Figure 6. <a href="https://500px.com/martinamm">Amm, Martin  <code>https://500px.com/martinamm</code> accessed 7/27/2017</a>, found at  <a href="https://www.reddit.com/r/pics/comments/x503f/absolutely_stunning_picture_of_a_dragonfly_in_all/">reddit link</a></div>
+<div class="title">Figure 7. <a href="https://500px.com/martinamm">Amm, Martin  <code>https://500px.com/martinamm</code> accessed 7/27/2017</a>, found at  <a href="https://www.reddit.com/r/pics/comments/x503f/absolutely_stunning_picture_of_a_dragonfly_in_all/">reddit link</a></div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10452,7 +10454,7 @@ A <em>matrix</em> is a rectangular table of numbers. The branch of mathematics t
 <div class="content">
 <img src="./images/darker_bug.jpg" alt="darker bug" width="500">
 </div>
-<div class="title">Figure 7. Darker Bug</div>
+<div class="title">Figure 8. Darker Bug</div>
 </div>
 </div>
 <div class="sect2">
@@ -10484,7 +10486,7 @@ to \((255 + 255 + 0)/3 = 170\), or the light gray <code>(170,170,170)</code>. We
 <div class="content">
 <img src="./images/gray_bug.jpg" alt="gray bug" width="500">
 </div>
-<div class="title">Figure 8. Grayscale Bug</div>
+<div class="title">Figure 9. Grayscale Bug</div>
 </div>
 <div class="paragraph">
 <p>What is cool with digital images is that we can do whatever we want to the pixel values.
@@ -10494,7 +10496,7 @@ The term <em>photographic negative</em> comes from the era a film photography an
 <div class="content">
 <img src="./images/gray_weighted_rgb_bug.jpg" alt="gray weighted rgb bug" width="500">
 </div>
-<div class="title">Figure 9. Grayscale Bug with weighted RGB</div>
+<div class="title">Figure 10. Grayscale Bug with weighted RGB</div>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -10518,7 +10520,7 @@ The term <em>photographic negative</em> comes from the era a film photography an
 <div class="content">
 <img src="./images/negative_bug.jpg" alt="negative bug" width="500">
 </div>
-<div class="title">Figure 10. Negative Insect</div>
+<div class="title">Figure 11. Negative Insect</div>
 </div>
 </div>
 </div>
@@ -10536,7 +10538,7 @@ For example, for every pixel \((r,g,b)\) change it to \((g,b,r)\)? Sometimes the
 <div class="content">
 <img src="./images/gbr_bug.jpg" alt="gbr bug" width="500">
 </div>
-<div class="title">Figure 11. RGB to GBR Insect</div>
+<div class="title">Figure 12. RGB to GBR Insect</div>
 </div>
 </div>
 <div class="sect2">
@@ -10548,7 +10550,7 @@ For example, for every pixel \((r,g,b)\) change it to \((g,b,r)\)? Sometimes the
 <div class="content">
 <img src="./images/scale.png" alt="scale" width="600">
 </div>
-<div class="title">Figure 12. Scaling an image</div>
+<div class="title">Figure 13. Scaling an image</div>
 </div>
 <div class="paragraph">
 <p>Until now we have had two ways to create a surface; the first is to use the <code>pygame.display.set_mode</code> function to create the special display surface. The second way was to use the <code>pygame.image.load</code> function to create a surface for an image. But our <code>scale</code> function will need to create an initially blank surface of an arbitrary width and height.</p>
@@ -10571,7 +10573,7 @@ For example, for every pixel \((r,g,b)\) change it to \((g,b,r)\)? Sometimes the
 <div class="content">
 <img src="./images/scale_xy.png" alt="scale xy" width="600">
 </div>
-<div class="title">Figure 13. Computing coordinates in scaled image</div>
+<div class="title">Figure 14. Computing coordinates in scaled image</div>
 </div>
 <div class="paragraph">
 <p>Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The \(x\) coordinate 10 in the scaled image should correspond to \(x\) coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.</p>
@@ -10753,7 +10755,7 @@ Notice that we use floating-point division on lines 4-5. This is because we migh
 <div class="content">
 <img src="./images/bug_in_a_bug.png" alt="bug in a bug" width="500">
 </div>
-<div class="title">Figure 14. Bug centered in a bug</div>
+<div class="title">Figure 15. Bug centered in a bug</div>
 </div>
 </div>
 </div>
@@ -10788,7 +10790,7 @@ The <em>aspect ratio</em> of an image is the ratio of an image&#8217;s width div
 <div class="content">
 <img src="./images/rainbow_toad_small.jpg" alt="rainbow toad small">
 </div>
-<div class="title">Figure 15. Rainbow Toad <sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup></div>
+<div class="title">Figure 16. Rainbow Toad <sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup></div>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -10906,7 +10908,7 @@ consider the pixel highlighted in red below. We create new pixel in a new image 
 <div class="content">
 <img src="./images/mean_filter.png" alt="mean filter" width="500">
 </div>
-<div class="title">Figure 16. Mean of the Neighborhood</div>
+<div class="title">Figure 17. Mean of the Neighborhood</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -10927,7 +10929,7 @@ The <em>neighborhood</em> of a pixel is comprised of the eight pixels that surro
 <div class="content">
 <img src="./images/neighborhood_mean.png" alt="neighborhood mean" width="500">
 </div>
-<div class="title">Figure 17. Function <code>neighborhood_mean</code> of a pixel</div>
+<div class="title">Figure 18. Function <code>neighborhood_mean</code> of a pixel</div>
 </div>
 <div class="paragraph">
 <p>The function header should be &#8230;&#8203;</p>
@@ -11026,7 +11028,7 @@ The <em>neighborhood</em> of a pixel is comprised of the eight pixels that surro
 <div class="content">
 <img src="./images/mean_filter_func.png" alt="mean filter func" width="500">
 </div>
-<div class="title">Figure 18. Mean filter function</div>
+<div class="title">Figure 19. Mean filter function</div>
 </div>
 <div class="paragraph">
 <p>There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don&#8217;t have any neighborson the left and if the <code>neighborhood_mean</code> functions tries to access a negative <em>x</em> coordinate the program will crash.</p>
@@ -11175,7 +11177,7 @@ With <em>lossy compression</em> data is either discarded or modified and cannot 
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-JPEG (<em>Joint Photographic Experts Group</em> <sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup>) uses advanced mathematics to achieve good, but lossy, compression.
+JPEG (<em>Joint Photographic Experts Group</em> <sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>) uses advanced mathematics to achieve good, but lossy, compression.
 </td>
 </tr>
 </table>
@@ -11194,7 +11196,7 @@ JPEG (<em>Joint Photographic Experts Group</em> <sup class="footnote">[<a id="_f
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-PNG  <sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup> One of the techniques used in PNG&#8217;s lossless compression is called <em>Huffman Encoding</em>, a common technique discussed in a <em>Data Structures</em> text.
+PNG  <sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup> One of the techniques used in PNG&#8217;s lossless compression is called <em>Huffman Encoding</em>, a common technique discussed in a <em>Data Structures</em> text.
 </td>
 </tr>
 </table>
@@ -11224,7 +11226,7 @@ The moral of the story is that image file formats that use lossy compression (<e
 <div class="content">
 <img src="./images/png/red_panda.png" alt="red panda" width="450">
 </div>
-<div class="title">Figure 19. Red Panda (Ailurus Fulgens) <code>https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG</code></div>
+<div class="title">Figure 20. Red Panda (Ailurus Fulgens) <code>https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG</code></div>
 </div>
 <div class="admonitionblock caution">
 <table>
@@ -11429,7 +11431,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="content">
 <img src="./images/png/antialias.png" alt="antialias" width="600">
 </div>
-<div class="title">Figure 20. Antialiasing</div>
+<div class="title">Figure 21. Antialiasing</div>
 </div>
 <div class="paragraph">
 <p>Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate \((0,0)\) in the image corresponds with coordinate \((0,0)\) in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.</p>
@@ -11438,7 +11440,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="content">
 <img src="./images/png/panda_overlay_secret.png" alt="panda overlay secret">
 </div>
-<div class="title">Figure 21. Overlaying a secret on image</div>
+<div class="title">Figure 22. Overlaying a secret on image</div>
 </div>
 <div class="paragraph">
 <p>The following program for hiding a message in an image puts it all together.</p>
@@ -11567,7 +11569,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="sect2">
 <h3 id="_case_study_schellings_segregation_model"><a class="anchor" href="#_case_study_schellings_segregation_model"></a>10.8. Case Study: Schelling&#8217;s Segregation Model</h3>
 <div class="paragraph">
-<p>In 1969 and 1971 the economist Thomas Schelling published two now famous papers <em>Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup> and <em>Dynamic Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup>. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn&#8217;t just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background.</p>
+<p>In 1969 and 1971 the economist Thomas Schelling published two now famous papers <em>Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup> and <em>Dynamic Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn&#8217;t just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background.</p>
 </div>
 <div class="paragraph">
 <p>Consider the following map of New York City.</p>
@@ -11576,7 +11578,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="content">
 <img src="./images/nyc_segregation.jpg" alt="nyc segregation">
 </div>
-<div class="title">Figure 22. Segregation map of NYC.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup></div>
+<div class="title">Figure 23. Segregation map of NYC.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup></div>
 </div>
 <div class="paragraph">
 <p>In this map each red dot represents a Caucasian household, blue represents a black household, yellow a Latino household, and green an Asian household. The segregation is obvious.</p>
@@ -11588,7 +11590,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="content">
 <img src="./images/schelling_grid.jpg" alt="schelling grid">
 </div>
-<div class="title">Figure 23. Schelling Agent Grid</div>
+<div class="title">Figure 24. Schelling Agent Grid</div>
 </div>
 <div class="paragraph">
 <p>In this grid we have green agents and blue agents. White represents empty locations on the grid where agents can move.  Schelling suggested that there is a threshold of the number of unlike neighbors an agent might tolerate before they decide to move. In this case we have a green agent marked with an X who is deciding if they should move. There are two empty cells, so X has six neighbors, two of which are like them, or \(2/6 = 1/3 = \overline{.33}\). If the threshold were <em>if less than stm[1/3] of my neighbors are like me then I&#8217;ll move</em>. In this case X would stay put. On the otherhand if the threshold were \(1/2\) then X would move.</p>
@@ -11603,7 +11605,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="content">
 <img src="./images/schelling_grid1.jpg" alt="schelling grid1">
 </div>
-<div class="title">Figure 24. Moving to lower left</div>
+<div class="title">Figure 25. Moving to lower left</div>
 </div>
 <div class="paragraph">
 <p>In this case <strong>X</strong> now has \(1/2\) half its neighbors like them. But what if they moved to the upper right?</p>
@@ -11612,7 +11614,7 @@ The above program can crash if the image containing the message is larger than t
 <div class="content">
 <img src="./images/schelling_grid2.jpg" alt="schelling grid2">
 </div>
-<div class="title">Figure 25. Moving to upper right</div>
+<div class="title">Figure 26. Moving to upper right</div>
 </div>
 <div class="paragraph">
 <p>Here <strong>X</strong> now has 0 neighbors like them, and they will most likely move again in the next round.</p>
@@ -11726,7 +11728,7 @@ and not <code>randrange()</code>. Later on it will be easier to make the populat
 <div class="content">
 <img src="./images/schelling_initial.jpg" alt="schelling initial">
 </div>
-<div class="title">Figure 26. Initial randomly populated grid</div>
+<div class="title">Figure 27. Initial randomly populated grid</div>
 </div>
 </div>
 <div class="sect3">
@@ -12008,7 +12010,7 @@ We always need to watch out for dividing by zero.
 <div class="content">
 <img src="./images/schelling_1_3.jpg" alt="schelling 1 3">
 </div>
-<div class="title">Figure 27. Schelling model with 1/3 threshold and equal agent proportion</div>
+<div class="title">Figure 28. Schelling model with 1/3 threshold and equal agent proportion</div>
 </div>
 <div class="paragraph">
 <p>If we make one of the agents a minority the results are even more pronounced. Below we have 25% of the agents are blue, 50% are green, and 25% empty cells.</p>
@@ -12017,7 +12019,7 @@ We always need to watch out for dividing by zero.
 <div class="content">
 <img src="./images/schelling_25_50_25.jpg" alt="schelling 25 50 25">
 </div>
-<div class="title">Figure 28. Schelling model with 1/3 threshold and 25% blue, 50% green agents</div>
+<div class="title">Figure 29. Schelling model with 1/3 threshold and 25% blue, 50% green agents</div>
 </div>
 <div class="paragraph">
 <p>These results were pretty surprising. If fewer than 33% of an agent&#8217;s neighbors are like them then the agent moves with the end result being a fair amount of segregation. That is, with fairly tolerant agents, we see segregation.</p>
@@ -12029,7 +12031,7 @@ We always need to watch out for dividing by zero.
 <div class="content">
 <img src="./images/schelling_thresh_15.jpg" alt="schelling thresh 15">
 </div>
-<div class="title">Figure 29. Schelling model with 15% threshold and equal proportion agents.</div>
+<div class="title">Figure 30. Schelling model with 15% threshold and equal proportion agents.</div>
 </div>
 <div class="paragraph">
 <p>If we increased the threshold to say 50% and also introduce a minority agent population we should see even more dramatic segregation. And we do.</p>
@@ -12038,7 +12040,7 @@ We always need to watch out for dividing by zero.
 <div class="content">
 <img src="./images/schelling_50_25_50_25.jpg" alt="schelling 50 25 50 25">
 </div>
-<div class="title">Figure 30. Schelling model with 50% threshold and 25% blue 50% green agents.</div>
+<div class="title">Figure 31. Schelling model with 50% threshold and 25% blue 50% green agents.</div>
 </div>
 <div class="paragraph">
 <p>If, however, we make agents very intolerant by having, say a 70% threshold, and we have enough diversity in the population it can be very hard to please an agent and the simulation doesn&#8217;t every really settle down.</p>
@@ -12047,7 +12049,7 @@ We always need to watch out for dividing by zero.
 <div class="sect3">
 <h4 id="_schelling_summary"><a class="anchor" href="#_schelling_summary"></a>10.8.5. Schelling Summary</h4>
 <div class="paragraph">
-<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup>.</p>
+<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_32" class="footnote" href="#_footnotedef_32" title="View footnote.">32</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_33" class="footnote" href="#_footnotedef_33" title="View footnote.">33</a>]</sup>.</p>
 </div>
 </div>
 </div>
@@ -13066,7 +13068,7 @@ incorrect</code></pre>
 <p>The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. <em>newline</em> character. We often call spaces, tabs, andnelinw character <em>whitespace</em> characters.  In most programming languages the newline character is written <code>\n</code>.</p>
 </div>
 <div class="paragraph">
-<p>We tell Python the name of a file we want to read using the <a href="https://docs.python.org/3.6/library/functions.html#open"><code>open</code></a> function.<sup class="footnote">[<a id="_footnoteref_32" class="footnote" href="#_footnotedef_32" title="View footnote.">32</a>]</sup></p>
+<p>We tell Python the name of a file we want to read using the <a href="https://docs.python.org/3.6/library/functions.html#open"><code>open</code></a> function.<sup class="footnote">[<a id="_footnoteref_34" class="footnote" href="#_footnotedef_34" title="View footnote.">34</a>]</sup></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13170,7 +13172,7 @@ incorrect</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Instead of printing a newline character print the empty string. The documentation for <a href="https://docs.python.org/3.6/library/functions.html#print"><code>print</code></a> is a little complicated.<sup class="footnote">[<a id="_footnoteref_33" class="footnote" href="#_footnotedef_33" title="View footnote.">33</a>]</sup></td>
+<td>Instead of printing a newline character print the empty string. The documentation for <a href="https://docs.python.org/3.6/library/functions.html#print"><code>print</code></a> is a little complicated.<sup class="footnote">[<a id="_footnoteref_35" class="footnote" href="#_footnotedef_35" title="View footnote.">35</a>]</sup></td>
 </tr>
 </table>
 </div>
@@ -13309,10 +13311,10 @@ incorrect</code></pre>
 <div class="sect2">
 <h3 id="_example_bioinformatics"><a class="anchor" href="#_example_bioinformatics"></a>11.3. Example: Bioinformatics</h3>
 <div class="paragraph">
-<p>DNA, <em>Deoxyribonucleic Acid</em>, is a molecule that caries the genetic information of all living organisms. DNA has a helical structure famously described by Watson and Crick.<sup class="footnote">[<a id="_footnoteref_34" class="footnote" href="#_footnotedef_34" title="View footnote.">34</a>]</sup></p>
+<p>DNA, <em>Deoxyribonucleic Acid</em>, is a molecule that caries the genetic information of all living organisms. DNA has a helical structure famously described by Watson and Crick.<sup class="footnote">[<a id="_footnoteref_36" class="footnote" href="#_footnotedef_36" title="View footnote.">36</a>]</sup></p>
 </div>
 <div class="paragraph">
-<div class="title">Double Helix Structure of DNA.<sup class="footnote">[<a id="_footnoteref_35" class="footnote" href="#_footnotedef_35" title="View footnote.">35</a>]</sup></div>
+<div class="title">Double Helix Structure of DNA.<sup class="footnote">[<a id="_footnoteref_37" class="footnote" href="#_footnotedef_37" title="View footnote.">37</a>]</sup></div>
 <p><span class="image"><img src="./images/double_helix.png" alt="double helix" width="300"></span></p>
 </div>
 <div class="paragraph">
@@ -13736,7 +13738,7 @@ some basic concepts we can go a long way to understand some of the fundamentals,
 <div class="content">
 <img src="./images/alice_eve_bob.png" alt="alice eve bob">
 </div>
-<div class="title">Figure 31. Cryptography</div>
+<div class="title">Figure 32. Cryptography</div>
 </div>
 <div class="paragraph">
 <p>Alice (the sender) <em>encrypts</em> the message <em>attack at dawn</em> using a special key (similar to a password) to Bob (the receiver) without Eve being able to intercept the message and understand it.  Bob <em>decrypts</em> the encrypted cleartext (the <em>ciphertext</em>) using the very same key. This implies that Alice and Bob had to get together first to agree on a key.</p>
@@ -13996,7 +13998,7 @@ What would the following print?</p>
 <div class="content">
 <img src="./images/encrypt.png" alt="encrypt" width="500">
 </div>
-<div class="title">Figure 32. Function <code>encrypt</code></div>
+<div class="title">Figure 33. Function <code>encrypt</code></div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14253,7 +14255,7 @@ alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  Wit
 <div class="content">
 <img src="./images/OTP_encrypt.png" alt="OTP encrypt" width="500">
 </div>
-<div class="title">Figure 33. One Time Pad Encryption</div>
+<div class="title">Figure 34. One Time Pad Encryption</div>
 </div>
 <div class="paragraph">
 <p>The process of decrypting using a one time pad is exactly the opposite. We line up the ciphertext with the key and then <em>subtract</em> modulo 26. For example, given the ciphertext <code>lozdn</code> we subtract the one time pad <code>lzjsj</code> to get <code>apple</code> back.</p>
@@ -14262,7 +14264,7 @@ alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  Wit
 <div class="content">
 <img src="./images/OTP_decrypt.png" alt="OTP decrypt" width="500">
 </div>
-<div class="title">Figure 34. One Time Pad Decryption</div>
+<div class="title">Figure 35. One Time Pad Decryption</div>
 </div>
 <div class="paragraph">
 <p>The one tricky aspect is to remember how to compute mod using negative numbers. For example, <code>(14 - 25) % 26</code> is equal to <code>-11 % 26</code> which is <code>15</code>.</p>
@@ -14849,7 +14851,7 @@ A <em>mutable</em> value can be modified.
 <h3 id="_the_birthday_paradox"><a class="anchor" href="#_the_birthday_paradox"></a>14.2. The Birthday Paradox</h3>
 <div class="paragraph">
 <p>The <em>Birthday Paradox</em> (also called the <em>Birthday Problem</em>) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a <a href="https://en.wikipedia.org/wiki/Birthday_attack"><em>birthday attack</em></a>.  The popular radio show <em>This American Life</em> did an <a href="https://www.thisamericanlife.org/630/things-i-mean-to-know">episode</a> where the results from the birthday paradox were used to debunk claims of voter
-fraud.<sup class="footnote">[<a id="_footnoteref_36" class="footnote" href="#_footnotedef_36" title="View footnote.">36</a>]</sup></p>
+fraud.<sup class="footnote">[<a id="_footnoteref_38" class="footnote" href="#_footnotedef_38" title="View footnote.">38</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>The mathematics for solving the birthday problem, while not all that complicated, is beyond the scope of this text. However, writing a program to simulate the birthday problem is fairly straightforward.</p>
@@ -15678,52 +15680,58 @@ modules we have encountered in this text.</p>
 <a href="#_footnoteref_22">22</a>. <em>The Factal Geometry of Nature</em>, Benoit Mandelbrot, W.H. Freeman and Company, 1982
 </div>
 <div class="footnote" id="_footnotedef_23">
-<a href="#_footnoteref_23">23</a>. <a href="http://marilynvossavant.com/game-show-problem/" class="bare">http://marilynvossavant.com/game-show-problem/</a>
+<a href="#_footnoteref_23">23</a>. Creative Commons <code>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Monty_open_door.svg/1200px-Monty_open_door.svg.png</code>
 </div>
 <div class="footnote" id="_footnotedef_24">
-<a href="#_footnoteref_24">24</a>. <code>http://www.bbc.co.uk/nature/14151541</code> <em>Lost rainbow toad is rediscovered</em>, BBC Nature News, accssed on 7/27/2017
+<a href="#_footnoteref_24">24</a>. <a href="http://marilynvossavant.com/game-show-problem/" class="bare">http://marilynvossavant.com/game-show-problem/</a>
 </div>
 <div class="footnote" id="_footnotedef_25">
-<a href="#_footnoteref_25">25</a>. <a href="https://jpeg.org/" class="bare">https://jpeg.org/</a>
+<a href="#_footnoteref_25">25</a>. This is the first problem in a set of problems from <a href="https://projecteuler.net/archives">Project Euler</a>.
 </div>
 <div class="footnote" id="_footnotedef_26">
-<a href="#_footnoteref_26">26</a>. <a href="https://www.w3.org/TR/PNG/" class="bare">https://www.w3.org/TR/PNG/</a>
+<a href="#_footnoteref_26">26</a>. <code>http://www.bbc.co.uk/nature/14151541</code> <em>Lost rainbow toad is rediscovered</em>, BBC Nature News, accssed on 7/27/2017
 </div>
 <div class="footnote" id="_footnotedef_27">
-<a href="#_footnoteref_27">27</a>. Schelling, Thomas. <em>Models of Segregation</em>, American Economic Review, 1969, 59(2)
+<a href="#_footnoteref_27">27</a>. <a href="https://jpeg.org/" class="bare">https://jpeg.org/</a>
 </div>
 <div class="footnote" id="_footnotedef_28">
-<a href="#_footnoteref_28">28</a>. Schelling, Thomas, <em>Dynamic Models of Segregation</em>, Journal of Mathematical Sociology, 1(2)
+<a href="#_footnoteref_28">28</a>. <a href="https://www.w3.org/TR/PNG/" class="bare">https://www.w3.org/TR/PNG/</a>
 </div>
 <div class="footnote" id="_footnotedef_29">
-<a href="#_footnoteref_29">29</a>. Creative Commons <code>https://www.flickr.com/photos/walkingsf/4981444199/</code>
+<a href="#_footnoteref_29">29</a>. Schelling, Thomas. <em>Models of Segregation</em>, American Economic Review, 1969, 59(2)
 </div>
 <div class="footnote" id="_footnotedef_30">
-<a href="#_footnoteref_30">30</a>. Nigel Gilbert, <em>Agent Based Models</em>, SAGE Publications, 2008
+<a href="#_footnoteref_30">30</a>. Schelling, Thomas, <em>Dynamic Models of Segregation</em>, Journal of Mathematical Sociology, 1(2)
 </div>
 <div class="footnote" id="_footnotedef_31">
-<a href="#_footnoteref_31">31</a>. <a href="https://ccl.northwestern.edu/netlogo/" class="bare">https://ccl.northwestern.edu/netlogo/</a>
+<a href="#_footnoteref_31">31</a>. Creative Commons <code>https://www.flickr.com/photos/walkingsf/4981444199/</code>
 </div>
 <div class="footnote" id="_footnotedef_32">
-<a href="#_footnoteref_32">32</a>. <a href="https://docs.python.org/3.6/library/functions.html#open" class="bare">https://docs.python.org/3.6/library/functions.html#open</a>
+<a href="#_footnoteref_32">32</a>. Nigel Gilbert, <em>Agent Based Models</em>, SAGE Publications, 2008
 </div>
 <div class="footnote" id="_footnotedef_33">
-<a href="#_footnoteref_33">33</a>. <a href="https://docs.python.org/3.6/library/functions.html#print" class="bare">https://docs.python.org/3.6/library/functions.html#print</a>
+<a href="#_footnoteref_33">33</a>. <a href="https://ccl.northwestern.edu/netlogo/" class="bare">https://ccl.northwestern.edu/netlogo/</a>
 </div>
 <div class="footnote" id="_footnotedef_34">
-<a href="#_footnoteref_34">34</a>. James Watson and Francis Crick, Molecular Structure of Nucleic Acids, <em>Nature</em>. <strong>171</strong>, April 1953.
+<a href="#_footnoteref_34">34</a>. <a href="https://docs.python.org/3.6/library/functions.html#open" class="bare">https://docs.python.org/3.6/library/functions.html#open</a>
 </div>
 <div class="footnote" id="_footnotedef_35">
-<a href="#_footnoteref_35">35</a>. <a href="https://commons.wikimedia.org/wiki/File%3ADna-split.png" class="bare">https://commons.wikimedia.org/wiki/File%3ADna-split.png</a>, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons
+<a href="#_footnoteref_35">35</a>. <a href="https://docs.python.org/3.6/library/functions.html#print" class="bare">https://docs.python.org/3.6/library/functions.html#print</a>
 </div>
 <div class="footnote" id="_footnotedef_36">
-<a href="#_footnoteref_36">36</a>. <a href="https://5harad.com/papers/1p1v.pdf"><em>One Person, One Vote: Estimating the Prevalence of Double Voting in U.S. Presidential Elections</em></a>
+<a href="#_footnoteref_36">36</a>. James Watson and Francis Crick, Molecular Structure of Nucleic Acids, <em>Nature</em>. <strong>171</strong>, April 1953.
+</div>
+<div class="footnote" id="_footnotedef_37">
+<a href="#_footnoteref_37">37</a>. <a href="https://commons.wikimedia.org/wiki/File%3ADna-split.png" class="bare">https://commons.wikimedia.org/wiki/File%3ADna-split.png</a>, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons
+</div>
+<div class="footnote" id="_footnotedef_38">
+<a href="#_footnoteref_38">38</a>. <a href="https://5harad.com/papers/1p1v.pdf"><em>One Person, One Vote: Estimating the Prevalence of Double Voting in U.S. Presidential Elections</em></a>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-05 14:47:14 EDT
+Last updated 2018-08-07 10:30:41 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

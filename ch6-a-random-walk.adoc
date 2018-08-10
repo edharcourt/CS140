@@ -12,7 +12,7 @@ NOTE: A computer program is _deterministic_ if it produces the same exact result
 
 NOTE: "A random process models the progression of a system over time, where the evolution is random rather than deterministic."footnote:[https://reference.wolfram.com/language/guide/RandomProcesses.html]
 
-Lets simulate tossing a coin stem:[n] times counting the number of occurrences of a head or a tail. We will have stem:[n] be input by the user. Lets start by tossing a coin once and checking if it is heads or tails. We will use a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
+Lets simulate tossing a coin stem:[n] times counting the number of occurrences of a head or a tail. We will have stem:[n] be input by the user. We will start by tossing a coin once and checking if it is heads or tails using a variable `heads` to keep track of the number times heads appeared and a variable `tails` for the number of times tails appeared.
 
 [source,python,numbered]
 ----
@@ -110,9 +110,9 @@ print("Number of ten in a row: ", in_a_row_count)
 
 === The Gambler's Ruin
 
-Lets modify our coin toss program and see if we can learn something about randomness. A gambler starts out with a certain number of chips, say one thousand. The gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. So they have a 50-50 chance chance of winning each toss (better odds than a real real casino.)
+Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand. 
 
-How long will the gambler play? Well, a recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
+How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
 
 [source,python,numbered]
 ----
@@ -132,7 +132,7 @@ print(chips) <3>
 <2> We play until we double our chips or lose them all.
 <3> Will print either 0 or 2000.
 
-As you might expect about half the time the player loses everything and half the time they double their money. But a gambler with a problem typically can't quit, even when they are ahead. What might the program look like now?  
+If you run this program many times, as you might expect, about half the time the player loses everything and half the time they double their money. But a player with a gambling problem typically can't quit, even when they are ahead. What might the program look like now?  
 
 [source,python,numbered]
 ----
@@ -150,18 +150,18 @@ print(chips) <2>
 <1> The only change is to remove the condition that the loop terminate when `chips` reaches 2000.
 <2> What will always get printed?
 
-We don't even need to run the program to see what will happen here. This is the _Gambler's Ruin_. A gambler who gambles long enough will always lose everything!
+We don't even need to run the program to see what will happen here. The only way the program terminates is when the number of chips reaches zero. This will always happen and is called _The Gambler's Ruin_. A gambler who gambles long enough will always lose everything.
 
 ==== A One Dimensional Random Walk
 
-Lets visualize this random process, plotting the number of chips the gambler has over time. It will be instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width stem:[w] and height stem:[h], if we let the center stem:[y]-coordinate of the window represent stem:[0] chips then `0 - chips` will be the stem:[y]    
+How can we visualize this random process, plotting the number of chips the gambler has over time. It is instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width stem:[w] and height stem:[h], if we let the center stem:[y]-coordinate of the window represent stem:[0] chips then `0 - chips` will be the stem:[y]    
 coordinate of where we need to draw a pixel. If we keep a counter `i` for each toss of the coin then `i` will represent the `x` coordinate. 
 
 The Pygame command 
 
-[source,python,numbered]
+[source,python]
 ----
-win.set_at( (x,y), RGB)
+win.set_at((x,y), RGB)
 ----
 
 draws a single pixel at coordinate `(x,y)` with the  color `RGB` (which should be an RGB triple).
@@ -259,12 +259,12 @@ The Gambler's Ruin is an example of a _one dimensional random walk. One dimensio
 
 === Brownian Motion
 
-Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. Here, the particle can move randomly in either the stem:[x] or stem:[y] direction.  In terms of a graphic display, the particle's coordinate stem:[(x,y)] has 
+Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. In this case, the particle can move randomly in either the stem:[x] or stem:[y] direction.  In terms of a graphic display, the particle's coordinate stem:[(x,y)] has 
 eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display. 
 
 image::pixel_neighbors.png[width=214,height=200,align="center"]
 
-In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  Assuming that `(x,y)` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
+In this case we will have _two_ random variables, one in the stem:[x] direction and one in the stem:[y] direction.  If `(x,y)` is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update `x` and `y` accordingly. For example, if we assign each neighbor one of the random numbers from `0` to `7` with `0` corresponding to the top middle, then if we rolled a `0` then the particle's new `x` coordinate would remain the same and its new `y` coordinate would be `y - 1`. 
 
 NOTE: Because we are using two random variables this Brownian Motion simulation is often referred to as a _two dimensional random walk_. It also goes by the rather uncomplimentary moniker _The Drunkard's Walk_, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets. 
 
@@ -293,7 +293,7 @@ else:            # top left
     y = y - 1
 ----
 
-This is essentially the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` coordinate and returns its new `x` and `y`. Pictorially, 
+This block of code is the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function `move` that takes a particle's current `x` and `y` coordinate and returns its new `x` and `y`. Pictorially, 
 
 image::2D_move.png[width=362,height=130,align="center"]
 
@@ -304,7 +304,8 @@ def move(x,y):
     return (x,y)
 ----
 
-Calling the `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run but when should the simulation stop? That is, what is the loop condition? We have several options. We could
+Calling the `move` function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run. 
+But when should the simulation stop? That is, what is the loop condition? We have several options. We could
 
 - run for a certain number of iterations, 10, 100, 10000, etc.
 - run until we the particle moves off of the display
@@ -575,7 +576,7 @@ import pygame, random, color
 side = 500
 win = pygame.display.set_mode((side,side))
 
-x0 = side // 2  # tower 0 coordinates
+x0 = side // 2  # tower 0 coordinates  <1>
 y0 = 0
 
 x1 = side - 1   # tower 1 coordinates
@@ -591,8 +592,8 @@ win.fill(color.white)
 
 while True:
 
-    #choose a tower at random
-    t = random.randrange(3) <1>
+    # choose a tower at random
+    t = random.randrange(3) <2>
 
 	# which tower is it?
     if (t == 0):
@@ -608,7 +609,8 @@ while True:
     win.set_at((x, y), color.blue)
     pygame.display.update()
 ----
-<1> It is important that the random number is in the loop body. We need
+<1> Another way to write this is to use _tuple assignment_ as `(x0,y0) = (side//2, 0)`.
+<2> It is important that the random number is in the loop body. We need
 to get a new random tower every iteration. If this were before the loop then we would always be choosing the same tower.
 
 The shape rendered by the code is called _Sierpinski's Triangle_.
@@ -623,11 +625,17 @@ The Gambler's Ruin is an example of a one dimensional random walk, because the n
 Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
 
 .Exercise
-Rather than using a triangle make use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: keep an extra variable `prev` that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
+Rather than using a triangle use four cell towers, where each tower is placed in the middle of the window's edge. For example, tower 0 is in the middle of the top edge at coordinate _(side//2, 0)_, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: Keep an extra variable `prev` that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn't the same as `prev`.   
 
 === The Monty Hall Problem
 
-The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
+The _Monty Hall Problem_ dates back to a game show on American television called _Let's Make a Deal_, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats. 
+
+.The Monty Hall Problem.footnote:[Creative Commons `https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Monty_open_door.svg/1200px-Monty_open_door.svg.png`]
+image::doorsandgoat.png[width="250, height="251,align="center"]
+
+
+The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The _Monty Hall Problem_ is whether the contestant should switch or not.
 
 This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant's weekly Parade column presented her with the problem.footnote:[http://marilynvossavant.com/game-show-problem/] Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for ... the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it. 
 
@@ -645,7 +653,7 @@ We'll tackle each of these in turn.
 
 We can assign goats and a car to doors in any order. One thing we need to be careful about is that we do not assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.
 
-[source,python,numbered]
+[source,python]
 ----
 goat1 = random.randrange(1,4) <1>
 ----
@@ -653,7 +661,7 @@ goat1 = random.randrange(1,4) <1>
 
 Now how about the second goat?
 
-[source,python,numbered]
+[source,python]
 ----
 goat2 = random.randrange(1,4)
 ----
@@ -661,7 +669,7 @@ goat2 = random.randrange(1,4)
 This doesn't quit work because we might accidentally get the same 
 random number as `goat1`.  Here is another attempt.
 
-[source,python,numbered]
+[source,python]
 ----
 goat2 = random.randrange(1,4)
 
@@ -678,11 +686,11 @@ get the same random number twice in a row. We need to keep trying as long as the
 goat2 = random.randrange(1,4)
 
 while goat1 == goat2:
-    goat2 = random.randrange(1,4) <1>
+    goat2 = random.randrange(1,4)                       <1>
 # What is true at this point after the loop terminates? <2>
 ----
 <1> Keep trying as long as we keep getting the same random number as `goat1`. We know from the Gambler's Ruin that we can sometimes get the same number several times in a row.
-<2>`goat1 != goat2`
+<2>that `goat1 != goat2`
 
 We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
 
@@ -697,7 +705,7 @@ This is one way to do it.
  
 .Exercise +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Since there is only one door remaining for the car we should be able to calculate
-it without using a loop. Hint: Think of a simple expression involving th door numbers.
+it without using a loop. Hint: Think of a simple expression involving the door numbers.
 
 [.result]
 ====
@@ -710,7 +718,7 @@ car = 6 - goat1 + goat2 <1>
 
 In the second part of the game we need to have the contestant choose a door. We can simply ask them to input it from the keyboard.
 
-[source,python,numbered]
+[source,python]
 ----
 choice = int(input("Choose a door: ")) <1>
 ----
@@ -819,20 +827,22 @@ else:
 ----
 ====
 
-What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, that is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
-
-Probability is often counterintuitive.
+What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, it is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.
 
 === Exercises
 
 .Exercise 1 - Prime Numbers
 Prime numbers play an important role in cryptography. A prime number is only divisible by 
-one and itself.  If a number is not prime then it has _factor_ that is not one or itself. For example, 
+one and itself.  If a number is not prime then it has a _factor_ that is neither one or itself. For example, 
 stem:[16517] has factors stem:[83] and stem:[199] because stem:[16517 = 83 \times 199].
+Write a program `prime.py`, that reads an integer from the user and prints whether the number is prime or not. 
 
-. prime
-. euler problem
-. count 7s
+.Exercise 2 - Adding multiples of 3 or 5
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Write a program to print find and print the sum of all the multiples of 3 or 5 below 1000.footnote:[This is the first problem in a set of problems from https://projecteuler.net/archives[Project Euler].]
+
+.Exercise 3 - Sevens
+Write a program that will read an integer and count the number of sevens that occur in the integer.
+
 . modifications to gamblers ruin
 . modify Brownian 
 . modify fractal
