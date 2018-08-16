@@ -14,9 +14,9 @@ win = pygame.display.set_mode((600,600)) <3>
 
 <1> import the Pygame module
 <2> Call a Pygame function `init` that initializes pygame. The `init` function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.
-<3> Construct a window, 600 pixels wide and 600 pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a Pygame _display surface_.
+<3> Construct a window, stem:[600] pixels wide and stem:[600] pixels high. The `set_mode` function is part of the `display` module that is in the `pygame` module. Notice the double parentheses. The `set_mode` function takes one argument, but that argument needs to be a _tuple_ that represents the width and the height of the window in pixels. `set_mode` returns a _reference_ to the window. `win` is a variable that refers to a Pygame _display surface_.
 
-When we run the program above, a 600X600 pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
+When we run the program above, a stem:[600 \times 600] pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
 NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
 
