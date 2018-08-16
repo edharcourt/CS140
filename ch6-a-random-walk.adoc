@@ -646,7 +646,7 @@ Lets lay out the process of playing the game outlined above:
 . The contestant is presented with three doors, two with goats, and one with a new car. The goats and car are randomly assigned.
 . The contestant chooses a door to be revealed later.
 . The host shows a goat behind one of the other doors (not the contestant's door). 
-. The contestant is given th choice whether to switch to the other unopened door.
+. The contestant is given the choice whether to switch to the other unopened door.
 . The contestant's door is revealed.
 
 We'll tackle each of these in turn.
@@ -666,7 +666,7 @@ Now how about the second goat?
 goat2 = random.randrange(1,4)
 ----
 
-This doesn't quit work because we might accidentally get the same 
+This doesn't quite work because we might accidentally get the same 
 random number as `goat1`.  Here is another attempt.
 
 [source,python]
@@ -709,7 +709,7 @@ it without using a loop. Hint: Think of a simple expression involving the door n
 
 [.result]
 ====
-[source,python,numbered]
+[source,python]
 ----
 car = 6 - goat1 + goat2 <1>
 ----
@@ -731,7 +731,7 @@ So now we have four variables set up:
 . `car` the location of the car
 . `choice` the door the contestant chose
 
-In the third step of the game we reveal one of the two goats being careful not to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch at all. 
+In the third step of the game we reveal one of the two goats, being careful not to show what is behind the contestant's door or where the car is. Lets set up two variables `switch_door` and `show`. The `show` variable will be the door we need to show and the variable `switch_door` will be the door the contestant will switch to if they decide they want to switch. 
 
 If the user chose the same door as `goat1` then the door we will show is `goat2`. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.
 
@@ -748,10 +748,10 @@ else:                  <3>
     switch = goat2
 ---- 
 <1> If the contestant chose the same door as `goat1` then we will show `goat2` and if they choose to switch it will be to the car.
-<2> Similar to <1>
-<3> Finally, if the contestant chose the car then it doesn't matter which goat to show. In this cae we pick `goat1` and we will show the `goat2`.
+<2> Similarly, if the contestant chose `goat2` then we will show `goat1` and if they choose to switch it will be to th car.
+<3> Finally, if the contestant chose the car then it doesn't matter which goat to show. In this case we pick `goat1` and we will show the `goat2`.
 
-Now, we haven't even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.
+We haven't even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.
 
 .Check Yourself
 Finish the Monty Hall Program. Here are some sample runs of what the program might look like.
