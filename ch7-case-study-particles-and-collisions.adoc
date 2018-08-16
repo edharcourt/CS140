@@ -14,12 +14,12 @@ ball = pygame.image.load("ball.png") <1>
 ----
 <1> The variable `ball` is a Pygame _surface_.
 
-We've previously discussed Pygame surfaces noting that the Pygame display is a surface.
-Here we are constructing a new kind of surface. The variable `ball` refers to a Pygame surface that is not the display surface, but a surface that that represent an image and can be drawn _onto_ the display surface.
+We have previously discussed Pygame surfaces noting that the Pygame display is a surface.
+Here we are constructing a new kind of surface. The variable `ball` refers to a Pygame surface that is not the display surface, but a surface that represents an image and can be placed _onto_ the display surface, like overlaying a smaller piece of paper on a larger piece of paper. 
 
 [source,python,numbered]
 ----
-# Draw a particle (an image of a scooer ball) on the display
+# Place a particle (an image of a soccer ball) on the display
 import pygame, color
 pygame.init()
 side = 600
@@ -30,7 +30,7 @@ win.blit(ball, (side//2, side//2)) <2>
 pygame.display.update()
 ----
 <1> The `load` function returns a surface. We immediately call the function `convert_alpha` on the surface so we don't lose background transparency.
-<2> The function `blit` is used to place one surface on another.
+<2> The function `blit` is used to place one surface on another. The term _blit_ is an abbreviation for _bit block transfer_.
 
 Images are rectangular, even if they are an image of a circle. So in order for the image to appear like a circle the pixels that are outside of the ball are _transparent_. In graphics terminology we call this _alpha transparency_.  The `convert_alpha` function ensures that when we load the image we don't lose any of the transparency in the image pixels.
 
@@ -38,13 +38,13 @@ To animate a particle with a velocity we see that a velocity has two components,
 
 image:ball_velocity.png[width=455,height=261,align="center"]
 
-Unlike a Pygame circle whose coordinate is measure from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).
+Unlike a Pygame circle, whose coordinate is measured from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).
 
 All that is left to do is to update the particle's coordinates by its velocity and do something sensible if it hits a wall. Lets define a `move` function as we did in the Brownian Motion example. This `move` function will be a little more complicated because not only will the particle's coordinates change (`x` and `y`), but if the particle hits a wall its direction will change, that is, the velocity `dx` or `dy`.
 
 image::particle_move.png[align="center"]
 
-Hereis a rough draft of the move function.
+Here is an outline of the move function.
 
 [source,python,numbered]
 ----
@@ -95,7 +95,7 @@ return: new x, y, dx, and dy.
 
 Now all that is left is to write the main program and call the `move` function.
 
-We'll start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, less than 1. We will explain that later.
+We will start the particle off at the center of the display. For now, we'll also initialize the velocity to very small numbers, less than 1. We will explain that later.
 
 [source,python,numbered]
 ----
@@ -131,19 +131,19 @@ while True:
 	# update the display
     pygame.display.update()
 ----
-<1>Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
+<1> Notice the line continuation character `\`. This is needed when a line is too long and you want to split it.
 
-The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundredth of a pixel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. 
+The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the stem:[x] direction and one hundredth of a pixel in the stem:[y] direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loop executes so fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using `pygame.time.delay`. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. We don't want the ball to move across the screen in a shorter amount of time just because it is running on a faster computer.
 
 === Understanding the _Frame Rate_
 
-One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One isse is that our velocity `ball_dx` and `ball_dy` are in pixels? But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
+One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as the while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One issue is that our velocity `ball_dx` and `ball_dy` are in pixels. But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
 
 A _frame_ is one still image, a snapshot, of an animation. A standard _frame rate_ for movies is 24 frames per second (_fps_). The movie _The Hobbit: The Desolation of Smaug_ was filmed at 48 _fps_. 
 
-NOTE: A _frame_ is one image in a sequence of images that is part of a video. The _frame rate_ is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for cartoons to run at 15 _fps_.
+NOTE: A _frame_ is one image in a sequence of images that is part of a video. The _frame rate_ is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for hand drawn cartoons to run at 15 _fps_.
 
-The particle simulation runs at _one frame per loop iteration_. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.
+The particle simulation runs at _one frame per loop iteration_. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 FPS. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate. 
 
 Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the stem:[x] velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
 
@@ -168,7 +168,7 @@ dt = pygame.time.tick() <1>
 ---- 
 <1> let `dt` mean _delta time_ or _the change in time_. In this case milliseconds.
 
-We can then compute how far the particle has traveled in both the stem:[x] and stem:[y] direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have traveled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
+We can then compute how far the particle has traveled in both the stem:[x] and stem:[y] direction. If you all traveling at 55 MPH and 13 minutes has passed, then you have traveled stem:[(13/60)55 = 14.67] miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.
 
 [source,python,numbered]
 ----
@@ -176,7 +176,7 @@ dt = clock.tick(60) / 1000.0 # in seconds
 ball_x = ball_x + dt * ball_dx <1>
 ball_y = ball_y + dt * ball_dy <2>
 ---- 
-<1> The particle's new stem:[x] coordinate is the old stem:[x] coordinate plus the time passed times the ball's stem:[x] velocity. This should make intuitive sense.
+<1> The particle's new stem:[x]-coordinate is the old stem:[x]-coordinate plus the time passed times the ball's stem:[x] velocity. This should make intuitive sense.
 <2> Similarly for the change in the stem:[y]component.
 
 The logic for bouncing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.

@@ -8003,7 +8003,7 @@ to get a new random tower every iteration. If this were before the loop then we 
 <p>The host shows a goat behind one of the other doors (not the contestant&#8217;s door).</p>
 </li>
 <li>
-<p>The contestant is given th choice whether to switch to the other unopened door.</p>
+<p>The contestant is given the choice whether to switch to the other unopened door.</p>
 </li>
 <li>
 <p>The contestant&#8217;s door is revealed.</p>
@@ -8038,7 +8038,7 @@ to get a new random tower every iteration. If this were before the loop then we 
 </div>
 </div>
 <div class="paragraph">
-<p>This doesn&#8217;t quit work because we might accidentally get the same
+<p>This doesn&#8217;t quite work because we might accidentally get the same
 random number as <code>goat1</code>.  Here is another attempt.</p>
 </div>
 <div class="listingblock">
@@ -8109,8 +8109,7 @@ it without using a loop. Hint: Think of a simple expression involving the door n
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-mi">6</span> <span class="tok-o">-</span> <span class="tok-n">goat1</span> <span class="tok-o">+</span> <span class="tok-n">goat2</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-mi">6</span> <span class="tok-o">-</span> <span class="tok-n">goat1</span> <span class="tok-o">+</span> <span class="tok-n">goat2</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8159,7 +8158,7 @@ it without using a loop. Hint: Think of a simple expression involving the door n
 </ol>
 </div>
 <div class="paragraph">
-<p>In the third step of the game we reveal one of the two goats being careful not to show what is behind the contestant&#8217;s door or where the car is. Lets set up two variables <code>switch_door</code> and <code>show</code>. The <code>show</code> variable will be the door we need to show and the variable <code>switch_door</code> will be the door the contestant will switch to if they decide they want to switch at all.</p>
+<p>In the third step of the game we reveal one of the two goats, being careful not to show what is behind the contestant&#8217;s door or where the car is. Lets set up two variables <code>switch_door</code> and <code>show</code>. The <code>show</code> variable will be the door we need to show and the variable <code>switch_door</code> will be the door the contestant will switch to if they decide they want to switch.</p>
 </div>
 <div class="paragraph">
 <p>If the user chose the same door as <code>goat1</code> then the door we will show is <code>goat2</code>. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.</p>
@@ -8194,16 +8193,16 @@ it without using a loop. Hint: Think of a simple expression involving the door n
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Similar to &lt;1&gt;</td>
+<td>Similarly, if the contestant chose <code>goat2</code> then we will show <code>goat1</code> and if they choose to switch it will be to th car.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Finally, if the contestant chose the car then it doesn&#8217;t matter which goat to show. In this cae we pick <code>goat1</code> and we will show the <code>goat2</code>.</td>
+<td>Finally, if the contestant chose the car then it doesn&#8217;t matter which goat to show. In this case we pick <code>goat1</code> and we will show the <code>goat2</code>.</td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Now, we haven&#8217;t even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.</p>
+<p>We haven&#8217;t even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself</div>
@@ -8351,20 +8350,7 @@ Write a program <code>prime.py</code>, that reads an integer from the user and p
 </div>
 <div class="paragraph">
 <div class="title">Exercise 3 - Sevens</div>
-<p>Write a program that will read an integer and count the number of sevens that occur in the integer.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>modifications to gamblers ruin</p>
-</li>
-<li>
-<p>modify Brownian</p>
-</li>
-<li>
-<p>modify fractal</p>
-</li>
-</ol>
+<p>Write a program that will read an integer and count and print the number of sevens that occur in the integer.</p>
 </div>
 </div>
 <div class="sect2">
@@ -8461,8 +8447,8 @@ Pygame with <code>pygame.image.load</code> function. This function has one argum
 </table>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve previously discussed Pygame surfaces noting that the Pygame display is a surface.
-Here we are constructing a new kind of surface. The variable <code>ball</code> refers to a Pygame surface that is not the display surface, but a surface that that represent an image and can be drawn <em>onto</em> the display surface.</p>
+<p>We have previously discussed Pygame surfaces noting that the Pygame display is a surface.
+Here we are constructing a new kind of surface. The variable <code>ball</code> refers to a Pygame surface that is not the display surface, but a surface that represents an image and can be placed <em>onto</em> the display surface, like overlaying a smaller piece of paper on a larger piece of paper.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8474,7 +8460,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 6
 7
 8
-9</div></td><td class="code"><span></span><span class="tok-c1"># Draw a particle (an image of a scooer ball) on the display</span>
+9</div></td><td class="code"><span></span><span class="tok-c1"># Place a particle (an image of a soccer ball) on the display</span>
 <span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
 <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
 <span class="tok-n">side</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>
@@ -8494,7 +8480,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The function <code>blit</code> is used to place one surface on another.</td>
+<td>The function <code>blit</code> is used to place one surface on another. The term <em>blit</em> is an abbreviation for <em>bit block transfer</em>.</td>
 </tr>
 </table>
 </div>
@@ -8508,7 +8494,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 <p><span class="image"><img src="./images/ball_velocity.png" alt="ball velocity" width="455" height="261"></span></p>
 </div>
 <div class="paragraph">
-<p>Unlike a Pygame circle whose coordinate is measure from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).</p>
+<p>Unlike a Pygame circle, whose coordinate is measured from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).</p>
 </div>
 <div class="paragraph">
 <p>All that is left to do is to update the particle&#8217;s coordinates by its velocity and do something sensible if it hits a wall. Lets define a <code>move</code> function as we did in the Brownian Motion example. This <code>move</code> function will be a little more complicated because not only will the particle&#8217;s coordinates change (<code>x</code> and <code>y</code>), but if the particle hits a wall its direction will change, that is, the velocity <code>dx</code> or <code>dy</code>.</p>
@@ -8519,7 +8505,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 </div>
 </div>
 <div class="paragraph">
-<p>Hereis a rough draft of the move function.</p>
+<p>Here is an outline of the move function.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8610,7 +8596,7 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 <p>Now all that is left is to write the main program and call the <code>move</code> function.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll start the particle off at the center of the display. For now, we&#8217;ll also initialize the velocity to very small numbers, less than 1. We will explain that later.</p>
+<p>We will start the particle off at the center of the display. For now, we&#8217;ll also initialize the velocity to very small numbers, less than 1. We will explain that later.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8678,8 +8664,13 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 </td></tr></table></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>&lt;1&gt;Notice the line continuation character <code>\</code>. This is needed when a line is too long and you want to split it.</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice the line continuation character <code>\</code>. This is needed when a line is too long and you want to split it.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The velocity variables <code>dx</code> and <code>dy</code> are set to be very small. <code>.04</code> and <code>.01</code>. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the \(x\) direction and one hundredth of a pixel in the \(y\) direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using <code>pygame.time.delay</code>. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc.</p>
@@ -15732,7 +15723,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-15 22:06:11 EDT
+Last updated 2018-08-16 16:36:03 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

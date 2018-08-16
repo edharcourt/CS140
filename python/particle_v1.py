@@ -1,4 +1,5 @@
 import pygame, color
+import time
 pygame.init()
 side = 600
 win = pygame.display.set_mode((side,side))
@@ -38,11 +39,16 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 
-while True:
+start = int(round(time.time() * 1000))
+i = 0
+while i < 10000:
     win.fill(color.lightgray)
     (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
     win.blit(ball, (ball_x, ball_y))
     pygame.display.update()
     pygame.event.poll()
-
-input()
+    i += 1
+    if i % 1000 == 0:
+        print(i)
+end = int(round(time.time() * 1000))
+print("Time:", end - start)
