@@ -841,11 +841,9 @@ Write a program `prime.py`, that reads an integer from the user and prints wheth
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Write a program to print find and print the sum of all the multiples of 3 or 5 below 1000.footnote:[This is the first problem in a set of problems from https://projecteuler.net/archives[Project Euler].]
 
 .Exercise 3 - Sevens
-Write a program that will read an integer and count the number of sevens that occur in the integer.
+Write a program that will read an integer and count and print the number of sevens that occur in the integer.
 
-. modifications to gamblers ruin
-. modify Brownian 
-. modify fractal
+.Need lots more exercises
 
 === Terminology 
 
