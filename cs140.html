@@ -8696,7 +8696,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </table>
 </div>
 <div class="paragraph">
-<p>The particle simulation runs at <em>one frame per loop iteration</em>. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 FPS. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.</p>
+<p>The particle simulation runs at <em>one frame per loop iteration</em>. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 <em>fps</em>. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.</p>
 </div>
 <div class="paragraph">
 <p>Lets instead define a velocity in terms of <em>time</em> as <em>pixels per second</em>. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the \(x\) velocity would be <code>600 / 2.0</code> or <code>300</code> pixels per second. We should be more general and handle displays of various widths and heights.  Assume <code>width</code> and <code>height</code> are the dimensions of the display we have &#8230;&#8203;</p>
@@ -8714,8 +8714,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">clock</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">Clock</span><span class="tok-p">()</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">clock</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">Clock</span><span class="tok-p">()</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8723,8 +8722,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">()</span> <i class="conum" data-value="1"></i><b>(1)</b>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">()</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -8900,7 +8898,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
-<p>Add a second particle to the simulation. <strong>Hint</strong>: you will need variables for the secnd particle&#8217;s position and velocity.</p>
+<p>Add a second particle to the simulation. <strong>Hint</strong>: you will need variables for the second particle&#8217;s position and velocity.</p>
 </div>
 <div class="exampleblock result">
 <div class="content">
@@ -8923,7 +8921,7 @@ than for the first particle to make it more interesting.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now modify the loop body to move the second particle. And don&#8217;t forget to redraw the second particle.</p>
+<p>Now modify the loop body to move the second particle. Remember to redraw the second particle.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9046,8 +9044,7 @@ than for the first particle to make it more interesting.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span>
-</td></tr></table></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9452,7 +9449,7 @@ This way of handling a collision, simply swapping velocities, is overly simplist
 <p>frame rate</p>
 </li>
 <li>
-<p>tupple assignment</p>
+<p>tuple assignment</p>
 </li>
 </ul>
 </div></div></td>
@@ -9495,7 +9492,7 @@ exact number of times. Recall the pattern &#8230;&#8203;</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This loop will body will execute exactly <code>n</code> times; as long as <code>n</code> is not modified in the loop body. Another way to write this in Python is using the for loop.</p>
+<p>This loop will body will execute exactly <code>n</code> times; as long as <code>n</code> is not modified in the loop body. Another way to write this in Python is using the <code>for</code>-loop.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9506,7 +9503,7 @@ exact number of times. Recall the pattern &#8230;&#8203;</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There are two new Python keywords <code>for</code> and <code>in</code>. Notice also that the there is no explicit assignment statement incrementing <code>i</code> by one. There is also the use of this new thing <code>range(n)</code>. Technically <code>range</code> is not a function in Python but a <em>range type</em> which is used to generate an immutable sequence of integers. Something that is <em>immutable</em> cannot be changed. So <code>range(n)</code> generates a sequence of numbers from <code>0</code> up to but not including <code>n</code>.</p>
+<p>There are two new Python keywords <code>for</code> and <code>in</code>. Notice also that the there is no explicit assignment statement incrementing <code>i</code> by one. There is also the use of this new function call <code>range(n)</code>. Technically <code>range</code> is not a function in Python but a <em>range type</em> which is used to generate an immutable sequence of integers. Something that is <em>immutable</em> cannot be changed. So <code>range(n)</code> generates a sequence of numbers from <code>0</code> up to but not including <code>n</code>.</p>
 </div>
 <div class="paragraph">
 <p>The <code>for</code>-loop</p>
