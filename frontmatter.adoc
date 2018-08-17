@@ -12,7 +12,3 @@ Goals of the course include:
   (the Python programming language).
 * Explore a multitude of topics in computer science such as; graphics and animation, image processing, simulation and randomness, cryptography, network communications, and much more.
 
-=== Acknowledgments
-
-These notes were written using http://asciidoctor.org/[asciidoctor]. Thank you to Dan Allen for creating such a wonderful tool. The table of contents is produced using https://tscanlin.github.io/tocbot/[Tocbot] and an asciidoctor integration https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137[described in this thread].footnote:[https://github.com/asciidoctor/asciidoctor/issues/699#issuecomment-321429137] Dan also wrote the
-https://github.com/asciidoctor/asciidoctor-extensions-lab/blob/master/lib/view-result-docinfoprocessor.rb[view-result plugin]. Mathematics is typeset using https://www.mathjax.org/[MathJax]footnote:[https://www.mathjax.org/]. The Python syntax highlighter is http://pygments.org/[pygments].footnote:[http://pygments.org/]. Thank you to Dr. Lisa Torrey who had the nerve to start teaching our intro class in Python while the rest of us were still stuck in Java. Thank you to Dr. Rich Sharp, now at The Natural Capital Project at Stanford Univeristy, who got me hooked on pygame.

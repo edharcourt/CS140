@@ -1,15 +1,15 @@
 == Event Handling
 
-Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clocking on the screen.
+Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the `input` function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clicking somewhere on a pygame window.
 
-NOTE: An _event_ is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event; a mouse movement, mouse button press, key press, etc. Additional information depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
+NOTE: An _event_ is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event, such as a mouse movement, mouse button press, or key press. Additional data depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
 
 One event we can check for is to see if the user has clicked the X in the Pygame
-window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the Pygame display can screen generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
+window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the Pygame display can generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
 
-A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get in a queue. An _event queue_ is Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get _in queue_. An _event queue_ is Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
 
-Here is a snippet to check for the `QUIT` event and stop the program if the user
+Here is a code snippet that checks for the `QUIT` event and stops the program if the user
 has clicked on the X. The Pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
 
 [source,python,numbered]
@@ -65,7 +65,7 @@ def wait_for_click():
         for e in pygame.event.get():               <3>
             if e.type == pygame.MOUSEBUTTONDOWN:   <4>
                 done = True                        <5>
-        pygame.time.wait(100)                     <6>
+        pygame.time.wait(100)                      <6>
 
 ----
 <1> Local variable used to control loop
@@ -81,7 +81,7 @@ Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also
 
 === Pong
 
-One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games, if you will.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
+One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
 
 image::paddle.png[caption="Our Pong Paddle", align="center"]
 
@@ -90,7 +90,7 @@ Next we need to set up some properties of the paddle and `blit` it to the displa
 [source,python,numbered]
 ----
 # properties of the paddle
-paddle = pygame.image.load("../images/paddle.png")
+paddle = pygame.image.load("paddle.png")
 paddle_w = paddle.get_width()
 paddle_h = paddle.get_height()
 paddle_x = 10
@@ -233,9 +233,9 @@ while True:
 
 ====
 
-TIP: The outer loop in our case the `while` loop throttled by the frame rate) is often call _the game loop_.
+TIP: The outer loop, in our case the `while` loop (throttled by the frame rate) is often called _the game loop_.
 
-We also need to bounce the ball off of the paddle. To do this lets make sure we understand all of the coordinates and widths and heights.
+We also need to bounce the ball off of the paddle. To do this lets make sure we understand the various coordinates and widths and heights.
 
 image::ball_hitting_paddle.png[align="center", width=600]
 
@@ -255,7 +255,7 @@ if ball_x <= paddle_x + paddle_w:
     dx = -dx
 ----
 
-That's closer. Bt this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the stem:[y] coordinates of the paddle.
+That's closer. But this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the stem:[y] coordinates of the paddle.
 
 [source,python,numbered]
 ----

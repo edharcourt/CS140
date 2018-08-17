@@ -19,7 +19,7 @@ for i in range(n):
     # loop body
 ----
 
-There are two new Python keywords `for` and `in`. Notice also that the there is no explicit assignment statement incrementing `i` by one. There is also the use of this new function call `range(n)`. Technically `range` is not a function in Python but a _range type_ which is used to generate an immutable sequence of integers. Something that is _immutable_ cannot be changed. So `range(n)` generates a sequence of numbers from `0` up to but not including `n`.
+There are two new Python keywords `for` and `in`. Notice also that there is no explicit assignment statement incrementing `i` by one. There is also the use of this new function  `range(n)` with an argument(n). Technically `range` is not a function in Python but a _range type_ which is used to generate an immutable sequence of integers. Something that is _immutable_ cannot be changed. So `range(n)` generates a sequence of numbers from `0` up to but not including `n`.
 
 The `for`-loop 
 

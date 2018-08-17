@@ -137,7 +137,7 @@ The velocity variables `dx` and `dy` are set to be very small. `.04` and `.01`. 
 
 === Understanding the _Frame Rate_
 
-One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as the while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One issue is that our velocity `ball_dx` and `ball_dy` are in pixels. But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration.
+One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as the while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One issue is that our velocity `ball_dx` and `ball_dy` are in pixels. But pixels per what? Velocity is always something like _miles per hour_ or _feet per second_, or _kilometers per hour_. Our velocity does not have time associated with it. It is just, for example, `.04` pixels per loop iteration. But how long does one loop iteration take to run?
 
 A _frame_ is one still image, a snapshot, of an animation. A standard _frame rate_ for movies is 24 frames per second (_fps_). The movie _The Hobbit: The Desolation of Smaug_ was filmed at 48 _fps_. 
 

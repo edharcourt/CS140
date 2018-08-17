@@ -1,6 +1,6 @@
 == Image Processing
 
-There are many useful application for processing images. All of your smartphones have image processing software to related to the camera, and the fingerprint sensor on the device has image processing software for fingerprint matching. The software I'm using to write these notes has image processing capabilities to resize images.
+Computer vision, medical imaging (MRIs, x-rays, CT scans) are all area related to _image processing_. All of your smartphones have image processing software to related to the camera, and the fingerprint sensor on the device has image processing software for fingerprint matching. The software I am using to write these notes has image processing capabilities to resize images.
 
 From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
 
