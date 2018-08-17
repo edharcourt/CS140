@@ -8673,12 +8673,12 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 </table>
 </div>
 <div class="paragraph">
-<p>The velocity variables <code>dx</code> and <code>dy</code> are set to be very small. <code>.04</code> and <code>.01</code>. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the \(x\) direction and one hundredth of a pixel in the \(y\) direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loops executes to fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using <code>pygame.time.delay</code>. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc.</p>
+<p>The velocity variables <code>dx</code> and <code>dy</code> are set to be very small. <code>.04</code> and <code>.01</code>. This goes against our intuition a little in that we are moving the particle four hundredths of a pixel in the \(x\) direction and one hundredth of a pixel in the \(y\) direction. Can we have fractions of a pixel? Well, no. But if we were to set these values to say 4 and 1, the loop executes so fast that the particle looks like it is just jumping around the screen and not moving fluidly. We could add a delay in the loop body using <code>pygame.time.delay</code>. Indeed we are going to do something similar but we want a more general solution for different speed computers; laptops vs desktops, macs vs windows, etc. We don&#8217;t want the ball to move across the screen in a shorter amount of time just because it is running on a faster computer.</p>
 </div>
 <div class="sect2">
 <h3 id="_understanding_the_frame_rate"><a class="anchor" href="#_understanding_the_frame_rate"></a>7.1. Understanding the <em>Frame Rate</em></h3>
 <div class="paragraph">
-<p>One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as that while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One isse is that our velocity <code>ball_dx</code> and <code>ball_dy</code> are in pixels? But pixels per what? Velocity is always something like <em>miles per hour</em> or <em>feet per second</em>, or <em>kilometers per hour</em>. Our velocity does not have time associated with it. It is just, for example, <code>.04</code> pixels per loop iteration.</p>
+<p>One problem with the particle simulation above is that it will run faster or slower depending on the hardware it is running on. The animation runs as fast as the while loop can run. On slower computers the particle will move more slowly and more quickly on faster computers. Even if you have a faster computer that is doing a lots of other work the animation will slow down. One issue is that our velocity <code>ball_dx</code> and <code>ball_dy</code> are in pixels. But pixels per what? Velocity is always something like <em>miles per hour</em> or <em>feet per second</em>, or <em>kilometers per hour</em>. Our velocity does not have time associated with it. It is just, for example, <code>.04</code> pixels per loop iteration.</p>
 </div>
 <div class="paragraph">
 <p>A <em>frame</em> is one still image, a snapshot, of an animation. A standard <em>frame rate</em> for movies is 24 frames per second (<em>fps</em>). The movie <em>The Hobbit: The Desolation of Smaug</em> was filmed at 48 <em>fps</em>.</p>
@@ -8690,13 +8690,13 @@ Here we are constructing a new kind of surface. The variable <code>ball</code> r
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-A <em>frame</em> is one image in a sequence of images that is part of a video. The <em>frame rate</em> is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for cartoons to run at 15 <em>fps</em>.
+A <em>frame</em> is one image in a sequence of images that is part of a video. The <em>frame rate</em> is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for hand drawn cartoons to run at 15 <em>fps</em>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The particle simulation runs at <em>one frame per loop iteration</em>. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.</p>
+<p>The particle simulation runs at <em>one frame per loop iteration</em>. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 FPS. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate.</p>
 </div>
 <div class="paragraph">
 <p>Lets instead define a velocity in terms of <em>time</em> as <em>pixels per second</em>. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the \(x\) velocity would be <code>600 / 2.0</code> or <code>300</code> pixels per second. We should be more general and handle displays of various widths and heights.  Assume <code>width</code> and <code>height</code> are the dimensions of the display we have &#8230;&#8203;</p>
@@ -8736,7 +8736,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </table>
 </div>
 <div class="paragraph">
-<p>We can then compute how far the particle has traveled in both the \(x\) and \(y\) direction. If you all traveling at 55 MPH and have 13 minutes has passed, then you have traveled \((13/60)55 = 14.67\) miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.</p>
+<p>We can then compute how far the particle has traveled in both the \(x\) and \(y\) direction. If you all traveling at 55 MPH and 13 minutes has passed, then you have traveled \((13/60)55 = 14.67\) miles. The formula is the same for figuring out how many pixels we have traveled; though we need to convert milliseconds to seconds by dividing by 1000.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8752,7 +8752,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The particle&#8217;s new \(x\) coordinate is the old \(x\) coordinate plus the time passed times the ball&#8217;s \(x\) velocity. This should make intuitive sense.</td>
+<td>The particle&#8217;s new \(x\)-coordinate is the old \(x\)-coordinate plus the time passed times the ball&#8217;s \(x\) velocity. This should make intuitive sense.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -15723,7 +15723,7 @@ modules we have encountered in this text.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-16 16:36:03 EDT
+Last updated 2018-08-16 22:24:57 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

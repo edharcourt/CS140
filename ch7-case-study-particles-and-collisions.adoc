@@ -143,7 +143,7 @@ A _frame_ is one still image, a snapshot, of an animation. A standard _frame rat
 
 NOTE: A _frame_ is one image in a sequence of images that is part of a video. The _frame rate_ is the number of frames that are displayed per second of video. Common frame rates are 24, 30, 60. It was common for hand drawn cartoons to run at 15 _fps_.
 
-The particle simulation runs at _one frame per loop iteration_. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 FPS. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate. 
+The particle simulation runs at _one frame per loop iteration_. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 _fps_. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate. 
 
 Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the stem:[x] velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
 
@@ -155,14 +155,14 @@ ball_dy = height / 4  # four seconds to travel from top to bottom
 
 We need to know how far the particle traveled in one loop iteration. This is where pygame's `Clock` object is helpful. We can create a clock to measure time using ...
 
-[source,python,numbered]
+[source,python]
 ----
 clock = pygame.time.Clock()
 ---- 
 
 and we can call the object's `tick` method that will return how many milliseconds have passed since the previous call to tick.
 
-[source,python,numbered]
+[source,python]
 ----
 dt = pygame.time.tick() <1>
 ---- 
@@ -247,7 +247,7 @@ while True:
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Add a second particle to the simulation. *Hint*: you will need variables for the secnd particle's position and velocity.
+Add a second particle to the simulation. *Hint*: you will need variables for the second particle's position and velocity.
 
 [.result]
 ====
@@ -263,7 +263,7 @@ ball2_dx = width / 1.603 # across screen in two seconds (units are pixels/second
 ball2_dy = height / -3.237 # down screen in four seconds
 ----
 
-Now modify the loop body to move the second particle. And don't forget to redraw the second particle.
+Now modify the loop body to move the second particle. Remember to redraw the second particle.
 
 [source,python,numbered]
 ----
@@ -333,7 +333,7 @@ ball2_dy = tmp
 
 This is the classic way to express this in just about every programming language. Python's tuple notation allows us to write this a little more succinctly. Two swap the value of two variables in Python you can use _tuple assignment_. For example, to swap the two variables `a` and `b` you can simply write ...
 
-[source,python,numbered]
+[source,python]
 ----
 (a,b) = (b,a)
 ----
@@ -547,7 +547,7 @@ Add an inner wall to the particle simulation that is centered within the display
 a|
  * frame
  * frame rate
- * tupple assignment
+ * tuple assignment
 
 a|
  * millisecond
