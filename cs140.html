@@ -10200,16 +10200,28 @@ The outer loop, in our case the <code>while</code> loop (throttled by the frame 
 <h2 id="_image_processing"><a class="anchor" href="#_image_processing"></a>10. Image Processing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Computer vision, medical imaging (MRIs, x-rays, CT scans) are all area related to <em>image processing</em>. All of your smartphones have image processing software to related to the camera, and the fingerprint sensor on the device has image processing software for fingerprint matching. The software I am using to write these notes has image processing capabilities to resize images.</p>
+<p>One important and common application in computer science is <em>image processing</em>. Computer vision, facial recognition, medical imaging (MRIs, x-rays, CT scans) are all part of image processing. All of your smartphones have image processing software; the camera provides a software zoom, and the fingerprint sensor on the device has image processing software for fingerprint matching. Web browsers resize images, and software such as Photoshop is used to do some amazing effects with images.</p>
 </div>
 <div class="paragraph">
-<p>From what we know so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the <em>alpha transparency</em> of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call <em>compositing</em>. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the <em>RGBA</em> color scheme.</p>
+<p>From what we have learned so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the <em>alpha transparency</em> of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call <em>compositing</em>. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the <em>RGBA</em> color scheme.</p>
 </div>
 <div class="paragraph">
 <p>If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 30%? Theoretically this should make the image darker.</p>
 </div>
 <div class="paragraph">
-<p>To do this we need a systematic way to go through every pixel in the image so we don&#8217;t miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way toprocess an image is row-by-row and top to bottom.</p>
+<p>To do this we need a systematic way to go through every pixel in the image so we don&#8217;t miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way to process an image is row-by-row and top-to-bottom.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An image is just a rectangular table of pixels, where each pixel is four integers.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_interlude_processing_rectangular_data"><a class="anchor" href="#_interlude_processing_rectangular_data"></a>10.1. Interlude - processing rectangular data</h3>
