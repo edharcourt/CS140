@@ -1,6 +1,6 @@
 == Introduction
 
-_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), online shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacologists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.
+_Computer Science_ is the field of study encompassing the theory and practical implementation of processing digital information. Computer Science encompasses such diverse areas networking, cryptography, security, web development, artificial intelligence, databases, computer graphics, mobile computing, audio and video processing, ... a list that could continue for some time. What this has enabled is astonishing; self driving cars, social media, voice and image recognition, digital music and video streaming (_e.g.,_ Spotify and Netflix), on-line shopping and banking, digital maps and GPS. Biologists use software to analyze DNA, Doctors use software to understand how genes impact disease.  Pharmacologists search for new drugs using software. Computer programming and software is the thread that knits all of these seemingly disparate areas together. It is an obvious jumping off point for introducing computer science.
 
 A _computer program_ (_i.e.,_ software) is developed and written in a _programming language_. There are, literally, thousands of programming languages, mostly dead now, https://en.wikipedia.org/wiki/List_of_programming_languages[but there are many hundreds still in active use].footnote:[Back in my college days some of the languages I learned were COBOL, Ada, Pascal, Prolog, SNOBOL, Lisp, Fortran, and APL. A veritable graveyard of languages. Lisp and Fortran have both lived on in some evolved form and have also had a profound impact on the design of many other languages languages still used today.] About a dozen languages dominate the modern software development landscape, and many more are actively used in niche areas such as engineering and the visual arts.  
 
@@ -477,7 +477,7 @@ print("Hello)
 
 [.result]
 ====
-Missing double quote closing the string lteral `"Hello"`.
+Missing double quote closing the string literal `"Hello"`.
 ====
 
 .Example 2
@@ -691,7 +691,7 @@ import math
 
 One way to compute the square root of a number would be just to raise to the 1/2 power. 
 
-[source,pyhon]
+[source,python]
 ----
 print(2**.5)
 ----
@@ -842,7 +842,7 @@ An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _by
 |===
 
 
-The CPU, (_Central Processing Unit_) or _processor_, carries out basic mathematical operations such as addition and multiplication. The CPU is connected to _main memory_ where it can store numbers (bits). Main memory is fast and _volatile_. That is, when the power is turned off main memory loses any information that was stored. Also connected to the CPU and memory are other hardware components such as hard drives, graphics card, and network hardware. Hard drives are _non-volatile_ memory. Turn off the power and they remember what was stored, they are also musch slower than main memory.
+The CPU, (_Central Processing Unit_) or _processor_, carries out basic mathematical operations such as addition and multiplication. The CPU is connected to _main memory_ where it can store numbers (bits). Main memory is fast and _volatile_. That is, when the power is turned off main memory loses any information that was stored. Also connected to the CPU and memory are other hardware components such as hard drives, graphics card, and network hardware. Hard drives are _non-volatile_ memory. Turn off the power and they remember what was stored, they are also much slower than main memory.
 
 Here is a high level layout of a computer.
 
@@ -859,7 +859,7 @@ Python is a little different, it is not a compiled language but an _interpreted_
 .Python Interpreter
 image::interpreter.png[width=600]
 
-NOTE: Python is actually a bit more complicated. The Python interpreteter actually compiles Python programs to a CPU independent intermediate language called 
+NOTE: Python is actually a bit more complicated. The Python interpreter actually compiles Python programs to a CPU independent intermediate language called 
 _byte code_. It is the Python program's byte code that is then executed the Python interpreter.
 
 
@@ -937,13 +937,13 @@ The area of a circle with radius stem:[r] is stem:[area = \pi r^2].  Write a pro
 The volume of a cone with height stem:[h] and radius stem:[r] is stem:[v = \pi r^2h/3]. Write a Python program that will read the radius and the height from the user and computes and prints the volume of the cone.
 
 .Population Growth
-In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will promt the user for a number of years and print the estimated population that many years from now.
+In the United States there is a birth every 8 seconds, a death every 12 seconds, and a new immigrant (net) every 33 seconds.  The current population is roughly 325 million. Write a program that will prompt the user for a number of years and print the estimated population that many years from now.
 
 .Compound Interest
 Assume that stem:[C] is an initial amount of an investment, stem:[r] is the yearly rate of interest (e.g., stem:[.02] is stem:[2\%]), stem:[t] is the number of years until maturation, stem:[n] is the number of times the interest is compounded per year, then the final value of the investment is stem:[p=c(1+r/n)^{tn}]. Write a program that reads stem:[C], stem:[r], stem:[n], and stem:[t] from the user and computes and then prints the final value of the investment to the nearest penny.
 
 .Change Making 
-Write a prgram that reads an amount of money that we need to make change for, and dispenses
+Write a program that reads an amount of money that we need to make change for, and dispenses
 the correct amount of change (in U.S. currency). Assume that the 20 dollar bill is the largest denomination.  Here is an example execution of the program ...
 
 ----

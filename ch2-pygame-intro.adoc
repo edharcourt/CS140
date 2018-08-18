@@ -162,7 +162,7 @@ input("Hit <enter> when done")
 
 image::pygame-rect-window.png[width=533,height=367,align="center"]
 
-Notice the use of _integer division_ `//`. All of the Pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't mak sense to do this in fractions of a pixel. 
+Notice the use of _integer division_ `//`. All of the Pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn't make sense to do this in fractions of a pixel. 
 
 .Self Check
 
@@ -333,7 +333,7 @@ Notice the line for calculating the stem:[x]-coordinate of the upper right circl
 
  ur_c_x = r_x + 3 * r_width // 4
 
-where we specified that it three-fourths thw width of the rectangle. You might be tempted to write
+where we specified that it three-fourths the width of the rectangle. You might be tempted to write
 
  ur_c_x = r_x + 3 // 4 * r_width
 
