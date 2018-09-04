@@ -7,7 +7,7 @@ To use Pygame there is some standard code we need at the start of every program 
 .hello_pygame.py
 [source,python,numbered]
 ----
-import Pygame <1>
+import pygame <1>
 pygame.init() <2>
 win = pygame.display.set_mode((600,600)) <3>
 ----
