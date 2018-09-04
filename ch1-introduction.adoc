@@ -421,7 +421,7 @@ Things can get pretty crazy. How about if we wanted to print the string _He said
 The statement
 
 [source,python,numbered]
-print('He said "don\'t" do it!') 
+print('He said "don\'t do it!"') 
 
 produces the output 
 
