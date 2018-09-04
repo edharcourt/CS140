@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
     resultNode.style.display = 'none';
     var viewLink = document.createElement('a');
     viewLink.className = 'view-result';
-    //viewLink.href = '#';
+//   viewLink.href = '#';
     viewLink.appendChild(document.createTextNode('[ view result ]'));
     resultNode.previousElementSibling.querySelector('.title').appendChild(viewLink);
     viewLink.addEventListener('click', toggle_result_block);
@@ -610,6 +610,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_bits_cpus_interpreters_and_compilers">1.15. Bits, CPUs, Interpreters, and Compilers</a></li>
 <li><a href="#_exercises">1.16. Exercises</a></li>
 <li><a href="#_terminology">1.17. Terminology</a></li>
+</ul>
+</li>
+<li><a href="#_pygame_intro">2. Pygame Intro</a>
+<ul class="sectlevel2">
+<li><a href="#_colors">2.1. Colors</a></li>
+<li><a href="#_shapes">2.2. Shapes</a></li>
+<li><a href="#_exercises_2">2.3. Exercises</a></li>
+<li><a href="#_terminology_2">2.4. Terminology</a></li>
+<li><a href="#_pygame_functions">2.5. Pygame Functions</a></li>
 </ul>
 </li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
@@ -2599,6 +2608,1292 @@ If <code>x</code> is an integer then convert it to a float. If <code>x</code> is
 </div>
 </div>
 <div class="sect1">
+<h2 id="_pygame_intro"><a class="anchor" href="#_pygame_intro"></a>2. Pygame Intro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A fun way to learn to program is through graphics, images, and animation.  <a href="https://www.pygame.org/news">Pygame</a> is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.</p>
+</div>
+<div class="paragraph">
+<p>To use Pygame there is some standard code we need at the start of every program (but only in programs that use Pygame).</p>
+</div>
+<div class="listingblock">
+<div class="title">hello_pygame.py</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">Pygame</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span> <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-mi">600</span><span class="tok-p">,</span><span class="tok-mi">600</span><span class="tok-p">))</span> <i class="conum" data-value="3"></i><b>(3)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>import the Pygame module</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call a Pygame function <code>init</code> that initializes pygame. The <code>init</code> function takes no arguments and does not return a value. The parentheses are necessary to indicate that this is a function call.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Construct a window, \(600\) pixels wide and \(600\) pixels high. The <code>set_mode</code> function is part of the <code>display</code> module that is in the <code>pygame</code> module. Notice the double parentheses. The <code>set_mode</code> function takes one argument, but that argument needs to be a <em>tuple</em> that represents the width and the height of the window in pixels. <code>set_mode</code> returns a <em>reference</em> to the window. <code>win</code> is a variable that refers to a Pygame <em>display surface</em>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When we run the program above, a \(600 \times 600\) pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don&#8217;t want the window to disappear right away and we will fix this in a bit.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>tuple</em> is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple <code>(200,300)</code> represents a single value with two integer components.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>pixel</em>, short for <em>picture element</em>, represents a single dot on the screen. A typical display has a <em>resolution</em>, which might be \(1024 \times 768\) (\(1024\) pixels wide by \(768\) pixels high) or \(1472 \times 1193\).  A pixel has a physical dimension that depends on the size of the display.  The word <em>pixel</em> is sometimes abbreviated <em>px</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Most of the variables we have encountered so far have held integers or floats. The variable <code>win</code> above represents a <em>reference</em> to a window. For now, think of a reference as being a variable that refers to a complex object such as a window.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the statement <code>x = 73</code> we say that <code>x</code> is <em>primitive</em> and <code>win</code> is <em>reference</em> to an object.<br>
+<span class="image"><img src="./images/references.png" alt="references" width="500"></span></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An <em>object</em> in Python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called <em>methods</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, the Pygame window above has two methods <code>get_height()</code> and <code>get_width()</code> that return the height and width in pixels of the window. Methods are always called using a <em>dot notation</em> of the object name followed by the methods. For example <code>win.get_height()</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The <code>input</code> function waits for the user to type something on the keyboard and hit enter.</p>
+</div>
+<div class="listingblock">
+<div class="title">hello_pygame.py</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">Pygame</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-mi">600</span><span class="tok-p">,</span><span class="tok-mi">600</span><span class="tok-p">))</span>
+<span class="tok-n">dummy</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We don&#8217;t need the <code>dummy</code> variable since we aren&#8217;t going to use what the user typed. We could have just said &#8230;&#8203;</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_colors"><a class="anchor" href="#_colors"></a>2.1. Colors</h3>
+<div class="paragraph">
+<p>Before we talk about drawing shapes on the window we need to know how to represent a color. A common color scheme is called RGB, for <em>Red-Green-Blue</em>. In Pygame a color is a triple of three values where (0,0,0) represents black all the way up to (255,255,255) which is white. There are roughly 16 million different colors we can represent. <strong class="red">Red</strong> is (255,0,0), <strong class="green">green</strong> is (0,255,0), and <strong class="blue">blue</strong> is (0,0,255). Yellow is red and green, so that would be (255,255,0).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There are many online tools to help determine the RGB values for various colors. Most development environments have one too. Just do an internet search for RGB colors, or color picker.<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>One common thing many of our Pygame programs will do is to define some colors.</p>
+</div>
+<div class="listingblock">
+<div class="title">color.py</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-c1"># file color.py</span>
+<span class="tok-n">red</span>         <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-n">green</span>       <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-n">blue</span>        <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">)</span>
+<span class="tok-n">yellow</span>      <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-n">white</span>       <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">)</span>
+<span class="tok-n">black</span>       <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">)</span>
+<span class="tok-n">aqua</span>        <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">,</span><span class="tok-mi">255</span><span class="tok-p">)</span>
+<span class="tok-n">burntsienna</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">138</span><span class="tok-p">,</span><span class="tok-mi">54</span><span class="tok-p">,</span><span class="tok-mi">15</span><span class="tok-p">)</span>
+<span class="tok-n">lightgray</span>   <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-mi">200</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We will soon get tired of retyping color definitions in our Pygame programs. We can place these definitions in their own file and name it <code>color.py</code>.
+We can then import <code>color.py</code> into our Pygame program with <code>import color</code> and voila! we have created our own Python module named <code>color</code> and we can reuse our color definitions without having to retype them every time.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Put commonly used code in a separate file and import that file into each program that needs it. This allows you to <em>reuse</em> code you have already written rather than duplicate it.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Don&#8217;t name your Python programs the same name as modules you commonly import. For example, if you name your program <code>pygame.py</code> and then in your program you have <code>import pygame</code> you are in the embarrassing situation of your program trying to import itself.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">hello_pygame.py</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">color</span>   <span class="tok-c1"># this is the color.py file we just wrote above</span>
+<span class="tok-kn">import</span> <span class="tok-nn">pygame</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">width</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>
+<span class="tok-n">height</span> <span class="tok-o">=</span> <span class="tok-mi">500</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-n">height</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">burntsienna</span><span class="tok-p">)</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>                       <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span>                 <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>win</code> (short for window) is a <em>display surface</em> in pygame. We did not have to call it <code>win</code>. We could have called it any legal variable name.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Our first Pygame drawing command <code>win.fill</code> takes one argument that is an RGB color triple and fills the window with the color <code>burntsienna</code> from our color module.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When Pygame functions draw on the display the window is not actally updated until we call the Pygame function <code>pygame.display.update()</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Wait for the user to hit enter so the window doesn&#8217;t disappear right away.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shapes"><a class="anchor" href="#_shapes"></a>2.2. Shapes</h3>
+<div class="paragraph">
+<p>In this section we learn how to draw basic shapes; a circle, ellipse, rectangle, line, and a single pixel on a surface.</p>
+</div>
+<div class="sect3">
+<h4 id="_rectangle"><a class="anchor" href="#_rectangle"></a>2.2.1. Rectangle</h4>
+<div class="paragraph">
+<p>The Pygame function <code>pygame.draw.rect</code> draws a rectangle on a surface and takes either three or four arguments.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Pygame programs only ever have one display surface. We will see later on that our Pygame programs may have multiple surfaces (such as an image) that we will render on a display surface.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+<code class="listingblock">
+pygame.draw.rect(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>surface</em></dt>
+<dd>
+<p>The surface we are going to draw the rectangle on. For now we will just use the display surface <code>win</code> that was constructed using the <code>set_mode</code> function.</p>
+</dd>
+<dt class="hdlist1"><em>color</em></dt>
+<dd>
+<p>An RGB triple such as (0, 255, 255) or <code>color.yellow</code> (from our color module)</p>
+</dd>
+<dt class="hdlist1"><em>xywh</em></dt>
+<dd>
+<p>A four tuple (quadruple) that represents the \(x\) and \(y\) coordinate of the upper left hand corner of the rectangle and the width \(w\) and the height \(h\) of the rectangle. All units are in pixels.</p>
+</dd>
+<dt class="hdlist1"><em>optional-line-width</em></dt>
+<dd>
+<p>If this argument is left off then the rectangle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the rectangle.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+The upper left coordinate of a Pygame surface is the origin <code>(0,0)</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Example <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Place a yellow rectangle that is one third the width of the display surface and one third the height in the center of the display. Hint: draw this out on a sheet of paper. It is a little trickier than you think. Here is a diagram to get you started.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">width</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>   <span class="tok-c1"># display surface 600 pixels wide</span>
+<span class="tok-n">height</span> <span class="tok-o">=</span> <span class="tok-mi">400</span>  <span class="tok-c1"># display surface is 400 pixels high</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-n">height</span><span class="tok-p">))</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">lightgray</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># set up some variable for the rectangle</span>
+<span class="tok-n">r_width</span> <span class="tok-o">=</span> <span class="tok-n">width</span><span class="tok-o">//</span><span class="tok-mi">3</span>
+<span class="tok-n">r_height</span> <span class="tok-o">=</span> <span class="tok-n">height</span><span class="tok-o">//</span><span class="tok-mi">3</span>
+<span class="tok-n">r_x</span> <span class="tok-o">=</span> <span class="tok-n">width</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">r_y</span> <span class="tok-o">=</span> <span class="tok-n">height</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">r_height</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">r_x</span><span class="tok-p">,</span><span class="tok-n">r_y</span><span class="tok-p">,</span><span class="tok-n">r_width</span><span class="tok-p">,</span><span class="tok-n">r_height</span><span class="tok-p">))</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; when done&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/pygame-rect-window.png" alt="pygame rect window" width="533" height="367">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the use of <em>integer division</em> <code>//</code>. All of the Pygame functions take integer arguments. Intuitively, when calculating dimensions or coordinates it doesn&#8217;t make sense to do this in fractions of a pixel.</p>
+</div>
+<div class="paragraph">
+<div class="title">Self Check</div>
+<p>Assume we have a 600 X 400 Pygame display.</p>
+</div>
+<div class="paragraph">
+<div class="title">Top Left<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the coordinate of the top left pixel in the Pygame window?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(0,0)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Top Right<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the coordinate of the top right pixel in the Pygame window?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(599,0)</p>
+</div>
+<div class="paragraph">
+<p>Now, most likely what you said was (600,0). This is a common mistake, Remember
+the window is 600 pixels wide and we are starting counting at 0. So the 600th pixel
+is column 599. This mistake of being off by one, computer scientists quite literally call an <em>off by one error</em>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Bottom Left<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the coordinate of the bottom left pixel in the Pygame window?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(0,399)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Bottom Right<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the coordinate of the bottom right pixel in the Pygame window?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(599,399)</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Proportional Graphics</div>
+<p>The yellow square is <em>proportional</em> and relative to the size of the main Pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is <em>vector graphics</em>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Try and always use <em>proportional graphics</em>. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be
+drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door&#8217;s dimensions would be relative to the house&#8217;s dimensions.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Contrast this with using <em>absolute dimensions</em> and <em>absolute pixel coordinates</em>. For example, if we draw a yellow rectangle at coordinate <code>(100,200)</code> with a width of 300px and a height of 200px.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">,</span><span class="tok-mi">300</span><span class="tok-p">,</span><span class="tok-mi">200</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>then this would draw the same sized yellow rectangle in the same place no matter if our display was 400 X 400 or 1000 X 1000.  Worse yet if the display was 200 x 200 the yellow square would not even fit in the display.</p>
+</div>
+<div class="paragraph">
+<p>Graphics using individual pixels only called <em>raster graphics</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_circle"><a class="anchor" href="#_circle"></a>2.2.2. Circle</h4>
+<div class="paragraph">
+<p>The Pygame function <code>pygame.draw.circle</code> draws a circle on a surface and takes either four or five arguments.</p>
+</div>
+<div class="paragraph">
+<p>
+<code class="listingblock">
+pygame.draw.circle(<i>surface</i>, <i>color</i>, <i>xy</i>, radius, <i>optional-line-width</i>)
+</code>
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>surface</em></dt>
+<dd>
+<p>The surface we are going to draw the rectangle on.</p>
+</dd>
+<dt class="hdlist1"><em>color</em></dt>
+<dd>
+<p>An RGB triple</p>
+</dd>
+<dt class="hdlist1"><em>xy</em></dt>
+<dd>
+<p>A tuple that represents the \(x\) and \(y\) coordinate of the <em>center</em> of the circle.</p>
+</dd>
+<dt class="hdlist1"><em>optional-line-width</em></dt>
+<dd>
+<p>If this argument is left off then the circle is filled in with the specified color. If it is specified then it takes a width, in pixels, of the border of the circle.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Lets draw a dark gray circle centered in the upper left quadrant of the yellow square. We will do this proportionally, making the diameter of the circle 1/3 width of the quadrant. Calculating the <code>x</code> and <code>y</code> coordinates of the circle can be a little tricky. The width of the quadrant is <code>r_width//2</code></p>
+</div>
+<div class="paragraph">
+<p>The \(x\) coordinate of the circle is relative to <code>r_x</code>, the \(x\) coordinate of the yellow rectangle. Add in 1/2 the width of the quadrant you get</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">4</span>   <span class="tok-c1"># ul_c_x is short for upper left circle x coordinate</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similarly the \(y\) coordinate is</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember that the circle function requires the radius but the problem stated that the
+diameter of the circle is 1/3 the width of the quadrant. We know the width of the quadrant is <code>r_width//2</code> and 1/3 of that is <code>r_width//2//3</code> and a radius is still 1/2 of that, so we are left with</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-c1"># or r_width // 12</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Defining a new color <code>darkgray = (100,100,100)</code> in our color module and putting it all together we have</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ul_c_x</span><span class="tok-p">,</span><span class="tok-n">ul_c_y</span><span class="tok-p">),</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we should get something that looks like</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/upper-left-circle.png" alt="upper left circle" width="300" height="200">
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Draw another dark gray circle with the same radius centered in the upper right quadrant of the yellow rectangle.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The only thing that changes is the \(x\) coordinate. The \(y\) coordinate and the radius
+of the upper right circle are the same as the \(y\) coordinate and radius f the upper left circle. One way to think about the \(x\) coordinate is that it is 3/4 of the width of the rectangle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">ur_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-mi">3</span><span class="tok-o">*</span><span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">4</span>
+<span class="tok-n">ur_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>    <span class="tok-c1"># same as upper left circle</span>
+<span class="tok-n">ur_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <span class="tok-c1"># same as upper left circle</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ur_c_x</span><span class="tok-p">,</span> <span class="tok-n">ur_c_y</span><span class="tok-p">),</span> <span class="tok-n">ur_c_radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/upper-right-circle.png" alt="upper right circle" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Complete program <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Here is the complete program so far with the two circles in the rectangle.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">width</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>   <span class="tok-c1"># display surface 600 pixels wide</span>
+<span class="tok-n">height</span> <span class="tok-o">=</span> <span class="tok-mi">400</span>  <span class="tok-c1"># display surface is 400 pixels high</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-n">height</span><span class="tok-p">))</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">lightgray</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># set up some variable for the rectangle</span>
+<span class="tok-n">r_width</span> <span class="tok-o">=</span> <span class="tok-n">width</span><span class="tok-o">//</span><span class="tok-mi">3</span>
+<span class="tok-n">r_height</span> <span class="tok-o">=</span> <span class="tok-n">height</span><span class="tok-o">//</span><span class="tok-mi">3</span>
+<span class="tok-n">r_x</span> <span class="tok-o">=</span> <span class="tok-n">width</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">r_y</span> <span class="tok-o">=</span> <span class="tok-n">height</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">r_height</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">r_x</span><span class="tok-p">,</span><span class="tok-n">r_y</span><span class="tok-p">,</span><span class="tok-n">r_width</span><span class="tok-p">,</span><span class="tok-n">r_height</span><span class="tok-p">))</span>
+
+<span class="tok-n">ul_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">ul_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+
+<span class="tok-c1"># width of quadrant is r_width//2 then 1/3 of that is</span>
+<span class="tok-c1"># the diameter, then 1/2 of that for the radius</span>
+<span class="tok-n">ul_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ul_c_x</span><span class="tok-p">,</span><span class="tok-n">ul_c_y</span><span class="tok-p">),</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">)</span>
+
+<span class="tok-n">ur_c_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-mi">3</span> <span class="tok-o">*</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">ur_c_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">ur_c_radius</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <span class="tok-c1"># or r_width//12</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ur_c_x</span><span class="tok-p">,</span><span class="tok-n">ur_c_y</span><span class="tok-p">),</span> <span class="tok-n">ur_c_radius</span><span class="tok-p">)</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; when done&quot;</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Notice the line for calculating the \(x\)-coordinate of the upper right circle</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ur_c_x = r_x + 3 * r_width // 4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where we specified that it three-fourths the width of the rectangle. You might be tempted to write</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ur_c_x = r_x + 3 // 4 * r_width</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Why is the incorrect? Because <code>3//4</code> is 0!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ellipse"><a class="anchor" href="#_ellipse"></a>2.2.3. Ellipse</h4>
+<div class="paragraph">
+<p>An ellipse is an oval shape with a width and a height. In graphics an ellipse is very similar to a rectangle. In fact the function to draw an ellipse is almost exactly the same as the function to draw a rectangle.  The one part of drawing an ellipse that takes
+some getting used to it that the <code>(x,y)</code> coordinate of the ellipse is the <code>(x,y)</code> coordinate of the rectangle (or <em>bounding box</em>) that surrounds the ellipse.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/ellipse.png" alt="ellipse">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <em>bounding box</em> is the invisible rectangle that circumscribes a geometric shape such as an ellipse, circle, or polygon.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+<code class="listingblock">
+pygame.draw.ellipse(<i>surface</i>, <i>color</i>, <i>xywh</i>, <i>optional-line-width</i>)
+</code>
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>surface</em></dt>
+<dd>
+<p>The surface we are going to draw the ellipse on.</p>
+</dd>
+<dt class="hdlist1"><em>color</em></dt>
+<dd>
+<p>An RGB triple.</p>
+</dd>
+<dt class="hdlist1"><em>xywh</em></dt>
+<dd>
+<p>A four tuple (quadruple) that represents the \(x\) and \(y\) coordinate of the upper left hand corner <em>bounding box</em>, and the width \(w\) and the height \(h\) of the ellipse.</p>
+</dd>
+<dt class="hdlist1"><em>optional-line-width</em></dt>
+<dd>
+<p>same as rectangle and circle functions.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>These are, in fact, the same arguments for drawing a rectangle.</p>
+</div>
+<div class="paragraph">
+<p>Continuing our program from before, lets draw a pink ellipse centered in the x axis, 3/4 the width of the rectangle and two-thirds of the way down the height of the rectangle. Add <code>pink = (255, 20, 147)</code> to our <code>color.py</code> module.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">e_width</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">e_height</span> <span class="tok-o">=</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">e_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">e_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">e_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">3</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">pink</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">e_x</span><span class="tok-p">,</span><span class="tok-n">e_y</span><span class="tok-p">,</span><span class="tok-n">e_width</span><span class="tok-p">,</span><span class="tok-n">e_height</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding this code to our running example we should get something like &#8230;&#8203;</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/ellipse2.png" alt="ellipse2" width="300" height="200">
+</div>
+</div>
+<div class="paragraph">
+<p>You have probably guessed by now that what is taking shape is a face, a Mr. or Mrs. Blockhead.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Use an ellipse to add a nose above the mouth.<br>
+<span class="image"><img src="./images/nose.png" alt="nose" width="300" height="200"></span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>There are lots of ways to do this, but you need to make it relative to the head.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">n_width</span> <span class="tok-o">=</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">10</span>  <span class="tok-c1"># 1/10th width of head</span>
+<span class="tok-n">n_height</span> <span class="tok-o">=</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span> <span class="tok-c1"># 1/4 height of head</span>
+<span class="tok-n">n_x</span> <span class="tok-o">=</span> <span class="tok-n">r_x</span> <span class="tok-o">+</span> <span class="tok-n">r_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">n_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># centered horizontally</span>
+<span class="tok-n">n_y</span> <span class="tok-o">=</span> <span class="tok-n">r_y</span> <span class="tok-o">+</span> <span class="tok-n">r_height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">n_height</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <span class="tok-c1"># centered vertically</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">n_x</span><span class="tok-p">,</span><span class="tok-n">n_y</span><span class="tok-p">,</span><span class="tok-n">n_width</span><span class="tok-p">,</span><span class="tok-n">n_height</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>You can give the Blockhead a smile by drawing an ellipse over the top of the mouth shifted up slightly, and make it the same color as the background head.<br>
+<span class="image"><img src="./images/smile.png" alt="smile" width="300" height="200"></span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>This is one line, drawing an ellipse shifted up, say 20% of the width of the mouth.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">e_x</span><span class="tok-p">,</span> <span class="tok-n">e_y</span><span class="tok-p">,</span> <span class="tok-n">e_width</span><span class="tok-p">,</span> <span class="tok-n">e_height</span> <span class="tok-o">-</span> <span class="tok-o">.</span><span class="tok-mi">2</span><span class="tok-o">*</span><span class="tok-n">e_height</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise</div>
+<p>Give the Blockhead pupils by drawing a circle or ellipse in each eye. Make sure it is proportional!</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can always check to see if you are making your shapes proportional if you change the dimensions of the Pygame display at the start of the program and make sure the image resizes appropriately.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lines"><a class="anchor" href="#_lines"></a>2.2.4. Lines</h4>
+<div class="paragraph">
+<p>You can draw a line in Pygame using the function <code>pygame.draw.line</code>.</p>
+</div>
+<div class="paragraph">
+<p>
+<code class="listingblock">
+pygame.draw.line(<i>surface</i>, <i>color</i>, <i>start-xy</i>, <i>end-xy</i>, <i>optional-line-width</i>)
+</code>
+</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em>surface</em></dt>
+<dd>
+<p>The surface we are going to drawing the line on.</p>
+</dd>
+<dt class="hdlist1"><em>color</em></dt>
+<dd>
+<p>An RGB triple</p>
+</dd>
+<dt class="hdlist1"><em>start-xy</em></dt>
+<dd>
+<p>The \((x,y)\) coordinate of one endpoint of the line</p>
+</dd>
+<dt class="hdlist1"><em>end-xy</em></dt>
+<dd>
+<p>The \((x,y)\) coordinate of the other endpoint of the line</p>
+</dd>
+<dt class="hdlist1"><em>optional-line-width</em></dt>
+<dd>
+<p>The width of the line in pixels</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<div class="title">Exercise  <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Draw a cross through the left eye.<br>
+<span class="image"><img src="./images/eye-cross.png" alt="eye cross" width="300" height="200"></span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">line</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">,</span>
+                 <span class="tok-p">(</span><span class="tok-n">ul_c_x</span><span class="tok-p">,</span> <span class="tok-n">ul_c_y</span> <span class="tok-o">-</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">),</span>
+                 <span class="tok-p">(</span><span class="tok-n">ul_c_x</span><span class="tok-p">,</span> <span class="tok-n">ul_c_y</span> <span class="tok-o">+</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">))</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">line</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">,</span>
+                 <span class="tok-p">(</span><span class="tok-n">ul_c_x</span> <span class="tok-o">-</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">,</span> <span class="tok-n">ul_c_y</span><span class="tok-p">),</span>
+                 <span class="tok-p">(</span><span class="tok-n">ul_c_x</span> <span class="tok-o">+</span> <span class="tok-n">ul_c_radius</span><span class="tok-p">,</span> <span class="tok-n">ul_c_y</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>There are other Pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines.</p>
+</div>
+<div class="paragraph">
+<div class="title">Our Complete Blockhead <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Variables have been renamed to be more meaningful. For example <code>ul_c_x</code> which stood for (<em>upper left circle x coordinate</em>) is now <code>left_eye_x</code> and so on.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+
+<span class="tok-c1"># initial pygame stuff</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">width</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>   <span class="tok-c1"># display surface 600 pixels wide</span>
+<span class="tok-n">height</span> <span class="tok-o">=</span> <span class="tok-mi">400</span>  <span class="tok-c1"># display surface is 400 pixels high</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-n">height</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># create the background</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">lightgray</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># set up some variable for the head</span>
+<span class="tok-n">head_width</span> <span class="tok-o">=</span> <span class="tok-n">width</span> <span class="tok-o">//</span> <span class="tok-mi">3</span>
+<span class="tok-n">head_height</span> <span class="tok-o">=</span> <span class="tok-n">height</span> <span class="tok-o">//</span> <span class="tok-mi">3</span>
+<span class="tok-n">head_x</span> <span class="tok-o">=</span> <span class="tok-n">width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">head_y</span> <span class="tok-o">=</span> <span class="tok-n">height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">head_x</span><span class="tok-p">,</span> <span class="tok-n">head_y</span><span class="tok-p">,</span> <span class="tok-n">head_width</span><span class="tok-p">,</span> <span class="tok-n">head_height</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># left eye</span>
+<span class="tok-n">left_eye_x</span> <span class="tok-o">=</span> <span class="tok-n">head_x</span> <span class="tok-o">+</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">left_eye_y</span> <span class="tok-o">=</span> <span class="tok-n">head_y</span> <span class="tok-o">+</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">left_eye_r</span> <span class="tok-o">=</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">//</span> <span class="tok-mi">3</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># width of quadrant is r_width//2 then 1/3 of that</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">left_eye_x</span><span class="tok-p">,</span> <span class="tok-n">left_eye_y</span><span class="tok-p">),</span> <span class="tok-n">left_eye_r</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># left eye cross</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">line</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">,</span>
+                 <span class="tok-p">(</span><span class="tok-n">left_eye_x</span><span class="tok-p">,</span> <span class="tok-n">left_eye_y</span> <span class="tok-o">-</span> <span class="tok-n">left_eye_r</span><span class="tok-p">),</span>
+                 <span class="tok-p">(</span><span class="tok-n">left_eye_x</span><span class="tok-p">,</span> <span class="tok-n">left_eye_y</span> <span class="tok-o">+</span> <span class="tok-n">left_eye_r</span><span class="tok-p">))</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">line</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">,</span>
+                 <span class="tok-p">(</span><span class="tok-n">left_eye_x</span> <span class="tok-o">-</span> <span class="tok-n">left_eye_r</span><span class="tok-p">,</span> <span class="tok-n">left_eye_y</span><span class="tok-p">),</span>
+                 <span class="tok-p">(</span><span class="tok-n">left_eye_x</span> <span class="tok-o">+</span> <span class="tok-n">left_eye_r</span><span class="tok-p">,</span> <span class="tok-n">left_eye_y</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># right eye</span>
+<span class="tok-n">right_eye_x</span> <span class="tok-o">=</span> <span class="tok-n">head_x</span> <span class="tok-o">+</span> <span class="tok-mi">3</span> <span class="tok-o">*</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">right_eye_y</span> <span class="tok-o">=</span> <span class="tok-n">head_y</span> <span class="tok-o">+</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">right_eye_r</span> <span class="tok-o">=</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">//</span> <span class="tok-mi">3</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># width of quadrant is r_width//2 then 1/3 of that</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">darkgray</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">right_eye_x</span><span class="tok-p">,</span> <span class="tok-n">right_eye_y</span><span class="tok-p">),</span> <span class="tok-n">right_eye_r</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># mouth</span>
+<span class="tok-n">mouth_width</span> <span class="tok-o">=</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">mouth_height</span> <span class="tok-o">=</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span>
+<span class="tok-n">mouth_x</span> <span class="tok-o">=</span> <span class="tok-n">head_x</span> <span class="tok-o">+</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">mouth_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">mouth_y</span> <span class="tok-o">=</span> <span class="tok-n">head_y</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">3</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">pink</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">mouth_x</span><span class="tok-p">,</span> <span class="tok-n">mouth_y</span><span class="tok-p">,</span> <span class="tok-n">mouth_width</span><span class="tok-p">,</span> <span class="tok-n">mouth_height</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># smile</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">yellow</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">mouth_x</span><span class="tok-p">,</span> <span class="tok-n">mouth_y</span><span class="tok-p">,</span> <span class="tok-n">mouth_width</span><span class="tok-p">,</span> <span class="tok-n">mouth_height</span> <span class="tok-o">-</span> <span class="tok-o">.</span><span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">mouth_height</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># add a nose</span>
+<span class="tok-n">nose_width</span> <span class="tok-o">=</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">10</span>  <span class="tok-c1"># 1/10th width of head</span>
+<span class="tok-n">nose_height</span> <span class="tok-o">=</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">4</span> <span class="tok-c1"># 1/4 height of head</span>
+<span class="tok-n">nose_x</span> <span class="tok-o">=</span> <span class="tok-n">head_x</span> <span class="tok-o">+</span> <span class="tok-n">head_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">nose_width</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># centered horizontally</span>
+<span class="tok-n">nose_y</span> <span class="tok-o">=</span> <span class="tok-n">head_y</span> <span class="tok-o">+</span> <span class="tok-n">head_height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">nose_height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># centered vertically</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">ellipse</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">nose_x</span><span class="tok-p">,</span> <span class="tok-n">nose_y</span><span class="tok-p">,</span> <span class="tok-n">nose_width</span><span class="tok-p">,</span> <span class="tok-n">nose_height</span><span class="tok-p">))</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; when done&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">include</span><span class="tok-p">:</span><span class="tok-n">python</span><span class="tok-o">/</span><span class="tok-n">blockhead</span><span class="tok-o">.</span><span class="tok-n">py</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise</div>
+<p>Complete the Blockhead adding ears, hair, a hat. Make sure it stays proportional.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sample_blockheads"><a class="anchor" href="#_sample_blockheads"></a>2.2.5. Sample Blockheads</h4>
+<div class="paragraph">
+<p>To give you some ideas here are some of the blockheads that have been turned in over the years as assignments.<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup></p>
+</div>
+<div class="paragraph">
+<div class="title">Example 1 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/sbh.png" alt="sbh" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 2 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/minion.png" alt="minion" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 3 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/pumpkin.png" alt="pumpkin" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 4 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/spongebob.png" alt="spongebob" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 5 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/grumpy.png" alt="grumpy" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 6 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/doodlebug.png" alt="doodlebug" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 7 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/twjone16.png" alt="twjone16" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 8 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/dlgold16.png" alt="dlgold16" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Example 9 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/djang16.png" alt="djang16" width="300" height="200">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_2"><a class="anchor" href="#_exercises_2"></a>2.3. Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 1 - Multiple Choice</div>
+<p>Answer questions about the following code fragment.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">color</span>   <span class="tok-c1"># this is the color.py file we just wrote above</span>
+<span class="tok-kn">import</span> <span class="tok-nn">pygame</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">width</span> <span class="tok-o">=</span> <span class="tok-mi">600</span>
+<span class="tok-n">height</span> <span class="tok-o">=</span> <span class="tok-mi">500</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-n">height</span><span class="tok-p">))</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">burntsienna</span><span class="tok-p">)</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit &lt;enter&gt; to quit.&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the statement <code>win.fill(color.burntsienna)</code>, <code>win</code> is an example of a/an (choose <em>the best</em> answer)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>object reference</p>
+</li>
+<li>
+<p>function</p>
+</li>
+<li>
+<p>method</p>
+</li>
+<li>
+<p>module</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In the statement <code>win.fill(color.burntsienna)</code>, <code>fill</code> is an example of a/an (choose <em>the best</em> answer)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>object reference</p>
+</li>
+<li>
+<p>function</p>
+</li>
+<li>
+<p>method</p>
+</li>
+<li>
+<p>module</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In the statement <code>pygame.display.update()</code>, <code>update</code> is an example of a/an (choose <em>the best</em> answer)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>object reference</p>
+</li>
+<li>
+<p>function</p>
+</li>
+<li>
+<p>method</p>
+</li>
+<li>
+<p>module</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In the statement <code>pygame.display.update()</code>, <code>pygame</code> is an example of a/an (choose <em>the best</em> answer)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>variable</p>
+</li>
+<li>
+<p>object reference</p>
+</li>
+<li>
+<p>function</p>
+</li>
+<li>
+<p>method</p>
+</li>
+<li>
+<p>module</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2 - Python Values <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>So far we have encountered six different kinds of Python values. For example, integers are one. Name the others.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>integers, floating-point numbers, strings, <code>None</code>, tuples, and object references</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3 - Smiley</div>
+<p>Write a Python/pygame program that reproduces the smiley below.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/smiley.png" alt="smiley" width="300" height="200">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology_2"><a class="anchor" href="#_terminology_2"></a>2.4. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>pixel</p>
+</li>
+<li>
+<p>reference</p>
+</li>
+<li>
+<p>display surface</p>
+</li>
+<li>
+<p>off-by-one error</p>
+</li>
+<li>
+<p>vector graphics</p>
+</li>
+<li>
+<p>object</p>
+</li>
+<li>
+<p>bounding box</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>tuple</p>
+</li>
+<li>
+<p>Integrated Development Environment (IDE)</p>
+</li>
+<li>
+<p>surface</p>
+</li>
+<li>
+<p>proportional graphics</p>
+</li>
+<li>
+<p>raster graphics</p>
+</li>
+<li>
+<p>method</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_pygame_functions"><a class="anchor" href="#_pygame_functions"></a>2.5. Pygame Functions</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>pygame.init</code></p>
+</li>
+<li>
+<p><code>pygame.display.set_mode</code></p>
+</li>
+<li>
+<p><code>surface.fill</code></p>
+</li>
+<li>
+<p><code>pygame.display.update</code></p>
+</li>
+<li>
+<p><code>pygame.draw.rect</code></p>
+</li>
+<li>
+<p><code>pygame.draw.circle</code></p>
+</li>
+<li>
+<p><code>pygame.draw.ellipse</code></p>
+</li>
+<li>
+<p><code>pygame.draw.line</code></p>
+</li>
+<li>
+<p><code>pygame.draw.arc</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2670,11 +3965,17 @@ If <code>x</code> is an integer then convert it to a float. If <code>x</code> is
 <div class="footnote" id="_footnotedef_3">
 <a href="#_footnoteref_3">3</a>. Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.
 </div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. A popular <em>Integerated Development Environmnet</em> is <a href="https://www.jetbrains.com/pycharm/">Pycharm</a> from <a href="https://www.jetbrains.com">Jetbrains</a>. Pycharm has a built-in Color Picker. There is a free Community Edition of Pycharm or students and faculty can obtain a free license for the Professional version.
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. Thank you to Angelica Munyao, Sam Emerson, Ethan Cox, Elsa Feck, Yuxi Zhang, Jack Pattison, Dakota Golde, Tim Jones, and Dong Hae Jang for allowing me to use their Blockhead submissions.
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-08-27 23:15:48 EDT
+Last updated 2018-09-04 09:23:03 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
