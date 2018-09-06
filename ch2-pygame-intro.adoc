@@ -75,6 +75,8 @@ black       = (0,0,0)
 aqua        = (0,255,255)
 burntsienna = (138,54,15)
 lightgray   = (200,200,200)
+pink        = (255, 20, 147)
+darkgray    = (100,100,100)
 ----	
 
 We will soon get tired of retyping color definitions in our Pygame programs. We can place these definitions in their own file and name it `color.py`.
