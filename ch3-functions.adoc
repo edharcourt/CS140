@@ -45,13 +45,13 @@ The inner `print` prints _Hello World_ to the console and returns `None` to the 
 
 ====
 
-TIP: `None` is an actual value in Python like `3` and `3,14` and `"Hello"`. It is the value that means _no value_. You will rarely every use it explicitly.
+TIP: `None` is an actual value in Python like `3` and `3.14`, `"Hello"`, and `'Goodbye'`. It is the value that means _no value_. You will rarely every use it explicitly.
 
 === Calling Functions
 
 Lets get a little more formal about calling functions. Consider the statement
 
-[source,python,numbered]
+[source,python]
 print("Hello World")
 
 We say that we are _calling_ the `print` function and _passing_ the argument `Hello World`. Passing an argument means we send the value to the function.
