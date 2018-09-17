@@ -631,6 +631,19 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_3">3.6. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_repetition_the_while_loop">4. Repetition - The While Loop</a>
+<ul class="sectlevel2">
+<li><a href="#_animation">4.1. Animation</a></li>
+<li><a href="#_relational_operators">4.2. Relational Operators</a></li>
+<li><a href="#_counting_loops">4.3. Counting Loops</a></li>
+<li><a href="#_accumulating_loops">4.4. Accumulating Loops</a></li>
+<li><a href="#_exponential_growth_example_password_length">4.5. Exponential Growth (Example: Password Length)</a></li>
+<li><a href="#_exponential_growth_example_population">4.6. Exponential Growth (Example: Population)</a></li>
+<li><a href="#_checksums_detecting_network_communication_errors">4.7. Checksums; detecting network communication errors</a></li>
+<li><a href="#_while_loop_exercises">4.8. While-Loop Exercises</a></li>
+<li><a href="#_terminology_4">4.9. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -4646,6 +4659,1186 @@ A <em>global variable</em> is defined in the main program. Its scope is the poin
 </div>
 </div>
 <div class="sect1">
+<h2 id="_repetition_the_while_loop"><a class="anchor" href="#_repetition_the_while_loop"></a>4. Repetition - The While Loop</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Lets assume we have a particle (a circle, face, or image of a ball).<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> on a Pygame display surface drawn halfway down the display and all the way to the left.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We will often use the term <em>particle</em> to represent a moving object such as a baseball, a hockey puck, an electron, etc. The term <a href="https://en.wikipedia.org/wiki/Particle"><em>particle</em></a> comes from physics and is an abstract representation of some object.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When the particle is obviously something like a soccer ball I will often use the term <em>particle</em> and <em>ball</em> interchangeably.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">color</span><span class="tok-o">,</span> <span class="tok-nn">pygame</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">side</span> <span class="tok-o">=</span> <span class="tok-mi">500</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">side</span><span class="tok-p">,</span><span class="tok-n">side</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># properties of the particle</span>
+<span class="tok-n">radius</span> <span class="tok-o">=</span> <span class="tok-n">side</span><span class="tok-o">//</span><span class="tok-mi">20</span>
+<span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">radius</span>   <span class="tok-c1"># particle is all the way to the left </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">py</span> <span class="tok-o">=</span> <span class="tok-n">side</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <span class="tok-c1"># and halfway down display</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># draw the particle</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span> <span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Where would the particle show up of we set <code>px = 0</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>What if we wanted to draw another particle right next to the first? The next particle&#8217;s \(x\) coordinate will be one diameter (or 2 radii) past the first particle&#8217;s \(x\) coordinate.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">radius</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span> <span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>How about a third particle?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">radius</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span> <span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And a fourth particle? &#8230;&#8203; well, you get the picture. We could keep copying and pasting until we have as many particles displayed as we need. This should feel wrong. And it is. What we want to do is repeat those two lines until the display is filled with particles.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/particles.png" alt="particles">
+</div>
+</div>
+<div class="paragraph">
+<p>The <em>while loop</em> repeats a body of code (indented) as long as some condition is true. The syntax is &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python">while (<strong><em>condition</em></strong>):
+    stmt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We want to keep repeating the two lines of code</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">radius</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span> <span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>as long as some condition is true. In this case, as long as the particle&#8217;s right edge is to the left of the right edge of the display.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-k">while</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-n">radius</span> <span class="tok-o">&lt;</span> <span class="tok-n">side</span><span class="tok-p">:</span>
+    <span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-mi">2</span> <span class="tok-o">*</span> <span class="tok-n">radius</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span> <span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Eventually <code>px + radius</code> will become greater than <code>side</code> and the loop condition becomes false and then the loop <em>terminates</em>.</p>
+</div>
+<div class="paragraph">
+<p>Note: <code>True</code> and <code>False</code> are values in Python, just like the integer <code>1</code> and the float <code>3.14159</code>. <code>True</code> an `False are called <em>boolean</em> values.</p>
+</div>
+<div class="sect2">
+<h3 id="_animation"><a class="anchor" href="#_animation"></a>4.1. Animation</h3>
+<div class="paragraph">
+<p>One modification is that we can <em>animate</em> the particle moving across the screen smoothly. Rather than redraw the particle two radii, shift the particle by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object in computer graphics:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Erase the background</p>
+</li>
+<li>
+<p>Update the an object&#8217;s position (for example, the particle&#8217;s \(x\)-coordinate).</p>
+</li>
+<li>
+<p>Redraw the object</p>
+</li>
+<li>
+<p>introduce a slight delay to model (mimic or simulate) the passage of time</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">while</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-n">radius</span> <span class="tok-o">&lt;</span> <span class="tok-n">side</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>                                    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span><span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">)</span>                                     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>                                              <i class="conum" data-value="3"></i><b>(3)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>erase the screen, effectively erasing the particle</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>delay 5 milliseconds</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>moving 1 pixel at a time makes the motion look smooth</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>sprite</em> is a more general computer graphics term for a 2-dimensional object that is animated in a larger scene. Our particle is an example of a sprite.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_relational_operators"><a class="anchor" href="#_relational_operators"></a>4.2. Relational Operators</h3>
+<div class="paragraph">
+<p>So far we have only used the  <em>less than</em> relational operator <code>&lt;</code> that compares two values. Table <a href="#relops">Relational Operators</a> lists them all.</p>
+</div>
+<table id="relops" class="tableblock frame-all grid-all" style="width: 50%;">
+<caption class="title">Table 6. Relational Operators</caption>
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 88.8889%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Operator</th>
+<th class="tableblock halign-left valign-top">operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">less than</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;=</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">less than or equal to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">greater than</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&gt;=</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">greater than or equal to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>==</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">equal to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>!=</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">not equal to</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Animate moving the particle to the bottom of the screen.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>While the particle&#8217;s \(y\)-coordinate plus the radius is less than the
+side length.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">while</span> <span class="tok-n">py</span> <span class="tok-o">+</span> <span class="tok-n">radius</span> <span class="tok-o">&lt;</span> <span class="tok-n">side</span><span class="tok-p">:</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span><span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">)</span>
+    <span class="tok-n">py</span> <span class="tok-o">=</span> <span class="tok-n">py</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>What would happen if we simply had <code>while py &lt; side</code>?</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Animate moving the particle from right to left.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>While the particle&#8217;s \(x\)-coordinate is greater than 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">while</span> <span class="tok-n">px</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span><span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">)</span>
+    <span class="tok-n">px</span> <span class="tok-o">=</span> <span class="tok-n">px</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Animate moving the particle to the top of the screen.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>While the particle&#8217;s \(y\)-coordinate is greater than 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">while</span> <span class="tok-n">py</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">px</span><span class="tok-p">,</span><span class="tok-n">py</span><span class="tok-p">),</span> <span class="tok-n">radius</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">)</span>
+    <span class="tok-n">py</span> <span class="tok-o">=</span> <span class="tok-n">py</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Whenever you find yourself copying and pasting the same lines of code over and over that is a sure sign that either 1) you should be encapsulating that code in a function, or 2) it should be repeating in a loop.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_counting_loops"><a class="anchor" href="#_counting_loops"></a>4.3. Counting Loops</h3>
+<div class="paragraph">
+<p>A common loop pattern is to repeat a body of code an exact number of times.</p>
+</div>
+<div class="paragraph">
+<div class="title">Example</div>
+<p>Lets print a table of powers of two up to <em>2<sup>10</sup></em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>i   2^i
+==========
+0  | 1
+1  | 2
+2  | 4
+3  | 8
+...
+10 | 1024</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-c1"># table header</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;i     2^i&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;=========&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                       <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">10</span><span class="tok-p">:</span>              <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">,</span> <span class="tok-s1">&#39;</span><span class="tok-se">\t</span><span class="tok-s1">|&#39;</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-o">**</span><span class="tok-n">i</span><span class="tok-p">)</span>   <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>               <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In a counting loop we almost always initialize a variable to 0. It is a <em>convention</em> to use <code>i</code>, <code>j</code>, and <code>k</code> as a name for a counting variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We want to include <code>10</code> in our table so we use <code>&lt;=</code> here. Could we have also said <code>i &lt; 11</code>? Yes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>'\t'</code> represents the tab character. Without it the table columns would not be lined up neatly. Recall our discussion of <em>escape</em> characters back in the section on string literals.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This increments the value of <code>i</code> by 1.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lets be careful how we interpret the statement <code>i = i + 1</code>. This is an <em>assignment statement</em>, not a statement in mathematics (which would be nonsense). The way to read this is <em>the new value of <code>i</code> gets the old value of <code>i</code> plus one</em>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What would happen if we forgot the line <code>i = i + 1</code>?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Since <code>i</code> would never increment, the loop condition would never become false and the loop would never terminate. This is called an <em>infinite loop</em>. Furthermore,
+the program would keep printing the line <code>0  |  1</code></p>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A <em>convention</em> is something that is common practice. Stick with conventions as it makes code more readable.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a while-loop that prints the integers from 1 to 10, one integer per line.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Here is one way to do it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">10</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Does the following program work? If not, fix it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-mi">10</span><span class="tok-p">:</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You could fix it by starting <code>i</code> at <code>0</code> instead of <code>1</code>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Print the integers counting down from 10 to 0. When you are done print "Blast off!". Add a one second delay in between integers. Hint: use the <code>pygame.time.delay(n)</code> function where <code>n</code> is the number of
+milliseconds to delay.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>There is a 1000 milliseconds in a second.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">10</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&gt;</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">1000</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Blast off!&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_accumulating_loops"><a class="anchor" href="#_accumulating_loops"></a>4.4. Accumulating Loops</h3>
+<div class="paragraph">
+<p>Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from \(1\) to \(n\). That is, \(1 + 2 + 3 + \cdots + n\) where \(n\)is entered by the user.<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-n">n</span>   <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter n: &quot;</span><span class="tok-p">))</span>
+<span class="tok-n">i</span>   <span class="tok-o">=</span> <span class="tok-mi">1</span>                          <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                        <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-n">n</span><span class="tok-p">:</span>                    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">+</span> <span class="tok-n">i</span>            <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>                    <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The sum from 1 to&quot;</span><span class="tok-p">,</span> <span class="tok-n">n</span><span class="tok-p">,</span> <span class="tok-s2">&quot;is&quot;</span><span class="tok-p">,</span> <span class="tok-n">total</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The loop counter. This could have started at 0 but including 0 in the total doesn&#8217;t change it.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Keep track of the running total in <code>total</code>. I have purposefully avoided
+usng the variable named <code>sum</code> because <code>sum</code> is also the name of a built-in function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Make sure to include <code>n</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This adds the current value of <code>i</code> to the running total in <code>total</code>. Again, interpret this as the assignment statement <em>the new value of</em> <code>total</code> <em>gets the old value of</em> <code>total</code> <em>plus</em> <code>i</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Increment the loop counter</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Programmers often use assignment statements such as <code>x = x + 1</code>. Most programming languages, Python included, has a <code>+=</code> operator and we can write
+<code>x = x + 1</code> as the more pithy <code>x += 1</code>.<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup> The while loop in the example above could be rewritten to be</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">total</span> <span class="tok-o">+=</span> <span class="tok-n">i</span>
+    <span class="tok-n">i</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span></code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a program that computes the average of non-negative numbers (for example quiz grades) entered by the user. Quit reading numbers when the user has entered a negative number. Be careful, make sure you don&#8217;t include the negative number in the average. Here is an example run of the program.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Enter a number: 3
+Enter a number: 9
+Enter a number: 7
+Enter a number: 8
+Enter a number: -1
+The average is  6.75</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Answer  <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</div></td><td class="code"><span></span><span class="tok-n">n</span>   <span class="tok-o">=</span> <span class="tok-nb">float</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a number: &quot;</span><span class="tok-p">))</span>
+<span class="tok-n">i</span>   <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-k">while</span> <span class="tok-n">n</span> <span class="tok-o">&gt;=</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">i</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+    <span class="tok-n">total</span> <span class="tok-o">+=</span> <span class="tok-n">n</span>
+    <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">float</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a number: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-n">average</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">/</span> <span class="tok-n">i</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The average is &quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">average</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is actually a little tricky. Notice the first line. We read our first number <em>before</em> the loop. Once we get into the loop we know that we must have entered a non-negative number.</p>
+</div>
+<div class="paragraph">
+<p>There is actually a subtle bug in this code that can sometimes lead to a crash. Can you find it?<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exponential_growth_example_password_length"><a class="anchor" href="#_exponential_growth_example_password_length"></a>4.5. Exponential Growth (Example: Password Length)</h3>
+<div class="paragraph">
+<p>Why are longer passwords better than shorter passwords? It is obvious, longer passwords are harder to guess. But how much harder? Lets say we allowed passwords to contain 26 upper or lower case characters (that is 52 possible alphabetic characters, in the English alphabet), ten digits 0 through 9, and 32 symbol characters <code>~!@#$%^&amp;*()_-+={[}]"':;&gt;.&lt;,?/|\</code>. That is 94 possible distinct characters that can be used in a password.<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>There are \(94\) one character passwords, \(94^2 = 8836\) two character passwords, \(94^3 = 830584\) three character passwords, and so on, so that if a password was ten characters long there are \(94^{10} = 53861511409489970176\) possible passwords or approximately \(5 \times 10^{19}\).</p>
+</div>
+<div class="paragraph">
+<p>Plotting \(94^i\), where \(i\) is the number of characters in the password, gives us the graph:</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/94_to_the_i.png" alt="94 to the i" width="480" height="360">
+</div>
+</div>
+<div class="paragraph">
+<p>This is an example of <em>exponential growth</em> in the number of characters in the password. Notice how the graph explodes at between 8 and 10 characters (was it ever suggested that you make your passwords more than 8 characters long?)
+What is the total number of passwords up to 10 characters long? We would have to include all of the nine character passwords, and the eight character passwords, etc. and compute the sum \(94^1 + 94^2 + 94^3 + \cdots + 94^{10}\).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">10</span><span class="tok-p">:</span>
+    <span class="tok-n">total</span> <span class="tok-o">+=</span> <span class="tok-mi">94</span><span class="tok-o">**</span><span class="tok-n">i</span>
+    <span class="tok-n">i</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">total</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which would print <code>54440667446151152650</code>, which is also just bigger than \(5.4 \times 10^{19}\).</p>
+</div>
+<div class="paragraph">
+<p>To emphasize the difference between a six character password and a ten character password, let&#8217;s assume a malicious hacker was trying to break into a system by trying all possible passwords. How long might it take? Lets say we had a powerful computer that could attempt 1 billion passwords per second.</p>
+</div>
+<div class="paragraph">
+<p>For a six character password that&#8217;s \(94^6/10^9/60 \approx 11.5\) minutes to try all possibilities. On average we will search about half the passwords, so on average it would take about  \(6\)  minutes.</p>
+</div>
+<div class="paragraph">
+<p>For a ten character password,
+we have \(94^{10}/10^9\) seconds. Dividing by  \(60\)  to get minutes then another \(60\) for hours, then  \(24\) to get days, then \(365.25\) to get years, we have \(94^{10}/10^9/60/60/24/365.25 = 1706\) years! Again, this is to try them all, so on average we would find it after looking at half of the passwords, so it would only take about
+\(850\) years.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>brute force attack</em> is one where an attacker tries all possible combinations of passwords.  The number of possible passwords grows exponentially with their length. As we saw, brute force attacks are most effective against short passwords.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exponential_growth_example_population"><a class="anchor" href="#_exponential_growth_example_population"></a>4.6. Exponential Growth (Example: Population)</h3>
+<div class="paragraph">
+<p>Exponential growth arises in more subtle ways. In the previous example we were raising the base of the exponent, <em>94</em>, to a fairly large power.  What if the base were small, but still greater than one? Lets use an example of world population growth rate, which is currently estimated to be <em>1.11</em>% (or .011) per year in 2017.<sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>Let \(t\) be the current year and \(P_t\) be the current population  at the beginning of year \(t\). So \(P_{t+1} = P_t + 0.011P_t\) or, factoring out the \(P_t\) then \(P_{t+1} = P_t(1.011)\).</p>
+</div>
+<div class="paragraph">
+<p>One way of interpreting the formula \(P_{t+1} = P_t(1.011)\) is to see that <em>the new value of \(P\) is the old value of \(P\) times 1.011</em>. We have seen this pattern before in code. It is just an assignment statement:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-n">P</span> <span class="tok-o">*</span> <span class="tok-mf">1.011</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can just keep iterating this statement after we give it an initial population.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-mf">7.5e9</span>      <span class="tok-c1"># initial population</span>
+<span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-n">P</span> <span class="tok-o">*</span> <span class="tok-mf">1.011</span>  <span class="tok-c1"># population after year 1</span>
+<span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-n">P</span> <span class="tok-o">*</span> <span class="tok-mf">1.011</span>  <span class="tok-c1"># population after year 2</span>
+<span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-n">P</span> <span class="tok-o">*</span> <span class="tok-mf">1.011</span>  <span class="tok-c1"># population after year 3</span>
+<span class="tok-c1"># and so on</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course if we want to compute the population <em>P</em> after \(n\) years we should use a loop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-mf">7.5e9</span>    <span class="tok-c1"># initial population 7.5 billion</span>
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>        <span class="tok-c1"># counter</span>
+<span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-o">.</span><span class="tok-mo">011</span>     <span class="tok-c1"># growth rate 1.1%</span>
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a number of years: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">P</span> <span class="tok-o">=</span> <span class="tok-n">P</span> <span class="tok-o">*</span> <span class="tok-p">(</span><span class="tok-mi">1</span> <span class="tok-o">+</span> <span class="tok-n">r</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Final population: &quot;</span><span class="tok-p">,</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">P</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assume we have current population of roughly 7.5 billion.<sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnotedef_14" title="View footnote.">14</a>]</sup> If we look at plots over a 10 year (top left), 100 year (top right), 1000 year (bottom left), and 5000 year (bottom right) time horizon then the year plot looks nearly <em>linear</em>. But as we progress up to 5000 years we see that this seemingly linear growth is a mirage and we have a curve that is definitely exponential.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/pop-10-year.png" alt="pop 10 year" width="300" height="300"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/pop-100-year.png" alt="pop 100 year" width="300" height="300"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/pop-1000-year.png" alt="pop 1000 year" width="300" height="300"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/pop-5000-year.png" alt="pop 5000 year" width="300" height="300"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>Linear growth</em> folows the equation of a line, \(y=mx+b\) where \(m\) is the slope and \(b\) is the \(y\)-intercept.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The mathematically inclined will notice that if we just keep iterating the statement \(P = P(1+r)\) we can use a little algebra and keep substituting \(P(1+r)\) for \(P\).  Substituting once we get \(P = P(1+r)(1+r) = P(1+r)^2\). If we substitute a third time we get \(P = P(1+r)(1+r)(1+r) = P(1+r)^3\). After \(n+1\) substitutions we get \(P_{n+1} = P(1+r)^n\), and the exponential is obvious.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>When using a loop like this we can easily ask alternative questions such as <em>how many years will it take to reach a population of 10 billion</em>? This is just a simple matter of rephrasing the loop condition.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-mf">7.5e9</span>    <span class="tok-c1"># initial population 7.5 billion</span>
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>        <span class="tok-c1"># counter</span>
+<span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-o">.</span><span class="tok-mo">011</span>     <span class="tok-c1"># growth rate 1.1%</span>
+
+<span class="tok-k">while</span> <span class="tok-n">p</span> <span class="tok-o">&lt;</span> <span class="tok-mf">10e9</span><span class="tok-p">:</span>
+    <span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-n">p</span> <span class="tok-o">*</span> <span class="tok-p">(</span><span class="tok-mi">1</span> <span class="tok-o">+</span> <span class="tok-n">r</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">,</span> <span class="tok-s2">&quot;years to 10 billion&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself</div>
+<p>The population growth rate is not constant. It fluctuates and has increased and decreased over the centuries. Currently it is decreasing at a rate of about <em>.025%</em> per year (.00025). Can we modify our program to incorporate a decreasing growth rate? The beauty of programming is that incorporating changes like this is easy compared to trying to figure out the mathematics.  Below is a graph over a 50 year period beginning with our current population. After 50 years the population is approximately \(9.5 \times 10^9\).</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/pop-decreasing-growth.png" alt="align&quot;center&quot;"></span></p>
+</div>
+<div class="paragraph">
+<p>If the growth rate decreases long enough it will eventually become negative. Correspondingly the population will start shrinking.</p>
+</div>
+<div class="paragraph">
+<div class="title">Answer  <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</div></td><td class="code"><span></span><span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-mf">7.5e9</span>    <span class="tok-c1"># initial population 7.5 billion</span>
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>        <span class="tok-c1"># counter</span>
+<span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-o">.</span><span class="tok-mo">011</span>     <span class="tok-c1"># growth rate 1.1%</span>
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a number of years: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-n">p</span> <span class="tok-o">*</span> <span class="tok-p">(</span><span class="tok-mi">1</span> <span class="tok-o">+</span> <span class="tok-n">r</span><span class="tok-p">)</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-n">r</span> <span class="tok-o">-</span> <span class="tok-o">.</span><span class="tok-mo">00025</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Final population: &quot;</span><span class="tok-p">,</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">p</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is the only line that has changed from the original solution. The rate decreases by <em>.025%</em> every year.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_checksums_detecting_network_communication_errors"><a class="anchor" href="#_checksums_detecting_network_communication_errors"></a>4.7. Checksums; detecting network communication errors</h3>
+<div class="paragraph">
+<p>A <em>checksum</em> is an integer derived from a larger integer and is used to detect communication errors in a network.  There are many different checksum techniques but one of the easiest to understand is to add up the digits in a base-ten integer mod ten, and then append that number to the original integer. Recall that in a computer, everything is represented as bits; music, images, web pages, Word documents, etc. Sequences of bits are just integers. Rather than work in the language of bits, binary, 0s and 1s, we will stick with the more familiar base-ten digits 0-9.</p>
+</div>
+<div class="paragraph">
+<p>If a network was transmitting the number \(51623\) we would compute the checksum by computing \((5+1+6+2+3)\% 10 = 7\) and we would then transmit the number \(516237\). We call \(7\) the <em>checksum digit</em>, or just <em>checksum</em> for short. What would happen if there was an error in the transmission and the number transmitted was \(596237\). We remove the checksum digit \(7\), and compute
+the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7 \neq 5\) so there must have been an error in the transmission.</p>
+</div>
+<div class="paragraph">
+<p>Why does this work? This only works if there is a single error in a digit. It is easy to construct a case where if there were multiple errors this would not work. For example, if we were transmitting the value \(516237\) and there were two errors in the original communication such as \(526137\) the checksum is \(7\) in both. If there is only single error it makes sense that a change in any single digit would change the final checksum mod \(10\).</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What is the checksum digit for the integer \(198723\)?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>It is \(0\) because \((1 + 9 + 8 + 7 + 2 + 3) \% 10 = 30 \% 10 = 0\).</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>How can we write a program to compute a checksum? If we have an integer such as \(51623\) we can get the last digit using \(\% 10\); for example, \(51623 \% 10 = 3\). Then we need to do the same to the remaining digits \(5162\). We can get that using <em>integer division</em> by 10, \(51623 // 10 = 5162\). We just keep repeating this process adding up the remainder until the number has been reduced to \(0\).</p>
+</div>
+<div class="paragraph">
+<p>We can put this in a function that takes an integer to compute the checksum of and return the checksum.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">checksum</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">):</span>
+    <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+    <span class="tok-k">while</span> <span class="tok-n">n</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">+</span> <span class="tok-p">(</span><span class="tok-n">n</span> <span class="tok-o">%</span> <span class="tok-mi">10</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">n</span> <span class="tok-o">//</span> <span class="tok-mi">10</span>               <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">return</span> <span class="tok-n">total</span> <span class="tok-o">%</span> <span class="tok-mi">10</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>or `total += n % 10</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>or <code>n //= 10</code></td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Review</div>
+<ol class="arabic">
+<li>
+<p>Does the <code>checksum</code> function use any local variables?</p>
+</li>
+<li>
+<p><code>n</code> on line 1 is a ________________________</p>
+</li>
+<li>
+<p>Line 1 is the function ________________________</p>
+</li>
+<li>
+<p>Lines 2-7 constitute the function ________________________</p>
+</li>
+<li>
+<p><code>total</code> on line is defined a ______________________ variable.</p>
+</li>
+<li>
+<p>What is the value of <code>checksum(91242)</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>How can we append the checksum of an integer to the end (the <em>least significant digit</em>)? For example if the checksum of \(51326\) is \(7\) how do we build the new integer \(513267\)?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-n">check</span> <span class="tok-o">=</span> <span class="tok-n">checksum</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span>   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">data</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">*</span> <span class="tok-mi">10</span> <span class="tok-o">+</span> <span class="tok-n">check</span> <i class="conum" data-value="2"></i><b>(2)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Compute the checksum of <code>x</code>, the integer we want to transmit</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Multiply <code>x</code> by 10 shifting it left, and then add in the checksum digit <code>check</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_while_loop_exercises"><a class="anchor" href="#_while_loop_exercises"></a>4.8. While-Loop Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 0</div>
+<p>If you haven&#8217;t done the <em>Check Yourself</em> exercises in this chapter do those now.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 1<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><em>The Fibonacci Sequence</em> is the sequence of integers \(0,1,1,2,3,5,8,13\cdots\). Each Fibonacci number is the sum of the previous two Fibonacci numbers. By definition the first two Fibonacci numbers are \(0\) and \(1\). If the first Fibonacci number is \(0\) then the seventh Fibonacci number is \(8\). Write a while-loop to compute the one-hundredth Fibonacci number. Hint: This is a little tricky. Use two variables, one to keep track of the current Fibonacci number and one for the previous Fibonacci number.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The answer you get should be <code>218922995834555169026</code>.  This is a surprisingly large number. The Fibonacci sequence actually exhibits exponential growth.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2</div>
+<p>Write a while loop to compute the sum of squares from \(1\) to \(100\), or \(1^2 + 2^2 + 3^2 + \cdots + 100^2\).</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3</div>
+<p>How many times will <code>hello</code> be printed by the code below?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">2</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-mi">11</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;hello&quot;</span><span class="tok-p">)</span>
+	<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">2</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 4</div>
+<p>How many times will <code>hello</code> be printed by the code below?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">12</span>
+<span class="tok-k">while</span> <span class="tok-o">&lt;</span> <span class="tok-mi">18</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;hello&quot;</span><span class="tok-p">)</span>
+	<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 5</div>
+<p>What is the output the code below?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-mi">10</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">*</span> <span class="tok-mi">2</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 6</div>
+<p>Write a function <code>num_digits</code> that will return the number of digits in an integer. For example,
+if we were to call <code>num_digits(5132981)</code> it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the <code>checksum</code> program.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 7</div>
+<p>The <code>*</code> operator can be applied to a string and an integer. For example, <code>'Z' * 5</code> evaluates to <code>ZZZZZ</code>. Write a Python program that reads an integer from the user and prints a triangle pattern of asterisks. For example, if the user enters <code>6</code> then there are six rows of asterisks where the first row has one asterisk and the sixth row has six asterisks as in the sample output below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Enter n: 6
+*
+**
+***
+****
+*****
+******</pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Answer  <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter n: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;=</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;*&#39;</span> <span class="tok-o">*</span> <span class="tok-n">i</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Print <code>i</code> asterisks and an end-of-line character.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology_4"><a class="anchor" href="#_terminology_4"></a>4.9. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>particle</p>
+</li>
+<li>
+<p>loop condition</p>
+</li>
+<li>
+<p>convention</p>
+</li>
+<li>
+<p>counting loop</p>
+</li>
+<li>
+<p>brute force attack</p>
+</li>
+<li>
+<p>linear growth</p>
+</li>
+<li>
+<p>boolean</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>loop body</p>
+</li>
+<li>
+<p>sprite</p>
+</li>
+<li>
+<p>accumulating loop</p>
+</li>
+<li>
+<p>infinite loop</p>
+</li>
+<li>
+<p>exponential growth</p>
+</li>
+<li>
+<p>checksum</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -4729,11 +5922,32 @@ A <em>global variable</em> is defined in the main program. Its scope is the poin
 <div class="footnote" id="_footnotedef_7">
 <a href="#_footnoteref_7">7</a>. In other programming languages such as C and and Java these are called <em>void</em> functions.
 </div>
+<div class="footnote" id="_footnotedef_8">
+<a href="#_footnoteref_8">8</a>. a circle in pygame, which might be a ball, a hockey puck, an electron, &#8230;&#8203;
+</div>
+<div class="footnote" id="_footnotedef_9">
+<a href="#_footnoteref_9">9</a>. forgetting for the moment that there is a closed form answer of \(n(n+1)/2\)
+</div>
+<div class="footnote" id="_footnotedef_10">
+<a href="#_footnoteref_10">10</a>. The operator <code>+=</code> is really called the <em>in place add</em> operator and can have a different behavior than one might expect.
+</div>
+<div class="footnote" id="_footnotedef_11">
+<a href="#_footnoteref_11">11</a>. Hint: What if the very first number the user entered was negative?
+</div>
+<div class="footnote" id="_footnotedef_12">
+<a href="#_footnoteref_12">12</a>. A rather arbitrary number, 94, but it is probably close
+</div>
+<div class="footnote" id="_footnotedef_13">
+<a href="#_footnoteref_13">13</a>. <a href="https://www.census.gov" class="bare">https://www.census.gov</a>
+</div>
+<div class="footnote" id="_footnotedef_14">
+<a href="#_footnoteref_14">14</a>. <a href="https://www.census.gov" class="bare">https://www.census.gov</a>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-09-09 22:36:07 EDT
+Last updated 2018-09-16 22:43:16 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

@@ -39,9 +39,9 @@ include::ch2-pygame-intro.adoc[]
 
 include::ch3-functions.adoc[]
 
-////
 include::ch4-repetition-the-while-loop.adoc[]
 
+////
 include::ch5-conditionals.adoc[]
 
 include::ch6-a-random-walk.adoc[]

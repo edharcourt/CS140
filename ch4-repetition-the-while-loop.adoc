@@ -1,6 +1,6 @@
 == Repetition - The While Loop
 
-Lets assume we have a particle.footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a Pygame display surface drawn halfway down the display and all the way to the left.
+Lets assume we have a particle (a circle, face, or image of a ball).footnote:[a circle in pygame, which might be a ball, a hockey puck, an electron, ... ] on a Pygame display surface drawn halfway down the display and all the way to the left.
 
 NOTE: We will often use the term _particle_ to represent a moving object such as a baseball, a hockey puck, an electron, etc. The term https://en.wikipedia.org/wiki/Particle[_particle_] comes from physics and is an abstract representation of some object.
 
@@ -62,7 +62,7 @@ px = px + 2 * radius
 pygame.draw.circle(win, color.blue, (px, py), radius)
 ----
 
-as long as some condition is true. As long as the particle's right edge is to the left of the right side of the display.
+as long as some condition is true. In this case, as long as the particle's right edge is to the left of the right edge of the display.
 
 [source,python,numbered]
 ----
@@ -78,7 +78,7 @@ Note: `True` and `False` are values in Python, just like the integer `1` and the
 
 === Animation 
 
-One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
+One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, shift the particle by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object in computer graphics:
 
 . Erase the background
 . Update the an object's position (for example, the particle's stem:[x]-coordinate).
@@ -102,7 +102,7 @@ NOTE: A _sprite_ is a more general computer graphics term for a 2-dimensional ob
 
 === Relational Operators
 
-So far we have only used the  _less than_ relational operator `<`, that compares two values. Table <<relops>> lists them all.
+So far we have only used the  _less than_ relational operator `<` that compares two values. Table <<relops>> lists them all.
 
 [cols="1,8", width="50%", options="header"]
 .Relational Operators
@@ -578,7 +578,7 @@ while < 18:
 	i = i + 1
 ----
 
-.Exercise 4
+.Exercise 5
 What is the output the code below?
 
 [source,python,numbered]
@@ -590,11 +590,11 @@ while i < n:
 print(i)
 ----
 
-.Exercise 5
+.Exercise 6
 Write a function `num_digits` that will return the number of digits in an integer. For example,
 if we were to call `num_digits(5132981)` it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the `checksum` program.
 
-.Exercise 6
+.Exercise 7
 The `*` operator can be applied to a string and an integer. For example, `'Z' * 5` evaluates to `ZZZZZ`. Write a Python program that reads an integer from the user and prints a triangle pattern of asterisks. For example, if the user enters `6` then there are six rows of asterisks where the first row has one asterisk and the sixth row has six asterisks as in the sample output below.
 ----
 Enter n: 6
