@@ -832,7 +832,7 @@ An individual 1 or 0 is called a _bit_, for _binary digit_. Eight bits are a _by
 | stem:[10^{12}] (one trillion)
 | stem:[2^{40}] 
 
-| petabyte (TB)
+| petabyte (PB)
 | stem:[10^{15}] (one quadrillion) 
 | stem:[2^{50}] 
 
