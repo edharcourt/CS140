@@ -45,7 +45,7 @@ The inner `print` prints _Hello World_ to the console and returns `None` to the 
 
 ====
 
-TIP: `None` is an actual value in Python like `3` and `3.14`, `"Hello"`, and `'Goodbye'`. It is the value that means _no value_. You will rarely every use it explicitly.
+TIP: `None` is an actual value in Python like `3` and `3.14`, `"Hello"`, and `'Goodbye'`. It is the value that means _no value_. You will rarely ever use it explicitly.
 
 === Calling Functions
 

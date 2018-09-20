@@ -2173,7 +2173,7 @@ To reference functions and definitions in a module use <em>dot notation</em>. Fo
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(2^{40}\)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">petabyte (TB)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">petabyte (PB)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(10^{15}\) (one quadrillion)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">\(2^{50}\)</p></td>
 </tr>
@@ -3992,7 +3992,7 @@ You can just use the <code>math.sqrt</code> function. You don&#8217;t have to wr
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<code>None</code> is an actual value in Python like <code>3</code> and <code>3.14</code>, <code>"Hello"</code>, and <code>'Goodbye'</code>. It is the value that means <em>no value</em>. You will rarely every use it explicitly.
+<code>None</code> is an actual value in Python like <code>3</code> and <code>3.14</code>, <code>"Hello"</code>, and <code>'Goodbye'</code>. It is the value that means <em>no value</em>. You will rarely ever use it explicitly.
 </td>
 </tr>
 </table>
@@ -4662,7 +4662,7 @@ A <em>global variable</em> is defined in the main program. Its scope is the poin
 <h2 id="_repetition_the_while_loop"><a class="anchor" href="#_repetition_the_while_loop"></a>4. Repetition - The While Loop</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Lets assume we have a particle.<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> on a Pygame display surface drawn halfway down the display and all the way to the left.</p>
+<p>Lets assume we have a particle (a circle, face, or image of a ball).<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> on a Pygame display surface drawn halfway down the display and all the way to the left.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4772,7 +4772,7 @@ We will often use the term <em>particle</em> to represent a moving object such a
 </div>
 </div>
 <div class="paragraph">
-<p>as long as some condition is true. As long as the particle&#8217;s right edge is to the left of the right side of the display.</p>
+<p>as long as some condition is true. In this case, as long as the particle&#8217;s right edge is to the left of the right edge of the display.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4793,7 +4793,7 @@ We will often use the term <em>particle</em> to represent a moving object such a
 <div class="sect2">
 <h3 id="_animation"><a class="anchor" href="#_animation"></a>4.1. Animation</h3>
 <div class="paragraph">
-<p>One modification is that we can <em>animate</em> the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:</p>
+<p>One modification is that we can <em>animate</em> the particle moving across the screen smoothly. Rather than redraw the particle two radii, shift the particle by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object in computer graphics:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -4859,7 +4859,7 @@ A <em>sprite</em> is a more general computer graphics term for a 2-dimensional o
 <div class="sect2">
 <h3 id="_relational_operators"><a class="anchor" href="#_relational_operators"></a>4.2. Relational Operators</h3>
 <div class="paragraph">
-<p>So far we have only used the  <em>less than</em> relational operator <code>&lt;</code>, that compares two values. Table <a href="#relops">Relational Operators</a> lists them all.</p>
+<p>So far we have only used the  <em>less than</em> relational operator <code>&lt;</code> that compares two values. Table <a href="#relops">Relational Operators</a> lists them all.</p>
 </div>
 <table id="relops" class="tableblock frame-all grid-all" style="width: 50%;">
 <caption class="title">Table 6. Relational Operators</caption>
@@ -5705,7 +5705,7 @@ the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Exercise 4</div>
+<div class="title">Exercise 5</div>
 <p>What is the output the code below?</p>
 </div>
 <div class="listingblock">
@@ -5723,12 +5723,12 @@ the checksum of \(59623\) which is \((5+9+6+2+3) \% 10 = 5\) and we see that \(7
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Exercise 5</div>
+<div class="title">Exercise 6</div>
 <p>Write a function <code>num_digits</code> that will return the number of digits in an integer. For example,
 if we were to call <code>num_digits(5132981)</code> it would return 7 because there are 7 digits in 5132981. Hint: this is similar to the <code>checksum</code> program.</p>
 </div>
 <div class="paragraph">
-<div class="title">Exercise 6</div>
+<div class="title">Exercise 7</div>
 <p>The <code>*</code> operator can be applied to a string and an integer. For example, <code>'Z' * 5</code> evaluates to <code>ZZZZZ</code>. Write a Python program that reads an integer from the user and prints a triangle pattern of asterisks. For example, if the user enters <code>6</code> then there are six rows of asterisks where the first row has one asterisk and the sixth row has six asterisks as in the sample output below.</p>
 </div>
 <div class="listingblock">
