@@ -81,7 +81,7 @@ Note: `True` and `False` are values in Python, just like the integer `1` and the
 One modification is that we can _animate_ the particle moving across the screen smoothly. Rather than redraw the particle two radii, redraw shifted by just one pixel. We can also add a delay. Finally before we redraw the particle we can erase the display. This is a standard way of an animating an object:
 
 . Erase the background
-. Update the an object's position (for example, the particle's stem:[x]-coordinate).
+. Update the object's position (for example, the particle's stem:[x]-coordinate).
 . Redraw the object
 . introduce a slight delay to model (mimic or simulate) the passage of time
 
@@ -279,7 +279,7 @@ print("Blast off!")
 ====
 
 === Accumulating Loops
-Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where stem:[n]is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
+Another common loop pattern is to keep a running total. For example, lets compute the sum of the integers from stem:[1] to stem:[n]. That is, stem:[1 + 2 + 3 + \cdots + n] where stem:[n] is entered by the user.footnote:[forgetting for the moment that there is a closed form answer of stem:[n(n+1)/2] ]
 
 [source,python,numbered]
 ----
