@@ -435,7 +435,7 @@ Assume we have current population of roughly 7.5 billion.footnote:[https://www.c
 | image:pop-5000-year.png[width=300,height=300]
 |===
 
-NOTE: _Linear growth_ folows the equation of a line, stem:[y=mx+b] where stem:[m] is the slope and stem:[b] is the stem:[y]-intercept.
+NOTE: _Linear growth_ follows the equation of a line, stem:[y=mx+b] where stem:[m] is the slope and stem:[b] is the stem:[y]-intercept.
 
 NOTE: The mathematically inclined will notice that if we just keep iterating the statement stem:[P = P(1+r)] we can use a little algebra and keep substituting stem:[P(1+r)] for stem:[P].  Substituting once we get stem:[P = P(1+r)(1+r) = P(1+r)^2]. If we substitute a third time we get stem:[P = P(1+r)(1+r)(1+r) = P(1+r)^3]. After stem:[n+1] substitutions we get stem:[P_{n+1} = P(1+r)^n], and the exponential is obvious. 
 
