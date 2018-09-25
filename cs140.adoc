@@ -41,9 +41,9 @@ include::ch3-functions.adoc[]
 
 include::ch4-repetition-the-while-loop.adoc[]
 
-////
 include::ch5-conditionals.adoc[]
 
+////
 include::ch6-a-random-walk.adoc[]
 
 include::ch7-case-study-particles-and-collisions.adoc[]

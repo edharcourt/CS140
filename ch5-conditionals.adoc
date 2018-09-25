@@ -93,7 +93,7 @@ else:
 <1> Not exactly two-thirds, but close. How can we make it more accurate? 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a program that reads an integer from the keyboard and prints `even`, if the number was even, or `odd` if the number was odd. A number is even if it is divisible by two. That is, the raminder after dividing by two is zero.
+Write a program that reads an integer from the keyboard and prints `even`, if the number was even, or `odd` if the number was odd. A number is even if it is divisible by two. That is, the remainder after dividing by two is zero.
 
 [.result]
 ====
@@ -135,7 +135,7 @@ else:
                     print("six")
 ----
 
-This is pretty confusing and not very readable. Most programming languages have an alternative form of the if-statement that we sometimes call _if else if_. Here is Python's version:
+This is pretty confusing and not very readable. Most programming languages have an alternative form of the if-statement that we sometimes call _if-else-if_. Here is Python's version:
 
 [source,python,subs="quotes"]
 ----
@@ -322,7 +322,7 @@ if (d1 == 1 and d2 != 1) or (d1 != 1 and d2 == 1):
 
 ==== Logical `not`
 
-The remaining logical operator is `not`, the logical negation of `True` and `False`. The truth table is simply
+The remaining logical operator is `not`, the logical negation of `True` and `False`. The truth table is simply:
 
 [width="25%", options="header"]
 .Logical `not`
@@ -351,7 +351,7 @@ def max2(x,y):
 ----
 
 .Exercise 2+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write of function `max3` that returns the maximum of three parameters. For example, `print(max3(4,2,9))` would print `9`.
+Write a function `max3` that returns the maximum of three parameters. For example, `print(max3(4,2,9))` would print `9`.
 
 [.result]
 ====
@@ -393,6 +393,22 @@ print(max(2,10,4,1))
 
 .Exercise 3 
 Write a function `middle` that returns middle of three numbers. Calling `print(middle(4,1,9))` would print `4`.
+
+.Exercise 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+Write a program that reads three integers from the user and prints `equal` if all three are equal and `not equal` if they are not all the same.
+
+[.result]
+[source,python]
+----
+x = int(input("Enter number: "))
+y = int(input("Enter number: "))
+z = int(input("Enter number: "))
+
+if x == y and y == z:
+    print('equal')
+else:
+    print('not equal')
+----
 
 === Terminology 
 

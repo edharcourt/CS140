@@ -644,6 +644,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_4">4.9. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_conditionals">5. Conditionals</a>
+<ul class="sectlevel2">
+<li><a href="#_if_elif_else">5.1. if-elif-else</a></li>
+<li><a href="#_logical_operators">5.2. Logical Operators</a></li>
+<li><a href="#_exercises_4">5.3. Exercises</a></li>
+<li><a href="#_terminology_5">5.4. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -5839,6 +5847,786 @@ if we were to call <code>num_digits(5132981)</code> it would return 7 because th
 </div>
 </div>
 <div class="sect1">
+<h2 id="_conditionals"><a class="anchor" href="#_conditionals"></a>5. Conditionals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Lets simulate tossing a coin and print <code>Heads</code> or <code>Tails</code> with a 50-50 chance.</p>
+</div>
+<div class="paragraph">
+<p>The <code>random</code> module contains many functions for generating random numbers. The function <code>random.random()</code> returns a <code>uniform</code> floating-point number between 0 and 1.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A random number generator is <em>uniform</em> if all outcomes are equally likely.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-p">())</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>0.2840077963246783</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The function <code>random.randrange(n)</code> returns a <em>uniform</em> random integer between 0 and <code>n-1</code> inclusive.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We need some way to check what the random number generator produced.
+The <em>if-statement</em> executes one of two possible blocks of statements depending on a logical condition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python">if (<strong><em>condition</em></strong>):
+    true_stmts
+else:
+    false_stmts</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the condition is true then the block of statements labeled <code>true_stmts</code> will be executed, otherwise the block of statements labeled <code>false_stmts</code> will be executed. The <code>else</code> part is optional.  <code>if</code> and <code>else</code> are new <em>keywords</em>. They cannot be used as variable or function names. Notice also that the statements under the <code>if</code> of <code>else</code> are indented just like a function body or the body of a while loop.</p>
+</div>
+<div class="paragraph">
+<p>Back to simulating a coin toss. Here is one way using <code>random.random()</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-p">()</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mf">0.5</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Assigning heads to be less than .5 is, of course, arbitrary. We could have just as easily made tails be less than .5.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is another way using <code>random.randrange()</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Similar to the above, assigning heads to be 0 is arbitrary.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using either <code>random.random()</code> or <code>random.randrange()</code> is fine. One way is not particularly better than the other. Using <code>random.random()</code> makes it a little easier to simulate tossing an <em>unfair</em> coin. For example, a coin that comes up heads two-thirds of the time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-p">()</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2</span><span class="tok-o">/</span><span class="tok-mi">3</span><span class="tok-p">:</span>        <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If the random number generator is uniform then this should ensure that <code>x</code> is less than <code>2/3</code>, well, with probability <code>2/3</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Using <code>random.randrange()</code> is a little tricker, but you can come close.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1000</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">667</span><span class="tok-p">:</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Not exactly two-thirds, but close. How can we make it more accurate?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a program that reads an integer from the keyboard and prints <code>even</code>, if the number was even, or <code>odd</code> if the number was odd. A number is even if it is divisible by two. That is, the remainder after dividing by two is zero.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter an integer: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-k">if</span> <span class="tok-n">n</span> <span class="tok-o">%</span> <span class="tok-mi">2</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">,</span> <span class="tok-s2">&quot;is even&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">,</span> <span class="tok-s2">&quot;is odd&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_if_elif_else"><a class="anchor" href="#_if_elif_else"></a>5.1. if-elif-else</h3>
+<div class="paragraph">
+<p>Lets take an example of tossing a single die <sup class="footnote">[<a id="_footnoteref_15" class="footnote" href="#_footnotedef_15" title="View footnote.">15</a>]</sup>. We will print <code>one</code> if we rolled a one, <code>two</code> if we rolled a two, etc. One way to write this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+
+<span class="tok-n">d</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;one&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">2</span><span class="tok-p">:</span>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;two&quot;</span><span class="tok-p">)</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">3</span><span class="tok-p">:</span>
+            <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;three&quot;</span><span class="tok-p">)</span>
+        <span class="tok-k">else</span><span class="tok-p">:</span>
+            <span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">4</span><span class="tok-p">:</span>
+                <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;four&quot;</span><span class="tok-p">)</span>
+            <span class="tok-k">else</span><span class="tok-p">:</span>
+                <span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">5</span><span class="tok-p">:</span>
+                    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;five&quot;</span><span class="tok-p">)</span>
+                <span class="tok-k">else</span><span class="tok-p">:</span>
+                    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;six&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is pretty confusing and not very readable. Most programming languages have an alternative form of the if-statement that we sometimes call <em>if-else-if</em>. Here is Python&#8217;s version:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python">if (<strong><em>condition1</em></strong>):
+    stmts1
+elif (<strong><em>condition2</em></strong>):
+    stmts2
+elif (<strong><em>condition3</em></strong>):
+    stmts3
+
+	...
+
+else:
+    stmts_else</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final <code>else</code> clause is optional. Note the new keyword <code>elif</code>.  <code>condition1</code> is checked first and if it is true then <code>stmts</code> is executed, and the remainder of the if-elif-statement is skipped. If <code>condition1</code> is false we check <code>condition2</code> and so on.</p>
+</div>
+<div class="paragraph">
+<p>Now we can write our die toss program as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</div></td><td class="code"><span></span><span class="tok-n">d</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-k">if</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;one&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">2</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;two&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">3</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;three&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">4</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;four&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">d</span> <span class="tok-o">==</span> <span class="tok-mi">5</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;five&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;six&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logical_operators"><a class="anchor" href="#_logical_operators"></a>5.2. Logical Operators</h3>
+<div class="paragraph">
+<p>Up until now our conditions in either the while loop or the if-statement have been relatively simple. Python, as do all other programming languages, allow you to state more complicated conditions such as, <em>if the temperature greater than 50 and less than 100</em>. We have new Python keywords <code>and</code>, <code>or</code>, <code>not</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_logical_and"><a class="anchor" href="#_logical_and"></a>5.2.1. Logical <code>and</code></h4>
+<div class="paragraph">
+<p>Lets say we rolled a pair of dice and wanted to check if we rolled two ones (snake eyes). Our first attempt, might be:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-n">d1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-n">d2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">if</span> <span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">if</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;snake eyes!&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This works just fine, albeit a bit clunky. More concise would be to use the logical operator <code>and</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">d1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-n">d2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">if</span> <span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span> <span class="tok-ow">and</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;snake eyes!&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>and</code> is a Python keyword.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The logical operator <code>and</code> combines a logical value on the left and the right, <em>X</em> <code>and</code> <em>Y</em>. The entire logical expression is true if both <em>X</em> and <em>Y</em> are true.  We often state this interms of a <em>truth table</em>.</p>
+</div>
+<div class="paragraph">
+<p><code>False</code> and <code>True</code> are Python keywords.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<caption class="title">Table 8. Logical <code>and</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">X</th>
+<th class="tableblock halign-left valign-top">Y</th>
+<th class="tableblock halign-left valign-top">X <code>and</code> Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>truth table</em> enumerates all possible outcomes of a logical operator for all possible inputs.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write an if-statement that checks whether an integer <code>n</code> is between 0 and 100 inclusive. If it is then set a variable <code>x</code> to <code>0</code>. Write it two ways, one using a nested if-statement, and the second using the logical <code>and</code> operator.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="title">Version 1</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">n</span> <span class="tok-o">&gt;=</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-k">if</span> <span class="tok-n">n</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">100</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Version 2</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">n</span> <span class="tok-o">&gt;=</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">n</span> <span class="tok-o">&lt;=</span> <span class="tok-mi">100</span><span class="tok-p">:</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These are not complete programs as we haven&#8217;t assigned a value to <code>n</code> yet. We will often call these <em>code fragments</em>.</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>code fragment</em> is an incomplete segment of Python code. It is not meant to be a complete program.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_logical_or"><a class="anchor" href="#_logical_or"></a>5.2.2. Logical <code>or</code></h4>
+<div class="paragraph">
+<p>Returning to our dice roll, lets check to see if at least one of the dice is a one. Again, your first instinct might be to write this using if-statements alone, which is possible.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-n">d1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-n">d2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">if</span> <span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;one&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;one&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But a more concise way would be to use the logical <code>or</code> operator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">d1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-n">d2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">6</span><span class="tok-p">)</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">if</span> <span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span> <span class="tok-ow">or</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;one&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>or</code> is a Python keyword.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The logical operator <code>or</code> combines a logical value on the left and the right, <em>X</em> <code>or</code> <em>Y</em>. The entire logical expression is true if either one of <em>X</em> or <em>Y</em> is true.  The truth table for logical <code>or</code> is:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 50%;">
+<caption class="title">Table 9. Logical <code>or</code></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">X</th>
+<th class="tableblock halign-left valign-top">Y</th>
+<th class="tableblock halign-left valign-top">X <code>or</code> Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When <code>and</code> and <code>or</code> are both used in an expression <code>and</code> has a higher precedence (much like <code>*</code> does over <code>+</code>).</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a code fragment that will determine whether a user rolled exactly one 1.
+Assume variable <code>d1</code> and <code>d2</code> have values.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>There several ways to write this. Here is one way.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span> <span class="tok-ow">or</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-n">d1</span> <span class="tok-o">!=</span> <span class="tok-n">d2</span><span class="tok-p">:</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;exactly one, 1&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The parentheses around the <code>or</code> are necessary.  Another solution is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span> <span class="tok-ow">or</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-n">d1</span> <span class="tok-o">!=</span> <span class="tok-mi">1</span> <span class="tok-ow">or</span> <span class="tok-n">d2</span> <span class="tok-o">!=</span> <span class="tok-mi">1</span><span class="tok-p">):</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;exactly one, 1&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Note the parentheses, they are necessary.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Yet a third solution is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">d1</span> <span class="tok-o">==</span> <span class="tok-mi">1</span> <span class="tok-ow">and</span> <span class="tok-n">d2</span> <span class="tok-o">!=</span> <span class="tok-mi">1</span><span class="tok-p">)</span> <span class="tok-ow">or</span> <span class="tok-p">(</span><span class="tok-n">d1</span> <span class="tok-o">!=</span> <span class="tok-mi">1</span> <span class="tok-ow">and</span> <span class="tok-n">d2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">):</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;exactly one, 1&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_logical_not"><a class="anchor" href="#_logical_not"></a>5.2.3. Logical <code>not</code></h4>
+<div class="paragraph">
+<p>The remaining logical operator is <code>not</code>, the logical negation of <code>True</code> and <code>False</code>. The truth table is simply:</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 25%;">
+<caption class="title">Table 10. Logical <code>not</code></caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">X</th>
+<th class="tableblock halign-left valign-top"><code>not</code> X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_4"><a class="anchor" href="#_exercises_4"></a>5.3. Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 1 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function <code>max2</code> that returns the larger of the two parameters. For example, <code>print(max2(9,7))</code>
+would print <code>9</code>.</p>
+</div>
+<div class="listingblock result">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">max2</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">y</span><span class="tok-p">:</span>
+        <span class="tok-k">return</span> <span class="tok-n">x</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-k">return</span> <span class="tok-n">y</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function <code>max3</code> that returns the maximum of three parameters. For example, <code>print(max3(4,2,9))</code> would print <code>9</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">max3</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">):</span>
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&gt;</span> <span class="tok-n">z</span><span class="tok-p">:</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-k">return</span> <span class="tok-n">x</span>
+    <span class="tok-k">elif</span> <span class="tok-n">y</span> <span class="tok-o">&gt;</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&gt;</span> <span class="tok-n">z</span><span class="tok-p">:</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">return</span> <span class="tok-n">y</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>                  <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-k">return</span> <span class="tok-n">z</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Is <code>x</code> the largest?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Is <code>y</code> the largest?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>It must be <code>z</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A more concise way would be to use the function <code>max2</code> from the previus
+problem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">max3</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">):</span>
+    <span class="tok-k">return</span> <span class="tok-n">max2</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">max2</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">z</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Recall that this is called <em>function composition</em>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Okay, so none of this was necessary. Python already has a built-in function <code>max</code> that can take an arbitrary number of arguments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">9</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">max</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3</div>
+<p>Write a function <code>middle</code> that returns middle of three numbers. Calling <code>print(middle(4,1,9))</code> would print <code>4</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 4 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a program that reads three integers from the user and prints <code>equal</code> if all three are equal and <code>not equal</code> if they are not all the same.</p>
+</div>
+<div class="listingblock result">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter number: &quot;</span><span class="tok-p">))</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter number: &quot;</span><span class="tok-p">))</span>
+<span class="tok-n">z</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter number: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">==</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">==</span> <span class="tok-n">z</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;equal&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;not equal&#39;</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology_5"><a class="anchor" href="#_terminology_5"></a>5.4. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>uniform random number</p>
+</li>
+<li>
+<p>code fragment</p>
+</li>
+<li>
+<p>truth table</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p><code>and</code></p>
+</li>
+<li>
+<p><code>or</code></p>
+</li>
+<li>
+<p><code>not</code></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -5943,11 +6731,14 @@ if we were to call <code>num_digits(5132981)</code> it would return 7 because th
 <div class="footnote" id="_footnotedef_14">
 <a href="#_footnoteref_14">14</a>. <a href="https://www.census.gov" class="bare">https://www.census.gov</a>
 </div>
+<div class="footnote" id="_footnotedef_15">
+<a href="#_footnoteref_15">15</a>. <em>die</em> is the singular of the plural <em>dice</em>, one die, pair of dice.
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-09-16 22:43:16 EDT
+Last updated 2018-09-24 22:16:13 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
