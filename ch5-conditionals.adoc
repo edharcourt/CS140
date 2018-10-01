@@ -22,8 +22,6 @@ import random
 print(random.randrange(6))
 ----
 
- 5
-
 We need some way to check what the random number generator produced.
 The _if-statement_ executes one of two possible blocks of statements depending on a logical condition.
 
