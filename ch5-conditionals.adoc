@@ -215,7 +215,7 @@ The logical operator `and` combines a logical value on the left and the right, _
 |`False` | `False` | `False`
 |`False` | `True` | `False`
 |`True` | `False` | `False`
-|`True` | `True` | `False`
+|`True` | `True` | `True`
 |=== 
 
 NOTE: A _truth table_ enumerates all possible outcomes of a logical operator for all possible inputs.
