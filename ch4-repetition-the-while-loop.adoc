@@ -527,7 +527,7 @@ def checksum(n):
 . `n` on line 1 is a pass:[________________________]
 . Line 1 is the function pass:[________________________] 
 . Lines 2-7 constitute the function pass:[________________________]
-. `total` on line is defined a pass:[______________________] variable.
+. `total` on line 2 is defined as a pass:[______________________] variable.
 . What is the value of `checksum(91242)`
 
 How can we append the checksum of an integer to the end (the _least significant digit_)? For example if the checksum of stem:[51326] is stem:[7] how do we build the new integer stem:[513267]?
