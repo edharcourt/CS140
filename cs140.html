@@ -652,6 +652,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_5">5.4. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_a_random_walk">6. A Random Walk</a>
+<ul class="sectlevel2">
+<li><a href="#_the_gamblers_ruin">6.1. The Gambler&#8217;s Ruin</a></li>
+<li><a href="#_brownian_motion">6.2. Brownian Motion</a></li>
+<li><a href="#_a_fractional_dimension_random_walk_or_fractal">6.3. A Fractional Dimension Random Walk (or Fractal)</a></li>
+<li><a href="#_the_monty_hall_problem">6.4. The Monty Hall Problem</a></li>
+<li><a href="#_exercises_5">6.5. Exercises</a></li>
+<li><a href="#_terminology_6">6.6. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -6622,6 +6632,1713 @@ problem.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_a_random_walk"><a class="anchor" href="#_a_random_walk"></a>6. A Random Walk</h2>
+<div class="sectionbody">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Computer Simulations are really just virtual time machines.</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; Edmond Kirsch in Origin: A Novel<br>
+<cite>by Dan Brown</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>The real power in programming comes from how we can combine loops, conditional statements, and functions in creative ways to solve or explore a problem.  We will continue our investigations in
+programming by exploring the nature of <em>randomness</em>.<sup class="footnote">[<a id="_footnoteref_16" class="footnote" href="#_footnotedef_16" title="View footnote.">16</a>]</sup></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A computer program is <em>deterministic</em> if it produces the same exact results every time it executes.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+"A random process models the progression of a system over time, where the evolution is random rather than deterministic."<sup class="footnote">[<a id="_footnoteref_17" class="footnote" href="#_footnotedef_17" title="View footnote.">17</a>]</sup>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lets simulate tossing a coin \(n\) times counting the number of occurrences of a head or a tail. We will have \(n\) be input by the user. We will start by tossing a coin once and checking if it is heads or tails using a variable <code>heads</code> to keep track of the number times heads appeared and a variable <code>tails</code> for the number of times tails appeared.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">heads</span> <span class="tok-o">=</span> <span class="tok-n">heads</span> <span class="tok-o">+</span> <span class="tok-mi">1</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-n">tails</span> <span class="tok-o">=</span> <span class="tok-n">tails</span> <span class="tok-o">+</span> <span class="tok-mi">1</span> <i class="conum" data-value="2"></i><b>(2)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is actually a syntax error because <code>heads</code> is not yet defined.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Same comment. <code>tails</code> is not yet defined.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is the loop body, all we need to do now is to get \(n\) from the user, initialize the <code>heads</code> and <code>tails</code> variables, and use a counting loop to toss the die \(n\) times.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Don&#8217;t try and write the program all at once. Break into parts.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter number of times to toss coin: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>       <span class="tok-c1"># loop counter</span>
+<span class="tok-n">heads</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>   <span class="tok-c1"># number of heads tossed</span>
+<span class="tok-n">tails</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>   <span class="tok-c1"># number of tails tossed</span>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">heads</span> <span class="tok-o">=</span> <span class="tok-n">heads</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">tails</span> <span class="tok-o">=</span> <span class="tok-n">tails</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads: &quot;</span><span class="tok-p">,</span> <span class="tok-n">heads</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails: &quot;</span><span class="tok-p">,</span> <span class="tok-n">tails</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A common mistake is to put this statement before the loop. Why is that incorrect?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>One of the benefits of writing a program like this, a <em>simulation</em>, is that we can simulate tossing a coin thousands, millions, or even billions of times. This is not possible if we were to try and do this by hand with a real coin.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you think you need a loop try and figure out what the process is that needs to be repeated. Then, put that in the loop as the loop body.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>computer simulation</em> is a computer program that represents a simulation (or model) of some real-world process.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As you might expect when you run this program, the number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on <em>during</em> the simulation?</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the coin toss program to count the number of times it takes to toss ten heads in a row. Run the program a few times. How big do you have to make \(n\) in order to get ten heads in a row?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>This is just one possible solution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter number of times to toss coin: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">heads</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">tails</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">in_a_row</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">in_a_row_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>   <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">n</span><span class="tok-p">:</span>
+    <span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">heads</span> <span class="tok-o">=</span> <span class="tok-n">heads</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+        <span class="tok-n">in_a_row</span> <span class="tok-o">=</span> <span class="tok-n">in_a_row</span> <span class="tok-o">+</span> <span class="tok-mi">1</span> <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">tails</span> <span class="tok-o">=</span> <span class="tok-n">tails</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+        <span class="tok-n">in_a_row</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>            <i class="conum" data-value="4"></i><b>(4)</b>
+
+    <span class="tok-k">if</span> <span class="tok-n">in_a_row</span> <span class="tok-o">==</span> <span class="tok-mi">10</span><span class="tok-p">:</span>          <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-n">in_a_row_count</span> <span class="tok-o">=</span> <span class="tok-n">in_a_row_count</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Heads: &quot;</span><span class="tok-p">,</span> <span class="tok-n">heads</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Tails: &quot;</span><span class="tok-p">,</span> <span class="tok-n">tails</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Number of ten in a row: &quot;</span><span class="tok-p">,</span> <span class="tok-n">in_a_row_count</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A counter for keeping track of number of heads in a row.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Keep track of the number of times we roll heads ten in a row.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When we roll heads, increment the counter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If we roll tails, reset the counter.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Check to see if we hit ten in a row.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_gamblers_ruin"><a class="anchor" href="#_the_gamblers_ruin"></a>6.1. The Gambler&#8217;s Ruin</h3>
+<div class="paragraph">
+<p>Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand.</p>
+</div>
+<div class="paragraph">
+<p>How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-mi">1000</span>                        <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">while</span> <span class="tok-n">chips</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">chips</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2000</span><span class="tok-p">:</span>   <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">chips</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We start with 1000 chips.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We play until we double our chips or lose them all.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Will print either 0 or 2000.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you run this program many times, as you might expect, about half the time the player loses everything and half the time they double their money. But a player with a gambling problem typically can&#8217;t quit, even when they are ahead. What might the program look like now?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+<span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-mi">1000</span>
+<span class="tok-k">while</span> <span class="tok-n">chips</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">toss</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">toss</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">chips</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The only change is to remove the condition that the loop terminate when <code>chips</code> reaches 2000.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>What will always get printed?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t even need to run the program to see what will happen here. The only way the program terminates is when the number of chips reaches zero. This will always happen and is called <em>The Gambler&#8217;s Ruin</em>. A gambler who gambles long enough will always lose everything.</p>
+</div>
+<div class="sect3">
+<h4 id="_a_one_dimensional_random_walk"><a class="anchor" href="#_a_one_dimensional_random_walk"></a>6.1.1. A One Dimensional Random Walk</h4>
+<div class="paragraph">
+<p>How can we visualize this random process, plotting the number of chips the gambler has over time. It is instructive to let the number of chips go negative (similar to borrowing chips from the casino). Assuming we have a Pygame window of width \(w\) and height \(h\), if we let the center \(y\)-coordinate of the window represent \(0\) chips then <code>0 - chips</code> will be the \(y\)
+coordinate of where we need to draw a pixel. If we keep a counter <code>i</code> for each toss of the coin then <code>i</code> will represent the <code>x</code> coordinate.</p>
+</div>
+<div class="paragraph">
+<p>The Pygame command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">RGB</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>draws a single pixel at coordinate <code>(x,y)</code> with the  color <code>RGB</code> (which should be an RGB triple).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span><span class="tok-o">,</span><span class="tok-nn">pygame</span><span class="tok-o">,</span><span class="tok-nn">color</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-mi">600</span><span class="tok-p">,</span><span class="tok-mi">600</span><span class="tok-p">))</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+
+<span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">scale</span> <span class="tok-o">=</span> <span class="tok-mi">100</span>                       <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span><span class="tok-o">*</span><span class="tok-n">scale</span><span class="tok-p">:</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">n</span> <span class="tok-o">%</span> <span class="tok-mi">2</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">chips</span> <span class="tok-o">=</span> <span class="tok-n">chips</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">chips</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">line</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">red</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">h</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-p">))</span> <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Rather than drawing only one point for each \(x\)-coordinate, we can fit more points if we plot multiple points at each coordinate. The <code>scale</code> variable is used for this.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Only draw until we fill the screen. This is also the first time we have seen this function call <code>win.get_width()</code>. See the note below.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Plot our current chip count. Notice the use of the <code>scale</code> variable to plot multiple points at each x-coordinate.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Keep redrawing a red line in the middle to represent zero chips.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The window object <code>win</code> has methods <code>get_width()</code> and <code>get_height()</code> that returns
+the width and the height of the window, in pixels. Recall that <em>methods</em> are special functions
+that are defined on objects.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The random walk on the left plots 10 points per \(x\)-coordinate <code>scale = 10</code>. The plot on the right
+plots 100 points per pixel <code>scale = 100</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Two random walks</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/rand_walk1.png" alt="rand walk1" width="300" height="300"></span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="image"><img src="./images/rand_walk2.png" alt="rand walk2" width="300" height="300"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Even though we have a 50-50 chance of increasing our decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. For a negative chip count plot a red pixel.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Replace the line that plots a point with the condition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">cash</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">red</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What color pixel gets plotted when cash equals 0? Does it matter? No, drawing the red line erases whatever pixel that would have been drawn at \(y\)-coordinate \(0\).</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the random walk so that whenever we hit a new high we mark the location by printing a small green circle (slightly bigger than a single pixel).  Also, when we hit a new low, plot a red circle at the location.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The trick here is to use two variables, one to keep track of the current high, and the other to keep track of the current low. Call these <code>high</code> and <code>low</code> and should be initialized to the starting <code>cash</code> amount at the beginning. Whenever the <code>cash</code> variable exceeds <code>high</code>, set <code>high</code> to cash. Similarly when <code>cash</code> is less than <code>low</code> set <code>low</code> to <code>cash</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">cash</span> <span class="tok-o">&gt;</span> <span class="tok-n">high</span><span class="tok-p">:</span>
+	<span class="tok-n">high</span> <span class="tok-o">=</span> <span class="tok-n">cash</span>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
+<span class="tok-k">elif</span> <span class="tok-n">cash</span> <span class="tok-o">&lt;</span> <span class="tok-n">low</span><span class="tok-p">:</span>
+	<span class="tok-n">low</span> <span class="tok-o">=</span> <span class="tok-n">cash</span>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">draw</span><span class="tok-o">.</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">red</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">i</span><span class="tok-o">//</span><span class="tok-n">scale</span><span class="tok-p">,</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span><span class="tok-o">-</span><span class="tok-n">cash</span><span class="tok-p">),</span> <span class="tok-mi">2</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is an example run. Early in the simulation we generate lots of new highs and lows, and whenever we hit a new high or low we tend to generate several nearby, but these becaome rare as the simulation progresses. This was done with <code>scale</code> set to <code>100</code>.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/hi-low-1d-rand-walk.png" alt="hi low 1d rand walk" width="300" height="300"></span></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The Gambler&#8217;s Ruin is an example of a <em>random walk</em>. Random walks are useful for building models in many disciplines including economics.<sup class="footnote">[<a id="_footnoteref_18" class="footnote" href="#_footnotedef_18" title="View footnote.">18</a>]</sup> and physics.  In economics random walks are often used to model fluctuations in random processes such as the stock market. In physics, a random walk can model random motions such as <em>Brownian Motion</em>.</p>
+</div>
+<div class="paragraph">
+<p>Random walks have a sophisticated and complex mathematical theory. However, notice how straightforward it is to do some simple programming experiments and learn something about random processes without having to understanding the mathematics.</p>
+</div>
+<div class="paragraph">
+<p>The Gambler&#8217;s Ruin is an example of a _one dimensional random walk. One dimensional because there is only one random variable, the coin toss.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_brownian_motion"><a class="anchor" href="#_brownian_motion"></a>6.2. Brownian Motion</h3>
+<div class="paragraph">
+<p>Brownian Motion is the random movement of particles suspended in a liquid or gas.  Botanist Robert Brown discovered this while noticing the random movement of pollen particles on the surface of water. In this case, the particle can move randomly in either the \(x\) or \(y\) direction.  In terms of a graphic display, the particle&#8217;s coordinate \((x,y)\) has
+eight possible neighboring locations that it can move to. Forgetting, for the time being, about a particle that is on an edge of the display.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/pixel_neighbors.png" alt="pixel neighbors" width="214" height="200">
+</div>
+</div>
+<div class="paragraph">
+<p>In this case we will have <em>two</em> random variables, one in the \(x\) direction and one in the \(y\) direction.  If <code>(x,y)</code> is the coordinate of the particle how can we make it move randomly to one of the eight neighbors? One way is to toss an eight sided die and update <code>x</code> and <code>y</code> accordingly. For example, if we assign each neighbor one of the random numbers from <code>0</code> to <code>7</code> with <code>0</code> corresponding to the top middle, then if we rolled a <code>0</code> then the particle&#8217;s new <code>x</code> coordinate would remain the same and its new <code>y</code> coordinate would be <code>y - 1</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because we are using two random variables this Brownian Motion simulation is often referred to as a <em>two dimensional random walk</em>. It also goes by the rather uncomplimentary moniker <em>The Drunkard&#8217;s Walk</em>, referring to the rather haphazard way one who has imbibed too much alcohol meanders through the streets.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</div></td><td class="code"><span></span><span class="tok-nb">dir</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">8</span><span class="tok-p">)</span>
+<span class="tok-k">if</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>     <span class="tok-c1"># top middle</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>   <span class="tok-c1"># top right</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">2</span><span class="tok-p">:</span>   <span class="tok-c1"># right middle</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">3</span><span class="tok-p">:</span>   <span class="tok-c1"># lower right</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">4</span><span class="tok-p">:</span>   <span class="tok-c1"># botton middle</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">5</span><span class="tok-p">:</span>   <span class="tok-c1"># bottom left</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">6</span><span class="tok-p">:</span>   <span class="tok-c1"># left middle</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>            <span class="tok-c1"># top left</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This block of code is the process we need to repeat over and over (when do we quit?, hold that thought).  But first lets think about this code segment. Putting this in the loop body will make our loop a little unwieldy. Instead lets think of it in terms of a function <code>move</code> that takes a particle&#8217;s current <code>x</code> and <code>y</code> coordinate and returns its new <code>x</code> and <code>y</code>. Pictorially,</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/2D_move.png" alt="2D move" width="362" height="130">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-c1"># insert if-elif above</span>
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Calling the <code>move</code> function is the heart of our loop body. We can start a particle in the middle of the window (or at any random location for that matter) and let it run.
+But when should the simulation stop? That is, what is the loop condition? We have several options. We could</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>run for a certain number of iterations, 10, 100, 10000, etc.</p>
+</li>
+<li>
+<p>run until the particle moves off of the display</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, <em>while the particle is on the display</em>?</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a logical condition that is true if the particle at coordinate <code>(x,y)</code> is within the bounds of  the display window. Assume that variable <code>w</code> and <code>h</code> refer to the width and height of the display.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Well &#8230;&#8203; <code>x</code> must be between <code>0</code> and <code>w</code> (including 0, but excluding <code>w</code>) and
+<code>y</code> must be between <code>0</code> and <code>h</code> (including 0, but excluding <code>h</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The parentheses are not strictly necessary but aid in clarity. Contrast this same expression
+without parentheses.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-ow">and</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span> <span class="tok-ow">and</span> <span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-ow">and</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Python allows for a more concise way to describe inequalities. For example, in mathematical notation for the first inequality above, we would say \(0 \le x \lt w\). Python allows something similar and we can write <code>0 &lt;= x &lt; w</code>. Most programming languages do not allow this more pithy notation, but Python does. So we could rewrite the logical expression as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_complete_brownian_program"><a class="anchor" href="#_the_complete_brownian_program"></a>6.2.1. The complete Brownian program</h4>
+<div class="paragraph">
+<p>Putting this altogether we have &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">random</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+
+<span class="tok-c1">#</span>
+<span class="tok-c1"># move a particle with coordinates (x,y) to</span>
+<span class="tok-c1"># a new random location, one of its eight neighbors.</span>
+<span class="tok-c1">#</span>
+<span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-nb">dir</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">8</span><span class="tok-p">)</span>
+    <span class="tok-k">if</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">2</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">3</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">4</span><span class="tok-p">:</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">5</span><span class="tok-p">:</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-k">elif</span> <span class="tok-nb">dir</span> <span class="tok-o">==</span> <span class="tok-mi">6</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># main program</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-mi">600</span><span class="tok-p">,</span><span class="tok-mi">600</span><span class="tok-p">))</span>
+<span class="tok-n">w</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span>
+<span class="tok-n">h</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">w</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">):</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">)</span>
+    <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Hit enter&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Start the particle in the middle of the x axis.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Start the particle in the middle of the y axis.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is one sample run of the program</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/brownian.png" alt="brownian" width="285" height="200"></span></p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Add a second particle (use a different color) to the simulation. Stop the simulation when <em>both</em> particles have gone off the window.
+Hints:-Add properties for a second particle. Don&#8217;t modify the <code>move</code> function or make a copy of the <code>move</code> function. Just <em>reuse</em> it by calling it again with the properties of the second particle. (That is the whole point of using functions). Finally modify the loop condition so the simulation terminates properly.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Like always, there are many solutions. Here is one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">random</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+
+<span class="tok-c1"># same move function goes here.</span>
+
+<span class="tok-c1"># main program</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-mi">600</span><span class="tok-p">,</span><span class="tok-mi">600</span><span class="tok-p">))</span>
+<span class="tok-n">w</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span>
+<span class="tok-n">h</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span>
+<span class="tok-n">x1</span> <span class="tok-o">=</span> <span class="tok-n">w</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">y1</span> <span class="tok-o">=</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">x2</span> <span class="tok-o">=</span> <span class="tok-n">w</span><span class="tok-o">//</span><span class="tok-mi">2</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">y2</span> <span class="tok-o">=</span> <span class="tok-n">h</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x1</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y1</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">)</span> <span class="tok-ow">or</span> \  <i class="conum" data-value="3"></i><b>(3)</b>
+      <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">x2</span> <span class="tok-o">&lt;</span> <span class="tok-n">w</span><span class="tok-p">)</span> <span class="tok-ow">and</span> <span class="tok-p">(</span><span class="tok-mi">0</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y2</span> <span class="tok-o">&lt;</span> <span class="tok-n">h</span><span class="tok-p">):</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x1</span><span class="tok-p">,</span><span class="tok-n">y1</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">)</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x2</span><span class="tok-p">,</span><span class="tok-n">y2</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">)</span> <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-p">(</span><span class="tok-n">x1</span><span class="tok-p">,</span><span class="tok-n">y1</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">move</span><span class="tok-p">(</span><span class="tok-n">x1</span><span class="tok-p">,</span><span class="tok-n">y1</span><span class="tok-p">)</span>
+    <span class="tok-p">(</span><span class="tok-n">x2</span><span class="tok-p">,</span><span class="tok-n">y2</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">move</span><span class="tok-p">(</span><span class="tok-n">x2</span><span class="tok-p">,</span><span class="tok-n">y2</span><span class="tok-p">)</span>   <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Coordinates of the first particle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Coordinates of the second particle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Why logical <code>or</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Don&#8217;t forget to draw the second particle.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Notice how we just call the <code>move</code> function a second time with different arguments?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>How hard is it to add a third particle? A fourth? As we progress we will learn more advanced techniques so we don&#8217;t have to keep defining new variables for each particle.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>A two particle system might look like</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/brownian2.png" alt="brownian2" width="292" height="208">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_improvements_to_the_brownian_program"><a class="anchor" href="#_improvements_to_the_brownian_program"></a>6.2.2. Improvement&#8217;s to the Brownian Program</h4>
+<div class="paragraph">
+<p>That big if-statement in the <code>move</code> function is rather clunky and error prone. If you mistype a <code>-</code> or <code>+</code> sign then the particle goes off in a seemingly nonrandom direction. Notice that all we are doing is either subtracting 1 or adding 1 to the particle&#8217;s \(x\) and/or \(y\) coordinate. We could just generate a random integer in the range -1 to 1 and add that to the coordinate.  We have to be careful to generate a different random integer for each coordinate.</p>
+</div>
+<div class="paragraph">
+<p>A better and more concise <code>move</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+
+    <span class="tok-n">delta_x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">delta_x</span>
+
+    <span class="tok-n">delta_y</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">delta_y</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Why <code>2</code> instead of <code>1</code> as the second argument to <code>randrange</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The Greek letter \(\Delta\) (pronounced <em>delta</em>) is often used to represent a change in some quantity. In this case a change in the <code>x</code> coordinate.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Python (version 3) actually does allow Greek alphabetic letters in identifier names.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">A particle on a torus</div>
+<p>Right now our particle simulation terminates when a particle hits the edge of the display. One modification would be to force the particle to stay within the bounds of the window. For example, when it hits an edge just make sure we don&#8217;t adjust the coordinate to go off the display.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the Brownian particle simulation so that a particle stays within the bounds of the window as if the edges of the window were an impermeable wall.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The only thing you need to add is an if-statement that checks the bounds of the particle. An appropriate place to put this is the <code>move</code> function, since it is related to moving the particle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-c1"># add this to the bottom of the move function.</span>
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;=</span> <span class="tok-n">w</span><span class="tok-p">:</span>      <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">w</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-k">elif</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-k">if</span> <span class="tok-n">y</span> <span class="tok-o">&gt;=</span> <span class="tok-n">h</span><span class="tok-p">:</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">h</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+<span class="tok-k">elif</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Why <code>&gt;=</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Could we have also said <code>x &gt; w - 1</code> or even <code>x == w</code>? Yes to both.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Why <code>w - 1</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Could we have also said <code>x == -1</code>? Yes.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Another more interesting solution might be to pretend that the display <em>wraps around</em> on its edges. For example, if a particle goes off the right edge have it come in on the left edge, and vice-versa. If a particle goes off the top then it appears at the bottom.</p>
+</div>
+<div class="paragraph">
+<p>An obvious way to do this is similar to the above <em>check yourself</em> solution and check if the particle has gone off an edge and reset its coordinate accordingly.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-c1"># wrap the x-coordinate around the x-axis.</span>
+<span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&gt;=</span> <span class="tok-n">w</span><span class="tok-p">:</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-k">elif</span> <span class="tok-n">x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">w</span> <span class="tok-o">-</span> <span class="tok-mi">1</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Why <code>w - 1</code> and not <code>w</code>?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Modifying the \(y\)-coordinate is similar.</p>
+</div>
+<div class="paragraph">
+<p>If we think of the display as a sheet of paper and curl the paper around on the x-axis then we curl it again around the y-axis we end up with the topological shape of a <em>torus</em>, or a donut.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./images/brownian_on_torus.png" alt="brownian on torus" width="240" height="226"></span></p>
+</div>
+<div class="paragraph">
+<p>The concept of a variable <em>wrapping around</em> should be familiar. This is modular arithmetic. So rather than the if-statement above we can simply add or subtract 1 modulo the width or height of the window. In which case our <code>move</code> function becomes &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">):</span>
+
+    <span class="tok-n">delta_x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">delta_x</span><span class="tok-p">)</span> <span class="tok-o">%</span> <span class="tok-n">w</span>
+
+    <span class="tok-n">delta_y</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">)</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">delta_y</span><span class="tok-p">)</span> <span class="tok-o">%</span> <span class="tok-n">h</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets see what happens when the particle is on the right edge. Lets assume that the width of the window is 600 pixels (<code>w</code> is <code>600</code>), <code>x</code> is <code>599</code>. Lets further assume that <code>delta_x</code> is <code>1</code>, then the new value of <code>x</code> is <code>(599 + 1) % 600</code> or <code>0</code>, which becomes the new value of <code>x</code>, effectively wrapping around to the left edge.</p>
+</div>
+<div class="paragraph">
+<p>Lets look at the left edge. When the particle <code>x</code> is on the left edge then <code>x</code> is <code>0</code> and let <code>delta_x</code> be <code>-1</code>. Then <code>(0 + -1) % 600</code> is <code>-1 % 600</code> which is <code>599</code>, effectively wrapping back to the right edge.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_fractional_dimension_random_walk_or_fractal"><a class="anchor" href="#_a_fractional_dimension_random_walk_or_fractal"></a>6.3. A Fractional Dimension Random Walk (or Fractal)</h3>
+<div class="paragraph">
+<p>Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them \(t_0\), \(t_1\), and \(t_2\). The hiker picks a cell tower at random and heads off to it on a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, &#8230;&#8203; forever. The image drawn by marking the rocks is an interesting sort of random walk.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/lost_hiker.png" alt="lost hiker" width="711" height="400">
+</div>
+</div>
+<div class="paragraph">
+<p>Let variables <code>(x0,y0)</code>, <code>(x1,y1)</code>, <code>(x2,y2)</code> be the coordinates of the towers, and
+<code>(x,y)</code> be the coordinates of the hiker. Lets right down the process described in the paragraph above in <em>pseudocode</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>1) create a Pygame display window
+2) Assign the coordinates of the towers to variables
+3) Assign the hiker random coordinates anywhere within the display
+4) Forever
+   a) choose a tower at random
+   b) compute the mid-point between the hiker and the chosen tower and
+      update the hiker's coordinates with the midpoint.
+   c) plot a pixel at the hikers coordinate (similar to marking with a rock)</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Before you start writing code make sure you understand the problem. One way to do this is to write out each step of the problem, not in real Python code, but in more informal text, what computer scientists call <em>pseudocode</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The mid-point of a line between two points \((x_0,y_0)\) and \((x_1,y_1)\) is
+the average of the \(x\)-coordinates and the average of the \(y\)-coordinates, or
+\((\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})\)
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">random</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+<span class="tok-n">side</span> <span class="tok-o">=</span> <span class="tok-mi">500</span>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">side</span><span class="tok-p">,</span><span class="tok-n">side</span><span class="tok-p">))</span>
+
+<span class="tok-n">x0</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>  <span class="tok-c1"># tower 0 coordinates  </span><i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">y0</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-n">x1</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>   <span class="tok-c1"># tower 1 coordinates</span>
+<span class="tok-n">y1</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+
+<span class="tok-n">x2</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>          <span class="tok-c1"># tower 2 coordinates</span>
+<span class="tok-n">y2</span> <span class="tok-o">=</span> <span class="tok-n">side</span> <span class="tok-o">-</span> <span class="tok-mi">1</span>
+
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-n">side</span><span class="tok-p">)</span> <span class="tok-c1"># hiker coordinates</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-n">side</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-bp">True</span><span class="tok-p">:</span>
+
+    <span class="tok-c1"># choose a tower at random</span>
+    <span class="tok-n">t</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">3</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+	<span class="tok-c1"># which tower is it?</span>
+    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">t</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">):</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">x0</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">y0</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+    <span class="tok-k">elif</span> <span class="tok-p">(</span><span class="tok-n">t</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">):</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">x1</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">y1</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">x2</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">y2</span><span class="tok-p">)</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Another way to write this is to use <em>tuple assignment</em> as <code>(x0,y0) = (side//2, 0)</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>It is important that the random number is in the loop body. We need
+to get a new random tower every iteration. If this were before the loop then we would always be choosing the same tower.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The shape rendered by the code is called <em>Sierpinski&#8217;s Triangle</em>.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/sierpinski.png" alt="sierpinski" width="500" height="500">
+</div>
+</div>
+<div class="paragraph">
+<p>This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (<em>e.g.</em> the midpoint) is informally called  the <em>chaos game</em>, named by the branch of mathematics called <em>chaos theory</em>.</p>
+</div>
+<div class="paragraph">
+<p>The Gambler&#8217;s Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski&#8217;s Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but more than one dimensional. It is a <em>fractional dimension</em> random walk, or a <em>fractal</em>.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book <em>The Fractal Geometry of Nature</em>.<sup class="footnote">[<a id="_footnoteref_19" class="footnote" href="#_footnotedef_19" title="View footnote.">19</a>]</sup></p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise</div>
+<p>Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise</div>
+<p>Rather than using a triangle use four cell towers, where each tower is placed in the middle of the window&#8217;s edge. For example, tower 0 is in the middle of the top edge at coordinate <em>(side//2, 0)</em>, and so on. Additionally, when choosing a new random tower make sure not to choose the same tower twice in a row. Hint: Keep an extra variable <code>prev</code> that keeps track of the previous tower guessed . When choosing a new tower make sure that you keep guessing until it isn&#8217;t the same as <code>prev</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_monty_hall_problem"><a class="anchor" href="#_the_monty_hall_problem"></a>6.4. The Monty Hall Problem</h3>
+<div class="paragraph">
+<p>The <em>Monty Hall Problem</em> dates back to a game show on American television called <em>Let&#8217;s Make a Deal</em>, hosted by, of course, Monty Hall. In the game show a contestant is presented with three doors. Behind one of the doors is a new car and behind the remaining doors are goats.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/doorsandgoat.png" alt="doorsandgoat" width="251">
+</div>
+<div class="title">Figure 6. The Monty Hall Problem.<sup class="footnote">[<a id="_footnoteref_20" class="footnote" href="#_footnotedef_20" title="View footnote.">20</a>]</sup></div>
+</div>
+<div class="paragraph">
+<p>The contestant chooses a door. Monty Hall then opens a door that has a goat behind it. So now there are two closed doors, the one the contestant chose and the one that Monty Hall did not open. The contestant is given the chance to switch doors. The <em>Monty Hall Problem</em> is whether the contestant should switch or not.</p>
+</div>
+<div class="paragraph">
+<p>This problem caused quite a ruckus in the mathematics community when a reader of Marilyn Vos Savant&#8217;s weekly Parade column presented her with the problem.<sup class="footnote">[<a id="_footnoteref_21" class="footnote" href="#_footnotedef_21" title="View footnote.">21</a>]</sup> Almost universally people thought the answer should be that it does not matter if the contestant switches because there are two unopened doors, so the odds are 50-50. Marilyn Vos Savant explained a different answer and the backlash from the mathematics community was harsh, patronizing, and really embarrassing for &#8230;&#8203; the mathematicians. Marilyn Vos Savant was correct. This is easy for us to say now after-the-fact; hindsight is 20-20. This problem stumped some well known mathematicians, and to this day, many of us still fumble around when we try to explain it.</p>
+</div>
+<div class="paragraph">
+<p>Probability is often counter-intuitive, we saw this with the Gambler&#8217;s Ruin, but once again we can explore the Monty Hall Problem by writing a rather simple program to simulate the Monty Hall Problem to explore the answer, without having to understand the mathematics.  As we will see, even before we run the program, the answer will be evident.</p>
+</div>
+<div class="paragraph">
+<p>Lets lay out the process of playing the game outlined above:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The contestant is presented with three doors, two with goats, and one with a new car. The goats and car are randomly assigned.</p>
+</li>
+<li>
+<p>The contestant chooses a door to be revealed later.</p>
+</li>
+<li>
+<p>The host shows a goat behind one of the other doors (not the contestant&#8217;s door).</p>
+</li>
+<li>
+<p>The contestant is given the choice whether to switch to the other unopened door.</p>
+</li>
+<li>
+<p>The contestant&#8217;s door is revealed.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll tackle each of these in turn.</p>
+</div>
+<div class="paragraph">
+<p>We can assign goats and a car to doors in any order. One thing we need to be careful about is that we do not assign more than one goat or car to the same door.  Assume the doors are numbered 1, 2, and 3.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Assign goat 1 to a random door.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now how about the second goat?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This doesn&#8217;t quite work because we might accidentally get the same
+random number as <code>goat1</code>.  Here is another attempt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Try again if we generated the same random door as <code>goat1</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is a common mistake. Why is it incorrect? Well, while it is less likely, we can still
+get the same random number twice in a row. We need to keep trying as long as they are the same.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>                       <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-c1"># What is true at this point after the loop terminates? </span><i class="conum" data-value="2"></i><b>(2)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keep trying as long as we keep getting the same random number as <code>goat1</code>. We know from the Gambler&#8217;s Ruin that we can sometimes get the same number several times in a row.
+&lt;2&gt;that <code>goat1 != goat2</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+<span class="tok-k">while</span> <span class="tok-n">car</span> <span class="tok-o">==</span> <span class="tok-n">goat1</span> <span class="tok-ow">or</span> <span class="tok-n">car</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is one way to do it.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Since there is only one door remaining for the car we should be able to calculate
+it without using a loop. Hint: Think of a simple expression involving the door numbers.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-mi">6</span> <span class="tok-o">-</span> <span class="tok-n">goat1</span> <span class="tok-o">+</span> <span class="tok-n">goat2</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Try it for various values of <code>goat1</code> and <code>goat2</code></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In the second part of the game we need to have the contestant choose a door. We can simply ask them to input it from the keyboard.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">choice</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Choose a door: &quot;</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We are assuming the user will type in either 1, 2, or 3. We don&#8217;t do any error checking, though error checking is an import part of writing reliable, robust computer programs. Indeed many computer security vulnerabilities come from software developers not properly validating input data causing program to behave in unexpected and sometimes dangerous ways.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>So now we have four variables set up:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>goat1</code> the location of the first goat</p>
+</li>
+<li>
+<p><code>goat2</code> the location of the second goat</p>
+</li>
+<li>
+<p><code>car</code> the location of the car</p>
+</li>
+<li>
+<p><code>choice</code> the door the contestant chose</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the third step of the game we reveal one of the two goats, being careful not to show what is behind the contestant&#8217;s door or where the car is. Lets set up two variables <code>switch_door</code> and <code>show</code>. The <code>show</code> variable will be the door we need to show and the variable <code>switch_door</code> will be the door the contestant will switch to if they decide they want to switch.</p>
+</div>
+<div class="paragraph">
+<p>If the user chose the same door as <code>goat1</code> then the door we will show is <code>goat2</code>. The door the user will switch to is (if these want to) is where the car is.  The other cases are reasoned out the same way.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">choice</span> <span class="tok-o">==</span> <span class="tok-n">goat1</span><span class="tok-p">:</span>    <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat2</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">car</span>
+<span class="tok-k">elif</span> <span class="tok-n">choice</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat1</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">car</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>                  <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat1</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">goat2</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If the contestant chose the same door as <code>goat1</code> then we will show <code>goat2</code> and if they choose to switch it will be to the car.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Similarly, if the contestant chose <code>goat2</code> then we will show <code>goat1</code> and if they choose to switch it will be to th car.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Finally, if the contestant chose the car then it doesn&#8217;t matter which goat to show. In this case we pick <code>goat1</code> and we will show the <code>goat2</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We haven&#8217;t even finished the program yet and the solution to the Monty Hall Problem should be jumping out at you by examining the above if-statement. In two out of the three cases if the contestant switches doors they will switch to a car! Therefore, if they switch there is a two-thirds chance that they will win the car. They should definitely switch. Probability is often counterintuitive.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself</div>
+<p>Finish the Monty Hall Program. Here are some sample runs of what the program might look like.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Choose a door: 1
+There is a goat in door 3
+Do you want to switch?(y/n): y
+You won a goat!
+
+Choose a door: 2
+There is a goat in door 1
+Do you want to switch?(y/n): y
+You won a car!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Answer <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Below is just one version based on the code we&#8217;ve been developing.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">random</span>
+
+<span class="tok-c1"># place a goat behind door one.</span>
+<span class="tok-n">goat1</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># place the second goat, making sure</span>
+<span class="tok-c1"># that it is not the same door as the first goat.</span>
+<span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-n">goat1</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">goat2</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># how did the loop terminate?</span>
+
+<span class="tok-c1"># assign a car to the door that is not the</span>
+<span class="tok-c1"># same a goat 1 or goat 2</span>
+<span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-n">car</span> <span class="tok-o">==</span> <span class="tok-n">goat1</span> <span class="tok-ow">or</span> <span class="tok-n">car</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">car</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">4</span><span class="tok-p">)</span>
+
+<span class="tok-c1"># What is true?</span>
+<span class="tok-c1"># car != goat1 != goat2</span>
+<span class="tok-c1"># print(goat1,goat2,car)</span>
+<span class="tok-n">choice</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Choose a door: &quot;</span><span class="tok-p">))</span>
+
+<span class="tok-c1"># figure out how to show a goat</span>
+<span class="tok-c1"># to the contestant</span>
+<span class="tok-k">if</span> <span class="tok-n">choice</span> <span class="tok-o">==</span> <span class="tok-n">goat1</span><span class="tok-p">:</span>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat2</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">car</span>
+<span class="tok-k">elif</span> <span class="tok-n">choice</span> <span class="tok-o">==</span> <span class="tok-n">goat2</span><span class="tok-p">:</span>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat1</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">car</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-n">show</span> <span class="tok-o">=</span> <span class="tok-n">goat1</span>
+    <span class="tok-n">switch</span> <span class="tok-o">=</span> <span class="tok-n">goat2</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;There is a goat in door&quot;</span><span class="tok-p">,</span> <span class="tok-n">show</span><span class="tok-p">)</span>
+
+<span class="tok-n">switch_doors</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Do you want to switch?(y/n): &quot;</span><span class="tok-p">)</span>
+<span class="tok-k">if</span> <span class="tok-n">switch_doors</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;y&#39;</span> <span class="tok-ow">or</span> <span class="tok-n">switch_doors</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;Y&#39;</span><span class="tok-p">:</span>
+    <span class="tok-n">choice</span> <span class="tok-o">=</span> <span class="tok-n">switch</span>
+
+<span class="tok-c1"># Did they win?</span>
+<span class="tok-k">if</span> <span class="tok-n">choice</span> <span class="tok-o">==</span> <span class="tok-n">car</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;You won a car!&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;You won a goat!&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>What if we wanted to play the Monty Hall game many times to verify that the contestant should aways switch thereby winning the car two-thirds of the time?  Running this version is a little cumbersome because it requires interaction with the keyboard. How can we automate playing the game thousands of times?  When the user chooses a door, it is just a random choice. So we could have the computer choose a random door instead. Also, rather than ask whether the contestant wants to switch we hard code always switching. Finally, to play thousands of times we should probably wrap up our game in a function and put that function in a loop.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_5"><a class="anchor" href="#_exercises_5"></a>6.5. Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 1 - Prime Numbers</div>
+<p>Prime numbers play an important role in cryptography. A prime number is only divisible by
+one and itself.  If a number is not prime then it has a <em>factor</em> that is neither one or itself. For example,
+\(16517\) has factors \(83\) and \(199\) because \(16517 = 83 \times 199\).
+Write a program <code>prime.py</code>, that reads an integer from the user and prints whether the number is prime or not.</p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2 - Adding multiples of 3 or 5</div>
+<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23. Write a program to print find and print the sum of all the multiples of 3 or 5 below 1000.<sup class="footnote">[<a id="_footnoteref_22" class="footnote" href="#_footnotedef_22" title="View footnote.">22</a>]</sup></p>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3 - Sevens</div>
+<p>Write a program that will read an integer and count and print the number of sevens that occur in the integer.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology_6"><a class="anchor" href="#_terminology_6"></a>6.6. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>random process</p>
+</li>
+<li>
+<p>deterministic</p>
+</li>
+<li>
+<p>Gambler&#8217;s Ruin</p>
+</li>
+<li>
+<p>Brownian Motion</p>
+</li>
+<li>
+<p>torus</p>
+</li>
+<li>
+<p>pseudocode</p>
+</li>
+<li>
+<p>The Monty Hall Problem</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>computer simulation</p>
+</li>
+<li>
+<p>one dimensional random walk</p>
+</li>
+<li>
+<p>two dimensional random walk</p>
+</li>
+<li>
+<p>The Drunkard&#8217;s Walk</p>
+</li>
+<li>
+<p>fractal</p>
+</li>
+<li>
+<p>midpoint of a line</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -6729,11 +8446,32 @@ problem.</p>
 <div class="footnote" id="_footnotedef_15">
 <a href="#_footnoteref_15">15</a>. <em>die</em> is the singular of the plural <em>dice</em>, one die, pair of dice.
 </div>
+<div class="footnote" id="_footnotedef_16">
+<a href="#_footnoteref_16">16</a>. Randomness plays an important role in many areas of computer science, including cryptography, networking, and simulation and modeling.
+</div>
+<div class="footnote" id="_footnotedef_17">
+<a href="#_footnoteref_17">17</a>. <a href="https://reference.wolfram.com/language/guide/RandomProcesses.html" class="bare">https://reference.wolfram.com/language/guide/RandomProcesses.html</a>
+</div>
+<div class="footnote" id="_footnotedef_18">
+<a href="#_footnoteref_18">18</a>. One of the best known books on investing is <em>A Random Walk Down Wall Street</em> by Burton Malkiel.
+</div>
+<div class="footnote" id="_footnotedef_19">
+<a href="#_footnoteref_19">19</a>. <em>The Factal Geometry of Nature</em>, Benoit Mandelbrot, W.H. Freeman and Company, 1982
+</div>
+<div class="footnote" id="_footnotedef_20">
+<a href="#_footnoteref_20">20</a>. Creative Commons <code>https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Monty_open_door.svg/1200px-Monty_open_door.svg.png</code>
+</div>
+<div class="footnote" id="_footnotedef_21">
+<a href="#_footnoteref_21">21</a>. <a href="http://marilynvossavant.com/game-show-problem/" class="bare">http://marilynvossavant.com/game-show-problem/</a>
+</div>
+<div class="footnote" id="_footnotedef_22">
+<a href="#_footnoteref_22">22</a>. This is the first problem in a set of problems from <a href="https://projecteuler.net/archives">Project Euler</a>.
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-09-24 22:16:13 EDT
+Last updated 2018-10-03 21:34:19 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

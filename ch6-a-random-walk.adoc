@@ -308,7 +308,7 @@ Calling the `move` function is the heart of our loop body. We can start a partic
 But when should the simulation stop? That is, what is the loop condition? We have several options. We could
 
 - run for a certain number of iterations, 10, 100, 10000, etc.
-- run until we the particle moves off of the display
+- run until the particle moves off of the display
 
 The first option is straightforward and just requires a counting variable. The second option is a little more interesting. How can we say, as a Python logical condition, _while the particle is on the display_?
 
@@ -402,7 +402,7 @@ image:brownian.png[width=285,height=200,align="center"]
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Add a second particle (use a different color) to the simulation. Stop the simulation when _both_ particle have gone off the window. 
+Add a second particle (use a different color) to the simulation. Stop the simulation when _both_ particles have gone off the window. 
 Hints:-Add properties for a second particle. Don't modify the `move` function or make a copy of the `move` function. Just _reuse_ it by calling it again with the properties of the second particle. (That is the whole point of using functions). Finally modify the loop condition so the simulation terminates properly.
 
 [.result]
@@ -619,7 +619,7 @@ image::sierpinski.png[width=500,height=500,align="center"]
 
 This process of choosing a random point within a shape and repeatedly choosing new points based on some criteria (_e.g._ the midpoint) is informally called  the _chaos game_, named by the branch of mathematics called _chaos theory_.
 
-The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but ore than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbrot, W.H. Freeman and Company, 1982] 
+The Gambler's Ruin is an example of a one dimensional random walk, because the number of random variables is one, and the variable can take on any integer value. Brownian Motion is an example of a two dimensional random walk because there two random variable that can take on any integer value. Sierpinski's Triangle is different. While there are two random variables, it is clear from the image that the variables can only take on a subset of the values that the two dimensional random walk can. It is some how less than a two dimensional random walk, but more than one dimensional. It is a _fractional dimension_ random walk, or a _fractal_.   The branch of Mathematics that studies fractals was made well know by the mathematician Benoit Mandlebrot in his book _The Fractal Geometry of Nature_.footnote:[_The Factal Geometry of Nature_, Benoit Mandelbrot, W.H. Freeman and Company, 1982] 
 
 .Exercise
 Add a second hiker to the Sierpinski Triangle program (the lost hiker example) and have it draw a different color pixel than the first hiker. 
