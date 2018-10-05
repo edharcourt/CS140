@@ -110,7 +110,7 @@ print("Number of ten in a row: ", in_a_row_count)
 
 === The Gambler's Ruin
 
-Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand. 
+Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand. 
 
 How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
 
@@ -544,7 +544,7 @@ Lets look at the left edge. When the particle `x` is on the left edge then `x` i
 
 === A Fractional Dimension Random Walk (or Fractal)
 
-Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it on a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, ... forever. The image drawn by marking the rocks is an interesting sort of random walk. 
+Imagine a hiker out for a hike got lost. Off in the distance the hiker sees three cell towers, call them stem:[t_0], stem:[t_1], and stem:[t_2]. The hiker picks a cell tower at random and heads off to it in a straight line. Halfway there the hiker changes their mind, and marks the spot with a rock (a thumb tack in the image below). The hiker then chooses another tower at random (maybe the same towser) and walks towards it, gets halfway there and has a change of heart. They once again mark the spot with a rock, and choose another cell tower. Continuing this process until, well, ... forever. The image drawn by marking the rocks is an interesting sort of random walk. 
 
 image::lost_hiker.png[width=711,height=400,align="center"]
 
@@ -568,7 +568,7 @@ TIP: Before you start writing code make sure you understand the problem. One way
 
 NOTE: The mid-point of a line between two points stem:[(x_0,y_0)] and stem:[(x_1,y_1)] is 
 the average of the stem:[x]-coordinates and the average of the stem:[y]-coordinates, or 
-stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})]
+stem:[(\frac{x_0+x_1}{2}, \frac{y_0+y_1}{2})].
 
 [source,python,numbered]
 ----
@@ -692,7 +692,7 @@ while goat1 == goat2:
 <1> Keep trying as long as we keep getting the same random number as `goat1`. We know from the Gambler's Ruin that we can sometimes get the same number several times in a row.
 <2>that `goat1 != goat2`
 
-We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure that to avoid the two goat doors.
+We have now assigned the two goats to two different doors. We need to assign the car to the remaining door. We can do the same thing but we have to make sure to avoid the two goat doors.
 
 [source,python,numbered]
 ----
@@ -722,7 +722,7 @@ In the second part of the game we need to have the contestant choose a door. We 
 ----
 choice = int(input("Choose a door: ")) <1>
 ----
-<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking, though error checking is an import part of writing reliable, robust computer programs. Indeed many computer security vulnerabilities come from software developers not properly validating input data causing program to behave in unexpected and sometimes dangerous ways.
+<1> We are assuming the user will type in either 1, 2, or 3. We don't do any error checking, though error checking is an import part of writing reliable, robust computer programs. Indeed many computer security vulnerabilities come from software developers not properly validating input data causing programs to behave in unexpected and sometimes dangerous ways.
 
 So now we have four variables set up:
 
