@@ -45,7 +45,6 @@ include::ch5-conditionals.adoc[]
 
 include::ch6-a-random-walk.adoc[]
 
-////
 include::ch7-case-study-particles-and-collisions.adoc[]
 
 include::ch8-the-for-loop.adoc[]
@@ -61,7 +60,6 @@ include::ch12-cryptography.adoc[]
 include::ch13-accessing-the-web.adoc[]
 
 include::ch14-tuples-and-lists.adoc[]
-////
 
 [bibliography]
 == References and Reading
