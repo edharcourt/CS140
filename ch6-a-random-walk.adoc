@@ -211,7 +211,7 @@ plots 100 points per pixel `scale = 100`.
 
 |===
 
-Even though we have a 50-50 chance of increasing our decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.
+Even though we have a 50-50 chance of increasing or decreasing our chip count on every roll notice that we still go on long winning or long losing streaks.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Modify the random walk above so that whenever we have a positive chip count we plot a green pixel. For a negative chip count plot a red pixel.
