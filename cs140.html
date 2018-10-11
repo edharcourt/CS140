@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
     resultNode.style.display = 'none';
     var viewLink = document.createElement('a');
     viewLink.className = 'view-result';
-    //viewLink.href = '#';
+//   viewLink.href = '#';
     viewLink.appendChild(document.createTextNode('[ view result ]'));
     resultNode.previousElementSibling.querySelector('.title').appendChild(viewLink);
     viewLink.addEventListener('click', toggle_result_block);
@@ -6905,7 +6905,7 @@ A <em>computer simulation</em> is a computer program that represents a simulatio
 <div class="sect2">
 <h3 id="_the_gamblers_ruin"><a class="anchor" href="#_the_gamblers_ruin"></a>6.1. The Gambler&#8217;s Ruin</h3>
 <div class="paragraph">
-<p>Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand.</p>
+<p>Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance of winning each toss (better odds than a real casino.) Maybe they will start with a certain number of chips, say one thousand.</p>
 </div>
 <div class="paragraph">
 <p>How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn&#8217;t matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.</p>
@@ -8652,7 +8652,7 @@ A <em>frame</em> is one image in a sequence of images that is part of a video. T
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">()</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">clock</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">()</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -9535,7 +9535,7 @@ This way of handling a collision, simply swapping velocities, is overly simplist
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-10-10 15:08:58 EDT
+Last updated 2018-10-11 13:11:07 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
