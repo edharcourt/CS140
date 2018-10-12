@@ -45,8 +45,9 @@ include::ch5-conditionals.adoc[]
 
 include::ch6-a-random-walk.adoc[]
 
-////
 include::ch7-case-study-particles-and-collisions.adoc[]
+
+////
 
 include::ch8-the-for-loop.adoc[]
 

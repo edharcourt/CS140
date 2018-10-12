@@ -164,7 +164,7 @@ and we can call the object's `tick` method that will return how many millisecond
 
 [source,python]
 ----
-dt = pygame.time.tick() <1>
+dt = clock.tick() <1>
 ---- 
 <1> let `dt` mean _delta time_ or _the change in time_. In this case milliseconds.
 
