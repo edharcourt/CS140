@@ -68,11 +68,11 @@ Here is the completed move function.
 [source,python,numbered]
 ----
 def move(x, y, dx, dy):
-'''
-x and y are the location of the particle
-dx and dy is the velocity of the particle
-return: new x, y, dx, and dy.
-'''
+	'''
+	x and y are the location of the particle
+	dx and dy is the velocity of the particle
+	return: new x, y, dx, and dy.
+	'''
     x = x + dx
     y = y + dy
 
@@ -177,7 +177,7 @@ ball_x = ball_x + dt * ball_dx <1>
 ball_y = ball_y + dt * ball_dy <2>
 ---- 
 <1> The particle's new stem:[x]-coordinate is the old stem:[x]-coordinate plus the time passed times the ball's stem:[x] velocity. This should make intuitive sense.
-<2> Similarly for the change in the stem:[y]component.
+<2> Similarly for the change in the stem:[y] component.
 
 The logic for bouncing the particle off of the wall is exactly the same as before. We now have enough to rewrite our `move` function to account for the frame rate.
 
@@ -185,12 +185,10 @@ The logic for bouncing the particle off of the wall is exactly the same as befor
 ----
 def move(x, y, dx, dy):
 
-    time_passed = clock.tick(60) / 1000.0  <1>
-
     x = x + time_passed * dx
     y = y + time_passed * dy
 
-	# bounce of the four walls <2>
+	# bounce of the four walls <1>
     if x < 0:                     # left
         x = 0
         dx = -dx
@@ -207,8 +205,7 @@ def move(x, y, dx, dy):
 
     return (x,y,dx,dy)
 ---- 
-<1> The `tick` function can take an optional frame rate as an argument (in this case 60), which means Pygame will make sure that the loop does not go faster than 60 _fps_. 
-<2> This conditional is exactly like before.
+<1> This conditional is exactly like before.
 
 Piecing this all together we have ...
 
@@ -235,6 +232,7 @@ ball_dy = height // 4 <2>
 clock = pygame.time.Clock()
 
 while True:
+    time_passed = clock.tick(60) / 1000.0  <3>
     win.fill(color.lightgray)
 
     (ball_x,ball_y,ball_dx,ball_dy) = move(ball_x,ball_y,ball_dx,ball_dy)
@@ -244,6 +242,7 @@ while True:
 ----
 <1> move across stem:[x] axis in two seconds
 <2> move down stem:[y] axis in four seconds
+<3> The `tick` function can take an optional frame rate as an argument (in this case 60), which means Pygame will make sure that the loop does not go faster than 60 _fps_. 
 
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
@@ -259,8 +258,8 @@ than for the first particle to make it more interesting.
 # this goes before loop
 ball2_x = width // 4 - ball_w // 2
 ball2_y = height // 4 - ball_h // 2
-ball2_dx = width / 1.603 # across screen in two seconds (units are pixels/second)
-ball2_dy = height / -3.237 # down screen in four seconds
+ball2_dx = width / 1.603    # across screen in 1.6 seconds (units are pixels/second)
+ball2_dy = height / -3.237  # up screen in 3.2 seconds
 ----
 
 Now modify the loop body to move the second particle. Remember to redraw the second particle.
