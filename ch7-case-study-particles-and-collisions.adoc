@@ -1,7 +1,7 @@
 == Case study: Particles and Collision
 
-Lets revisit modeling a particle moving in two dimensions at a constant velocity. 
-But lets use an image of particle (as a soccer ball) rather than a circle.
+Let's revisit modeling a particle moving in two dimensions at a constant velocity. 
+We will use an image of particle (as a soccer ball) rather than a circle.
 
 image::ball.png[align="center"]
 
@@ -34,13 +34,13 @@ pygame.display.update()
 
 Images are rectangular, even if they are an image of a circle. So in order for the image to appear like a circle the pixels that are outside of the ball are _transparent_. In graphics terminology we call this _alpha transparency_.  The `convert_alpha` function ensures that when we load the image we don't lose any of the transparency in the image pixels.
 
-To animate a particle with a velocity we see that a velocity has two components, its direction on the stem:[x]-axis a direction on the stem:[y]-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would move to the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
+To animate a particle with a velocity we see that a velocity has two components, its direction on the stem:[x]-axis and a direction on the stem:[y]-axis. We often represent a velocity using two variables `dx` and `dy`. If `dx` were `1` then that means the particle would move to the right one pixel every time step.  If `dy` were `1` then the particle would also move down one pixel every time step. The net effect would be that the particle would be moving down and to the right at a 45 degree angle.
 
 image:ball_velocity.png[width=455,height=261,align="center"]
 
 Unlike a Pygame circle, whose coordinate is measured from the center of the circle, the coordinates of an image in Pygame is the coordinate of the upper left corner of the image (remember, all images are rectangular).
 
-All that is left to do is to update the particle's coordinates by its velocity and do something sensible if it hits a wall. Lets define a `move` function as we did in the Brownian Motion example. This `move` function will be a little more complicated because not only will the particle's coordinates change (`x` and `y`), but if the particle hits a wall its direction will change, that is, the velocity `dx` or `dy`.
+All that is left to do is to update the particle's coordinates by its velocity and do something sensible if it hits a wall. Let's define a `move` function as we did in the Brownian Motion example. This `move` function will be a little more complicated because not only will the particle's coordinates change (`x` and `y`), but if the particle hits a wall its direction will change, that is, the velocity `dx` or `dy`.
 
 image::particle_move.png[align="center"]
 
@@ -145,7 +145,7 @@ NOTE: A _frame_ is one image in a sequence of images that is part of a video. Th
 
 The particle simulation runs at _one frame per loop iteration_. This is enormously fast. On my laptop 1000 loop iterations takes about 1 second. That would amount to 1000 _fps_. The problem is that we do not know how long a loop iteration takes to execute. So we do not have a consistent frame rate. 
 
-Lets instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the stem:[x] velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
+Let's instead define a velocity in terms of _time_ as _pixels per second_. If our window is 600 pixels wide and we want the particle to travel across the window in two seconds then the stem:[x] velocity would be `600 / 2.0` or `300` pixels per second. We should be more general and handle displays of various widths and heights.  Assume `width` and `height` are the dimensions of the display we have ...
 
 [source,python,numbered]
 ----
