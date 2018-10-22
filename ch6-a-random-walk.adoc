@@ -110,7 +110,7 @@ print("Number of ten in a row: ", in_a_row_count)
 
 === The Gambler's Ruin
 
-Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance of winning each toss (better odds than a real real casino.) Maybe they will start with a certain number of chips, say one thousand. 
+Lets modify our coin toss program and see if we can learn something about randomness. Assume a gambler is playing the coin toss game, if they guess correctly they win a chip, and lose one of they are wrong. They have a 50-50 chance of winning each toss (better odds than a real casino.) Maybe they will start with a certain number of chips, say one thousand. 
 
 How long will the gambler play? A recreational gambler might play until they lose everything or hit some goal, such as doubling their chips. Lets modify the coin toss program and turn it in to the coin toss gambling game. We could ask the user every time if they want to choose heads or tails, but this may take a long time, and we will want to see what happens over many tosses (a thousand, or million). Since it doesn't matter what the gambler guesses, because it is always 50-50, we can have the program always choose heads (or tails) for the guess.
 
