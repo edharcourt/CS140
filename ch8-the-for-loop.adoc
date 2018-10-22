@@ -53,10 +53,9 @@ for i in range(101):
 The `range` function can take an optional starting value. For example `range(10,15)` generates the sequence of integers `10, 11, 12, 13, 14`.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-What is the output of the following code fragment.
-
 [source,python,numbered]
 ----
+# What is the output of the following code?
 sum = 0
 for i in range(3,8):
     sum += i
@@ -67,6 +66,47 @@ print(sum)
 ====
 25
 ====
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+[source,python,numbered]
+----
+# What is the output of the following code?
+sum = 0
+for i in range(8,3):
+    sum += i
+print(sum)
+----
+
+[.result]
+====
+----
+0
+----
+Because the start value in the `range` function is greater-than-or-equal to the stop value the loop iterates exactly zero times.
+====
+
+The range function can also take an optional step value as the third argument. For example, `range(10,15,2)` generates the sequence of integers `10, 12, 14`.
+
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+[source,python,numbered]
+----
+# What is the output of the following code?
+sum = 0
+for i in range(3,8,2):
+    sum += i
+print(sum)
+----
+
+[.result]
+====
+----
+15
+----
+The sequence generates is `3,5,7`.
+====
+
+Step values can be negative. For example, `range(8,3,-1)` generates the sequence
+`8,7,6,5,4`.
 
 We don't always have to use the `range` function to generate a sequence. A string literal is  also a sequence of characters.
 
