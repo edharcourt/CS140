@@ -29,7 +29,7 @@ for i in range(10):
     print(i)
 ----
 
-will print the integers 0 through 9, one per line. More generally, the `for`-loop has the sytnax
+will print the integers 0 through 9, one per line. More generally, the `for`-loop has the syntax ...
 
 [source,python,numbered]
 ----
@@ -50,9 +50,39 @@ for i in range(101):
     total = total + i
 ----
 
-*TODO: MOre for-loop examples should go here and check yourself.*
+The `range` function can take an optional starting value. For example `range(10,15)` generates the sequence of integers `10, 11, 12, 13, 14`.
 
-We don't always have to use the `range` function to generate a sequence. A string literal is  also a sequence of characters. For example, the loop
+.Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+What is the output of the following code fragment.
+
+[source,python,numbered]
+----
+sum = 0
+for i in range(3,8):
+    sum += i
+print(sum)
+----
+
+[.result]
+====
+25
+====
+
+We don't always have to use the `range` function to generate a sequence. A string literal is  also a sequence of characters.
+
+.Example
+
+[source,python,numbered]
+----
+x = 3 + 5 * 9
+print(x)
+----
+
+[.result]
+====
+`48`
+====
+
 
 [source,python,numbered]
 ----
