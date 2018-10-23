@@ -19,11 +19,9 @@ paddle_w = paddle.get_width()
 paddle_h = paddle.get_height()
 paddle_x = 10
 paddle_y = height // 2 - paddle_h // 2
-paddle_dy = 8
+paddle_dy = height // 2 # paddle moves down screen in two seconds
 
 def move(x, y, dx, dy):
-
-    dt = clock.tick(60) / 1000.0
 
     x += dt * ball_dx
     y += dt * ball_dy
@@ -52,6 +50,8 @@ pygame.key.set_repeat(1,1)
 while True:
     win.fill(color.lightgray)
 
+    dt = clock.tick(60) / 1000.0
+
     (ball_x,ball_y,ball_dx,ball_dy) = \
           move(ball_x,ball_y,ball_dx,ball_dy)
 
@@ -60,16 +60,17 @@ while True:
         pygame.quit()
         exit()
 
+    event = pygame.event.poll()
     # handle events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                paddle_y = paddle_y - paddle_dy
-            elif event.key == pygame.K_DOWN:
-                paddle_y = paddle_y + paddle_dy
+    #for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+        pygame.quit()
+        exit()
+    elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_UP:
+            paddle_y = paddle_y - dt*paddle_dy
+        elif event.key == pygame.K_DOWN:
+            paddle_y = paddle_y + dt*paddle_dy
 
     win.blit(ball, (ball_x, ball_y))
     win.blit(paddle, (paddle_x, paddle_y))
