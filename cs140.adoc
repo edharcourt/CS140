@@ -49,9 +49,9 @@ include::ch7-case-study-particles-and-collisions.adoc[]
 
 include::ch8-the-for-loop.adoc[]
 
-////
-
 include::ch9-event-handling.adoc[]
+
+////
 
 include::ch10-image-processing.adoc[]
 

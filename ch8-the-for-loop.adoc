@@ -110,8 +110,8 @@ Because `3+5+7` is `15`.
 ====
 
 Step values can be negative. For example, `range(8,3,-1)` generates the sequence
-`8,7,6,5,4` (why does it no include `3`? Because the `range` function never includes the 
-final _stop_ value, in this case `3`.
+`8,7,6,5,4` (why does it not include `3`? Because the `range` function never includes the 
+final _stop_ value, in this case `3`).
 
 === Nested `for`-loops
 

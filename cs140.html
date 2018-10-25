@@ -679,6 +679,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_8">8.5. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_event_handling">9. Event Handling</a>
+<ul class="sectlevel2">
+<li><a href="#_a_handy_utility_function">9.1. A Handy Utility Function</a></li>
+<li><a href="#_pong">9.2. Pong</a></li>
+<li><a href="#_exercises_8">9.3. Exercises</a></li>
+<li><a href="#_terminology_9">9.4. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -9572,8 +9580,8 @@ the loop iterates exactly zero times.</p>
 </div>
 <div class="paragraph">
 <p>Step values can be negative. For example, <code>range(8,3,-1)</code> generates the sequence
-<code>8,7,6,5,4</code> (why does it no include <code>3</code>? Because the <code>range</code> function never includes the
-final <em>stop</em> value, in this case <code>3</code>.</p>
+<code>8,7,6,5,4</code> (why does it not include <code>3</code>? Because the <code>range</code> function never includes the
+final <em>stop</em> value, in this case <code>3</code>).</p>
 </div>
 </div>
 <div class="sect2">
@@ -9703,6 +9711,612 @@ up to but not including <code>3</code>.</p>
 </li>
 <li>
 <p>inner loop</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event_handling"><a class="anchor" href="#_event_handling"></a>9. Event Handling</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Up to this point the only way that the user has interacted with a program is to enter data from the console with the keyboard from a call to the <code>input</code> function.  Lets now allow the user to interact with a running Pygame program using the mouse or the keyboard. For example, hitting the up and down arrows to move something on a pygame display or clicking somewhere on a pygame window.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An <em>event</em> is a Pygame object that represents a user action such as pressing a key or moving the mouse. An event has data associated with it such as the kind of event, such as a mouse movement, mouse button press, or key press. Additional data depends on the event. For example, if the mouse was moved then the event also contains the current location of the mouse. If a key was pressed then the event contains data about which key.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>One event we can check for is to see if the user has clicked the X in the Pygame
+window to kill the program. We can check for this event, named <code>pygame.QUIT</code>. Events can be generated quickly. Just moving your mouse across the Pygame display can generate hundreds of <code>pygame.MOUSEMOTION</code> events.  Hence, events get stored in the <em>event queue</em>.</p>
+</div>
+<div class="paragraph">
+<p>A <em>queue</em> is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people get <em>in queue</em>. An <em>event queue</em> is a Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.</p>
+</div>
+<div class="paragraph">
+<p>Here is a code snippet that checks for the <code>QUIT</code> event and stops the program if the user
+has clicked on the X. The Pygame function <code>pygame.event.get()</code> retrieves the event queue (and the event queue is a sequence, so it can be used in a <code>for</code>-loop).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-k">for</span> <span class="tok-n">event</span> <span class="tok-ow">in</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">():</span>   <i class="conum" data-value="1"></i><b>(1)</b>
+	<span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">QUIT</span><span class="tok-p">:</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+		<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>              <i class="conum" data-value="3"></i><b>(3)</b>
+		<span class="tok-nb">exit</span><span class="tok-p">()</span>                     <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>For each event in the event queue</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>See if it is the <code>QUIT</code> event. If it is then &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>stop Pygame (this is a new function)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>exit out of the program</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We could place this code in the outer while loop of our particle simulation.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_handy_utility_function"><a class="anchor" href="#_a_handy_utility_function"></a>9.1. A Handy Utility Function</h3>
+<div class="paragraph">
+<p>The above event processing code checks for a <code>QUIT</code> event while the program is executing. It does not otherwise cause the program to stop or wait. Recall how we were using the <code>input()</code> function to cause a Pygame program to actually pause so the display didn&#8217;t just disappear when the program terminated. Lets modify the above event processing code and write a function <code>wait_for_quit()</code> that causes the program to actually stop and wait until the user closes the window. We can do this just by looping until the user closes the window.</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>util.py</code></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">wait_for_quit</span><span class="tok-p">():</span>
+
+    <span class="tok-k">while</span> <span class="tok-bp">True</span><span class="tok-p">:</span>
+        <span class="tok-k">for</span> <span class="tok-n">event</span> <span class="tok-ow">in</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">():</span>   <i class="conum" data-value="1"></i><b>(1)</b>
+            <span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">QUIT</span><span class="tok-p">:</span>
+                <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>
+				<span class="tok-nb">exit</span><span class="tok-p">()</span>                     <i class="conum" data-value="2"></i><b>(2)</b>
+		<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">wait</span><span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">)</span>              <i class="conum" data-value="3"></i><b>(3)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Same event code as before.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>wait_for_quit</code> never returns, it just kills the program right here.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>While this line not absolutely necessary, forcing a delay keeps the <code>while</code> loop from spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Function <code>pygame.time.wait</code> waits for a number of milliseconds. It is similar to <code>pygame.time.delay</code> except that <code>pygame.time.wait</code> relinquishes the CPU so that other programs may run whereas <code>pygame.time.delay</code> continues to use the processor during the delay.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Function <code>wait_for_quit</code> assumes that if the user closes the window they want the program to terminate as well. Function <code>wait_for_quit()</code> is so useful that we might consider putting it in a separate file <code>util.py</code> so we can import it in other Pygame programs.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function <code>wait_for_click()</code> that <em>pauses</em> the program until the user clicks
+somewhere in the Pygame display. This function should behave a little differently than <code>wait_for_quit()</code> in that the program should not exit, but just continue.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">wait_for_click</span><span class="tok-p">():</span>
+    <span class="tok-n">done</span> <span class="tok-o">=</span> <span class="tok-bp">False</span>                                   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">while</span> <span class="tok-ow">not</span> <span class="tok-n">done</span><span class="tok-p">:</span>                                <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">for</span> <span class="tok-n">e</span> <span class="tok-ow">in</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">():</span>               <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tok-k">if</span> <span class="tok-n">e</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">MOUSEBUTTONDOWN</span><span class="tok-p">:</span>   <i class="conum" data-value="4"></i><b>(4)</b>
+                <span class="tok-n">done</span> <span class="tok-o">=</span> <span class="tok-bp">True</span>                        <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">wait</span><span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">)</span>                      <i class="conum" data-value="6"></i><b>(6)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Local variable used to control the <code>while</code> loop.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This loop does not terminate until the user has clicked in the Pygame display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Standard code to get events in event queue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Check for the <code>MOUSEBUTTONDOWN</code> event. This will check for either the left or right mouse button and even clicking the scrolling wheel on the mouse.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Setting <code>done</code> to <code>True</code> will cause the <code>while</code>-loop to terminate.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Again, this is to be user friendly and let other programs run and not chew up CPU (or battery).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Function <code>wait_for_click</code> does actually return (unlike <code>wait_for_quit</code>). It also does not return a value (OK, it returns the special value <code>None</code>).  We should also put <code>wait_for_click</code> in <code>util.py</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pong"><a class="anchor" href="#_pong"></a>9.2. Pong</h3>
+<div class="paragraph">
+<p>One of the first successful video games was <a href="https://en.wikipedia.org/wiki/Pong">Pong</a>. By now Pong is considered a classic, almost the <em>hello world</em> of computer games.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we will need a graphic for the paddle.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/paddle.png" alt="paddle">
+</div>
+</div>
+<div class="paragraph">
+<p>Next we need to set up some properties of the paddle and <code>blit</code> it to the display inside of the outer <code>while</code>.  We&#8217;ll offset the paddle a little padding on the left and start it in the middle of the \(y\) axis of the display.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-c1"># properties of the paddle</span>
+<span class="tok-n">paddle</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;paddle.png&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">paddle_w</span> <span class="tok-o">=</span> <span class="tok-n">paddle</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span>
+<span class="tok-n">paddle_h</span> <span class="tok-o">=</span> <span class="tok-n">paddle</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span>
+<span class="tok-n">paddle_x</span> <span class="tok-o">=</span> <span class="tok-mi">10</span>
+<span class="tok-n">paddle_y</span> <span class="tok-o">=</span> <span class="tok-n">height</span> <span class="tok-o">//</span> <span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">paddle_h</span> <span class="tok-o">//</span> <span class="tok-mi">2</span>
+<span class="tok-n">paddle_dy</span> <span class="tok-o">=</span> <span class="tok-mi">8</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and add the following line right after we <code>blit</code> the ball in the outer <code>while</code> loop. (Okay, so we are playing pong with a soccer ball).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">paddle</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">paddle_x</span><span class="tok-p">,</span> <span class="tok-n">paddle_y</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We need to figure out how to make the paddle responsive to the up and down arrow on the keyboard. The <code>KEYDOWN</code> event means that some key on the keyboard is being pressed. We can look at some data associated with the event to determine which key it is.  We can
+check to see if <code>event.key</code> is <code>K_UP</code> or <code>K_DOWN</code>, the constants for the up and down  arrow keys and add or sbtract to <code>paddle_y</code> as appropriate.</p>
+</div>
+<div class="paragraph">
+<p>Our code to process events is a little more complicated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">for</span> <span class="tok-n">event</span> <span class="tok-ow">in</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">():</span>
+	<span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">QUIT</span><span class="tok-p">:</span>
+		<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>
+		<span class="tok-nb">exit</span><span class="tok-p">()</span>
+	<span class="tok-k">elif</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">KEYDOWN</span><span class="tok-p">:</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+		<span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">key</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">K_UP</span><span class="tok-p">:</span>           <i class="conum" data-value="2"></i><b>(2)</b>
+			<span class="tok-n">paddle_y</span> <span class="tok-o">=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">-</span> <span class="tok-n">paddle_dy</span>
+		<span class="tok-k">elif</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">key</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">K_DOWN</span><span class="tok-p">:</span>       <i class="conum" data-value="3"></i><b>(3)</b>
+			<span class="tok-n">paddle_y</span> <span class="tok-o">=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">+</span> <span class="tok-n">paddle_dy</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Do we have a key press event?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If so, then is it the up-arrow &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>or the down-arrow key?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you add this to the outer <code>while</code> loop you will notice that you need to keep hitting the up or down arrow key just to move the paddle one pixel. That is because when you press the down arrow key you generate only one event. What we would like to have happen is that when we press the key we continue to generate <code>KEYDOWN</code> events at a regular interval as long as it stays pressed. We can do this at the start of the program using the Pygame function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">key</span><span class="tok-o">.</span><span class="tok-n">set_repeat</span><span class="tok-p">(</span><span class="tok-n">initial</span><span class="tok-p">,</span><span class="tok-n">interval</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What this says is to generate an initial event after <code>initial</code> milliseconds and then at regular intervals of <code>interval</code> milliseconds as the key is pressed.  Reasonable values for
+<code>initial</code> and <code>interval</code> are <code>1</code> millisecond.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">key</span><span class="tok-o">.</span><span class="tok-n">set_repeat</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Moving the paddle one pixel at a time is still slow, so we&#8217;ll set up another variable <code>paddle_dy</code> to move it eight pixels every event.</p>
+</div>
+<div class="paragraph">
+<p>In order to make this a complete Pong game we need some way to lose. In Pong this is by not hitting the ball and having go off the left edge. IN the <code>move</code> function we need to remove the code that bounces the particle off of the left wall. And in the outer <code>while</code> loop we can simply check the \(x\) coordinate of the ball and exit the program much like we did for the <code>QUIT</code> event.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the <code>move</code> function so the particle does not bounce off of the left wall.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Simply delete the part of the condition where we check if \(x\) is less than 0. The new <code>move</code> function is below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">,</span> <span class="tok-n">dx</span><span class="tok-p">,</span> <span class="tok-n">dy</span><span class="tok-p">):</span>
+
+    <span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">clock</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">(</span><span class="tok-mi">60</span><span class="tok-p">)</span> <span class="tok-o">/</span> <span class="tok-mf">1000.0</span>   <span class="tok-c1"># time elapsed since last frame</span>
+
+    <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">dt</span> <span class="tok-o">*</span> <span class="tok-n">ball_dx</span>           <span class="tok-c1"># new x and y coordinates</span>
+    <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">dt</span> <span class="tok-o">*</span> <span class="tok-n">ball_dy</span>
+
+	<span class="tok-c1"># code to bounce off of left wall was deleted here.</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">ball_w</span> <span class="tok-o">&gt;=</span> <span class="tok-n">width</span><span class="tok-p">:</span>        <span class="tok-c1"># right wall</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">width</span> <span class="tok-o">-</span> <span class="tok-n">ball_w</span>
+        <span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>                      <span class="tok-c1"># top wall</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+        <span class="tok-n">dy</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dy</span>
+    <span class="tok-k">elif</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">ball_h</span> <span class="tok-o">&gt;=</span> <span class="tok-n">height</span><span class="tok-p">:</span>     <span class="tok-c1"># bottom wall</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">height</span> <span class="tok-o">-</span> <span class="tok-n">ball_h</span>
+        <span class="tok-n">dy</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dy</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">dx</span><span class="tok-p">,</span><span class="tok-n">dy</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the outer <code>while</code> loop so that the game ends (rather abruptly) when the ball
+goes off the left hand side of the window.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>To check to see if the player lost we could add the following code
+to the outer <code>while</code> loop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-c1"># check to see if we lst.</span>
+<span class="tok-k">if</span> <span class="tok-n">ball_x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>
+	<span class="tok-nb">exit</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the entire outer while loop including our event code to check for the
+<code>QUIT</code> event and the paddle movement.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</div></td><td class="code"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">key</span><span class="tok-o">.</span><span class="tok-n">set_repeat</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-bp">True</span><span class="tok-p">:</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">fill</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">lightgray</span><span class="tok-p">)</span>
+
+    <span class="tok-p">(</span><span class="tok-n">ball_x</span><span class="tok-p">,</span><span class="tok-n">ball_y</span><span class="tok-p">,</span><span class="tok-n">ball_dx</span><span class="tok-p">,</span><span class="tok-n">ball_dy</span><span class="tok-p">)</span> <span class="tok-o">=</span> \
+          <span class="tok-n">move</span><span class="tok-p">(</span><span class="tok-n">ball_x</span><span class="tok-p">,</span><span class="tok-n">ball_y</span><span class="tok-p">,</span><span class="tok-n">ball_dx</span><span class="tok-p">,</span><span class="tok-n">ball_dy</span><span class="tok-p">)</span>
+
+    <span class="tok-c1"># check to see if we lost.</span>
+    <span class="tok-k">if</span> <span class="tok-n">ball_x</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>
+        <span class="tok-nb">exit</span><span class="tok-p">()</span>
+
+    <span class="tok-c1"># handle events</span>
+    <span class="tok-k">for</span> <span class="tok-n">event</span> <span class="tok-ow">in</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">():</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">QUIT</span><span class="tok-p">:</span>
+            <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">quit</span><span class="tok-p">()</span>
+            <span class="tok-nb">exit</span><span class="tok-p">()</span>
+        <span class="tok-k">elif</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">type</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">KEYDOWN</span><span class="tok-p">:</span>
+            <span class="tok-k">if</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">key</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">K_UP</span><span class="tok-p">:</span>
+                <span class="tok-n">paddle_y</span> <span class="tok-o">=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">-</span> <span class="tok-n">paddle_dy</span>
+            <span class="tok-k">elif</span> <span class="tok-n">event</span><span class="tok-o">.</span><span class="tok-n">key</span> <span class="tok-o">==</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">K_DOWN</span><span class="tok-p">:</span>
+                <span class="tok-n">paddle_y</span> <span class="tok-o">=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">+</span> <span class="tok-n">paddle_dy</span>
+
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">ball</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">ball_x</span><span class="tok-p">,</span> <span class="tok-n">ball_y</span><span class="tok-p">))</span>
+    <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">paddle</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">paddle_x</span><span class="tok-p">,</span> <span class="tok-n">paddle_y</span><span class="tok-p">))</span>
+
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is the same as the event processing <code>for</code> loop we just covered above.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The outer loop, in our case the <code>while</code> loop (throttled by the frame rate) is often called <em>the game loop</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We also need to bounce the ball off of the paddle. To do this lets make sure we understand the various coordinates and widths and heights.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/ball_hitting_paddle.png" alt="ball hitting paddle" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>With the paddle on the left hand side of the display, the ball is always coming in from the right. One common mistake is to check if the \(x\) coordinate of the right side of the paddle (<code>paddle_x + paddle_w</code>) is equal to the left edge of the ball, <code>ball_x</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">paddle_x</span> <span class="tok-o">+</span> <span class="tok-n">paddle_w</span> <span class="tok-o">==</span> <span class="tok-n">ball_x</span><span class="tok-p">:</span>
+    <span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But remember that the particle travels a certain distance each frame and the left edge of the ball will most likely overlap the right edge of the paddle and rarely be equal. We should check if the left edge of the ball is less than or equal to the right edge of the paddle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">ball_x</span> <span class="tok-o">&lt;=</span> <span class="tok-n">paddle_x</span> <span class="tok-o">+</span> <span class="tok-n">paddle_w</span><span class="tok-p">:</span>
+    <span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s closer. But this is true even if the ball goes off the left edge of the display. Now we need to check if the ball is within the \(y\) coordinates of the paddle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;=</span> <span class="tok-n">paddle_x</span> <span class="tok-o">+</span> <span class="tok-n">paddle_w</span> <span class="tok-ow">and</span> \
+   <span class="tok-n">paddle_y</span> <span class="tok-o">&lt;=</span> <span class="tok-n">ball_y</span> <span class="tok-o">&lt;=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">+</span> <span class="tok-n">paddle_h</span><span class="tok-p">:</span> <i class="conum" data-value="1"></i><b>(1)</b>
+	<span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Using Python&#8217;s more mathematical notation for inequality \(x \le y \le z\)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It probably makes sense for this to go in the <code>move</code> function for the ball to keep the body of the main loop less cluttered.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Modify the <code>move</code> function so that it properly checks to see if the ball bounces off of the paddle.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">move</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">,</span> <span class="tok-n">dx</span><span class="tok-p">,</span> <span class="tok-n">dy</span><span class="tok-p">):</span>
+
+    <span class="tok-n">dt</span> <span class="tok-o">=</span> <span class="tok-n">clock</span><span class="tok-o">.</span><span class="tok-n">tick</span><span class="tok-p">(</span><span class="tok-mi">60</span><span class="tok-p">)</span> <span class="tok-o">/</span> <span class="tok-mf">1000.0</span>
+
+    <span class="tok-n">x</span> <span class="tok-o">+=</span> <span class="tok-n">dt</span> <span class="tok-o">*</span> <span class="tok-n">ball_dx</span>
+    <span class="tok-n">y</span> <span class="tok-o">+=</span> <span class="tok-n">dt</span> <span class="tok-o">*</span> <span class="tok-n">ball_dy</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">+</span> <span class="tok-n">ball_w</span> <span class="tok-o">&gt;=</span> <span class="tok-n">width</span><span class="tok-p">:</span>     <span class="tok-c1"># right wall</span>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">width</span> <span class="tok-o">-</span> <span class="tok-n">ball_w</span>
+        <span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">y</span> <span class="tok-o">&lt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>                   <span class="tok-c1">#top wall</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+        <span class="tok-n">dy</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dy</span>
+    <span class="tok-k">elif</span> <span class="tok-n">y</span> <span class="tok-o">+</span> <span class="tok-n">ball_h</span> <span class="tok-o">&gt;=</span> <span class="tok-n">height</span><span class="tok-p">:</span>  <span class="tok-c1"># bottom wall</span>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">height</span> <span class="tok-o">-</span> <span class="tok-n">ball_h</span>
+        <span class="tok-n">dy</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dy</span>
+
+    <span class="tok-c1"># check if particle hits paddle.          </span><i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">if</span> <span class="tok-n">x</span> <span class="tok-o">&lt;=</span> <span class="tok-n">paddle_x</span> <span class="tok-o">+</span> <span class="tok-n">paddle_w</span> <span class="tok-ow">and</span> \         <i class="conum" data-value="2"></i><b>(2)</b>
+       <span class="tok-n">paddle_y</span> <span class="tok-o">&lt;=</span> <span class="tok-n">y</span> <span class="tok-o">&lt;=</span> <span class="tok-n">paddle_y</span> <span class="tok-o">+</span> <span class="tok-n">paddle_h</span><span class="tok-p">:</span>
+        <span class="tok-n">dx</span> <span class="tok-o">=</span> <span class="tok-o">-</span><span class="tok-n">dx</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">dx</span><span class="tok-p">,</span><span class="tok-n">dy</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This <code>if</code>-statement is the only modification to the <code>move</code> function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We are using the parameters <code>x</code> and <code>y</code> and not <code>ball_x</code> and <code>ball_y</code>. Why? See the next <em>check yourself</em>.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Add a second ball to the pong game. Lose when both balls have gone off the screen.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>TBD</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-c1"># TBD</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_8"><a class="anchor" href="#_exercises_8"></a>9.3. Exercises</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_terminology_9"><a class="anchor" href="#_terminology_9"></a>9.4. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>event</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>event queue</p>
 </li>
 </ul>
 </div></div></td>
@@ -9845,7 +10459,7 @@ up to but not including <code>3</code>.</p>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-10-22 20:16:30 EDT
+Last updated 2018-10-25 09:22:41 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

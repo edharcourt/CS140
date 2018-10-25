@@ -7,7 +7,7 @@ NOTE: An _event_ is a Pygame object that represents a user action such as pressi
 One event we can check for is to see if the user has clicked the X in the Pygame
 window to kill the program. We can check for this event, named `pygame.QUIT`. Events can be generated quickly. Just moving your mouse across the Pygame display can generate hundreds of `pygame.MOUSEMOTION` events.  Hence, events get stored in the _event queue_. 
 
-A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people stand get _in queue_. An _event queue_ is Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
+A _queue_ is another name for a line. In the U.S. people might stand in a line to get a movie ticket, but in the U.K. people get _in queue_. An _event queue_ is a Python object that holds events in the order they occur. When you are typing in your favorite word processor you want the characters to appear in the order they are typed. Anything else would be strange.  
 
 Here is a code snippet that checks for the `QUIT` event and stops the program if the user
 has clicked on the X. The Pygame function `pygame.event.get()` retrieves the event queue (and the event queue is a sequence, so it can be used in a `for`-loop).
@@ -20,7 +20,7 @@ for event in pygame.event.get():   <1>
 		exit()                     <4>
 ----
 <1> For each event in the event queue
-<2> See if is the `QUIT` event. If it is then ...
+<2> See if it is the `QUIT` event. If it is then ...
 <3> stop Pygame (this is a new function)
 <4> exit out of the program
 
@@ -44,7 +44,7 @@ def wait_for_quit():
 ----
 <1> Same event code as before.
 <2> `wait_for_quit` never returns, it just kills the program right here.
-<3> While this is line not absolutely necessary forcing a delay keeps the `while` loop from spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
+<3> While this line not absolutely necessary, forcing a delay keeps the `while` loop from spinning at maximum speed and hogging the CPU thereby allowing other programs that might be running to utilize the CPU. Actions like this also keep your CPU cooler, and use less battery on your laptop.
 
 TIP: Function `pygame.time.wait` waits for a number of milliseconds. It is similar to `pygame.time.delay` except that `pygame.time.wait` relinquishes the CPU so that other programs may run whereas `pygame.time.delay` continues to use the processor during the delay. 
 
@@ -68,10 +68,10 @@ def wait_for_click():
         pygame.time.wait(100)                      <6>
 
 ----
-<1> Local variable used to control loop
+<1> Local variable used to control the `while` loop.
 <2> This loop does not terminate until the user has clicked in the Pygame display.
 <3> Standard code to get events in event queue.
-<4> Check for the `MOUSEBUTTONDOWN` event. This will check for either left or right mouse button and even clicking the scrolling wheel on the mouse.
+<4> Check for the `MOUSEBUTTONDOWN` event. This will check for either the left or right mouse button and even clicking the scrolling wheel on the mouse.
 <5> Setting `done` to `True` will cause the `while`-loop to terminate.
 <6> Again, this is to be user friendly and let other programs run and not chew up CPU (or battery).
 
@@ -81,7 +81,7 @@ Function `wait_for_click` does actually return (unlike `wait_for_quit`). It also
 
 === Pong
 
-One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we'll need a graphic for the paddle.
+One of the first successful video games was https://en.wikipedia.org/wiki/Pong[Pong]. By now Pong is considered a classic, almost the _hello world_ of computer games.  Lets add a paddle to our particle simulation and bounce the particle off the paddle. First we will need a graphic for the paddle.
 
 image::paddle.png[caption="Our Pong Paddle", align="center"]
 
