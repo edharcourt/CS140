@@ -66,7 +66,7 @@ while i < 10:
 
 === Darken an Image
 
-In pseudocode we need something like ...
+To darken an image we need to decrease the RGB value of each pixel by a certain amount, say 10%. In pseudocode we need something like ...
 
 [source]
 ----
@@ -83,7 +83,7 @@ A new Pygame function will assist us, `surface.get_at( (x,y) )` returns the RGBA
 ----
 (r,g,b,a) = win.get_at((0,0)) <1>
 ----
-<1> To be more precise recall that functions like `get_at` _methods_ because they are called using an _object_.
+<1> To be more precise recall that functions like `get_at` are _methods_ because they are called using an _object_.
 
 The Pygame function `surface.set_at( (x,y), RGBA)` modifies the pixel at coordinate `(x,y)` to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black ...
 
