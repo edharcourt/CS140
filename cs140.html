@@ -687,6 +687,20 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_9">9.4. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_image_processing">10. Image Processing</a>
+<ul class="sectlevel2">
+<li><a href="#_interlude_processing_rectangular_data">10.1. Interlude - processing rectangular data</a></li>
+<li><a href="#_darken_an_image">10.2. Darken an Image</a></li>
+<li><a href="#_converting_an_image_to_grayscale_and_more">10.3. Converting an image to Grayscale (and more)</a></li>
+<li><a href="#_scaling_an_image">10.4. Scaling an Image</a></li>
+<li><a href="#_smoothing_an_image">10.5. Smoothing an Image</a></li>
+<li><a href="#_image_file_formats">10.6. Image file formats</a></li>
+<li><a href="#_secrets">10.7. Secrets</a></li>
+<li><a href="#_case_study_schellings_segregation_model">10.8. Case Study: Schelling&#8217;s Segregation Model</a></li>
+<li><a href="#_exercises_9">10.9. Exercises</a></li>
+<li><a href="#_terminology_10">10.10. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -10327,6 +10341,1963 @@ The outer loop, in our case the <code>while</code> loop (throttled by the frame 
 </div>
 </div>
 <div class="sect1">
+<h2 id="_image_processing"><a class="anchor" href="#_image_processing"></a>10. Image Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One important and common application in computer science is <em>image processing</em>. Computer vision, facial recognition, medical imaging (MRIs, x-rays, CT scans) are all part of image processing. Your smartphone has image processing software; the camera provides a software zoom, and the fingerprint sensor on the device has image processing software for fingerprint matching. Web browsers resize images, and software such as Photoshop is used to do some amazing effects with images.</p>
+</div>
+<div class="paragraph">
+<p>From what we have learned so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the <em>alpha transparency</em> of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call <em>compositing</em>. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the <em>RGBA</em> color scheme.</p>
+</div>
+<div class="paragraph">
+<p>If an image is really just a bunch of integer values it means we can modify the pixel values in some way to come up with a new image. For example, what if we were to decrease each RGBA component of every pixel by 30%? Theoretically this should make the image darker.</p>
+</div>
+<div class="paragraph">
+<p>To do this we need a systematic way to go through every pixel in the image so we don&#8217;t miss any. We can go through the image row-by-row or column-by-column. We can proceed either top to bottom, bottom to top, left to right, or right to left. Probably the most common way to process an image is row-by-row and top-to-bottom.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An image is just a rectangular table of pixels, where each pixel is four integers.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_interlude_processing_rectangular_data"><a class="anchor" href="#_interlude_processing_rectangular_data"></a>10.1. Interlude - processing rectangular data</h3>
+<div class="paragraph">
+<p>Processing a rectangular table of numbers is common in computer science. We have
+a systematic way in which we can go through each number using two nested for
+loops. For example, lets say we wanted to produce the following <em>9 X 9</em>
+multiplication table on the console:</p>
+</div>
+<div class="literalblock">
+<div class="title">Multiplication Table</div>
+<div class="content">
+<pre>1	2	3	4	5	6	7	8	9
+2	4	6	8	10	12	14	16	18
+3	6	9	12	15	18	21	24	27
+4	8	12	16	20	24	28	32	36
+5	10	15	20	25	30	35	40	45
+6	12	18	24	30	36	42	48	54
+7	14	21	28	35	42	49	56	63
+8	16	24	32	40	48	56	64	72
+9	18	27	36	45	54	63	72	81</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">):</span>              <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">for</span> <span class="tok-n">j</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">):</span>          <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span> <span class="tok-o">*</span> <span class="tok-n">j</span><span class="tok-p">,</span> <span class="tok-s2">&quot;</span><span class="tok-se">\t</span><span class="tok-s2">&quot;</span><span class="tok-p">,</span> <span class="tok-n">end</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-k">print</span><span class="tok-p">()</span>                        <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We call this the <em>outer</em> <code>for</code>-loop. It constructs the rows in the table.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We call this the <em>inner</em> <code>for</code>-loop. It is responsible for construction a single row.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Recall that the character <code>\t</code> represents the tab character. The third argument <code>end=""</code> is what we call a <em>named parameter</em> in Python. The <code>print</code> function takes an optional argument whose corresponding parameter name is <code>end</code>. The <code>end</code> parameter specifies how we should handle the end of line. In this case we don&#8217;t want the <code>print</code> statement to print the end-of-line character <code>\n</code>, so we suppress it with <code>end=""</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This starts a new line.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A <em>matrix</em> is a rectangular table of numbers. The branch of mathematics that deals with matrices is called <em>linear algebra</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Rewrite the two nested <code>for</code>-loops above using two nested <code>while</code> loops.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+<span class="tok-k">while</span> <span class="tok-n">i</span> <span class="tok-o">&lt;</span> <span class="tok-mi">10</span><span class="tok-p">:</span>
+    <span class="tok-n">j</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+    <span class="tok-k">while</span> <span class="tok-n">j</span> <span class="tok-o">&lt;</span> <span class="tok-mi">10</span><span class="tok-p">:</span>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">i</span> <span class="tok-o">*</span> <span class="tok-n">j</span><span class="tok-p">,</span> <span class="tok-s2">&quot;</span><span class="tok-se">\t</span><span class="tok-s2">&quot;</span><span class="tok-p">,</span> <span class="tok-n">end</span><span class="tok-o">=</span><span class="tok-s2">&quot;&quot;</span><span class="tok-p">)</span>
+        <span class="tok-n">j</span> <span class="tok-o">=</span> <span class="tok-n">j</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+    <span class="tok-k">print</span><span class="tok-p">()</span>
+    <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">i</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_darken_an_image"><a class="anchor" href="#_darken_an_image"></a>10.2. Darken an Image</h3>
+<div class="paragraph">
+<p>To darken an image we need to decrease the RGB value of each pixel by a certain amount, say 10%. In pseudocode we need something like &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>for each row r in the image
+   for each column c in row r
+      get the RGBA components of pixel (c,r)
+	  reduce each component by 10%
+	  reset the pixel at (c,r) with the new RGBA values</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A new Pygame function will assist us, <code>surface.get_at( (x,y) )</code> returns the RGBA tuple at column <code>x</code> and row <code>y</code>. For example, if <code>win</code> was our surface, we could get the pixel in the upper left corner of the image with &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To be more precise recall that functions like <code>get_at</code> are <em>methods</em> because they are called using an <em>object</em>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Pygame function <code>surface.set_at( (x,y), RGBA)</code> modifies the pixel at coordinate <code>(x,y)</code> to be the color specified by RGBA (you can leave off the alpha transparency value, and just specify the RGB colors and the transparency will default to opaque). For example, to set the upper left corner pixel black &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <code>set_at</code> function does not return a value. Recall that functions that do not return a value really return the special value <code>None</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s a program that darkens the image below by 30%. We will review it line by line.</p>
+</div>
+<div id="img-bug" class="imageblock" style="text-align: left">
+<div class="content">
+<img src="./images/bug.jpg" alt="bug" width="500">
+</div>
+<div class="title">Figure 7. <a href="https://500px.com/martinamm">Amm, Martin  <code>https://500px.com/martinamm</code> accessed 7/27/2017</a>, found at  <a href="https://www.reddit.com/r/pics/comments/x503f/absolutely_stunning_picture_of_a_dragonfly_in_all/">reddit link</a></div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">util</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;bug.jpg&quot;</span><span class="tok-p">)</span>                                    <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">(),</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()))</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">convert_alpha</span><span class="tok-p">()</span>                                           <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>                                     <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>                                  <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>                                 <i class="conum" data-value="6"></i><b>(6)</b>
+        <span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-n">r</span> <span class="tok-o">*</span> <span class="tok-o">.</span><span class="tok-mi">7</span>                                                      <i class="conum" data-value="7"></i><b>(7)</b>
+        <span class="tok-n">g</span> <span class="tok-o">=</span> <span class="tok-n">g</span> <span class="tok-o">*</span> <span class="tok-o">.</span><span class="tok-mi">7</span>
+        <span class="tok-n">b</span> <span class="tok-o">=</span> <span class="tok-n">b</span> <span class="tok-o">*</span> <span class="tok-o">.</span><span class="tok-mi">7</span>
+        <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">))</span>                                    <i class="conum" data-value="8"></i><b>(8)</b>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>                                                  <i class="conum" data-value="9"></i><b>(9)</b>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>                                                   <i class="conum" data-value="10"></i><b>(10)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Load the image <em>before</em> we construct the display so we know how large to make the display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Construct a display surface that is the same size as the image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Call the <code>convert_alpha()</code> method <em>after</em> we load the image on line 4 and construct the display on line 5.  This is because the the <code>convert_alpha</code> function is making the format of the image compatible with the format of the display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>For each row of pixels <code>y</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>For each pixel <code>x</code> ub row <code>y</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Get the pixel value as the four components <code>(r,g,b,a)</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Decreasing a value by 30% is the same as multiplying it by <code>.7</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>We need to put the modified pixel values back in the image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><code>blit</code> the modified image back in to the display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Recall that the <code>wait_for_click()</code> function was defined in the section on event handling.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>And here is the result of darkening the image of the bug.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/darker_bug.jpg" alt="darker bug" width="500">
+</div>
+<div class="title">Figure 8. Darker Bug</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_converting_an_image_to_grayscale_and_more"><a class="anchor" href="#_converting_an_image_to_grayscale_and_more"></a>10.3. Converting an image to Grayscale (and more)</h3>
+<div class="paragraph">
+<p>The code for darkening an image gives us a useful template for performing a variety of image processing examples. The pixels in a grayscale image (<em>i.e.,</em> black-and-white) are
+always a shade of gray. Recall that in a gray pixel the RGB values are all equal.</p>
+</div>
+<div class="paragraph">
+<p>Lets say in our color image we had a pixel that was a very dark color such as <code>(93,15,13)</code>,
+a dark maroon. We would expect the corresponding grayscale pixel to be dark as well, a dark gray. Conversely, we would expect a bright color such as yellow <code>(255,255,0)</code> to be a light gray. One technique is to average the pixels of the color and use the average of the three color components. For example dark maroon would get converted to
+\((93 + 15 + 13)/3 = 40.3\), or the dark gray <code>(40,40,40)</code>.  Yellow would get converted
+to \((255 + 255 + 0)/3 = 170\), or the light gray <code>(170,170,170)</code>. We can almost reuse the entire program for darkening an image. Just change the inner loop body to &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>
+<span class="tok-n">gray</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-o">+</span><span class="tok-n">g</span><span class="tok-o">+</span><span class="tok-n">b</span><span class="tok-p">)</span><span class="tok-o">//</span><span class="tok-mi">3</span>
+<span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">gray</span><span class="tok-p">,</span><span class="tok-n">gray</span><span class="tok-p">,</span><span class="tok-n">gray</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result is &#8230;&#8203;</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/gray_bug.jpg" alt="gray bug" width="500">
+</div>
+<div class="title">Figure 9. Grayscale Bug</div>
+</div>
+<div class="paragraph">
+<p>What is cool with digital images is that we can do whatever we want to the pixel values.
+The term <em>photographic negative</em> comes from the era a film photography and how chemicals were used to develop film where colors are negated, white becomes black, black becomes white. For colors, the photographic negative of a pixel means to subtract each color component from 255.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/gray_weighted_rgb_bug.jpg" alt="gray weighted rgb bug" width="500">
+</div>
+<div class="title">Figure 10. Grayscale Bug with weighted RGB</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Compute and display the <em>photographic negative</em> of the bug.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Just change the inner loop body to &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>
+<span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-mi">255</span> <span class="tok-o">-</span> <span class="tok-n">r</span><span class="tok-p">,</span> <span class="tok-mi">255</span> <span class="tok-o">-</span> <span class="tok-n">g</span><span class="tok-p">,</span> <span class="tok-mi">255</span> <span class="tok-o">-</span> <span class="tok-n">b</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result is pretty cool looking.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/negative_bug.jpg" alt="negative bug" width="500">
+</div>
+<div class="title">Figure 11. Negative Insect</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The possibilities are endless. What hapens if we switch the color components around?
+For example, for every pixel \((r,g,b)\) change it to \((g,b,r)\)? Sometimes the effects are surprising and beautiful.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">a</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>
+<span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">r</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/gbr_bug.jpg" alt="gbr bug" width="500">
+</div>
+<div class="title">Figure 12. RGB to GBR Insect</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scaling_an_image"><a class="anchor" href="#_scaling_an_image"></a>10.4. Scaling an Image</h3>
+<div class="paragraph">
+<p>A common image processing operation is to resize an image so that it is larger or smaller. Lets think of this operation as a function that takes an image to resize along with the new width and new height of the resulting image.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/scale.png" alt="scale" width="600">
+</div>
+<div class="title">Figure 13. Scaling an image</div>
+</div>
+<div class="paragraph">
+<p>Until now we have had two ways to create a surface; the first is to use the <code>pygame.display.set_mode</code> function to create the special display surface. The second way was to use the <code>pygame.image.load</code> function to create a surface for an image. But our <code>scale</code> function will need to create an initially blank surface of an arbitrary width and height.</p>
+</div>
+<div class="paragraph">
+<p>The Pygame following line</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">surf</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">Surface</span><span class="tok-p">((</span><span class="tok-n">w</span><span class="tok-p">,</span><span class="tok-n">h</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>creates a new empty surface <code>surf</code> with width <code>w</code> and height <code>h</code> and assigns it to the variable <code>surf</code>.</p>
+</div>
+<div class="paragraph">
+<p>Lets assume we have an image we want to scale and it is in a surface <code>image</code>. Furthermore assume we have an empty surface <code>surf</code> that will be the new scaled image. We have to go through every pixel in <code>surf</code> and find a picel in <code>image</code> to copy in to <code>surf</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/scale_xy.png" alt="scale xy" width="600">
+</div>
+<div class="title">Figure 14. Computing coordinates in scaled image</div>
+</div>
+<div class="paragraph">
+<p>Lets say the orginal image was 600 pixels wide and the scaled image is 300 pixels wide. The \(x\) coordinate 10 in the scaled image should correspond to \(x\) coordinate 20 in the original image because the ratio of the widths in the original image to the scaled image is 2-to-1.</p>
+</div>
+<div class="paragraph">
+<p>In general if the width of the original image is \(w\) and the width of the scaled image is \(w'\) then an \(x\) coordinate in the scaled image will correspond to the \(x\) coordinate \(xw/w'\) in the original image. The reasoning is the same for the \(y\) coordinate.</p>
+</div>
+<div class="paragraph">
+<p>Here is the function <code>scale</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">scale</span><span class="tok-p">(</span><span class="tok-n">original</span><span class="tok-p">,</span> <span class="tok-n">scaled_w</span><span class="tok-p">,</span> <span class="tok-n">scaled_h</span><span class="tok-p">):</span>
+
+    <span class="tok-n">scaled</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">Surface</span><span class="tok-p">((</span><span class="tok-n">scaled_w</span><span class="tok-p">,</span> <span class="tok-n">scaled_h</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">w_ratio</span> <span class="tok-o">=</span> <span class="tok-n">original</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span> <span class="tok-o">/</span> <span class="tok-n">scaled_w</span>     <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">h_ratio</span> <span class="tok-o">=</span> <span class="tok-n">original</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span> <span class="tok-o">/</span> <span class="tok-n">scaled_h</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-k">for</span> <span class="tok-n">row</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">scaled_h</span><span class="tok-p">):</span>                   <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="tok-k">for</span> <span class="tok-n">col</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">scaled_w</span><span class="tok-p">):</span>
+            <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">col</span> <span class="tok-o">*</span> <span class="tok-n">w_ratio</span><span class="tok-p">)</span>                <i class="conum" data-value="5"></i><b>(5)</b>
+            <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">row</span> <span class="tok-o">*</span> <span class="tok-n">h_ratio</span><span class="tok-p">)</span>
+            <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">original</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>    <i class="conum" data-value="6"></i><b>(6)</b>
+            <span class="tok-n">scaled</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">col</span><span class="tok-p">,</span><span class="tok-n">row</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">))</span>     <i class="conum" data-value="7"></i><b>(7)</b>
+
+    <span class="tok-k">return</span> <span class="tok-n">scaled</span>                                 <i class="conum" data-value="8"></i><b>(8)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create the new empty surface that will contain our scaled image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Compute the ratio of the original image&#8217;s width to the new scaled image&#8217;s width.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Compute the ratio of the original image&#8217;s height to the new scaled image&#8217;s height.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>For every pixel in the scaled image &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Compute the \(x\) and \(y\) coordinates of the pixel we need to grab in the original image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Get the pixel in the original image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>And copy it to the new scaled image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Don&#8217;t forget this is a function that <em>returns</em> a new image.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Notice that we use floating-point division on lines 4-5. This is because we might be shrinking an image by a non-integral amount. For example, to shrink an image from <em>200 X 200</em> pixels to <em>150 X 150</em> then <code>w_ratio</code> and <code>h_ratio</code> need to be <code>1.33</code> and not <code>1</code>. When enlarging an image from <em>150 X 150</em> to <em>200 X 200</em> then <code>w_ratio</code> and <code>h_ratio</code> need to be <code>0.75</code> and not <code>0</code>.  On lines 9-10 we need to convert back to integer coordinates.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_shrinking_an_image"><a class="anchor" href="#_shrinking_an_image"></a>10.4.1. Shrinking an image</h4>
+<div class="paragraph">
+<p>If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was <em>400 X 400</em> and we are shrinking it to <em>200 X 200</em>. The scaling ratios <code>w_ratio</code> and <code>h_ratio</code> are both <code>2</code>.  Pixel <em>(0,0)</em> in the scaled image maps to pixel <em>(0,0)</em> in the original image. But pixel <em>(1,0)</em> in the scaled image maps to pixel <em>(2,0)</em> in the original image. We skipped over pixel <em>(1,0)</em>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Use the <code>scale</code> function to shrink an image 1/3 of its original height and width. Display the original image and center the smaller image in the original.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">util</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;bug.jpg&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">(),</span>
+                               <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()))</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">convert_alpha</span><span class="tok-p">()</span>                               <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-n">scaled_image</span> <span class="tok-o">=</span> <span class="tok-n">scale</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-p">,</span>
+                     <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">3</span><span class="tok-p">)</span>                 <i class="conum" data-value="3"></i><b>(3)</b>
+
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>                                      <i class="conum" data-value="4"></i><b>(4)</b>
+
+<span class="tok-n">tmp_x</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">scaled_image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">2</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+<span class="tok-n">tmp_y</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">2</span> <span class="tok-o">-</span> <span class="tok-n">scaled_image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span><span class="tok-o">//</span><span class="tok-mi">2</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">scaled_image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-n">tmp_x</span><span class="tok-p">,</span> <span class="tok-n">tmp_y</span><span class="tok-p">)</span>                       <i class="conum" data-value="6"></i><b>(6)</b>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a display the size of the original image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Always a good idea, but not always necessary.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Scale the original image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Blit the original image on to the display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Calculate the coordinates where <code>scaled_image</code> will be blitted.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Blit the scaled image.</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/bug_in_a_bug.png" alt="bug in a bug" width="500">
+</div>
+<div class="title">Figure 15. Bug centered in a bug</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice how we scaled the width and height of the image by the same proportion. That is, we kept the <em>aspect ratio</em> of the image the same.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <em>aspect ratio</em> of an image is the ratio of an image&#8217;s width divided by its height.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We didn&#8217;t have to keep the aspect ratio the same. The <code>scale</code> function will elongate, or stretch, an image along its horizontal or vertical axis.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_enlarging_an_image"><a class="anchor" href="#_enlarging_an_image"></a>10.4.2. Enlarging an image</h4>
+<div class="paragraph">
+<p>Does our scale function work if we are trying to enlarge an image? Lets reverse the scenario and enlarge a <em>200 X 200</em> image to <em>400 X 400</em>. In this case the scaling ratios <code>w_ratio</code> and <code>h_ratio</code> are both <code>0.5</code>.  Pixel <em>(0,0)</em> in the scaled image still maps to pixel <em>(0,0)</em> in the original image. However, pixel <em>(1,0)</em> in the scaled image also maps to pixel <em>(0,0)</em> in the original image. In this case we end up duplicating pixels from the original image in the scaled image.</p>
+</div>
+<div class="paragraph">
+<p>Here is a small image of a rainbow toad that we will enlarge.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/rainbow_toad_small.jpg" alt="rainbow toad small">
+</div>
+<div class="title">Figure 16. Rainbow Toad <sup class="footnote">[<a id="_footnoteref_23" class="footnote" href="#_footnotedef_23" title="View footnote.">23</a>]</sup></div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Enlarge the image of the rainbow toad to 3 times its width and height.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">util</span><span class="tok-o">,</span><span class="tok-nn">color</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;rainbow_toad_small.jpg&quot;</span><span class="tok-p">)</span>      <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span> <span class="tok-o">*</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
+                               <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span> <span class="tok-o">*</span> <span class="tok-mi">3</span><span class="tok-p">))</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">convert_alpha</span><span class="tok-p">()</span>                            <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-n">scaled_image</span> <span class="tok-o">=</span> <span class="tok-n">scale</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span> <span class="tok-o">*</span> <span class="tok-mi">3</span><span class="tok-p">,</span>       <i class="conum" data-value="4"></i><b>(4)</b>
+                     <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span> <span class="tok-o">*</span> <span class="tok-mi">3</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">scaled_image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Or whatever you named your image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Create a display 3 times the size of the original image.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Always a good idea, but not always necessary.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Scale the image.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is the enlarged image of the rainbow toad.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/rainbow_toad_enlarged.png" alt="rainbow toad enlarged">
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixels. This is why an image often becomes blurry when enlarged past the point of its resolution.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For a digital image the <em>pixel resolution</em> (or just <em>resolution</em>) is usually specified by the number of pixels wide and the number of pixels high. There also needs to be some indication of a physical dimension, often the dimensions of the display, or the number of pixels that will fit in a linear inch.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Example</div>
+<p>The specification for the display on the Samsung Galazy S7 Edge smartphone is <em>1440 X 2560</em> pixels at 534 pixels per linear inch (ppi). That means the width of the display should be \(1440/534 \approx 2.7 \) inches. The rear camera on the smartphone is 12MP (<em>i.e.</em> 12 megapixels, 12 million pixels) with an image dimension of <em>4032 px X 3024 px</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We say that an image is <em>pixelated</em> when an image is enlarged and we can see the individual pixels in the original image.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_smoothing_an_image"><a class="anchor" href="#_smoothing_an_image"></a>10.5. Smoothing an Image</h3>
+<div class="paragraph">
+<p>Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straightforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.</p>
+</div>
+<div class="paragraph">
+<p>One technique is called a <em>mean filter</em>. We replace the value of a pixel with the average (or mean) of the color components of the pixel with its eight neighbors. For example,
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components of the pixel and its neighbors.
+Likewise for the green and blue components.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/mean_filter.png" alt="mean filter" width="500">
+</div>
+<div class="title">Figure 17. Mean of the Neighborhood</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <em>neighborhood</em> of a pixel is comprised of the eight pixels that surround it.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This is probably best handled by writing a function that takes a surface and an \((x,y)\) coordinate and returns an RGB triple that is the average color of \((x,y)\) and all of its neighbors. Using our box and arrow notation we have &#8230;&#8203;</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/neighborhood_mean.png" alt="neighborhood mean" width="500">
+</div>
+<div class="title">Figure 18. Function <code>neighborhood_mean</code> of a pixel</div>
+</div>
+<div class="paragraph">
+<p>The function header should be &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">neighborhood_mean</span><span class="tok-p">(</span><span class="tok-n">surf</span><span class="tok-p">,</span> <span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">):</span>
+    <span class="tok-k">pass</span> <i class="conum" data-value="1"></i><b>(1)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Recall that we use the <code>pass</code> statement as a placeholder for the function body.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We could, write nine separate <code>get_at</code> calls to get the color of each pixel, this is a bit tedious and not very general. Notice how the nine pixels form a <em>3 X 3</em> grid. If \((x,y)\) represents the center pixel in the grid, then the row above is \(y-1\) and the row below is \(y+1\). The column to the left is \(x-1\) and the column to the right is \(x+1\). We can use our nested <code>for</code>-loop pattern to go through the <em>3 X 3</em> grid.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">neighborhood_mean</span><span class="tok-p">(</span><span class="tok-n">surf</span><span class="tok-p">,</span> <span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">):</span>
+
+    <span class="tok-n">red_sum</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                                   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">green_sum</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+    <span class="tok-n">blue_sum</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">ny</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">):</span>                     <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">for</span> <span class="tok-n">nx</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-n">x</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">):</span>                 <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">surf</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">nx</span><span class="tok-p">,</span><span class="tok-n">ny</span><span class="tok-p">))</span>      <i class="conum" data-value="4"></i><b>(4)</b>
+            <span class="tok-n">red_sum</span> <span class="tok-o">+=</span> <span class="tok-n">r</span>                          <i class="conum" data-value="5"></i><b>(5)</b>
+            <span class="tok-n">green_sum</span> <span class="tok-o">+=</span> <span class="tok-n">g</span>
+            <span class="tok-n">blue_sum</span> <span class="tok-o">+=</span> <span class="tok-n">b</span>
+
+    <span class="tok-n">red_avg</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">red_sum</span><span class="tok-o">/</span><span class="tok-mi">9</span><span class="tok-p">))</span>               <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="tok-n">green_avg</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">green_sum</span><span class="tok-o">/</span><span class="tok-mi">9</span><span class="tok-p">))</span>
+    <span class="tok-n">blue_avg</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">blue_sum</span><span class="tok-o">/</span><span class="tok-mi">9</span><span class="tok-p">))</span>
+
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">red_avg</span><span class="tok-p">,</span> <span class="tok-n">green_avg</span><span class="tok-p">,</span> <span class="tok-n">blue_avg</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Local variables to keep the sum of each color component.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>For each row in the <em>3 X 3</em> grid. Why <code>y+2</code> and not <code>y+1</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>For each column in the <em>3 X 3</em> grid. Why <code>x+2</code> and not <code>x+1</code>?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Get the neighborhood pixel color components.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The notation <code>var1 += var2</code> is shorthand for <code>var1 = var1 + var2</code>. So <code>red_sum += r</code> means <code>red_sum = red_sum + r</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>A color component must be an integer and averages are not integers; so round and convert to the closest integer.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now all that is left is to call <code>neighborhood_mean</code> for every pixel in the image, and write each pixel to an initially empty surface.  We might best think of this as a function <code>mean_filter</code> that takes a surface and returns a new surface.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/mean_filter_func.png" alt="mean filter func" width="500">
+</div>
+<div class="title">Figure 19. Mean filter function</div>
+</div>
+<div class="paragraph">
+<p>There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don&#8217;t have any neighborson the left and if the <code>neighborhood_mean</code> functions tries to access a negative <em>x</em> coordinate the program will crash.</p>
+</div>
+<div class="paragraph">
+<p>There are several ways we could handle this. We could modify <code>neighborhood_mean</code> to not access pixels outside of the boundary of the image, and only compute the mean of the neighbors the pixel does have. Pixels along the left edge (except the corners) would only have five neighbors. Corner pixels only have three neighbors, etc. We would have to keep a count of the number of actual neighbors because we can&#8217;t always divide by nine.</p>
+</div>
+<div class="paragraph">
+<p>An easier way is to skip over the border pixels and skip the first and last row and column.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">mean_filter</span><span class="tok-p">(</span><span class="tok-n">orig</span><span class="tok-p">):</span>
+    <span class="tok-n">surf</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">Surface</span><span class="tok-p">((</span><span class="tok-n">orig</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">(),</span>        <i class="conum" data-value="1"></i><b>(1)</b>
+	                       <span class="tok-n">orig</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()))</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-n">orig</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">):</span>          <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-n">orig</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">):</span>      <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">neighborhood_mean</span><span class="tok-p">(</span><span class="tok-n">orig</span><span class="tok-p">,</span> <span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+            <span class="tok-n">surf</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">))</span>             <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="tok-k">return</span> <span class="tok-n">surf</span>                                     <i class="conum" data-value="6"></i><b>(6)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create the new surface for the filtered image</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Check the loop bounds. We are skipping the first and last row of pixels. Why?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Skipping the first column and last column of pixels. Why?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Call the <code>nighborhood_mean</code> function from above.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Write the new pixel to the new surface.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Don&#8217;t forget to return the new surface.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is the original enlarged, pixelated, image.</p>
+</div>
+<div class="paragraph">
+<div class="title">Pixelated Rainbow Toad</div>
+<p><span class="image"><img src="./images/rainbow_toad_enlarged.png" alt="rainbow toad enlarged"></span></p>
+</div>
+<div class="paragraph">
+<p>And here is the filtered version.</p>
+</div>
+<div class="paragraph">
+<div class="title">Rainbow Toad after mean filtering</div>
+<p><span class="image"><img src="./images/filtered_toad.png" alt="filtered toad"></span></p>
+</div>
+<div class="paragraph">
+<p>The beautiful thing about writing this as a fuction is that if we wanted to filter the image twice we can just use <em>function composition</em> and call <code>mean filter</code> two or ever three times.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">filtered_image</span> <span class="tok-o">=</span> <span class="tok-n">mean_filter</span><span class="tok-p">(</span>
+                     <span class="tok-n">mean_filter</span><span class="tok-p">(</span>
+					     <span class="tok-n">mean_filter</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">)))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Complete the main program that calls <code>mean_filter</code> on an image.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">util</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;rainbow_toad_enlarged.png&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">(),</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()))</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Click to continue&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>
+
+<span class="tok-n">surf</span> <span class="tok-o">=</span> <span class="tok-n">mean_filter</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">surf</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Click to continue&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_image_file_formats"><a class="anchor" href="#_image_file_formats"></a>10.6. Image file formats</h3>
+<div class="paragraph">
+<p>Computer and software manufactures have defined various techniques for storing images in files. These techniques usually allow the image to be <em>compressed</em> so that it uses less storage.</p>
+</div>
+<div class="paragraph">
+<div class="title">Lossy Compression</div>
+<p>We have already seen one way we can compress an image - just make it smaller. Our <code>scale</code> function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it <em>loses information</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+With <em>lossy compression</em> data is either discarded or modified and cannot be reconstructed from the compressed data.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also use lossy compression.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+JPEG (<em>Joint Photographic Experts Group</em> <sup class="footnote">[<a id="_footnoteref_24" class="footnote" href="#_footnotedef_24" title="View footnote.">24</a>]</sup>) uses advanced mathematics to achieve good, but lossy, compression.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Lossless Compression</div>
+<p>Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word processing document. We couldn&#8217;t have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called <em>non-lossy</em> or <em>lossless</em>.</p>
+</div>
+<div class="paragraph">
+<p>The <em>Portable Network Graphics</em> image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as \(255(300)\). This lossless scheme is called <em>run length encoding</em>, because it encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+PNG  <sup class="footnote">[<a id="_footnoteref_25" class="footnote" href="#_footnotedef_25" title="View footnote.">25</a>]</sup> One of the techniques used in PNG&#8217;s lossless compression is called <em>Huffman Encoding</em>, a common technique discussed in a <em>Data Structures</em> text.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>PNG and JPEG are probably the two most important image file formats, but there are other popular formates including GIF (<em>Graphics Interchange Format</em>), and BMP (<em>Bitmap file format</em>).</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The moral of the story is that image file formats that use lossy compression (<em>i.e.</em>, JPEG) will change the values of the colors in your file. For example, if you set a pixel to the color value <code>(23,99,140)</code> if might get changed when the file is saved as a JPEG to some other "nearby" value such as <code>(24,98,141)</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_secrets"><a class="anchor" href="#_secrets"></a>10.7. Secrets</h3>
+<div class="paragraph">
+<p>As an exercise lets go through every pixel in the image of the red panda below, and if the red component of the pixel is odd, then color the pixel black. If it is even then color the pixel white.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/png/red_panda.png" alt="red panda" width="450">
+</div>
+<div class="title">Figure 20. Red Panda (Ailurus Fulgens) <code>https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG</code></div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+When you right click on the image and save it, note that it is a PNG file. Make sure to save it as a PNG file.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In previous examples we have loaded the image on a surface, processed the surface, and then blitted the image surface on the display surface. In this particular case let me suggest that we immediately blit the image to the display, and process the display surface. This will add a bit of dramatic effect.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span> <span class="tok-nn">util</span><span class="tok-o">,</span> <span class="tok-nn">color</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;red_panda.png&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">win</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">(),</span>
+                               <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()))</span>
+<span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">blit</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">))</span>                                      <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>
+
+<span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>
+    <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>
+        <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">))</span>
+        <span class="tok-k">if</span> <span class="tok-n">r</span> <span class="tok-o">%</span> <span class="tok-mi">2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>                                      <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">)</span>                 <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-k">else</span><span class="tok-p">:</span>
+            <span class="tok-n">win</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>                                 <i class="conum" data-value="4"></i><b>(4)</b>
+	<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">time</span><span class="tok-o">.</span><span class="tok-n">delay</span><span class="tok-p">(</span><span class="tok-mi">5</span><span class="tok-p">)</span>                                    <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Show the image of the fox.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>If the red component is odd make the pixel black, otherwise white.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Because we want to animate this process we are modifying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner <code>for</code>-loop?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>This delay is for dramatic effect only.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After running this code on the image of the red panda you&#8217;ll see a secret hidden message.</p>
+</div>
+<div class="paragraph">
+<div class="title">The secret message <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>&nbsp;</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="./images/png/secret.png" alt="secret" width="450">
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_hiding_a_message_in_an_image"><a class="anchor" href="#_hiding_a_message_in_an_image"></a>10.7.1. Hiding a message in an image</h4>
+<div class="paragraph">
+<p>This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the <em>odd red pixels</em>. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Why is it important that we subtract one and not add one to make a pixel even?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The red component could be 255, adding one would make it 256, which would cause a run-time error indicating that a color value was out of range.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function that takes a surface and sets all of the red pixels to even values that are at most one less than their original value.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">make_red_even</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">):</span>
+    <span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>               <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>
+            <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span> <span class="tok-n">g</span><span class="tok-p">,</span> <span class="tok-n">b</span><span class="tok-p">,</span> <span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">))</span>
+            <span class="tok-k">if</span> <span class="tok-n">r</span> <span class="tok-o">%</span> <span class="tok-mi">2</span> <span class="tok-o">==</span> <span class="tok-mi">1</span><span class="tok-p">:</span>                            <i class="conum" data-value="2"></i><b>(2)</b>
+                <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">r</span> <span class="tok-o">-</span> <span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-n">g</span><span class="tok-p">,</span> <span class="tok-n">b</span><span class="tok-p">))</span>   <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-k">return</span> <span class="tok-n">image</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We should be getting comfortable with this nested <code>for</code>-loop pattern for accessing each pixel on a surface.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This checks to see if the red component is odd.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>If it is odd, then decrease the red value by one and set it.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Notice that <code>make_red_even</code> does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface <code>image</code>) are really a <em>reference</em> to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the original image unmodified. When we should create a new surface object or  modify an existing one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contains a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop, Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in Pygame.</p>
+</div>
+<div class="paragraph">
+<p>The following two lines create a surface with the text <code>Attack At Dawn</code> rendered on it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">my_font</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">font</span><span class="tok-o">.</span><span class="tok-n">SysFont</span><span class="tok-p">(</span><span class="tok-s2">&quot;Veranda&quot;</span><span class="tok-p">,</span> <span class="tok-mi">48</span><span class="tok-p">)</span>                  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">secret</span> <span class="tok-o">=</span> <span class="tok-n">my_font</span><span class="tok-o">.</span><span class="tok-n">render</span><span class="tok-p">(</span><span class="tok-s2">&quot;Attack At Dawn&quot;</span><span class="tok-p">,</span> <span class="tok-bp">False</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">)</span> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create a <em>font object</em>, with 48pt text size. If the font Veranda is not on the system Pygame will use a default font.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Create a surface with the text <code>Attack At Dawn</code> on it using the color black (the third argument). The boolean value <code>False</code> means do not use <em>antialiasing</em> to smooth the edges on the text, but we want the image to be pure black-and-white, so we don&#8217;t antialias.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>Antialiasing</em> uses shades of a color to smooth edges.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the bottom does. You notice the difference the most where the edges of the letters are either curved or at an angle.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/png/antialias.png" alt="antialias" width="600">
+</div>
+<div class="title">Figure 21. Antialiasing</div>
+</div>
+<div class="paragraph">
+<p>Now that we have 1) a surface with a secret message on it, and 2) an image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Assume we are putting the secret message in the upper left hand corner of the image so that coordinate \((0,0)\) in the image corresponds with coordinate \((0,0)\) in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/png/panda_overlay_secret.png" alt="panda overlay secret">
+</div>
+<div class="title">Figure 22. Overlaying a secret on image</div>
+</div>
+<div class="paragraph">
+<p>The following program hides a message in an image puts it all together.</p>
+</div>
+<div class="listingblock">
+<div class="title">Hiding a message in an image <code>encrypt.py</code></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</div></td><td class="code"><span></span><span class="tok-kn">import</span> <span class="tok-nn">pygame</span><span class="tok-o">,</span><span class="tok-nn">util</span><span class="tok-o">,</span><span class="tok-nn">color</span>
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+
+<span class="tok-c1"># Main Program</span>
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-s2">&quot;some_image.png&quot;</span><span class="tok-p">)</span>                <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-n">image</span> <span class="tok-o">=</span> <span class="tok-n">make_red_even</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">)</span>                               <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-n">font</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">font</span><span class="tok-o">.</span><span class="tok-n">SysFont</span><span class="tok-p">(</span><span class="tok-s2">&quot;Veranda&quot;</span><span class="tok-p">,</span> <span class="tok-mi">40</span><span class="tok-p">)</span>
+<span class="tok-n">msg</span> <span class="tok-o">=</span> <span class="tok-n">font</span><span class="tok-o">.</span><span class="tok-n">render</span><span class="tok-p">(</span><span class="tok-s2">&quot;Python is Awesome&quot;</span><span class="tok-p">,</span> <span class="tok-bp">False</span><span class="tok-p">,</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">msg</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>                          <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">msg</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>
+        <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">msg</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>                      <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">:</span>                         <i class="conum" data-value="6"></i><b>(6)</b>
+            <span class="tok-p">(</span><span class="tok-n">ir</span><span class="tok-p">,</span><span class="tok-n">ig</span><span class="tok-p">,</span><span class="tok-n">ib</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>             <i class="conum" data-value="7"></i><b>(7)</b>
+            <span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">ir</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-n">ig</span><span class="tok-p">,</span><span class="tok-n">ib</span><span class="tok-p">))</span>              <i class="conum" data-value="8"></i><b>(8)</b>
+
+<span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">image</span><span class="tok-o">.</span><span class="tok-n">save</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">,</span> <span class="tok-s2">&quot;new_image.png&quot;</span><span class="tok-p">)</span>                  <i class="conum" data-value="9"></i><b>(9)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Make sure the image is a PNG. Why? Because of lossless compression.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Call the <code>make_red_even</code> function.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Create a secret message <code>Python is Awesome</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Go through each pixel in the secret message.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Get the message pixel and &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Check if it is black.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>If it is black then we need to get the corresponding pixel in the image and &#8230;&#8203;</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>make the red component f the image pixel odd. Hence the <code>ir+1</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td><code>pygame.image.save</code> is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case is saves the surface <code>image</code> in the file named <code>new_image.png</code> as a PNG file because the file name ends with <code>.png</code>.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The above program can crash if the image containing the message is larger than the image that is hiding the message.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Look at how we check if a color is black on line 15.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">black</span><span class="tok-p">:</span>
+    <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is checking using <em>tuple equality</em> by comparing each value in the <code>(r,g,b)</code> tuple against the tuple specified in <code>color.black</code> which is <code>(0,0,0)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Comparing tuples like this is handy, but if you didn&#8217;t know about tuple equality you could do this another with <em>logical and</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">if</span> <span class="tok-n">r</span> <span class="tok-o">==</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">g</span> <span class="tok-o">==</span> <span class="tok-mi">0</span> <span class="tok-ow">and</span> <span class="tok-n">b</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+    <span class="tok-o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, since we are certain that the message contains only black <code>(0,0,0)</code> or white <code>(255,255,255)</code> pixels, we could get away with just comparing one of the components, instead of
+all three.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_case_study_schellings_segregation_model"><a class="anchor" href="#_case_study_schellings_segregation_model"></a>10.8. Case Study: Schelling&#8217;s Segregation Model</h3>
+<div class="paragraph">
+<p>In 1969 and 1971 the economist Thomas Schelling published two now famous papers <em>Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup> and <em>Dynamic Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn&#8217;t just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background.</p>
+</div>
+<div class="paragraph">
+<p>Consider the following map of New York City.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/nyc_segregation.jpg" alt="nyc segregation">
+</div>
+<div class="title">Figure 23. Segregation map of NYC.<sup class="footnote">[<a id="_footnoteref_28" class="footnote" href="#_footnotedef_28" title="View footnote.">28</a>]</sup></div>
+</div>
+<div class="paragraph">
+<p>In this map each red dot represents a Caucasian household, blue represents a black household, yellow a Latino household, and green an Asian household. The segregation is obvious.</p>
+</div>
+<div class="paragraph">
+<p>Reasons for segregation are varied and complex.  Schelling tried to abstract away (that&#8217;s what a model does) details and propose something much more simple. People are agents living on a grid and follow some simple rules. People generally have choices of where they might live; if they don&#8217;t like where they are currently living they can move.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_grid.jpg" alt="schelling grid">
+</div>
+<div class="title">Figure 24. Schelling Agent Grid</div>
+</div>
+<div class="paragraph">
+<p>In this grid we have green agents and blue agents. White represents empty locations on the grid where agents can move.  Schelling suggested that there is a threshold of the number of unlike neighbors an agent might tolerate before they decide to move. In this case we have a green agent marked with an X who is deciding if they should move. There are two empty cells, so X has six neighbors, two of which are like them, or \(2/6 = 1/3 = \overline{.33}\). If the threshold were <em>if less than stm[1/3] of my neighbors are like me then I&#8217;ll move</em>. In this case X would stay put. On the otherhand if the threshold were \(1/2\) then X would move.</p>
+</div>
+<div class="paragraph">
+<p>How should we pick a place to move? In this case there are two choices, the lower left cell or upper right cell.  We could be smart about it and search for an empty cell that meets the threshold in which case the lower left cell would be the place.</p>
+</div>
+<div class="paragraph">
+<p>If <strong>X</strong> moves to the lower left we have</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_grid1.jpg" alt="schelling grid1">
+</div>
+<div class="title">Figure 25. Moving to lower left</div>
+</div>
+<div class="paragraph">
+<p>In this case <strong>X</strong> now has \(1/2\) half its neighbors like them. But what if they moved to the upper right?</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_grid2.jpg" alt="schelling grid2">
+</div>
+<div class="title">Figure 26. Moving to upper right</div>
+</div>
+<div class="paragraph">
+<p>Here <strong>X</strong> now has 0 neighbors like them, and they will most likely move again in the next round.</p>
+</div>
+<div class="paragraph">
+<p>Keeping in mind that empty cells could be far away on a large grid and not necessarily a neighboring cell, we might try for something simpler and search for an empty cell at random. It turns out either method will work. But from what Python we know now choosing a cell at random is the easier solution.</p>
+</div>
+<div class="paragraph">
+<p>The scenario just discussed for <strong>X</strong> is just one cell. We need to repeat this process for every cell in the grid. But when should we stop the process? When all agents are "happy" and we have no more agents moving. The question is what do we think will happen in the long run? Even with a relaive low threshold such as \(1/3\)?</p>
+</div>
+<div class="paragraph">
+<p>In pseudocode here is the process we outlined:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Randomly populate a grid with roughly equal numbers of green and blue agents and empty cells.</p>
+</li>
+<li>
+<p>Repeate until no more cells move</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>For each cell \((x,y)\) in the grid</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>if \((x,y)\) is an empty cell then continue on to the next cell</p>
+</li>
+<li>
+<p>Otherwise count the like neighbors of cell \((x,y)\)</p>
+</li>
+<li>
+<p>if the threshold is not met then otherwise search for an empty cell and move there</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To tackle the complexity of writing this program lets try and break this down into some functions. For step 1 lets write a function <code>randomly_populate</code> that takes a surface and randomly assigns each cell to be one of green, blue, or empty (white) with equal probability. (We could also modify this so that one color is less populated than another).</p>
+</div>
+<div class="paragraph">
+<p>For step 2.a.ii we can write a function <code>like_neighbors</code> that, given an agent&#8217;s coordinate, counts the number of neighbors that are like that agent. This should feel familiar; reminiscent of the <code>neighborhood_mean</code> function where we looked at the neighbors of a pixel.</p>
+</div>
+<div class="paragraph">
+<p>For step 2.a.iii lets write a function <code>find_empty</code> that finds an empty cell.</p>
+</div>
+<div class="sect3">
+<h4 id="_step_1_randomly_populate"><a class="anchor" href="#_step_1_randomly_populate"></a>10.8.1. Step 1: Randomly populate</h4>
+<div class="paragraph">
+<p>The function <code>randomly_populate</code> fills the grid with blue, green, or empty (white) agents (pixels).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">randomly_populate</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-p">):</span>                      <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>
+        <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>
+            <span class="tok-n">r</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">random</span><span class="tok-p">()</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
+            <span class="tok-k">if</span> <span class="tok-n">r</span> <span class="tok-o">&lt;</span> <span class="tok-mi">1</span><span class="tok-o">/</span><span class="tok-mi">3</span><span class="tok-p">:</span>                           <i class="conum" data-value="3"></i><b>(3)</b>
+                <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">blue</span><span class="tok-p">)</span>
+            <span class="tok-k">elif</span> <span class="tok-n">r</span> <span class="tok-o">&lt;</span> <span class="tok-mi">2</span><span class="tok-o">/</span><span class="tok-mi">3</span><span class="tok-p">:</span>                         <i class="conum" data-value="4"></i><b>(4)</b>
+                <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">green</span><span class="tok-p">)</span>
+            <span class="tok-k">else</span><span class="tok-p">:</span>                                 <i class="conum" data-value="5"></i><b>(5)</b>
+                <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Modify <code>grid</code> through its reference rather than create a new empty surface.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A random float between 0 and 1. There is a reason we are using <code>random()</code> here
+and not <code>randrange()</code>. Later on it will be easier to make the populations of agents different, for example 25% green and 50% blue.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Cell is a blue agent with 1/3 probability \((0 &lt; r &lt; 1/3)\).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Cell is a green agent with 1/3 probability \((1/3 &lt; r &lt; 2/3)\).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The remaining \(1/3\) are empty cells.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If we were to run <code>randomly_populate</code> we will end up with a starting grid that might look something like the following, equal parts green, blue, and white.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_initial.jpg" alt="schelling initial">
+</div>
+<div class="title">Figure 27. Initial randomly populated grid</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_2_count_like_neighbors"><a class="anchor" href="#_step_2_count_like_neighbors"></a>10.8.2. Step 2: Count like neighbors</h4>
+<div class="paragraph">
+<p>In the Schelling model we need to count the number of neighbors of an agent that are <em>like</em> (the same color as) that agent. For a given agent at coordinate \((x,y)\) we will have <code>count_like_neighbors</code> return the proportion of the eight neighboring agents that are like agent at coordinate \((x,y)\). What should we do about empty cells? Presumably an agent neither likes nor objects to being adjacent to an empty cell, so we will not count themas a neighbor. Consequently, if there is one empty neighbor, and there are two like neighbors our function should return return \(2/7\).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">count_like_neighbors</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-n">c</span><span class="tok-p">,</span><span class="tok-n">grid</span><span class="tok-p">):</span>                   <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="tok-n">like</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                                              <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="tok-n">nc</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                                                <i class="conum" data-value="3"></i><b>(3)</b>
+  <span class="tok-n">size</span> <span class="tok-o">=</span> <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()</span>                               <i class="conum" data-value="4"></i><b>(4)</b>
+  <span class="tok-k">for</span> <span class="tok-n">row</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-n">y</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">):</span>                           <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="tok-k">for</span> <span class="tok-n">col</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">,</span> <span class="tok-n">x</span><span class="tok-o">+</span><span class="tok-mi">2</span><span class="tok-p">):</span>                         <i class="conum" data-value="6"></i><b>(6)</b>
+      <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">row</span> <span class="tok-o">%</span> <span class="tok-n">size</span><span class="tok-p">,</span> <span class="tok-n">col</span> <span class="tok-o">%</span> <span class="tok-n">size</span><span class="tok-p">))</span> <i class="conum" data-value="7"></i><b>(7)</b>
+
+      <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">!=</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">:</span>                        <i class="conum" data-value="8"></i><b>(8)</b>
+        <span class="tok-n">nc</span> <span class="tok-o">=</span> <span class="tok-n">nc</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+      <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-n">c</span><span class="tok-p">:</span>                                  <i class="conum" data-value="9"></i><b>(9)</b>
+        <span class="tok-n">like</span> <span class="tok-o">=</span> <span class="tok-n">like</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+
+  <span class="tok-k">if</span> <span class="tok-n">nc</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>                                           <i class="conum" data-value="10"></i><b>(10)</b>
+    <span class="tok-k">return</span> <span class="tok-mi">0</span>
+  <span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">like</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">)</span><span class="tok-o">/</span><span class="tok-n">nc</span>                                  <i class="conum" data-value="11"></i><b>(11)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>(x,y)</code> is the coordinate of the current agent. Presumably <code>c</code> is blue or green becuase we should not be counting the neighbors of an empty cell.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Local variable <code>like</code> will be the count of the number of like nightbors.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Local variable <code>nc</code>, or <em>neighbor count</em>, will be the count the number of non-empty neighbors.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Local variable <code>size</code> is the width and height of <code>grid</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>This loop pattern we have seen before for looking at the <em>neighbordhood</em> of a cell. <code>row</code> ranges from the row above the agent to the row below.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td><code>col</code> ranges from the column to the left of the agent to the column to the right.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>We are calculating the coordinate mod <code>size</code> which means we are wrapping around the edges. This is just an easy way to avoid checking for out of bounds conditions.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>If the neighbor is not empty then increment the neighbor count.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>If the neighbor color is the same as the agent then increment the like count.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>If there are no neighbors then return zero, otherwise we run the risk of dividing by zero.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>We are subtracting one from <code>like</code> because the agent at <code>(x,y)</code> counted itself.</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+We always need to watch out for dividing by zero.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Function <code>count_like_neighbors</code> is a little subtle. We had to be careful about divinding by zero and and an agent not counting itself as a <em>like</em> neighbor.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_3_finding_an_empty_cell"><a class="anchor" href="#_step_3_finding_an_empty_cell"></a>10.8.3. Step 3: Finding an empty cell</h4>
+<div class="paragraph">
+<p>When an agent moves it needs to find an empty cell to move to. We could search for an empty cell in one of several ways, we could just start looking for an empty cell in the grid starting at the top and working our way down using our nested <code>for</code>-loop pattern. This would give preference to empty cells towards the top and slowly fill in the grid entirely from the top.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.</p>
+</div>
+<div class="paragraph">
+<p>Function <code>find_empty</code> randomly searches for an empty cell in the grid returning its coordinate when it has found one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">find_empty</span><span class="tok-p">():</span>
+    <span class="tok-k">while</span> <span class="tok-bp">True</span><span class="tok-p">:</span>                                   <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">())</span>    <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">())</span>
+        <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>
+        <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">:</span>                <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tok-k">return</span> <span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>It looks like this loop will run forever, the function retrns breaking out of the loop when an empty cell is found.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Generate a random coordinate.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>White means empty, so return the coordinate.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_putting_it_all_together"><a class="anchor" href="#_putting_it_all_together"></a>10.8.4. Putting it all together</h4>
+<div class="paragraph">
+<p>With function <code>randomly_populate</code>, <code>count_like_neighbors</code>, and <code>find_empty</code> we can put together the main program for the Schelling Segregation model. If we make the grid too large then the simulation can take a long time to run, so we will keep it as a square grid 400 on a side.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight nowrap"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</div></td><td class="code"><span></span><span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">init</span><span class="tok-p">()</span>
+<span class="tok-n">n</span> <span class="tok-o">=</span> <span class="tok-mi">400</span>
+<span class="tok-n">grid</span> <span class="tok-o">=</span> <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">set_mode</span><span class="tok-p">((</span><span class="tok-n">n</span><span class="tok-p">,</span><span class="tok-n">n</span><span class="tok-p">))</span>
+<span class="tok-n">randomly_populate</span><span class="tok-p">()</span>
+<span class="tok-n">threshhold</span> <span class="tok-o">=</span> <span class="tok-mi">1</span><span class="tok-o">/</span><span class="tok-mi">3</span>
+<span class="tok-n">done</span> <span class="tok-o">=</span> <span class="tok-bp">False</span>
+
+<span class="tok-k">while</span> <span class="tok-ow">not</span> <span class="tok-n">done</span><span class="tok-p">:</span>
+    <span class="tok-n">moved</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                                            <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="tok-k">for</span> <span class="tok-n">y</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_height</span><span class="tok-p">()):</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_width</span><span class="tok-p">()):</span>
+            <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-n">_</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">get_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">))</span>               <i class="conum" data-value="3"></i><b>(3)</b>
+
+            <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)</span> <span class="tok-o">!=</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">:</span>
+                <span class="tok-n">like</span> <span class="tok-o">=</span> <span class="tok-n">count_like_neighbors</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">,(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">))</span> <i class="conum" data-value="4"></i><b>(4)</b>
+
+                <span class="tok-k">if</span> <span class="tok-n">like</span> <span class="tok-o">&lt;</span> <span class="tok-n">threshold</span><span class="tok-p">:</span>                     <i class="conum" data-value="5"></i><b>(5)</b>
+                    <span class="tok-p">(</span><span class="tok-n">ex</span><span class="tok-p">,</span><span class="tok-n">ey</span><span class="tok-p">)</span> <span class="tok-o">=</span> <span class="tok-n">find_empty</span><span class="tok-p">()</span>               <i class="conum" data-value="6"></i><b>(6)</b>
+                    <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">ex</span><span class="tok-p">,</span><span class="tok-n">ey</span><span class="tok-p">),</span> <span class="tok-p">(</span><span class="tok-n">r</span><span class="tok-p">,</span><span class="tok-n">g</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">))</span>        <i class="conum" data-value="7"></i><b>(7)</b>
+                    <span class="tok-n">grid</span><span class="tok-o">.</span><span class="tok-n">set_at</span><span class="tok-p">((</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-n">y</span><span class="tok-p">),</span> <span class="tok-n">color</span><span class="tok-o">.</span><span class="tok-n">white</span><span class="tok-p">)</span>      <i class="conum" data-value="8"></i><b>(8)</b>
+                    <span class="tok-n">moved</span> <span class="tok-o">=</span> <span class="tok-n">moved</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>                    <i class="conum" data-value="9"></i><b>(9)</b>
+
+    <span class="tok-n">pygame</span><span class="tok-o">.</span><span class="tok-n">display</span><span class="tok-o">.</span><span class="tok-n">update</span><span class="tok-p">()</span>                              <i class="conum" data-value="10"></i><b>(10)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">moved</span><span class="tok-p">)</span>                                         <i class="conum" data-value="11"></i><b>(11)</b>
+    <span class="tok-n">done</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">moved</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">)</span>                                  <i class="conum" data-value="12"></i><b>(12)</b>
+
+<span class="tok-n">util</span><span class="tok-o">.</span><span class="tok-n">wait_for_click</span><span class="tok-p">()</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keep processing the grid until there are no more moves (every agent is happy)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Go through the entire grid using our normal nested `for`0loop pattern.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Get the agent at the cell, which could be no agent (empty cell).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>If the cell is not empty then we have an agent and get the proportion of their like neighbors.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>If the proportion is less than the threshold then the agent needs to move.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Find an empty cell for the agent to move to.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Put the current agent at the empty location.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Make the agent&#8217;s old coordinate empty.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Increment the <code>moved</code> count</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Update the display to animate the progress of the model</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>print the number of agents that moved. This should be decreasing.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>A little trick, but this sets <code>done</code> to <code>True</code> if <code>moved</code> is <code>0</code>. Could have used an if-statement.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When we run the Schelling model with equal proportions of agents and a threshold of \(1/3\) we notice that there is segregation.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_1_3.jpg" alt="schelling 1 3">
+</div>
+<div class="title">Figure 28. Schelling model with 1/3 threshold and equal agent proportion</div>
+</div>
+<div class="paragraph">
+<p>If we make one of the agents a minority the results are even more pronounced. Below we have 25% of the agents are blue, 50% are green, and 25% empty cells.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_25_50_25.jpg" alt="schelling 25 50 25">
+</div>
+<div class="title">Figure 29. Schelling model with 1/3 threshold and 25% blue, 50% green agents</div>
+</div>
+<div class="paragraph">
+<p>These results were pretty surprising. If fewer than 33% of an agent&#8217;s neighbors are like them then the agent moves with the end result being a fair amount of segregation. That is, with fairly tolerant agents, we see segregation.</p>
+</div>
+<div class="paragraph">
+<p>One thing to check with any model is to see if it matches our intuition. If we lower the threshold, that is we make the agents even more tolerant, then we should see less segregation. This is indeed the case.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_thresh_15.jpg" alt="schelling thresh 15">
+</div>
+<div class="title">Figure 30. Schelling model with 15% threshold and equal proportion agents.</div>
+</div>
+<div class="paragraph">
+<p>If we increased the threshold to say 50% and also introduce a minority agent population we should see even more dramatic segregation. And we do.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/schelling_50_25_50_25.jpg" alt="schelling 50 25 50 25">
+</div>
+<div class="title">Figure 31. Schelling model with 50% threshold and 25% blue 50% green agents.</div>
+</div>
+<div class="paragraph">
+<p>If, however, we make agents very intolerant by having, say a 70% threshold, and we have enough diversity in the population it can be very hard to please an agent and the simulation doesn&#8217;t every really settle down.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schelling_summary"><a class="anchor" href="#_schelling_summary"></a>10.8.5. Schelling Summary</h4>
+<div class="paragraph">
+<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_9"><a class="anchor" href="#_exercises_9"></a>10.9. Exercises</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Collage</p>
+</li>
+<li>
+<p>Add a third color agent to the Schelling model</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_terminology_10"><a class="anchor" href="#_terminology_10"></a>10.10. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 17. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>grayscale</p>
+</li>
+<li>
+<p>default parameter</p>
+</li>
+<li>
+<p>alpha transparency</p>
+</li>
+<li>
+<p>neighborhood</p>
+</li>
+<li>
+<p>resolution</p>
+</li>
+<li>
+<p>MP</p>
+</li>
+<li>
+<p>JPEG</p>
+</li>
+<li>
+<p>BMP</p>
+</li>
+<li>
+<p>antialiasing</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>named parameter</p>
+</li>
+<li>
+<p>matrix</p>
+</li>
+<li>
+<p>pixelated</p>
+</li>
+<li>
+<p>aspect ratio</p>
+</li>
+<li>
+<p>ppi</p>
+</li>
+<li>
+<p>PNG</p>
+</li>
+<li>
+<p>lossy compression</p>
+</li>
+<li>
+<p>non-lossy (or lossless) compression</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -10455,11 +12426,35 @@ The outer loop, in our case the <code>while</code> loop (throttled by the frame 
 <div class="footnote" id="_footnotedef_22">
 <a href="#_footnoteref_22">22</a>. This is the first problem in a set of problems from <a href="https://projecteuler.net/archives">Project Euler</a>.
 </div>
+<div class="footnote" id="_footnotedef_23">
+<a href="#_footnoteref_23">23</a>. <code>http://www.bbc.co.uk/nature/14151541</code> <em>Lost rainbow toad is rediscovered</em>, BBC Nature News, accssed on 7/27/2017
+</div>
+<div class="footnote" id="_footnotedef_24">
+<a href="#_footnoteref_24">24</a>. <a href="https://jpeg.org/" class="bare">https://jpeg.org/</a>
+</div>
+<div class="footnote" id="_footnotedef_25">
+<a href="#_footnoteref_25">25</a>. <a href="https://www.w3.org/TR/PNG/" class="bare">https://www.w3.org/TR/PNG/</a>
+</div>
+<div class="footnote" id="_footnotedef_26">
+<a href="#_footnoteref_26">26</a>. Schelling, Thomas. <em>Models of Segregation</em>, American Economic Review, 1969, 59(2)
+</div>
+<div class="footnote" id="_footnotedef_27">
+<a href="#_footnoteref_27">27</a>. Schelling, Thomas, <em>Dynamic Models of Segregation</em>, Journal of Mathematical Sociology, 1(2)
+</div>
+<div class="footnote" id="_footnotedef_28">
+<a href="#_footnoteref_28">28</a>. Creative Commons <code>https://www.flickr.com/photos/walkingsf/4981444199/</code>
+</div>
+<div class="footnote" id="_footnotedef_29">
+<a href="#_footnoteref_29">29</a>. Nigel Gilbert, <em>Agent Based Models</em>, SAGE Publications, 2008
+</div>
+<div class="footnote" id="_footnotedef_30">
+<a href="#_footnoteref_30">30</a>. <a href="https://ccl.northwestern.edu/netlogo/" class="bare">https://ccl.northwestern.edu/netlogo/</a>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.2<br>
-Last updated 2018-10-28 15:37:34 EDT
+Last updated 2018-10-28 20:26:00 EDT
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

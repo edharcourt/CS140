@@ -4,9 +4,9 @@ def randomly_populate():
     for y in range(grid.get_height()):
         for x in range(grid.get_width()):
             r = random.random()
-            if r < .25:
+            if r < .33:
                 grid.set_at((x, y), color.blue)
-            elif r < .75:
+            elif r < .66:
                 grid.set_at((x, y), color.green)
             else:
                 grid.set_at((x, y), color.white)
@@ -40,7 +40,7 @@ def find_empty():
 
 # M a i n    P r o g r a m
 pygame.init()
-n = 400
+n = 300
 grid = pygame.display.set_mode((n,n))
 randomly_populate()
 

@@ -1,6 +1,6 @@
 == Image Processing
 
-One important and common application in computer science is _image processing_. Computer vision, facial recognition, medical imaging (MRIs, x-rays, CT scans) are all part of image processing. All of your smartphones have image processing software; the camera provides a software zoom, and the fingerprint sensor on the device has image processing software for fingerprint matching. Web browsers resize images, and software such as Photoshop is used to do some amazing effects with images.
+One important and common application in computer science is _image processing_. Computer vision, facial recognition, medical imaging (MRIs, x-rays, CT scans) are all part of image processing. Your smartphone has image processing software; the camera provides a software zoom, and the fingerprint sensor on the device has image processing software for fingerprint matching. Web browsers resize images, and software such as Photoshop is used to do some amazing effects with images.
 
 From what we have learned so far in our explorations in programming, images are composed of pixels and a pixel is an RGB triple, three integers between 0 and 255. There is also a fourth integer that represents the _alpha transparency_ of the pixel. An alpha value of 255 is a fully opaque pixel (what we have been using all along) and an alpha value of 0 is a fully transparent pixel.  Alpha transparency is used to overlay pictures on top of each other, what we call _compositing_. We wont be using alpha transparency much, but we need to know it is there and that RGB color values really contain a fourth integer component. We should more properly call this the _RGBA_ color scheme.
 
@@ -104,27 +104,32 @@ image::bug.jpg[align="left",width=500]
 import pygame, util
 pygame.init()
 
-image = pygame.image.load("bug.jpg")  <1>
+image = pygame.image.load("bug.jpg")                                    <1>
 win = pygame.display.set_mode((image.get_width(), image.get_height()))  <2>
-image = image.convert_alpha()  <3>
+image = image.convert_alpha()                                           <3>
 
-for y in range(image.get_height()):
-    for x in range(image.get_width()):
-        (r,g,b,a) = image.get_at((x,y))
-        r = r * .7  <4>
+for y in range(image.get_height()):                                     <4>
+    for x in range(image.get_width()):                                  <5>
+        (r,g,b,a) = image.get_at((x,y))                                 <6>
+        r = r * .7                                                      <7>
         g = g * .7
         b = b * .7
-        image.set_at((x,y), (r,g,b))
+        image.set_at((x,y), (r,g,b))                                    <8>
 
-win.blit(image, (0,0))
-pygame.display.update()
-util.wait_for_click()  <5>
+win.blit(image, (0,0))                                                  <9>
+pygame.display.update()                                 
+util.wait_for_click()                                                   <10>
 ----
 <1> Load the image _before_ we construct the display so we know how large to make the display.
 <2> Construct a display surface that is the same size as the image.
 <3> Call the `convert_alpha()` method _after_ we load the image on line 4 and construct the display on line 5.  This is because the the `convert_alpha` function is making the format of the image compatible with the format of the display.
-<4> Decreasing a value by 30% is the same as multiplying it by `.7`.
-<5> Recall that the `wait_for_click()` function was defined in the section on event handling.
+<4> For each row of pixels `y`.
+<5> For each pixel `x` ub row `y`.
+<6> Get the pixel value as the four components `(r,g,b,a)`.
+<7> Decreasing a value by 30% is the same as multiplying it by `.7`.
+<8> We need to put the modified pixel values back in the image.
+<9> `blit` the modified image back in to the display.
+<10> Recall that the `wait_for_click()` function was defined in the section on event handling.
 
 And here is the result of darkening the image of the bug.
 
@@ -133,11 +138,11 @@ image::darker_bug.jpg[width=500]
 
 === Converting an image to Grayscale (and more)
 
-The code for darking an image gives us a useful template for doing a variety of image processing examples. The pixels in a grayscale image (_i.e.,_ black-and-white) are
-always a shaed of gray. Recall that in a grey pixel the RGB values are all equal.
+The code for darkening an image gives us a useful template for performing a variety of image processing examples. The pixels in a grayscale image (_i.e.,_ black-and-white) are
+always a shade of gray. Recall that in a gray pixel the RGB values are all equal.
 
-Lets say in our color image we had a pixel that was a very dark color, `(93,15,13)`, 
-a dark maroon. We would expect the corresponding grayscale pixel to be dark as well, a dark gray. Conversely, we would expect a bright color such as yellow `(255,255,0)` to be a light gray. One technique is to average the pixels of the color and use the average for all thre color components. For example dark maroon would get converted to 
+Lets say in our color image we had a pixel that was a very dark color such as `(93,15,13)`, 
+a dark maroon. We would expect the corresponding grayscale pixel to be dark as well, a dark gray. Conversely, we would expect a bright color such as yellow `(255,255,0)` to be a light gray. One technique is to average the pixels of the color and use the average of the three color components. For example dark maroon would get converted to 
 stem:[(93 + 15 + 13)/3 = 40.3], or the dark gray `(40,40,40)`.  Yellow would get converted
 to stem:[(255 + 255 + 0)/3 = 170], or the light gray `(170,170,170)`. We can almost reuse the entire program for darkening an image. Just change the inner loop body to ...
 
@@ -249,10 +254,10 @@ CAUTION: Notice that we use floating-point division on lines 4-5. This is becaus
 
 ==== Shrinking an image
 
-If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The caling ratios `w_ratio` and `h_ratio` are bth `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixel _(1,0)_.
+If we are shrinking an image then we only pick out a subset of the pixels in the original image. For example, if the original image was _400 X 400_ and we are shrinking it to _200 X 200_. The scaling ratios `w_ratio` and `h_ratio` are both `2`.  Pixel _(0,0)_ in the scaled image maps to pixel _(0,0)_ in the original image. But pixel _(1,0)_ in the scaled image maps to pixel _(2,0)_ in the original image. We skipped over pixel _(1,0)_.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Use the `scale` function to shrink an image 1/3 of its orgiginal height and width. Display the original image and center the smaller image in the original.
+Use the `scale` function to shrink an image 1/3 of its original height and width. Display the original image and center the smaller image in the original.
 
 [.result]
 ====
@@ -346,7 +351,7 @@ image::rainbow_toad_enlarged.png[]
 
 Notice how you can "see" the pixels. That is because every pixel in the original became nine pixels in the enlarged image. That is, we magnified the pixels. This is why an image often becomes blurry when enlarged past the point of its resolution.
 
-NOTE: For a digital image the _pixel resolution_ (or just _resolution_) is usually specified by the numbers of pixels wide and the number of pixels high. There also needs to be some indication of a physical dimension, often the dimensions of the display, or the number of pixels that will fit in a linear inch. 
+NOTE: For a digital image the _pixel resolution_ (or just _resolution_) is usually specified by the number of pixels wide and the number of pixels high. There also needs to be some indication of a physical dimension, often the dimensions of the display, or the number of pixels that will fit in a linear inch. 
 
 .Example
 The specification for the display on the Samsung Galazy S7 Edge smartphone is _1440 X 2560_ pixels at 534 pixels per linear inch (ppi). That means the width of the display should be stem:[1440/534 \approx 2.7 ] inches. The rear camera on the smartphone is 12MP (_i.e._ 12 megapixels, 12 million pixels) with an image dimension of _4032 px X 3024 px_. 
@@ -357,8 +362,9 @@ NOTE: We say that an image is _pixelated_ when an image is enlarged and we can s
 
 Image processing is a complex and sophisticated field requiring deep knowledge of mathematics.  There are, however, some relatively straightforward operations that we can use to try and clean up an image, such as trying to smooth the hard edges in the pixelated rainbow toad.
 
-One technique is called a _mean filter_. We replace the value of a pixel with the average of the color components of the pixel with its eight neighbors. For example,
-consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components. Likewise for the green and blue components.
+One technique is called a _mean filter_. We replace the value of a pixel with the average (or mean) of the color components of the pixel with its eight neighbors. For example,
+consider the pixel highlighted in red below. We create new pixel in a new image whose red component is the average of all the red components of the pixel and its neighbors. 
+Likewise for the green and blue components.
 
 .Mean of the Neighborhood
 image::mean_filter.png[width=500]
@@ -379,7 +385,7 @@ def neighborhood_mean(surf, x, y):
 ----
 <1> Recall that we use the `pass` statement as a placeholder for the function body.
 
-We could, write nine separate `get_at` calls to get the color of each pixel, this is a bit tedious and not very general. What if we wanted to expand the neighborhood to go two pixels on each side? Notice how the nine pixels form a _3 X 3_ grid. If stem:[(x,y)] represents the center pixel in the grid, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can use our nested `for`-loop pattern.
+We could, write nine separate `get_at` calls to get the color of each pixel, this is a bit tedious and not very general. Notice how the nine pixels form a _3 X 3_ grid. If stem:[(x,y)] represents the center pixel in the grid, then the row above is stem:[y-1] and the row below is stem:[y+1]. The column to the left is stem:[x-1] and the column to the right is stem:[x+1]. We can use our nested `for`-loop pattern to go through the _3 X 3_ grid.
  
 [source,python,numbered]
 ----
@@ -433,10 +439,10 @@ def mean_filter(orig):
     return surf                                     <6>
 ----
 <1> Create the new surface for the filtered image
-<2> Check the loop bounds. We are skipping the first and last row of pixels.
-<3> Skipping the first column and last column of pixels.
+<2> Check the loop bounds. We are skipping the first and last row of pixels. Why?
+<3> Skipping the first column and last column of pixels. Why?
 <4> Call the `nighborhood_mean` function from above.
-<5> Wrte the new pixel to the new surface.
+<5> Write the new pixel to the new surface.
 <6> Don't forget to return the new surface.
 
 Here is the original enlarged, pixelated, image.
@@ -449,7 +455,7 @@ And here is the filtered version.
 .Rainbow Toad after mean filtering
 image:filtered_toad.png[]
 
-The beautiful thing about writing this as a fuction is that if we wanted to filter theimage twice we can just use our trusty old _function composition_ and call `mean filter` two or ever three times.
+The beautiful thing about writing this as a fuction is that if we wanted to filter the image twice we can just use _function composition_ and call `mean filter` two or ever three times.
 
 
 [source,python]
@@ -492,21 +498,21 @@ util.wait_for_click()
 
 === Image file formats
 
-Computer and software manufactures have defined various techniques for storing images in files. These technique usually allow the image to be _compressed_ so that it uses less storage space.
+Computer and software manufactures have defined various techniques for storing images in files. These techniques usually allow the image to be _compressed_ so that it uses less storage.
 
 .Lossy Compression
 We have already seen one way we can compress an image - just make it smaller. Our `scale` function does this. It is not a terribly great way to compress an image but lots of software does this. For example, when you take a picture with your phone and then text it to someone, the texting software will usually shrink the image to reduce data consumption on your cellular plan. This kind of compression just throws some of the pixels away, it _loses information_.
 
 NOTE: With _lossy compression_ data is either discarded or modified and cannot be reconstructed from the compressed data.
 
-Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also uses lossy compression.
+Lossy compression is often acceptable. For example, the JPEG image format uses lossy compression (albeit in a far more sophisticated way than just leaving pixels out), and as long as the image still looks good we tend not to care. Audio file formats such as mp3 also use lossy compression.
 
 TIP: JPEG (_Joint Photographic Experts Group_ footnote:[https://jpeg.org/]) uses advanced mathematics to achieve good, but lossy, compression.  
 
 .Lossless Compression
 Sometimes lossy compression is not acceptable. For example, what if we wanted to compress a large word processing document. We couldn't have the compression technique modify or throw away characters.  Compression techniques that do not lose information are called _non-lossy_ or _lossless_.
 
-The _Portable Network Graphics_ image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as stem:[255(300)]. This lossless scheme is called _run length encoding_, because to encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated. 
+The _Portable Network Graphics_ image format (PNG) uses lossless compression. The lossless compression techniques are too advanced to discuss here, but we can give an example of a simple technique. What if an image contained a sequence pixels that were all the same color. For example, a white background might have a 100 white pixels (or 300 hundred integers that were all 255). Rather than just repeat the value 255, three hundred times, we could somehow record this in the file as stem:[255(300)]. This lossless scheme is called _run length encoding_, because it encodes long runs of the same number as two integers, the number to be repeated and then number of times it needs to be repeated. 
 
 TIP: PNG  footnote:[https://www.w3.org/TR/PNG/] One of the techniques used in PNG's lossless compression is called _Huffman Encoding_, a common technique discussed in a _Data Structures_ text.
 
@@ -577,7 +583,7 @@ The red component could be 255, adding one would make it 256, which would cause 
 ====
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Write a function that takes a surface and sets all of the red pixels to even values that are at most one less than their orginal value. 
+Write a function that takes a surface and sets all of the red pixels to even values that are at most one less than their original value. 
 
 [.result]
 ====
@@ -593,13 +599,13 @@ def make_red_even(image):
     return image
 ----
 <1> We should be getting comfortable with this nested `for`-loop pattern for accessing each pixel on a surface.
-<2> This checks to see of the red component is odd.
+<2> This checks to see if the red component is odd.
 <3> If it is odd, then decrease the red value by one and set it.
 
 Notice that `make_red_even` does not create a new empty surface but modifies the original surface passed in. Recall that objects passed in as a parameter (such as the surface `image`) are really a _reference_ to the object.  We could, if we wanted, have created a new, initially empty surface, with new RGB values, leaving the original image unmodified. When we should create a new surface object or  modify an existing one is subtle, and there are no hard and fast rules. In this particular case I wanted to show that you can modify an object through its reference parameter.
 ====
 
-Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contain's a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop,Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in pygame.
+Now we have an image where all of the red values are even. What if we were to create another image of exactly the same dimensions that is pure black-and-white (no intermediate gray values) that contains a secret message.  There are many ways to create a black-and-white image with text in it. You can use an image editing program such as Photoshop, Gimp, or Microsoft Paint. But probably the easiest way to do it is programmatically, directly in Pygame.
 
 The following two lines create a surface with the text `Attack At Dawn` rendered on it.
 
@@ -613,17 +619,17 @@ secret = my_font.render("Attack At Dawn", False, color.black) <2>
 
 NOTE: _Antialiasing_ uses shades of a color to smooth edges. 
 
-You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the button does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
+You can see the difference with anti-aliasing in the image below. The text on top does not use anti-aliasing while the text on the bottom does. You notice the difference the most where the edges of the letters are either curved or at an angle. 
 
 .Antialiasing
 image::png/antialias.png[width=600]
 
-Now that we 1) A surface with a secret message on it, and 2) An image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Lets assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresponds with coordinate stem:[(0,0)] in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.
+Now that we have 1) a surface with a secret message on it, and 2) an image where all of the red values are even we need to go through each pixel in the secret message, check to see if it is black, and if it is black, make a corresponding pixel in the original image odd. Assume we are putting the secret message in the upper left hand corner of the image so that coordinate stem:[(0,0)] in the image corresponds with coordinate stem:[(0,0)] in the secret message surface. We can think of this as overlaying the secret message on the window. We are making a big assumption that the message surface will fit in the image. That is, both the message width and height are less than the image width and height.
 
 .Overlaying a secret on image
 image::png/panda_overlay_secret.png[]
 
-The following program for hiding a message in an image puts it all together.
+The following program hides a message in an image puts it all together.
 
 .Hiding a message in an image `encrypt.py`
 [source,python, numbered]
@@ -668,9 +674,9 @@ if (r,g,b) == color.black:
     ...
 ----
 
-This is checking using _tuple equality_ by comparing each value in the `(r,g,b)` tuple againast the tuple specified in `color.black` which is `(0,0,0)`.
+This is checking using _tuple equality_ by comparing each value in the `(r,g,b)` tuple against the tuple specified in `color.black` which is `(0,0,0)`.
 
-Comparing tuples like this is handy, but if you didn't know you could do this another way would be to use _logical and_.
+Comparing tuples like this is handy, but if you didn't know about tuple equality you could do this another with _logical and_.
 
 [source,python]
 ----
@@ -678,7 +684,8 @@ if r == 0 and g == 0 and b == 0:
     ...
 ----
 
-Finally, since we are certain that the message contains only black `(0,0,0)` or white `(255,255,255)` pixels, we could probably get away with just compairing one of them.
+Finally, since we are certain that the message contains only black `(0,0,0)` or white `(255,255,255)` pixels, we could get away with just comparing one of the components, instead of 
+all three.
 
 === Case Study: Schelling's Segregation Model
 
