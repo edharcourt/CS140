@@ -1,7 +1,7 @@
 An Introduction to Computer Science and Programming with Python
 ===============================================================
 Ed Harcourt <edharcourt@stlawu.edu>
-v0.2, July 2018:
+v0.3, November 2018:
 :toc: right
 :doctype: book
 :toclevels: 2
