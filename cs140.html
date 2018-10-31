@@ -11725,7 +11725,7 @@ all three.</p>
 <div class="sect2">
 <h3 id="_case_study_schellings_segregation_model"><a class="anchor" href="#_case_study_schellings_segregation_model"></a>10.8. Case Study: Schelling&#8217;s Segregation Model</h3>
 <div class="paragraph">
-<p>In 1969 and 1971 the economist Thomas Schelling published two now famous papers <em>Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup> and <em>Dynamic Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn&#8217;t just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background.</p>
+<p>In 1969 and 1971 the economist Thomas Schelling published two now famous papers, <em>Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_26" class="footnote" href="#_footnotedef_26" title="View footnote.">26</a>]</sup> and <em>Dynamic Models of Segregation</em>.<sup class="footnote">[<a id="_footnoteref_27" class="footnote" href="#_footnotedef_27" title="View footnote.">27</a>]</sup>. One of the phenomena that Schelling was trying to study was why people segregated based on race. Why people segregate by race may seem obvious; racial segregation and racism have a long, violent, and sorrowful history in America. What Schelling was trying to understand though is what might happen if we started with some sense of racial balance. Would societies continue to segregate? Schelling wasn&#8217;t just interested in race, but cited examples of all kinds of segregation such as income, sex, and educational background.</p>
 </div>
 <div class="paragraph">
 <p>Consider the following map of New York City.</p>
@@ -11749,10 +11749,10 @@ all three.</p>
 <div class="title">Figure 24. Schelling Agent Grid</div>
 </div>
 <div class="paragraph">
-<p>In this grid we have green agents and blue agents. White represents empty locations on the grid where agents can move.  Schelling suggested that there is a threshold of the number of unlike neighbors an agent might tolerate before they decide to move. In this case we have a green agent marked with an X who is deciding if they should move. There are two empty cells, so X has six neighbors, two of which are like them, or \(2/6 = 1/3 = \overline{.33}\). If the threshold were <em>if less than stm[1/3] of my neighbors are like me then I&#8217;ll move</em>. In this case X would stay put. On the otherhand if the threshold were \(1/2\) then X would move.</p>
+<p>In this grid we have green agents and blue agents. White represents empty locations on the grid where agents can move.  Schelling suggested that there is a threshold of the number of unlike neighbors an agent might tolerate before they decide to move. In this case we have a green agent marked with an X who is deciding if they should move. There are two empty cells, so X has six neighbors, two of which are like them, or \(2/6 = 1/3 = \overline{.33}\). If the threshold were <em>if less than \(1/3\) of my neighbors are like me then I&#8217;ll move</em>. In this case X would stay put. On the other hand if the threshold were \(1/2\) then X would move.</p>
 </div>
 <div class="paragraph">
-<p>How should we pick a place to move? In this case there are two choices, the lower left cell or upper right cell.  We could be smart about it and search for an empty cell that meets the threshold in which case the lower left cell would be the place.</p>
+<p>How should we pick a place to move? In this case there are two choices, the lower left cell or upper right cell.  We could be smart about it and search for an empty cell that meets the threshold, in which case the lower left cell would be the place.</p>
 </div>
 <div class="paragraph">
 <p>If <strong>X</strong> moves to the lower left we have</p>
@@ -11776,10 +11776,10 @@ all three.</p>
 <p>Here <strong>X</strong> now has 0 neighbors like them, and they will most likely move again in the next round.</p>
 </div>
 <div class="paragraph">
-<p>Keeping in mind that empty cells could be far away on a large grid and not necessarily a neighboring cell, we might try for something simpler and search for an empty cell at random. It turns out either method will work. But from what Python we know now choosing a cell at random is the easier solution.</p>
+<p>Keeping in mind that empty cells could be far away on a large grid and not necessarily a neighboring cell, we might try for something simpler and search for an empty cell at random. It turns out either method will work. But from what Python we know now, choosing a cell at random is the easier solution.</p>
 </div>
 <div class="paragraph">
-<p>The scenario just discussed for <strong>X</strong> is just one cell. We need to repeat this process for every cell in the grid. But when should we stop the process? When all agents are "happy" and we have no more agents moving. The question is what do we think will happen in the long run? Even with a relaive low threshold such as \(1/3\)?</p>
+<p>The scenario just discussed for <strong>X</strong> is just one cell. We need to repeat this process for every cell in the grid. But when should we stop the process? When all agents are "happy" and we have no more agents moving. The question is what do we think will happen in the long run? Even with a relatively low threshold such as \(1/3\)?</p>
 </div>
 <div class="paragraph">
 <p>In pseudocode here is the process we outlined:</p>
@@ -11790,7 +11790,7 @@ all three.</p>
 <p>Randomly populate a grid with roughly equal numbers of green and blue agents and empty cells.</p>
 </li>
 <li>
-<p>Repeate until no more cells move</p>
+<p>Repeat until no more cells move</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -11801,10 +11801,10 @@ all three.</p>
 <p>if \((x,y)\) is an empty cell then continue on to the next cell</p>
 </li>
 <li>
-<p>Otherwise count the like neighbors of cell \((x,y)\)</p>
+<p>Otherwise count the <em>like neighbors</em> of cell \((x,y)\)</p>
 </li>
 <li>
-<p>if the threshold is not met then otherwise search for an empty cell and move there</p>
+<p>if the threshold is not met then search for an empty cell and move there</p>
 </li>
 </ol>
 </div>
@@ -11890,7 +11890,7 @@ and not <code>randrange()</code>. Later on it will be easier to make the populat
 <div class="sect3">
 <h4 id="_step_2_count_like_neighbors"><a class="anchor" href="#_step_2_count_like_neighbors"></a>10.8.2. Step 2: Count like neighbors</h4>
 <div class="paragraph">
-<p>In the Schelling model we need to count the number of neighbors of an agent that are <em>like</em> (the same color as) that agent. For a given agent at coordinate \((x,y)\) we will have <code>count_like_neighbors</code> return the proportion of the eight neighboring agents that are like agent at coordinate \((x,y)\). What should we do about empty cells? Presumably an agent neither likes nor objects to being adjacent to an empty cell, so we will not count themas a neighbor. Consequently, if there is one empty neighbor, and there are two like neighbors our function should return return \(2/7\).</p>
+<p>In the Schelling model we need to count the number of neighbors of an agent that are <em>like</em> (the same color as) that agent. For a given agent at coordinate \((x,y)\) we will have <code>count_like_neighbors</code> return the proportion of the eight neighboring agents that are like agent at coordinate \((x,y)\). What should we do about empty cells? Presumably an agent neither likes nor objects to being adjacent to an empty cell, so we will not count them as a neighbor. Consequently, if there is one empty neighbor, and there are two like neighbors our function should return return \(2/7\).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11936,11 +11936,11 @@ and not <code>randrange()</code>. Later on it will be easier to make the populat
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>(x,y)</code> is the coordinate of the current agent. Presumably <code>c</code> is blue or green becuase we should not be counting the neighbors of an empty cell.</td>
+<td><code>(x,y)</code> is the coordinate of the current agent. Presumably <code>c</code> is blue or green because we should not be counting the neighbors of an empty cell.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Local variable <code>like</code> will be the count of the number of like nightbors.</td>
+<td>Local variable <code>like</code> will be the count of the number of like neighbors.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -11993,7 +11993,7 @@ We always need to watch out for dividing by zero.
 </table>
 </div>
 <div class="paragraph">
-<p>Function <code>count_like_neighbors</code> is a little subtle. We had to be careful about divinding by zero and and an agent not counting itself as a <em>like</em> neighbor.</p>
+<p>Function <code>count_like_neighbors</code> is a little subtle. We had to be careful about dividing by zero and and an agent not counting itself as a <em>like</em> neighbor.</p>
 </div>
 </div>
 <div class="sect3">
@@ -12002,7 +12002,7 @@ We always need to watch out for dividing by zero.
 <p>When an agent moves it needs to find an empty cell to move to. We could search for an empty cell in one of several ways, we could just start looking for an empty cell in the grid starting at the top and working our way down using our nested <code>for</code>-loop pattern. This would give preference to empty cells towards the top and slowly fill in the grid entirely from the top.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take on average three random searches to find an empty cell.</p>
+<p>Alternatively, we could randomly search for an empty cell. If, for example, one third of the cells are empty then it would take, on average, three random searches to find an empty cell.</p>
 </div>
 <div class="paragraph">
 <p>Function <code>find_empty</code> randomly searches for an empty cell in the grid returning its coordinate when it has found one.</p>
@@ -12029,7 +12029,7 @@ We always need to watch out for dividing by zero.
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>It looks like this loop will run forever, the function retrns breaking out of the loop when an empty cell is found.</td>
+<td>It looks like this loop will run forever, but the function actually <em>returns</em>, breaking out of the loop when an empty cell is found.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -12205,7 +12205,7 @@ We always need to watch out for dividing by zero.
 <div class="sect3">
 <h4 id="_schelling_summary"><a class="anchor" href="#_schelling_summary"></a>10.8.5. Schelling Summary</h4>
 <div class="paragraph">
-<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages design specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>.</p>
+<p>The Schelling Model was one of the early models in an area called <em>Agent Based Modeling</em>.<sup class="footnote">[<a id="_footnoteref_29" class="footnote" href="#_footnotedef_29" title="View footnote.">29</a>]</sup> In Agent Based Models, agents live on a grid and are endowed with a set of rules or behaviors that dictate how agents interact with neighboring agents. There are many applications of agent based modeling across the social and natural sciences including epidemiological models of the spread of disease, predator-prey population models, and animal flocking. Later on we will see an agent based model for simulating a forest fire. While using Python and Pygame for agent based modeling is pretty effective there are special purpose programming languages designed specifically for building agent based models, NetLogo being the most prominent.<sup class="footnote">[<a id="_footnoteref_30" class="footnote" href="#_footnotedef_30" title="View footnote.">30</a>]</sup>.</p>
 </div>
 </div>
 </div>
