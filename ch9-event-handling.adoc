@@ -106,21 +106,21 @@ win.blit(paddle, (paddle_x, paddle_y))
 ----
 
 We need to figure out how to make the paddle responsive to the up and down arrow on the keyboard. The `KEYDOWN` event means that some key on the keyboard is being pressed. We can look at some data associated with the event to determine which key it is.  We can
-check to see if `event.key` is `K_UP` or `K_DOWN`, the constants for the up and down  arrow keys and add or sbtract to `paddle_y` as appropriate.
+check to see if `event.key` is `K_UP` or `K_DOWN`, the constants for the up and down  arrow keys and add or subtract to `paddle_y` as appropriate.
 
 Our code to process events is a little more complicated.
 
 [source,python,numbered]
 ----
 for event in pygame.event.get():
-	if event.type == pygame.QUIT:
-		pygame.quit()
-		exit()
-	elif event.type == pygame.KEYDOWN:         <1>
-		if event.key == pygame.K_UP:           <2>
-			paddle_y = paddle_y - paddle_dy
-		elif event.key == pygame.K_DOWN:       <3>
-			paddle_y = paddle_y + paddle_dy
+    if event.type == pygame.QUIT:
+	    pygame.quit()
+	    exit()
+    elif event.type == pygame.KEYDOWN:         <1>
+        if event.key == pygame.K_UP:           <2>
+            paddle_y = paddle_y - paddle_dy
+        elif event.key == pygame.K_DOWN:       <3>
+            paddle_y = paddle_y + paddle_dy
 ----
 <1> Do we have a key press event?
 <2> If so, then is it the up-arrow ...
@@ -184,12 +184,12 @@ goes off the left hand side of the window.
 
 [.result]
 ====
-To check to see if the player lost we could add the following code 
-to the outer `while` loop. 
+In the `move` function to check to see if the player lost we could add the following
+code to the outer `while` loop.
 
 [source,python,numbered]
 ----
-# check to see if we lst.
+# check to see if we lost.
 if ball_x < 0:
 	pygame.quit()
 	exit()

@@ -213,7 +213,7 @@ surf = pygame.Surface((w,h))
 
 creates a new empty surface `surf` with width `w` and height `h` and assigns it to the variable `surf`. 
 
-Lets assume we have an image we want to scale and it is in a surface `image`. Furthermore assume we have an empty surface `surf` that will be the new scaled image. We have to go through every pixel in `surf` and find a picel in `image` to copy in to `surf`.
+Lets assume we have an image we want to scale and it is in a surface `image`. Furthermore assume we have an empty surface `surf` that will be the new scaled image. We have to go through every pixel in `surf` and find a pixel in `image` to copy in to `surf`.
 
 .Computing coordinates in scaled image
 image::scale_xy.png[width=600]
