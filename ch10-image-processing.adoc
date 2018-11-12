@@ -282,7 +282,7 @@ win.blit(image, (0,0))                                      <4>
 
 tmp_x = win.get_width()//2 - scaled_image.get_width()//2    <5>  
 tmp_y = win.get_height()//2 - scaled_image.get_height()//2
-win.blit(scaled_image, (tmp_x, tmp_y)                       <6>
+win.blit(scaled_image, (tmp_x, tmp_y))                      <6>
 
 pygame.display.update()
 util.wait_for_click()
