@@ -455,8 +455,7 @@ And here is the filtered version.
 .Rainbow Toad after mean filtering
 image:filtered_toad.png[]
 
-The beautiful thing about writing this as a fuction is that if we wanted to filter the image twice we can just use _function composition_ and call `mean filter` two or ever three times.
-
+The beautiful thing about writing this as a fuction is that if we wanted to filter the image twice we can just use _function composition_ and call `mean filter` two or three times.
 
 [source,python]
 ----

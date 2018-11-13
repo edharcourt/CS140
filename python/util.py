@@ -9,7 +9,7 @@ def wait_for_click():
                 done = True
         pygame.time.wait(100)
 
-def wait_for_click():
+def wait_for_quit():
     print("Waiting for quit")
     done = False
     while not done:

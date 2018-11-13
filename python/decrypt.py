@@ -5,7 +5,9 @@ import pygame, util, color
 
 pygame.init()
 
-image = pygame.image.load("D:/Shared/images/png/yummy_secret.png")
+#image = pygame.image.load("D:/Shared/images/png/yummy_secret.png")
+#image = pygame.image.load("../images/png/yummy_secret.png")
+image = pygame.image.load("T:/Harcourt/gallery/png/church.png")
 
 win = pygame.display.set_mode((image.get_width(),
                                image.get_height()))
