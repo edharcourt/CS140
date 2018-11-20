@@ -11485,7 +11485,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="sect3">
 <h4 id="_hiding_a_message_in_an_image"><a class="anchor" href="#_hiding_a_message_in_an_image"></a>10.7.1. Hiding a message in an image</h4>
 <div class="paragraph">
-<p>This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the <em>odd red pixels</em>. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.</p>
+<p>This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the <em>odd red pixels</em>. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image, even if we ended up changing every pixel.</p>
 </div>
 <div class="paragraph">
 <div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
@@ -11598,7 +11598,7 @@ When you right click on the image and save it, note that it is a PNG file. Make 
 <div class="title">Figure 22. Overlaying a secret on image</div>
 </div>
 <div class="paragraph">
-<p>The following program hides a message in an image puts it all together.</p>
+<p>The following program hides a message in an image putting everything together.</p>
 </div>
 <div class="listingblock">
 <div class="title">Hiding a message in an image <code>encrypt.py</code></div>

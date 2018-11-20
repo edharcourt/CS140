@@ -571,7 +571,7 @@ image::png/secret.png[width=450]
 
 ==== Hiding a message in an image
 
-This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image. Even if we ended up changing every pixel.
+This seems a bit creepy, but notice that the message is black-and-white. From our program above we see that the message is hidden in the _odd red pixels_. Lets figure out how we could hide a message in an image. The first thing we need to do is "make room" for the secret message. What if we were to preprocess an image and change the red component of each pixel so that it was even. For instance, if the red component of a pixel was 201, we change it to 200. That will not have a noticeable visible effect on the image, even if we ended up changing every pixel.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Why is it important that we subtract one and not add one to make a pixel even?
@@ -628,7 +628,7 @@ Now that we have 1) a surface with a secret message on it, and 2) an image where
 .Overlaying a secret on image
 image::png/panda_overlay_secret.png[]
 
-The following program hides a message in an image puts it all together.
+The following program hides a message in an image putting everything together.
 
 .Hiding a message in an image `encrypt.py`
 [source,python, numbered]
