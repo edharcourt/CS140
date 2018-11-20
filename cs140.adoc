@@ -53,9 +53,9 @@ include::ch9-event-handling.adoc[]
 
 include::ch10-image-processing.adoc[]
 
-////
-
 include::ch11-string-and-file-processing.adoc[]
+
+////
 
 include::ch12-cryptography.adoc[]
 

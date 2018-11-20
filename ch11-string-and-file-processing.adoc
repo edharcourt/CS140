@@ -2,8 +2,6 @@
 
 Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines such as google store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
 
-TIP: A _byte_ (8 bits) is enough to store a single character. 
-
 We have already used text in our programs; strings are text. We hardcode text into our programs using string constants ...
 
 [source,python]

@@ -701,6 +701,16 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_10">10.10. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_string_and_file_processing">11. String and File Processing</a>
+<ul class="sectlevel2">
+<li><a href="#_string_operations">11.1. String operations</a></li>
+<li><a href="#_files">11.2. Files</a></li>
+<li><a href="#_example_bioinformatics">11.3. Example: Bioinformatics</a></li>
+<li><a href="#_example_files_of_numbers">11.4. Example: Files of numbers</a></li>
+<li><a href="#_exercises_10">11.5. Exercises</a></li>
+<li><a href="#_terminology_11">11.6. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -12298,6 +12308,1587 @@ We always need to watch out for dividing by zero.
 </div>
 </div>
 <div class="sect1">
+<h2 id="_string_and_file_processing"><a class="anchor" href="#_string_and_file_processing"></a>11. String and File Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines such as google store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that google has <em>exabytes</em> of data.  Biologists use tools such as <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a> to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is <em>cryptography</em>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+A <em>byte</em> (8 bits) is enough to store a single character.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We have already used text in our programs; strings are text. We hardcode text into our programs using string constants &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;antidisestablishmentarianism&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or enter them from the keyboard</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a string: &quot;</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For the following discussion lets assume that <code>s</code> is the string <code>'antidisestablishmentarianism'</code></p>
+</div>
+<div class="paragraph">
+<p>We can get the length of a string using the function <code>len</code>. The statement</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would print <code>28</code> on the console.</p>
+</div>
+<div class="paragraph">
+<p>We can also access individual characters in a string. The characters in a string are numbered starting with <code>0</code>. We use a bracket notation for accessing individual characters. <code>s[0]</code> is the first character or <code>'a'</code> and <code>s[27]</code> is the last character, or <code>'m'</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3</div></td><td class="code"><span></span><span class="tok-c1"># What would get printed?</span>
+<span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;antidisestablishmentarianism&#39;</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">],</span> <span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-mi">11</span><span class="tok-p">],</span> <span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">])</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">a</span> <span class="tok-n">b</span> <span class="tok-n">m</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>You need to be careful about <em>off-by-one</em> errors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">)])</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would create an <em>index out of range</em> error, because it is trying to print character <code>s[28]</code> but that character does not exist. Oddly enough you can index from that end of the string. <code>s[-1]</code> is the last character, <code>s[-2]</code> is the second to last character, etc.</p>
+</div>
+<div class="sect2">
+<h3 id="_string_operations"><a class="anchor" href="#_string_operations"></a>11.1. String operations</h3>
+<div class="paragraph">
+<p>There are typically two ways we will loop through and examine each character in a string.</p>
+</div>
+<div class="paragraph">
+<p>Assume that the variable <code>s</code> contains a string value. Back when we introduced the <code>for</code> loop we noted that strings were a <em>sequence type</em> and that we can use a sequence type in a <code>for</code> loop.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">s</span><span class="tok-p">:</span>
+    <span class="tok-c1"># loop body</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variable <code>ch</code> (for <em>character</em>) will take on each each character in the string <code>s</code>. Lets say we wanted to count the number of times the character <code>'a'</code> appeared in a string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5</div></td><td class="code"><span></span><span class="tok-n">a_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">s</span><span class="tok-p">:</span>                   <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">if</span> <span class="tok-n">ch</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;a&#39;</span><span class="tok-p">:</span>
+        <span class="tok-n">a_count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>ch</code> will take on each character in the string <code>s</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The way of looping through a string works great if you only need to look at each character independent of all the other characters.</p>
+</div>
+<div class="paragraph">
+<p>The second way to loop through a string is to remember that each character in a string has an integer <em>index</em>. So another way to count the numbers of times the character <code>a</code> occurs is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">a_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">)):</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">if</span> <span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;a&#39;</span><span class="tok-p">:</span>             <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-n">a_count</span> <span class="tok-o">=</span> <span class="tok-n">a_count</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>i</code> will take on the integer values <code>0</code> up to but not including <code>28</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>s</code> is a string, <code>i</code> is an integer, so <code>s[i]</code> is the character at index <code>i</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, lets say we wanted to count the number of double characters in a string. For example <code>Mississippi</code> has three sets of double characters; the first <code>ss</code>, the second <code>ss</code>, and the <code>pp</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_strings_are_immutable"><a class="anchor" href="#_strings_are_immutable"></a>11.1.1. Strings are <em>immutable</em></h4>
+<div class="paragraph">
+<p>Once a variable has been assigned a string value that string cannot be changed. For example, if <code>s</code> is a string we can&#8217;t change the value of <code>s[0]</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;Z&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This causes an error <code>'str' object does not support item assignment</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In Python strings are <em>immutable</em>. This means that the components of the string cannot be changed.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The way to modify a string is to build a new one. If <code>s1</code> and <code>s2</code> are two strings then you can <em>concatenate</em> the two strings with <code>+</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s1</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;hello&quot;</span>
+<span class="tok-n">s2</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;world&quot;</span>
+<span class="tok-n">s3</span> <span class="tok-o">=</span> <span class="tok-n">s1</span> <span class="tok-o">+</span> <span class="tok-n">s2</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s3</span><span class="tok-p">)</span>     <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Will print <code>helloworld</code></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To <em>concatenate</em> strings means to join two or more strings into one.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reversing_a_string"><a class="anchor" href="#_reversing_a_string"></a>11.1.2. Reversing a string</h4>
+<div class="paragraph">
+<p>To illustrate building a string lets write a function that takes a string as an argument and returns the reverse of the string; <code>reverse('python')</code> is <code>'nohtyp'</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">reverse</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+    <span class="tok-n">tmp</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;&quot;</span>            <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">s</span><span class="tok-p">:</span>        <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-n">tmp</span> <span class="tok-o">=</span> <span class="tok-n">ch</span> <span class="tok-o">+</span> <span class="tok-n">tmp</span>  <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-k">return</span> <span class="tok-n">tmp</span>          <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>An initially empty string that we will use to build up the reversed string (there is no space between the double quotes).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>For each character <code>ch</code> in the string <code>s</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is a little tricky. We will discuss below.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Return the reversed string</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Why does this work? Lets take an example of the string <code>'abcd'</code> and lets follow the values of <code>ch</code> and <code>tmp</code> after each loop iteration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>ch     tmp
+--     ---
+a      a     <i class="conum" data-value="1"></i><b>(1)</b>
+b      ba    <i class="conum" data-value="2"></i><b>(2)</b>
+c      cba   <i class="conum" data-value="3"></i><b>(3)</b>
+d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>tmp</code> is initially empty so the new value of <code>tmp</code> is <code>ch + tmp</code> or <code>'a'</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>ch</code> is <code>'b'</code> and <code>tmp</code> is <code>'a'</code> so the new value of <code>tmp</code> is <code>ch + tmp</code> or <code>'ba'</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>ch</code> is <code>'c'</code> and <code>tmp</code> is <code>'ba'</code> so the new value of <code>tmp</code> is <code>ch + tmp</code> or <code>'cba'</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>finally <code>ch</code> is <code>'d'</code> and <code>tmp</code> is <code>'cba'</code> so the new value of <code>tmp</code> is <code>ch + tmp</code> or <code>'dcba'</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>What would happen if the loop body in the function <code>reverse</code> were <code>tmp = tmp + ch</code> instead of <code>tmp = ch + tmp</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>It just rebuilds the original string and does not build the reverse.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>A <em>palindrome</em> is a word that reads backwards and forwards such as <em>racecar</em>, <em>kayak</em>, and <em>madam</em>.  Write a function <code>palindrome</code> that takes a string as an argument and returns true if the argument is a palindrome, false otherwise. Hint: use the <code>reverse</code> function.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>This is kind of easy if we can use the <code>reverse</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">palindrome</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+   <span class="tok-k">if</span> <span class="tok-n">s</span> <span class="tok-o">==</span> <span class="tok-n">reverse</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+       <span class="tok-k">return</span> <span class="tok-bp">True</span>
+   <span class="tok-k">else</span><span class="tok-p">:</span>
+       <span class="tok-k">return</span> <span class="tok-bp">False</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is an even more concise way to write the <code>palindrome</code> function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">palindrome</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+   <span class="tok-k">return</span> <span class="tok-n">s</span> <span class="tok-o">==</span> <span class="tok-n">reverse</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The way to think about this is that if is <code>s</code> is equal to <code>reverse(s)</code> then that is the value <code>True</code>, which is then returned. If they are not equal then it evaluates to <code>False</code> which is then returned. This is the same exact behavior as the first version of <code>palindrome</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_searching_a_string"><a class="anchor" href="#_searching_a_string"></a>11.1.3. Searching a String</h4>
+<div class="paragraph">
+<p>Often we will want to search a string for a <em>substring</em>. For example, does the string <code>'establish'</code> appear somewhere in the string <code>s</code>. The string function <code>s1.find(s2)</code> returns the starting location of the first occurrence of the string <code>s2</code> in <code>s1</code>. It returns <code>-1</code> if it is not there.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s1</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;antidisestablishmentarianism&#39;</span>
+<span class="tok-n">s2</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;hippopotomonstrosesquipedaliophobia&#39;</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s1</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;establish&#39;</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s1</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;hippo&#39;</span><span class="tok-p">))</span>     <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s2</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;po&#39;</span><span class="tok-p">))</span>        <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>prints <code>7</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>prints <code>-1</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>prints <code>3</code>, the first occurrence of <code>'po'</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A second version of the <code>find</code> function takes a starting location for the search; <code>s1.find(s2,start)</code> will retrn the location of <code>s2</code> in <code>s1</code> starting at index <code>start</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s2</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;po&#39;</span><span class="tok-p">,</span> <span class="tok-mi">4</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>prints <code>5</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If we didn&#8217;t know to start search at <code>4</code> and we wanted to find the second location of <code>po</code> we can search fr the first occurrence and se that as a starting point for a search for the second occrurrence.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">start</span> <span class="tok-o">=</span> <span class="tok-n">s2</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;po&#39;</span><span class="tok-p">)</span>           <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s2</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;po&#39;</span><span class="tok-p">,</span> <span class="tok-n">start</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">))</span>   <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>index of first occurrence of <code>po</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>start searching for the second ccurrence at <code>start+1</code> and not <code>start</code>, otherwise we would just find the first occurrence all over again.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a program that reads a string from the user and counts the number of times the substring <code>'is'</code> appears. Print a user friendly answer. Use the <code>find</code> function but do not use the built-in string function <code>count</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a string: &quot;</span><span class="tok-p">)</span>
+<span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">loc</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;is&#39;</span><span class="tok-p">)</span>                           <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">loc</span> <span class="tok-o">!=</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>                             <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+    <span class="tok-n">loc</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;is&#39;</span><span class="tok-p">,</span><span class="tok-n">loc</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">)</span>                 <i class="conum" data-value="3"></i><b>(3)</b>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;&quot;is&quot; appears&#39;</span><span class="tok-p">,</span> <span class="tok-n">count</span><span class="tok-p">,</span> <span class="tok-s2">&quot;times in&quot;</span><span class="tok-p">,</span><span class="tok-n">s</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Find the first occurrence</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is an example execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">Enter</span> <span class="tok-n">a</span> <span class="tok-n">string</span><span class="tok-p">:</span> <span class="tok-n">antidisestablishmentarianism</span>
+<span class="tok-s2">&quot;is&quot;</span> <span class="tok-n">appears</span> <span class="tok-mi">3</span> <span class="tok-n">times</span> <span class="tok-ow">in</span> <span class="tok-n">antidisestablishmentarianism</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Okay, so we could have used the built-in string function <code>count</code> to do this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">count</span><span class="tok-p">(</span><span class="tok-s1">&#39;is&#39;</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As is often the case, Python&#8217;s built-in set of functions and libraries will often have what you are looking for.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_string_slices"><a class="anchor" href="#_string_slices"></a>11.1.4. String Slices</h4>
+<div class="paragraph">
+<p>The bracket notation picks out individual characters in a string;
+<code>s[i]</code> is the character at index <code>i</code>.  The bracket notation is also used to pick out consecutive portions of a string, a <em>substring</em>, using what Python calls a <em>slice</em> operation. The notation <code>s[x:y]</code> extracts the portion of the string starting at index <code>x</code> and up to but not including the character at index <code>y</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;antidisestablishmentarianism&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The slice <code>s[0:4]</code> is the string <code>'anti'</code>. The slice <code>s[7:16]</code> is the string <code>'establish'</code>.</p>
+</div>
+<div class="paragraph">
+<p>Leaving off the ending index then the slice is to the end of the string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-mi">7</span><span class="tok-p">:])</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will print <code>establishmentarianism</code>.</p>
+</div>
+<div class="paragraph">
+<p>Leaving off the starting index then the slice starts at index 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[:</span><span class="tok-mi">4</span><span class="tok-p">])</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>will print <code>anti</code>.</p>
+</div>
+<div class="paragraph">
+<p>A common use for combining <code>find</code> and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like <code>'39,88'</code>. But this will be a string, so we need bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter two numbers separated by a comma.&quot;</span><span class="tok-p">)</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;&gt; &quot;</span><span class="tok-p">)</span>                                   <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">comma</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">)</span>                               <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">num1</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[:</span><span class="tok-n">comma</span><span class="tok-p">])</span>                             <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-n">num2</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-n">comma</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">:])</span>                           <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">num1</span> <span class="tok-o">+</span> <span class="tok-n">num2</span><span class="tok-p">)</span> <span class="tok-o">/</span> <span class="tok-mi">2</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Average:&quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">avg</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Prompt on a separate line because it is a little long.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Prompt is short and sweet, just "&gt;".</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Find the position of the comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The first number is before the comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The second number is after the comma.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Ask the user to enter three numbers separated by a comma. Print their average.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>There are lots of ways to tackle this. Here is one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter three numbers separated by a comma&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;&gt; &quot;</span><span class="tok-p">)</span>
+<span class="tok-n">comma1</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">)</span>            <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">comma2</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">,</span> <span class="tok-n">comma1</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">)</span>  <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">num1</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[:</span><span class="tok-n">comma1</span><span class="tok-p">])</span>          <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-n">num2</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-n">comma1</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">:</span><span class="tok-n">comma2</span><span class="tok-p">])</span>  <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-n">num3</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-n">comma2</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">:])</span>        <i class="conum" data-value="5"></i><b>(5)</b>
+
+<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">num1</span> <span class="tok-o">+</span> <span class="tok-n">num2</span> <span class="tok-o">+</span> <span class="tok-n">num3</span><span class="tok-p">)</span> <span class="tok-o">/</span> <span class="tok-mi">3</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Average:&quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">avg</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Index of first comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Index of the second comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>First number is before first comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Second number is <em>between</em> the first and second comma.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Third number is after the second comma.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, lets take this one step further  and handle an arbitrary number of integers each separated by a comma. We will need to loop through the numbers some how.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Enter numbers separated by a comma
+&gt; 2,9,12,-33,15,7,99
+Average: 15.86</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similar to the way we counted the number of times we search for a substring in a string</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A list of numbers separated by commas are called <em>comma separated values</em>. Files that contain comma separated values are often use a <code>.csv</code> file suffix.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered <code>23,19,46,57</code> into the string <code>s</code>. We also need to keep a running total of the numbers and the count of the number of integers. We will use <code>total</code> and <code>count</code> for that.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>s               total  count
+-----------     ---    -----
+23,19,46,57      0       0      <i class="conum" data-value="1"></i><b>(1)</b>
+19,46,57         23      1      <i class="conum" data-value="2"></i><b>(2)</b>
+46,57            42      2      <i class="conum" data-value="3"></i><b>(3)</b>
+57               88      3      <i class="conum" data-value="4"></i><b>(4)</b>
+                 145     4      <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>s</code> is the original input CSV list.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Extract the first number <code>23</code>, add it to <code>total</code>, increment <code>count</code>, and delete <code>23</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Extract the first number <code>19</code>, add it to <code>total</code>, increment <code>count</code>, and delete <code>19</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Extract the first number <code>46</code>, add it to <code>total</code>, increment <code>count</code>, and delete <code>46</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>We should be seeing a pattern here. Extract the first number <code>57</code>, add it to <code>total</code>, increment <code>count</code>, and delete `57. Compute a final average of \(145/4 = 36.25\)</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</div></td><td class="code"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Enter a comma separated list of numbers&quot;</span><span class="tok-p">)</span>
+<span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;&gt; &quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">comma</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">)</span>
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                     <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="tok-k">while</span> <span class="tok-n">comma</span> <span class="tok-o">!=</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>          <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="tok-n">num</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">[:</span><span class="tok-n">comma</span><span class="tok-p">])</span>    <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="tok-n">total</span> <span class="tok-o">+=</span> <span class="tok-n">num</span>
+    <span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+    <span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-p">[</span><span class="tok-n">comma</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">:]</span>         <i class="conum" data-value="5"></i><b>(5)</b>
+    <span class="tok-n">comma</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">)</span>     <i class="conum" data-value="6"></i><b>(6)</b>
+
+<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-n">total</span><span class="tok-o">/</span><span class="tok-n">count</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Average: &quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">avg</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To hold the running total of the numbers.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Keep a count of the integers entered.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Keep processing the list of numbers until there are no more commas.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Extract the leading number in the list, add it to <code>total</code>, and increment <code>count</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Delete the leading number in the list.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Get the location of the next comma.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>There is actually a subtle bug in the code above; a classic off-by-one error. There are no syntax errors and the code doesn&#8217;t necessarily crash (more on that later) but it does produce an incorrect result. For example, if we enter <code>23,19,46,57</code> we get an average of <code>29.33</code>. Recall the answer should be <code>36.25</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Find and fix the bug in the above code.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The problem is that we skip the last number. For example, if we have the original list
+<code>23,19,46,57</code> eventually the list becomes <code>57</code> after line 12. There are no more commas in the list
+so on line 13 <code>comma</code> becomes <code>-1</code> and when we go back to check the loop condition the loop will quit having not processed the <code>57</code>. An easy fix is to realize that after the loop terminates <code>s</code> now contains the final number in the list. Add it to <code>total</code>, and don&#8217;t forget to increment <code>count</code>.  The code after the loop becomes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">total</span> <span class="tok-o">+</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">)</span>   <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>           <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-n">total</span><span class="tok-o">/</span><span class="tok-n">count</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Average: &quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">avg</span><span class="tok-p">,</span> <span class="tok-mi">2</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Add the final number to <code>total</code>. COuld we have used <code>num</code> here and not <code>s</code>? No. Why?</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>And increment <code>count</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>One more thing to check is to make sure the code works if we only have a single number to start with. This was also a problem before we fixed the bug, but now works.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_error_checking"><a class="anchor" href="#_error_checking"></a>11.1.5. Error Checking</h4>
+<div class="paragraph">
+<p>The term <em>hacker</em> used to be a badge of honor. It just meant you were a sharp programmer. The term now has a negative connotation and usually refers to someone using there technical skills unethically and possibly illegally. Hackers either break into systems to steal information, plant virus' or cause an organization&#8217;s software systems to crash.</p>
+</div>
+<div class="paragraph">
+<p>We will talk a little bit about breaking in to systems when we discuss cryptography so lets talk about possibly causing software to crash. One way to try and cause a software system to crash is to enter bogus data in the input. We have all seen this before when we enter data into a web form. If we forget to enter a zip code in our address then the system will generally not let us proceed. Up until we know we haven&#8217;t talked about checking the input data for errors, or <em>error checking</em>, but it is worth a cursory discussion.</p>
+</div>
+<div class="paragraph">
+<p>Lets look at our above example of computing the average of a list of numbers. What if instead of a list of numbers we entered an ill-formed line such as <code>rumpelstiltskin</code>, or <code>23,16,fred,11</code>. We get a run-time error (what I have also been calling a <em>crash</em>).</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ValueError: invalid literal for int() with base 10: 'rumpelstiltskin'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This makes sense, Python does not know how to convert <code>rumpelstiltskin</code> to an integer. I&#8217;d be worried if it did. Error checking is a little too advanced for us to cover now, but real software systems have to always check inputs for erroneous data to keep a system from crashing. In this case it would entail adding code to check and make sure that the user really entered a well formed list of integers separated by commas. If there was a problem the program could exit gracefully or the program could keep asking until the user entered something valid.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_word_scramble"><a class="anchor" href="#_example_word_scramble"></a>11.1.6. Example: Word scramble</h4>
+<div class="paragraph">
+<p>Lets say we were implementing an word scramble game where we present the user with an <em>anagram</em> and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An <em>anagram</em> is a rearrangement of the characters in a word.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Like always, lets break this up in to subproblems. Lets write a function <code>scramble</code> that takes a string and returns a random anagram of that string. For example <code>scramble('python')</code> might return <code>'hotpyn'</code> or <code>toyhpn</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+What are the chances that <code>scramble</code> will return the original word? Well for <code>python</code> there
+are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remaining 5. The third character any of the remaining 4, etc. This gives us \(6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720\) different possibilities for the word <code>python</code>. In general if a word has \(n\) distinct characters then there are at least \(n\) <em>factorial</em> (denoted as \(n!\)) permutations of the characters in the word. So the probability is \(1/n!\).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We repeatedly pick a random character from the word, append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don&#8217;t choose it again. So something like, the following process. Assume our word is in a string <code>word</code> and our new scrambled word is being constructed in a variable <code>tmp</code>. Lets also assume the a variable <code>i</code> contains a random index into <code>word</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>word    i    tmp
+-----   -    ---
+python  5    n          <i class="conum" data-value="1"></i><b>(1)</b>
+pytho   3    nh
+pyto    0    nhp
+yto     1    nhpt
+yo      1    nhpto
+y       0    nhptoy
+                        <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>tmp</code> initially starts out as the empty string</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>At this point the <code>len(word)</code> is 0 so the loop terminates.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here is the function <code>scramble</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">scramble</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">):</span>
+    <span class="tok-n">tmp</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+
+    <span class="tok-k">while</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">)</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+        <span class="tok-n">i</span> <span class="tok-o">=</span> <span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">))</span> <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="tok-n">tmp</span> <span class="tok-o">+=</span> <span class="tok-n">word</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]</span>                  <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-n">word</span> <span class="tok-o">=</span> <span class="tok-n">word</span><span class="tok-p">[:</span><span class="tok-n">i</span><span class="tok-p">]</span> <span class="tok-o">+</span> <span class="tok-n">word</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">:]</span>    <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-k">return</span> <span class="tok-n">tmp</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Choose a random index into the word.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Concatenate the character at that index into our temprary string <code>tmp</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Deletes the character at index <code>i</code> by rebuilding the word with all of the characters before index <code>i</code> (<code>word[:i]</code>) concatenated with all of the characters after index <code>i</code> (<code>word[i+1:]</code>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Putting it all together we have:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8
+9</div></td><td class="code"><span></span><span class="tok-n">word</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;python&#39;</span>               <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">anagram</span> <span class="tok-o">=</span> <span class="tok-n">scramble</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">anagram</span><span class="tok-p">)</span>
+<span class="tok-n">guess</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s1">&#39;Enter word: &#39;</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">guess</span> <span class="tok-o">==</span> <span class="tok-n">word</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Correct&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Incorrect. The word is&quot;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;&quot;&#39;</span> <span class="tok-o">+</span> <span class="tok-n">word</span> <span class="tok-o">+</span> <span class="tok-s1">&#39;&quot;&#39;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Okay, it is a little silly to have a word scramble game with one word. We will fix that next.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_files"><a class="anchor" href="#_files"></a>11.2. Files</h3>
+<div class="paragraph">
+<p>Up until know all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named <code>words.txt</code>. We&#8217;ll keep it relative short for now, but file can be enormous and could have hundreds of thousands of lines it.</p>
+</div>
+<div class="listingblock">
+<div class="title"><a href="python/words.txt"><code>words.txt</code></a></div>
+<div class="content">
+<pre class="pygments highlight"><code>apple
+banana
+interpreter
+racoon
+zombie
+example
+incorrect</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. <em>newline</em> character. We often call spaces, tabs, andnelinw character <em>whitespace</em> characters.  In most programming languages the newline character is written <code>\n</code>.</p>
+</div>
+<div class="paragraph">
+<p>We tell Python the name of a file we want to read using the <a href="https://docs.python.org/3.6/library/functions.html#open"><code>open</code></a> function.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s1">&#39;words.txt&#39;</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-c1"># process the file</span>
+
+<span class="tok-n">f</span><span class="tok-o">.</span><span class="tok-n">close</span><span class="tok-p">()</span>             <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>If <code>words.txt</code> doesn&#8217;t exist then you will get an error indicating that the file was not found.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>After we are done with the file it is a good practice to close the file by calling the function <code>close</code> on the file object returned from <code>open</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Function <code>open</code> takes a string as an argument that is the filename to be opened and it returns a reference to a file object. In this case being assigned to the variable <code>f</code> (like always we could have used any variable name here).</p>
+</div>
+<div class="paragraph">
+<p>There are various ways we can read the data in a file, probably the most straightforward is to read it line-by-line using a <code>for</code>-loop.  Recall that in a <code>for</code>-loop we need a variable that represents a <em>sequence type</em>, and it turns out a file object is such a type. For instance,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>f</code> should be the variable from the call to <code>open</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This will read and print each line in the file to console. But the output is not what you might expect for <code>words.txt</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>apple
+
+banana
+
+interpreter
+
+racoon
+
+zombie
+
+example
+
+incorrect</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Why is there a blank line between each word?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Recall that every time <code>print</code> is called the last character printed is a newline character <code>\n</code>. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.</p>
+</div>
+<div class="paragraph">
+<p>We can fix this in two ways. The first way is to slice off the last character in the line (the newline character) before we print it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">[:</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">])</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Why <code>len(line)-1</code> instead of <code>len(line)</code>?</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Or we can tell the print function to suppress printing a newline character using a <em>named parameter</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">,</span> <span class="tok-n">end</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Instead of printing a newline character print the empty string. The documentation for <a href="https://docs.python.org/3.6/library/functions.html#print"><code>print</code></a> is a little complicated.<sup class="footnote">[<a id="_footnoteref_32" class="footnote" href="#_footnotedef_32" title="View footnote.">32</a>]</sup></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_counting_the_lines_in_a_file"><a class="anchor" href="#_counting_the_lines_in_a_file"></a>11.2.1. Counting the lines in a file</h4>
+<div class="paragraph">
+<p>How can we count the lines a file?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4
+5
+6
+7
+8</div></td><td class="code"><span></span><span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s1">&#39;words.txt&#39;</span><span class="tok-p">)</span>
+
+<span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span>         <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+
+<span class="tok-n">f</span><span class="tok-o">.</span><span class="tok-n">close</span><span class="tok-p">()</span>              <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;words.txt has&quot;</span><span class="tok-p">,</span> <span class="tok-n">count</span><span class="tok-p">,</span> <span class="tok-s2">&quot;lines&quot;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Notice that we are not even using the variable <code>line</code> in the code.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Recall that it is a good practice to close the file when we are done.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once again, this is probably better provided as a reusable function.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</div></td><td class="code"><span></span><span class="tok-k">def</span> <span class="tok-nf">linecount</span><span class="tok-p">(</span><span class="tok-n">fname</span><span class="tok-p">):</span>
+    <span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">fname</span><span class="tok-p">)</span>
+    <span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+    <span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span>
+        <span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+    <span class="tok-n">f</span><span class="tok-o">.</span><span class="tok-n">close</span><span class="tok-p">()</span>
+    <span class="tok-k">return</span> <span class="tok-n">count</span>
+
+<span class="tok-c1"># Main program</span>
+<span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;words.txt&#39;</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;File&#39;</span><span class="tok-p">,</span> <span class="tok-n">name</span><span class="tok-p">,</span> <span class="tok-s1">&#39;has&#39;</span><span class="tok-p">,</span> <span class="tok-n">linecount</span><span class="tok-p">(</span><span class="tok-n">name</span><span class="tok-p">),</span> <span class="tok-s1">&#39;lines&#39;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Function <code>linecount</code> takes the name of a file as a parameter and returns the number of lines in that file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_word_scramble_using_a_file"><a class="anchor" href="#_word_scramble_using_a_file"></a>11.2.2. Word Scramble using a file</h4>
+<div class="paragraph">
+<p>Our previous version of word scamble used a single hard coded word that the user had to guess.  Not very interesting. We can now go through the file of words and let the user play multiple times.</p>
+</div>
+<div class="listingblock">
+<div class="title">Word Scramble</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</div></td><td class="code"><span></span><span class="tok-n">words</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s1">&#39;words.txt&#39;</span><span class="tok-p">)</span>                                     <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">for</span> <span class="tok-n">word</span> <span class="tok-ow">in</span> <span class="tok-n">words</span><span class="tok-p">:</span>                                            <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">if</span> <span class="tok-n">word</span><span class="tok-p">[</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;</span><span class="tok-se">\n</span><span class="tok-s1">&#39;</span><span class="tok-p">:</span>                             <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-n">word</span> <span class="tok-o">=</span> <span class="tok-n">word</span><span class="tok-p">[:</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">]</span>
+    <span class="tok-n">anagram</span> <span class="tok-o">=</span> <span class="tok-n">scramble</span><span class="tok-p">(</span><span class="tok-n">word</span><span class="tok-p">)</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;What word is this an anagram of?&quot;</span><span class="tok-p">,</span> <span class="tok-n">anagram</span><span class="tok-p">)</span>
+    <span class="tok-n">guess</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s1">&#39;Enter word: &#39;</span><span class="tok-p">)</span>
+
+    <span class="tok-k">if</span> <span class="tok-n">guess</span> <span class="tok-o">==</span> <span class="tok-n">word</span><span class="tok-p">:</span>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Correct&quot;</span><span class="tok-p">)</span>
+    <span class="tok-k">else</span><span class="tok-p">:</span>
+        <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Incorrect. The word is&quot;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;&quot;&#39;</span> <span class="tok-o">+</span> <span class="tok-n">word</span> <span class="tok-o">+</span> <span class="tok-s1">&#39;&quot;&#39;</span><span class="tok-p">)</span>
+		<span class="tok-k">break</span>                                                 <i class="conum" data-value="4"></i><b>(4)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The variable that refers to the file object does not have to be named <code>f</code>, in this case we are calling it <code>words</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>And the <code>for</code>-loop variable does not have to be named <code>line</code>, in this case <code>word</code> makes sense.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This is a little tricky. We need to remove the end of line character <code>'\n'</code>, but the last line in the file doesn&#8217;t have an end-of-line character but an <em>end of file</em> character.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The <code>break</code> statement causes the <code>for</code>-loop to terminate. More specifically it breaks out of the <em>innermost</em> enclosing <code>for</code> or <code>while</code> loop.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_bioinformatics"><a class="anchor" href="#_example_bioinformatics"></a>11.3. Example: Bioinformatics</h3>
+<div class="paragraph">
+<p>DNA, <em>Deoxyribonucleic Acid</em>, is a molecule that caries the genetic information of all living organisms. DNA has a helical structure famously described by Watson and Crick.<sup class="footnote">[<a id="_footnoteref_33" class="footnote" href="#_footnotedef_33" title="View footnote.">33</a>]</sup></p>
+</div>
+<div class="paragraph">
+<div class="title">Double Helix Structure of DNA.<sup class="footnote">[<a id="_footnoteref_34" class="footnote" href="#_footnotedef_34" title="View footnote.">34</a>]</sup></div>
+<p><span class="image"><img src="./images/double_helix.png" alt="double helix" width="300"></span></p>
+</div>
+<div class="paragraph">
+<p>DNA in one respect can be consider a <em>digital code</em> because a DNA strand can be abstractly represented as a string of characters <code>a</code>, <code>c</code>, <code>g</code>, and <code>t</code>. These stand for the nucleotides (sometimes called <em>base pairs</em>) <em>adenine</em>, <em>cytosine</em>, <em>guanine</em>, and <em>thymine</em> respectively. For example the start of the DNA sequence for the <em>Escherichia coli</em> (abbreviated <em>E. coli</em>) bacteria is</p>
+</div>
+<div class="literalblock">
+<div class="title"><a href="python/ecoli.txt"><em>E. coli</em></a></div>
+<div class="content">
+<pre>agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaagagtg ...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It doesn&#8217;t look like this means much but this sequence of nucleotides means something to a molecular biologist and can be analyzed using a computer. Not surprisingly programs on strings play an important part of this analysis.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Bioinformatics is the computational branch of molucular biology.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We can start with a simple example. One quick question we could answer are some basic statistics about the sequence. How many occurrences of each nucleotide are there? What are the relative frequencies of the nucleotides in <em>E. coli</em> as a percentage?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</div></td><td class="code"><span></span><span class="tok-n">ecoli</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s2">&quot;ecoli.txt&quot;</span><span class="tok-p">)</span>            <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-n">a_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">c_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">g_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">t_count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">ecoli</span><span class="tok-p">:</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">for</span> <span class="tok-n">bp</span> <span class="tok-ow">in</span> <span class="tok-n">line</span><span class="tok-p">:</span>
+        <span class="tok-k">if</span> <span class="tok-n">bp</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;a&#39;</span><span class="tok-p">:</span>                <i class="conum" data-value="3"></i><b>(3)</b>
+            <span class="tok-n">a_count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+        <span class="tok-k">elif</span> <span class="tok-n">bp</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;c&#39;</span><span class="tok-p">:</span>
+            <span class="tok-n">c_count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+        <span class="tok-k">elif</span> <span class="tok-n">bp</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;g&#39;</span><span class="tok-p">:</span>
+            <span class="tok-n">g_count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+        <span class="tok-k">elif</span> <span class="tok-n">bp</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;t&#39;</span><span class="tok-p">:</span>
+            <span class="tok-n">t_count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-n">a_count</span> <span class="tok-o">+</span> <span class="tok-n">c_count</span> <span class="tok-o">+</span> <span class="tok-n">g_count</span> <span class="tok-o">+</span> <span class="tok-n">t_count</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;length:&#39;</span><span class="tok-p">,</span> <span class="tok-n">total</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;a: &#39;</span><span class="tok-p">,</span> <span class="tok-n">a_count</span><span class="tok-p">,</span> <span class="tok-s1">&#39;, &#39;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">a_count</span><span class="tok-o">/</span><span class="tok-n">total</span> <span class="tok-o">*</span> <span class="tok-mi">100</span><span class="tok-p">,</span> <span class="tok-mi">1</span><span class="tok-p">),</span> <span class="tok-s1">&#39;%&#39;</span><span class="tok-p">,</span> <span class="tok-n">sep</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span><span class="tok-p">)</span> <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;c: &#39;</span><span class="tok-p">,</span> <span class="tok-n">c_count</span><span class="tok-p">,</span> <span class="tok-s1">&#39;, &#39;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">c_count</span><span class="tok-o">/</span><span class="tok-n">total</span> <span class="tok-o">*</span> <span class="tok-mi">100</span><span class="tok-p">,</span> <span class="tok-mi">1</span><span class="tok-p">),</span> <span class="tok-s1">&#39;%&#39;</span><span class="tok-p">,</span> <span class="tok-n">sep</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;g: &#39;</span><span class="tok-p">,</span> <span class="tok-n">g_count</span><span class="tok-p">,</span> <span class="tok-s1">&#39;, &#39;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">g_count</span><span class="tok-o">/</span><span class="tok-n">total</span> <span class="tok-o">*</span> <span class="tok-mi">100</span><span class="tok-p">,</span> <span class="tok-mi">1</span><span class="tok-p">),</span> <span class="tok-s1">&#39;%&#39;</span><span class="tok-p">,</span> <span class="tok-n">sep</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;t: &#39;</span><span class="tok-p">,</span> <span class="tok-n">t_count</span><span class="tok-p">,</span> <span class="tok-s1">&#39;, &#39;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">t_count</span><span class="tok-o">/</span><span class="tok-n">total</span> <span class="tok-o">*</span> <span class="tok-mi">100</span><span class="tok-p">,</span> <span class="tok-mi">1</span><span class="tok-p">),</span> <span class="tok-s1">&#39;%&#39;</span><span class="tok-p">,</span> <span class="tok-n">sep</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Download this file by clicking on the link above in the sequence.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>For each line in the file. (It turns out there is only one in this example)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Count the base pairs in the current line.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We are controlling the spaces in the line manually by indicating that the separator should be the empty string. That is don&#8217;t print a space after the comma separated items in the <code>print</code> statement.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After we execute the program we get the following results.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>length: 4638690
+a: 1142069, 24.6%
+c: 1179222, 25.4%
+g: 1176575, 25.4%
+t: 1140824, 24.6%</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A few points.  The number of base pairs in the sequence is approximately 4.6 million \(4.6 \times 10^6\). The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For <em>E. coli</em> if we round these values then each base pair is about 25% of the total. Notice that <code>c</code> and <code>g</code> are both 25.4% and <code>a</code> and <code>t</code> are the same at 24.6%. This might indicate that there is some special relationship between <code>a/t</code> and <code>c/g</code>. Indeed there is.  If we had this sequence but we didn&#8217;t know that it came from <em>E. coli</em> we can use <em>GC Content</em> to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of <em>E. Coli</em> is 50.7% and that of humans is 41%.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>GC Content</em> is the ratio of the number <code>g</code> and <code>c</code> base pairs to the total number of pase pairs. GC Content is \((g + c)/(a + c + g + t)\)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>GC Content is a simple example of how strings are used to analyze DNA.  Many of the algorithms used in bioinformatics are too advanced to describe in an introductory course.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>Genomics</em> is the branch of bioinformatics that uses string algorithms to study DNA (and RNA) sequences.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_searching_a_dna_sequence"><a class="anchor" href="#_searching_a_dna_sequence"></a>11.3.1. Searching a DNA Sequence</h4>
+<div class="paragraph">
+<p>The <em>central dogma</em> describes how DNA is converted to RNA to make proteins. A <em>gene</em> is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequences contain genes and are sometimes referred to a <em>protein-coding</em> genes. A <em>codon</em> is three consective base-pairs such as <code>GCA</code> or <code>AAT</code>. Protein coding genes obey the following constraints.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start with the codon <code>ATG</code>, (sometimes called a <em>start codon</em>)</p>
+</li>
+<li>
+<p>End with one of the <em>stop codons</em> <code>TAA</code>, <code>TAG</code>, or <code>TGA</code>.</p>
+</li>
+<li>
+<p>The number of base-pairs (nucleotides) between the start and stop codons must be a multiple of three.</p>
+</li>
+<li>
+<p>None of the intervening codons is one of the stop codons.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For example the sequence <span class="mono">ac<mark>atgcattggagctga</mark>acca</span> contains a potential gene (highlighted) while the sequence <span class="mono">ac<mark>atagttggagctga</mark>acca</span> is not. The reason is that starting at index three we have <code>ata</code> and not <code>atg</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Verify that the first highlighted region above matches the criteria for a potential gene.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>The highlighted region starts with the codon <code>atg</code>, the start codon. It ends with one of the stop codons <code>tga</code>. The region between the start and stop codons is <code>cattggagc</code>, which has nine base-pairs, a multiple of three.  Since the gene must also start with a <code>atg</code> and end with a stop-codon that has three base-pairs, the length of the entire sequence must also be a multiple of three.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets write a program to find all of the <em>potential</em> genes in the <em>E.coli</em> bacteria. The program should
+print the starting location and the ending location of each potential gene location. For example the
+digram below shows that the first possible gene location starts at location 29 and ends at location 95.</p>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/gene.png" alt="gene">
+</div>
+</div>
+<div class="paragraph">
+<p>The yellow highlights are the start and stop codons. To get the started we can find the location of the first occurrence of the start codon <code>atg</code> and then keep looking for one of the stop codons every three base-pairs after the start codon, stopping as soon as we find one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s1">&#39;ecoli.txt&#39;</span><span class="tok-p">)</span>
+<span class="tok-n">dna</span> <span class="tok-o">=</span> <span class="tok-n">f</span><span class="tok-o">.</span><span class="tok-n">readline</span><span class="tok-p">()</span>
+<span class="tok-n">start</span> <span class="tok-o">=</span> <span class="tok-n">dna</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;atg&#39;</span><span class="tok-p">)</span>                               <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">if</span> <span class="tok-n">start</span> <span class="tok-o">&gt;</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>                                        <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">start</span><span class="tok-o">+</span><span class="tok-mi">3</span><span class="tok-p">,</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">dna</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">3</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">):</span>           <i class="conum" data-value="3"></i><b>(3)</b>
+	    <span class="tok-k">if</span> <span class="tok-n">dna</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">:</span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">3</span><span class="tok-p">]</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-s1">&#39;taa&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;tag&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;tga&#39;</span><span class="tok-p">]</span> <span class="tok-ow">and</span> \  <i class="conum" data-value="4"></i><b>(4)</b>
+		   <span class="tok-p">(</span><span class="tok-n">i</span> <span class="tok-o">-</span> <span class="tok-n">start</span><span class="tok-p">)</span> <span class="tok-o">%</span> <span class="tok-mi">3</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>                      <i class="conum" data-value="5"></i><b>(5)</b>
+		    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">start</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-p">)</span>
+		    <span class="tok-k">break</span>                                     <i class="conum" data-value="6"></i><b>(6)</b>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Find the location of the start codon</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Only look for a stop codon if we found a start codon.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Look for a stop codon starting from <code>start+3</code> being careful not to go off of then end of the DNA string and a potential index out of bounds error.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This is a nice way to check for the stop codon instead of a complicated logical expression sch as <code>dna[i:i+3] == 'taa' or dna[i:i+3] == 'tag'</code> etc.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Make sure the length of the region is divisible by three.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>As soon as we find a possible gene location stop looking bcause the rule is that there cannot be an intervening stop codon.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The above code only finds the first possible gene location. Modify the program to find all of the possible gene locations.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Rather than use an if-statement to check only the first site we need to keep
+iterating until we don&#8217;t find any more start codons.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s1">&#39;ecoli.txt&#39;</span><span class="tok-p">)</span>
+<span class="tok-n">dna</span> <span class="tok-o">=</span> <span class="tok-n">f</span><span class="tok-o">.</span><span class="tok-n">readline</span><span class="tok-p">()</span>
+<span class="tok-n">start</span> <span class="tok-o">=</span> <span class="tok-n">dna</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;atg&#39;</span><span class="tok-p">)</span>
+
+<span class="tok-k">while</span> <span class="tok-n">start</span> <span class="tok-o">&gt;</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>                                     <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">start</span><span class="tok-o">+</span><span class="tok-mi">3</span><span class="tok-p">,</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">dna</span><span class="tok-p">)</span><span class="tok-o">-</span><span class="tok-mi">3</span><span class="tok-p">,</span> <span class="tok-mi">3</span><span class="tok-p">):</span>
+	    <span class="tok-k">if</span> <span class="tok-n">dna</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">:</span><span class="tok-n">i</span><span class="tok-o">+</span><span class="tok-mi">3</span><span class="tok-p">]</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-s1">&#39;taa&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;tag&#39;</span><span class="tok-p">,</span> <span class="tok-s1">&#39;tga&#39;</span><span class="tok-p">]</span> <span class="tok-ow">and</span> \
+		   <span class="tok-p">(</span><span class="tok-n">i</span> <span class="tok-o">-</span> <span class="tok-n">start</span><span class="tok-p">)</span> <span class="tok-o">%</span> <span class="tok-mi">3</span> <span class="tok-o">==</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
+		    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">start</span><span class="tok-p">,</span> <span class="tok-n">i</span><span class="tok-p">)</span>
+		    <span class="tok-k">break</span>
+    <span class="tok-n">start</span> <span class="tok-o">=</span> <span class="tok-n">dna</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;atg&#39;</span><span class="tok-p">,</span><span class="tok-n">start</span><span class="tok-o">+</span><span class="tok-mi">1</span><span class="tok-p">)</span>                   <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Keep looking until we don&#8217;t find any more start codons.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Look for the next start codon <em>after</em> the previous start codon.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The sequence of base-pairs between the start and stop codons are called
+<em>coding regions</em>. The sequence of base-pairs not part of a coding region are called, <em>non-coding regions</em>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_files_of_numbers"><a class="anchor" href="#_example_files_of_numbers"></a>11.4. Example: Files of numbers</h3>
+<div class="paragraph">
+<p>Often we have files of numbers that we need to process in some way. Lets say we had
+a file of integers that represented grades and we need to compute the average grade. We know that we need to read the file line-by-line adding each grade to a total, and then finally dividing by the total numbers of grades. Since we may not know in advance how many grades
+are in the file we will have to keep a count of the number of grades.  We also need to be careful to convert the line read to an integer</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</div></td><td class="code"><span></span><span class="tok-n">f</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-s2">&quot;grades.txt&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+<span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
+
+<span class="tok-k">for</span> <span class="tok-n">grade</span> <span class="tok-ow">in</span> <span class="tok-n">f</span><span class="tok-p">:</span>
+    <span class="tok-n">total</span> <span class="tok-o">+=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">grade</span><span class="tok-p">)</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">count</span> <span class="tok-o">+=</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;The average is&quot;</span><span class="tok-p">,</span> <span class="tok-nb">round</span><span class="tok-p">(</span><span class="tok-n">total</span><span class="tok-o">/</span><span class="tok-n">count</span><span class="tok-p">,</span> <span class="tok-mi">1</span><span class="tok-p">))</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Make sure to convert the string read from the file to an integer.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_10"><a class="anchor" href="#_exercises_10"></a>11.5. Exercises</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_terminology_11"><a class="anchor" href="#_terminology_11"></a>11.6. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 18. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>index</p>
+</li>
+<li>
+<p>palindrome</p>
+</li>
+<li>
+<p>slice</p>
+</li>
+<li>
+<p>factorial</p>
+</li>
+<li>
+<p>whitespace</p>
+</li>
+<li>
+<p>start codon</p>
+</li>
+<li>
+<p>stop codon</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>byte</p>
+</li>
+<li>
+<p>concatenate</p>
+</li>
+<li>
+<p>substring</p>
+</li>
+<li>
+<p>anagram</p>
+</li>
+<li>
+<p>newline</p>
+</li>
+<li>
+<p>bioinformatics</p>
+</li>
+<li>
+<p>gene</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -12450,11 +14041,23 @@ We always need to watch out for dividing by zero.
 <div class="footnote" id="_footnotedef_30">
 <a href="#_footnoteref_30">30</a>. <a href="https://ccl.northwestern.edu/netlogo/" class="bare">https://ccl.northwestern.edu/netlogo/</a>
 </div>
+<div class="footnote" id="_footnotedef_31">
+<a href="#_footnoteref_31">31</a>. <a href="https://docs.python.org/3.6/library/functions.html#open" class="bare">https://docs.python.org/3.6/library/functions.html#open</a>
+</div>
+<div class="footnote" id="_footnotedef_32">
+<a href="#_footnoteref_32">32</a>. <a href="https://docs.python.org/3.6/library/functions.html#print" class="bare">https://docs.python.org/3.6/library/functions.html#print</a>
+</div>
+<div class="footnote" id="_footnotedef_33">
+<a href="#_footnoteref_33">33</a>. James Watson and Francis Crick, Molecular Structure of Nucleic Acids, <em>Nature</em>. <strong>171</strong>, April 1953.
+</div>
+<div class="footnote" id="_footnotedef_34">
+<a href="#_footnoteref_34">34</a>. <a href="https://commons.wikimedia.org/wiki/File%3ADna-split.png" class="bare">https://commons.wikimedia.org/wiki/File%3ADna-split.png</a>, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.3<br>
-Last updated 2018-11-19 21:53:28 EST
+Last updated 2018-11-19 22:44:54 EST
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>
