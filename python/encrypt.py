@@ -11,14 +11,15 @@ def make_red_even(image):
 
 
 def make_message_surface(msg):
-    font = pygame.font.SysFont("Veranda", 200)
+    font = pygame.font.SysFont("Veranda", 80)
     return font.render(msg, False, color.black)
 
 # Main Program
-image = pygame.image.load("../images/png/yummy.png")
+win = pygame.display.set_mode((1,1))
+image = pygame.image.load("../images/png/red_panda.png").convert_alpha()
 
 image = make_red_even(image)
-msg = make_message_surface("Winter is coming")
+msg = make_message_surface("Attack At Dawn")
 
 message_surf = pygame.Surface((image.get_width(), image.get_height()))
 message_surf.fill(color.white)
@@ -33,5 +34,5 @@ for y in range(image.get_height()):
             (ir,ig,ib,_) = image.get_at((x,y))
             image.set_at((x,y), (ir+1,ig,ib))
 
-pygame.image.save(image, "giraffe.png")
+pygame.image.save(image, "../images/png/red_panda_secret.png")
 print("Done")

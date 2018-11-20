@@ -420,7 +420,7 @@ Now all that is left is to call `neighborhood_mean` for every pixel in the image
 .Mean filter function
 image::mean_filter_func.png[width=500]
 
-There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don't have any neighborson the left and if the `neighborhood_mean` functions tries to access a negative _x_ coordinate the program will crash. 
+There is one issue to contend with? What do we do about the pixels along the border? For instance, the pixels along the left edge don't have any neighbors on the left and if the `neighborhood_mean` functions tries to access a negative _x_ coordinate the program will crash. 
 
 There are several ways we could handle this. We could modify `neighborhood_mean` to not access pixels outside of the boundary of the image, and only compute the mean of the neighbors the pixel does have. Pixels along the left edge (except the corners) would only have five neighbors. Corner pixels only have three neighbors, etc. We would have to keep a count of the number of actual neighbors because we can't always divide by nine.
 
@@ -524,7 +524,7 @@ WARNING: The moral of the story is that image file formats that use lossy compre
 As an exercise lets go through every pixel in the image of the red panda below, and if the red component of the pixel is odd, then color the pixel black. If it is even then color the pixel white. 
 
 .Red Panda (Ailurus Fulgens) `https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG`
-image::png/red_panda.png[width=450]
+image::png/red_panda_secret.png[width=450]
 
 CAUTION: When you right click on the image and save it, note that it is a PNG file. Make sure to save it as a PNG file.
 
@@ -553,7 +553,7 @@ for y in range(win.get_height()):
 
 util.wait_for_click()
 ----
-<1> Show the image of the fox.
+<1> Show the image of the red panda.
 <2> If the red component is odd make the pixel black, otherwise white.
 <3> Because we want to animate this process we are modifying the display surface and not the image surface. This required, of course, that the image was already blitted to the display.
 <4> Inserting the display update here will update the display after every row is modified. This is necessary for animation. What would happen if we indented this line one level to be inside the inner `for`-loop?
@@ -661,7 +661,7 @@ pygame.image.save(image, "new_image.png")                  <9>
 <6> Check if it is black.
 <7> If it is black then we need to get the corresponding pixel in the image and ...
 <8> make the red component f the image pixel odd. Hence the `ir+1`.
-<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case is saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
+<9> `pygame.image.save` is a new Pygame function that saves a surface in a new file in the image format specified by the file suffix. In this case it saves the surface `image` in the file named `new_image.png` as a PNG file because the file name ends with `.png`.
 
 WARNING: The above program can crash if the image containing the message is larger than the image that is hiding the message.
 
@@ -675,7 +675,7 @@ if (r,g,b) == color.black:
 
 This is checking using _tuple equality_ by comparing each value in the `(r,g,b)` tuple against the tuple specified in `color.black` which is `(0,0,0)`.
 
-Comparing tuples like this is handy, but if you didn't know about tuple equality you could do this another with _logical and_.
+Comparing tuples like this is handy, but if you didn't know about tuple equality you could do this another way using _logical and_.
 
 [source,python]
 ----
@@ -868,7 +868,7 @@ while not done:
 util.wait_for_click()
 ----
 <1> Keep processing the grid until there are no more moves (every agent is happy)
-<2> Go through the entire grid using our normal nested `for`0loop pattern.
+<2> Go through the entire grid using our normal nested `for`-loop pattern.
 <3> Get the agent at the cell, which could be no agent (empty cell).
 <4> If the cell is not empty then we have an agent and get the proportion of their like neighbors.
 <5> If the proportion is less than the threshold then the agent needs to move.
