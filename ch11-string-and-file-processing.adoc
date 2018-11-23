@@ -60,7 +60,7 @@ There are typically two ways we will loop through and examine each character in 
 
 Assume that the variable `s` contains a string value. Back when we introduced the `for` loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
 
-[source,python,nymbered]
+[source,python]
 ----
 for ch in s:
     # loop body
@@ -72,7 +72,7 @@ The variable `ch` (for _character_) will take on each each character in the stri
 ----
 a_count = 0
 
-for ch in s:                   <1>
+for ch in s:           <1>
     if ch == 'a':
         a_count += 1
 ----
