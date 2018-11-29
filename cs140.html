@@ -12322,7 +12322,7 @@ We always need to watch out for dividing by zero.
 </div>
 </div>
 <div class="paragraph">
-<p>or enter them from the keyboard</p>
+<p>or enter them from the keyboard.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12421,7 +12421,7 @@ We always need to watch out for dividing by zero.
 <p>The way of looping through a string works great if you only need to look at each character independent of all the other characters.</p>
 </div>
 <div class="paragraph">
-<p>The second way to loop through a string is to remember that each character in a string has an integer <em>index</em>. So another way to count the numbers of times the character <code>a</code> occurs is:</p>
+<p>The second way to loop through a string is to remember that each character in a string has an integer <em>index</em>. So another way to count the number of times the character <code>a</code> occurs is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12544,7 +12544,7 @@ To <em>concatenate</em> strings means to join two or more strings into one.
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Return the reversed string</td>
+<td>Return the reversed string.</td>
 </tr>
 </table>
 </div>
@@ -12656,7 +12656,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>A second version of the <code>find</code> function takes a starting location for the search; <code>s1.find(s2,start)</code> will retrn the location of <code>s2</code> in <code>s1</code> starting at index <code>start</code>.</p>
+<p>A second version of the <code>find</code> function takes a starting location for the search; <code>s1.find(s2,start)</code> will return the location of <code>s2</code> in <code>s1</code> starting at index <code>start</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12672,7 +12672,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>If we didn&#8217;t know to start search at <code>4</code> and we wanted to find the second location of <code>po</code> we can search fr the first occurrence and se that as a starting point for a search for the second occrurrence.</p>
+<p>If we didn&#8217;t know to start the search at <code>4</code> and we wanted to find the second location of <code>po</code> we can search for the first occurrence and use that as a starting point for a search for the second occurrence.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12688,7 +12688,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>start searching for the second ccurrence at <code>start+1</code> and not <code>start</code>, otherwise we would just find the first occurrence all over again.</td>
+<td>start searching for the second occurrence at <code>start+1</code> and not <code>start</code>, otherwise we would just find the first occurrence all over again.</td>
 </tr>
 </table>
 </div>
@@ -12788,7 +12788,7 @@ d      dcba  <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
 <p>will print <code>anti</code>.</p>
 </div>
 <div class="paragraph">
-<p>A common use for combining <code>find</code> and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like <code>'39,88'</code>. But this will be a string, so we need bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers</p>
+<p>A common use for combining <code>find</code> and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like <code>'39,88'</code>. But this will be a string, so we need to bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12886,7 +12886,7 @@ Average: 15.86</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Similar to the way we counted the number of times we search for a substring in a string</p>
+<p>Similar to the way we counted the number of times we search for a substring in a string.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -12901,7 +12901,7 @@ A list of numbers separated by commas are called <em>comma separated values</em>
 </table>
 </div>
 <div class="paragraph">
-<p>Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered <code>23,19,46,57</code> into the string <code>s</code>. We also need to keep a running total of the numbers and the count of the number of integers. We will use <code>total</code> and <code>count</code> for that.</p>
+<p>Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, thereby making the second number the new first number.  Lets say the user entered <code>23,19,46,57</code> into the string <code>s</code>. We also need to keep a running total of the numbers and the count of the number of integers. We will use <code>total</code> and <code>count</code> for that.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12959,7 +12959,7 @@ A list of numbers separated by commas are called <em>comma separated values</em>
 <span class="tok-n">s</span> <span class="tok-o">=</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;&gt; &quot;</span><span class="tok-p">)</span>
 
 <span class="tok-n">comma</span> <span class="tok-o">=</span> <span class="tok-n">s</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;,&#39;</span><span class="tok-p">)</span>
-<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                     <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">total</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                   <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="tok-n">count</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>                   <i class="conum" data-value="2"></i><b>(2)</b>
 
 <span class="tok-k">while</span> <span class="tok-n">comma</span> <span class="tok-o">!=</span> <span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">:</span>          <i class="conum" data-value="3"></i><b>(3)</b>
@@ -13065,7 +13065,7 @@ so on line 13 <code>comma</code> becomes <code>-1</code> and when we go back to 
 <div class="sect3">
 <h4 id="_example_word_scramble"><a class="anchor" href="#_example_word_scramble"></a>11.1.6. Example: Word scramble</h4>
 <div class="paragraph">
-<p>Lets say we were implementing an word scramble game where we present the user with an <em>anagram</em> and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.</p>
+<p>Lets say we were implementing a word scramble game where we present the user with an <em>anagram</em> and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -13096,7 +13096,7 @@ are six distinct characters and the first character in the scrambled word could 
 </table>
 </div>
 <div class="paragraph">
-<p>We repeatedly pick a random character from the word, append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don&#8217;t choose it again. So something like, the following process. Assume our word is in a string <code>word</code> and our new scrambled word is being constructed in a variable <code>tmp</code>. Lets also assume the a variable <code>i</code> contains a random index into <code>word</code>.</p>
+<p>We repeatedly pick a random character from the word, and append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don&#8217;t choose it again. So something like, the following process. Assume our word is in a string <code>word</code> and our new scrambled word is being constructed in a variable <code>tmp</code>. Lets also assume the a variable <code>i</code> contains a random index into <code>word</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13115,7 +13115,7 @@ y       0    nhptoy
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><code>tmp</code> initially starts out as the empty string</td>
+<td><code>tmp</code> initially starts out as the empty string.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -13156,7 +13156,7 @@ y       0    nhptoy
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Concatenate the character at that index into our temprary string <code>tmp</code>.</td>
+<td>Concatenate the character at that index into our temporary string <code>tmp</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -13276,7 +13276,7 @@ banana
 
 interpreter
 
-racoon
+raccoon
 
 zombie
 
