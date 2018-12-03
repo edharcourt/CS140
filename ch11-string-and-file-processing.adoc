@@ -9,7 +9,7 @@ We have already used text in our programs; strings are text. We hardcode text in
 s = 'antidisestablishmentarianism'
 ----
 
-and use them in prompts to enter text from the keyboard
+and use them in prompts or enter them from the keyboard.
 
 [source,python]
 ----
@@ -80,7 +80,7 @@ for ch in s:           <1>
 
 This way of looping through a string works great if you only need to look at each character independent of all the other characters.
 
-The second way to loop through a string is to remember that each character in a string has an integer _index_. So another way to count the numbers of times the character `a` occurs is:
+The second way to loop through a string is to remember that each character in a string has an integer _index_. So another way to count the number of times the character `a` occurs is:
 
 [source,python,numbered]
 ----
@@ -136,7 +136,7 @@ def reverse(s):
 <1> An initially empty string that we will use to build up the reversed string (there is no space between the double quotes).
 <2> For each character `ch` in the string `s`.
 <3> This is a little tricky. We will discuss below.
-<4> Return the reversed string
+<4> Return the reversed string.
 
 Why does this work? Lets take an example of the string `'abcd'` and lets follow the values of `ch` and `tmp` after each loop iteration.
 
@@ -205,7 +205,7 @@ print(s2.find('po'))        <3>
 <2> prints `-1`
 <3> prints `3`, the first occurrence of `'po'`
 
-A second version of the `find` function takes a starting location for the search; `s1.find(s2,start)` will retrn the location of `s2` in `s1` starting at index `start`.
+A second version of the `find` function takes a starting location for the search; `s1.find(s2,start)` will return the location of `s2` in `s1` starting at index `start`.
 
 [source,python]
 ----
@@ -213,7 +213,7 @@ print(s2.find('po', 4)) <1>
 ----
 <1> prints `5`
 
-If we didn't know to start search at `4` and we wanted to find the second location of `po` we can search fr the first occurrence and se that as a starting point for a search for the second occrurrence.
+If we didn't know to start the search at `4` and we wanted to find the second location of `po` we can search for the first occurrence and use that as a starting point for a search for the second occurrence.
 
 [source,python]
 ----
@@ -221,7 +221,7 @@ start = s2.find('po')           <1>
 print(s2.find('po', start+1))   <2>
 ----
 <1> index of first occurrence of `po`
-<2> start searching for the second ccurrence at `start+1` and not `start`, otherwise we would just find the first occurrence all over again.
+<2> start searching for the second occurrence at `start+1` and not `start`, otherwise we would just find the first occurrence all over again.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Write a program that reads a string from the user and counts the number of times the substring `'is'` appears. Print a user friendly answer. Use the `find` function but do not use the built-in string function `count`.
@@ -291,7 +291,7 @@ print(s[:4])
 
 will print `anti`.
 
-A common use for combining `find` and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like `'39,88'`. But this will be a string, so we need bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers
+A common use for combining `find` and a string slice is when we are trying to parse data. For example, lets say we asked the user to enter two numbers separated by a comma. We will then compute the average of those two numbers. The user will enter something like `'39,88'`. But this will be a string, so we need to bust apart the two numbers. We can do this by finding the comma, and taking the slice before the comma, and the slice after the comma. We also have to be careful to convert the slices from strings to integers
 
 [source,python]
 ----
@@ -346,11 +346,11 @@ Enter numbers separated by a comma
 Average: 15.86
 ----
 
-Similar to the way we counted the number of times we search for a substring in a string
+Similar to the way we counted the number of times we search for a substring in a string.
 
 NOTE: A list of numbers separated by commas are called _comma separated values_. Files that contain comma separated values are often use a `.csv` file suffix.
 
-Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, therby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `total` and `count` for that.
+Like always, there are lots of different ways we could write this, but one way to think about this is to repeatedly get the first number in the list and then remove the first number in the list, thereby making the second number the new first number.  Lets say the user entered `23,19,46,57` into the string `s`. We also need to keep a running total of the numbers and the count of the number of integers. We will use `total` and `count` for that.
 
 [source]
 ----
@@ -374,7 +374,7 @@ print("Enter a comma separated list of numbers")
 s = input("> ")
 
 comma = s.find(',')
-total = 0                     <1>
+total = 0                   <1>
 count = 0                   <2>
 
 while comma != -1:          <3>
@@ -432,7 +432,7 @@ This makes sense, Python does not know how to convert `rumpelstiltskin` to an in
 
 ==== Example: Word scramble
 
-Lets say we were implementing an word scramble game where we present the user with an _anagram_ and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.
+Lets say we were implementing a word scramble game where we present the user with an _anagram_ and ask them to to try and guess the word.  For now we will hard code the word they are trying to guess in the game.
 
 NOTE: An _anagram_ is a rearrangement of the characters in a word.
 
@@ -441,7 +441,7 @@ Like always, lets break this up in to subproblems. Lets write a function `scramb
 NOTE: What are the chances that `scramble` will return the original word? Well for `python` there 
 are six distinct characters and the first character in the scrambled word could be any of the 6. The second character could be any of the remaining 5. The third character any of the remaining 4, etc. This gives us stem:[6\cdot5\cdot4\cdot3\cdot2\cdot1 = 720] different possibilities for the word `python`. In general if a word has stem:[n] distinct characters then there are at least stem:[n] _factorial_ (denoted as stem:[n!]) permutations of the characters in the word. So the probability is stem:[1/n!].
 
-We repeatedly pick a random character from the word, append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don't choose it again. So something like, the following process. Assume our word is in a string `word` and our new scrambled word is being constructed in a variable `tmp`. Lets also assume the a variable `i` contains a random index into `word`.
+We repeatedly pick a random character from the word, and append the character to our scrambled word. We also need to be careful that we delete the chosen character from the word so we don't choose it again. So something like, the following process. Assume our word is in a string `word` and our new scrambled word is being constructed in a variable `tmp`. Lets also assume the a variable `i` contains a random index into `word`.
 
 [source]
 ----
@@ -455,7 +455,7 @@ yo      1    nhpto
 y       0    nhptoy
                         <2>
 ----
-<1> `tmp` initially starts out as the empty string
+<1> `tmp` initially starts out as the empty string.
 <2> At this point the `len(word)` is 0 so the loop terminates.
 
 Here is the function `scramble`.
@@ -473,7 +473,7 @@ def scramble(word):
     return tmp
 ----
 <1> Choose a random index into the word.
-<2> Concatenate the character at that index into our temprary string `tmp`.
+<2> Concatenate the character at that index into our temporary string `tmp`.
 <3> Deletes the character at index `i` by rebuilding the word with all of the characters before index `i` (`word[:i]`) concatenated with all of the characters after index `i` (`word[i+1:]`).
 
 Putting it all together we have:
@@ -545,7 +545,7 @@ banana
 
 interpreter
 
-racoon
+raccoon
 
 zombie
 
