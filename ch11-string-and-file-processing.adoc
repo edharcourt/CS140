@@ -1,6 +1,6 @@
 == String and File Processing
 
-Lots of software processes text. For example word processors are used to edit text, web software reads and processes text entered in web forms. Email clients are used to read and write emails. Web search engines such as google store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
+Lots of software processes text. We use word processors to edit text and write documents,  web browsers to read and process text entered in web forms, e-mail clients to read and write emails. Web search engines such as Google, store and search massive amounts of text from every publicly accessible web site in the world. It is estimated that Google has _exabytes_ of data.  Biologists use tools such as https://blast.ncbi.nlm.nih.gov/Blast.cgi[BLAST] to process DNA sequences that are represented as text. The IDE we use to write our Python programs and spell checkers process text. One of the most important applications of text processing is _cryptography_.
 
 We have already used text in our programs; strings are text. We hardcode text into our programs using string constants ...
 
@@ -9,7 +9,7 @@ We have already used text in our programs; strings are text. We hardcode text in
 s = 'antidisestablishmentarianism'
 ----
 
-or enter them from the keyboard
+and use them in prompts to enter text from the keyboard
 
 [source,python]
 ----
@@ -58,7 +58,7 @@ would create an _index out of range_ error, because it is trying to print charac
 
 There are typically two ways we will loop through and examine each character in a string. 
 
-Assume that the variable `s` contains a string value. Back when we introduced the `for` loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
+Assume that the variable `s` contains a string value. Back when we introduced the `for`-loop we noted that strings were a _sequence type_ and that we can use a sequence type in a `for` loop.
 
 [source,python]
 ----
@@ -78,7 +78,7 @@ for ch in s:           <1>
 ----
 <1> `ch` will take on each character in the string `s`.
 
-The way of looping through a string works great if you only need to look at each character independent of all the other characters.
+This way of looping through a string works great if you only need to look at each character independent of all the other characters.
 
 The second way to loop through a string is to remember that each character in a string has an integer _index_. So another way to count the numbers of times the character `a` occurs is:
 
