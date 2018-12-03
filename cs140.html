@@ -711,6 +711,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_terminology_11">11.6. Terminology</a></li>
 </ul>
 </li>
+<li><a href="#_cryptography">12. Cryptography</a>
+<ul class="sectlevel2">
+<li><a href="#_the_caesar_cipher">12.1. The Caesar cipher</a></li>
+<li><a href="#_substitution_cipher">12.2. Substitution Cipher</a></li>
+<li><a href="#_the_one_time_pad_an_unbreakable_cipher">12.3. The One Time Pad - an Unbreakable Cipher</a></li>
+<li><a href="#_exercises_11">12.4. Exercises</a></li>
+<li><a href="#_terminology_12">12.5. Terminology</a></li>
+</ul>
+</li>
 <li><a href="#_references_and_reading">References and Reading</a></li>
 </ul>
 </div>
@@ -12322,11 +12331,7 @@ We always need to watch out for dividing by zero.
 </div>
 </div>
 <div class="paragraph">
-<<<<<<< HEAD
-<p>and use them in prompts to enter text from the keyboard</p>
-=======
-<p>or enter them from the keyboard.</p>
->>>>>>> 5b464ac62d3d45c9d8b29357ba31e9b0c7dc13ac
+<p>and use them in prompts or enter them from the keyboard.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13879,6 +13884,729 @@ are in the file we will have to keep a count of the number of grades.  We also n
 </div>
 </div>
 <div class="sect1">
+<h2 id="_cryptography"><a class="anchor" href="#_cryptography"></a>12. Cryptography</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cryptography is the science and related mathematics of sending messages from a sender to a receiver
+<em>securely</em> such that someone listening in (an eavesdropper) cannot understand the message.
+In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
+some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we will study one cryptographic system that is known to be completely secure and is relatively easy to understand and implement.</p>
+</div>
+<div class="paragraph">
+<p>In cryptography we always use three actors. Alice and Bob are trying to communicate in secret with Eve the evesdropper listening in. The framework is outlined in the figure below.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/alice_eve_bob.png" alt="alice eve bob">
+</div>
+<div class="title">Figure 32. Cryptography</div>
+</div>
+<div class="paragraph">
+<p>Alice (the sender) <em>encrypts</em> the message <em>attack at dawn</em> using a special key (similar to a password) to Bob (the receiver) without Eve being able to intercept the message and understand it.  Bob <em>decrypts</em> the encrypted cleartext (the <em>ciphertext</em>) using the very same key. This implies that Alice and Bob had to get together first to agree on a key.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_caesar_cipher"><a class="anchor" href="#_the_caesar_cipher"></a>12.1. The Caesar cipher</h3>
+<div class="paragraph">
+<p>The first cryptosystem we will study is really silly, and is easy to break. However, there are some good ideas in this system that we can use later to make a more secure cryptosystem.  For simplicity, assume that we are communicating using lower case characters from the Latin alphabet (<em>i.e.,</em> a-z). We can relax those conditions later. The idea of the Caesar cipher is that for each character in the plaintext we <em>shift</em> the character some distance down the alphabet. For example, if we used a shift of three, then an <code>a</code> in the plaintext would turn into a <code>d</code>. A <code>b</code> would become an <code>e</code>, etc., and a <code>w</code> becomes <code>z</code>. What about <code>x</code>, <code>y</code>, and <code>z</code>? These wrap around to <code>a</code>, <code>b</code>, and <code>c</code>. If we index each character in the alphabet by its position then shifting a character amounts to adding the position of the character to the shift mod 26.</p>
+</div>
+<div class="paragraph">
+<p>Why 26? Well, 26 is the number of characters in our alphabet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, to encrypt <em>attack</em> by a shift of ten we take the position of <code>a</code>, which is 0 and add 10 mod 26 = 10. The tenth letter of the alphabet is <code>k</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 60%;">
+<caption class="title">Table 19. Encrypting <em>"attack"</em> with a shift of ten.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 50%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Plaintext</th>
+<th class="tableblock halign-left valign-top"><em>i</em></th>
+<th class="tableblock halign-left valign-top"><code>(i + 10) % 26</code></th>
+<th class="tableblock halign-left valign-top">Ciphertext</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(0 + 10) % 26 = 10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(19 + 10) % 26 = 3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(19 + 10) % 26 = 3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(0 + 10) % 26 = 10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(2 + 10) % 26 = 12</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(10 + 10) % 26 = 20</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>u</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>We can choose the shift in advance by choosing a random number between 1 and 26. In this case the shift is also the <em>key</em> that both Alice and Bob must agree on.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Caesar cipher is sometimes called the <em>rotation cipher</em> or the <em>shift cipher</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The process of decrypting is exactly the same, except rather than add the shift, we subtract the shift.
+For example, given the ciphertext <em>"kddkmu"</em> and a shift of ten we compute <code>("k" - 10) % 26 = 0</code>, and <code>0</code> is the position in the alphabet of the letter <code>a</code>.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 60%;">
+<caption class="title">Table 20. Decrypting <em>"kddkmu"</em> with a shift of ten.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 50%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ciphertext</th>
+<th class="tableblock halign-left valign-top"><em>i</em></th>
+<th class="tableblock halign-left valign-top"><code>(i - 10) % 26</code></th>
+<th class="tableblock halign-left valign-top">Cleartext</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(10 - 10) % 26 = 0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(3 - 10) % 26 = 19</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(3 - 10) % 26 = 19</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(10 - 10) % 26 = 0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(12 - 10) % 26 = 2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>u</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(20 - 10) % 26 = 10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>k</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>One important aspect of this cipher is that Alice and Bob must get together and agree on a private key (the shift) beforehand.</p>
+</div>
+<div class="paragraph">
+<p>To implement the Caesar cipher we need to be able to turn a character into its position in the alphabet. For example, the letter <code>m</code> into <code>12</code>. We also need to be able to perform the inverse operation. Given the position in the alphabet what is the character at that position? For example, turning <code>12</code> back into <code>m</code>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Think About <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>How can you turn a letter into its position in the alphabet?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Hint: Set up a variable <code>alphabet</code> initialized to the string <code>"abcd...z"</code>.
+What would the following print?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;a&#39;</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;z&#39;</span><span class="tok-p">))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;m&#39;</span><span class="tok-p">))</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Turning a letter into its position in the alphabet is a matter of calling the
+<code>find</code> method on the string object <code>alphabet</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Answer</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-mi">0</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-mi">25</span> <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-mi">12</span> <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The position of <code>a</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The position of <code>z</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The position of <code>m</code></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Think About <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>How can you turn an integer from 0 to 25 into the corresponding letter?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Hint: What is the opposite of calling <code>find</code>?  What would get printed by the following?</p>
+</div>
+<div class="listingblock">
+<div class="title">Answer</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">],</span> <span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-mi">25</span><span class="tok-p">],</span> <span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-mi">12</span><span class="tok-p">])</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-s1">&#39;x&#39;</span><span class="tok-p">)],</span> <span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-mi">23</span><span class="tok-p">]))</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">a</span> <span class="tok-n">z</span> <span class="tok-n">m</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">x</span> <span class="tok-mi">23</span>  <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The characters at positions 0, 25, and 12.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Indexing and <code>find</code> are inverses of each other in this case.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets put this all together to implement a function <code>encrypt</code> that takes a cleartext message and a shift and produces a ciphertext as shown in the figure below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/encrypt.png" alt="encrypt" width="500">
+</div>
+<div class="title">Figure 33. Function <code>encrypt</code></div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">import</span> <span class="tok-nn">string</span>
+<span class="tok-k">def</span> <span class="tok-nf">encrypt</span><span class="tok-p">(</span><span class="tok-n">cleartext</span><span class="tok-p">,</span><span class="tok-n">shift</span><span class="tok-p">):</span>
+
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>                        <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">ciphertext</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>                                    <i class="conum" data-value="2"></i><b>(2)</b>
+    <span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">cleartext</span><span class="tok-p">:</span>                               <i class="conum" data-value="3"></i><b>(3)</b>
+        <span class="tok-n">chpos</span> <span class="tok-o">=</span> <span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">ch</span><span class="tok-p">)</span>                      <i class="conum" data-value="4"></i><b>(4)</b>
+        <span class="tok-n">cipherpos</span> <span class="tok-o">=</span> <span class="tok-p">(</span><span class="tok-n">chpos</span> <span class="tok-o">+</span> <span class="tok-n">shift</span><span class="tok-p">)</span> <span class="tok-o">%</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">)</span>    <i class="conum" data-value="5"></i><b>(5)</b>
+        <span class="tok-n">ciphertext</span> <span class="tok-o">+=</span> <span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-n">cipherpos</span><span class="tok-p">]</span>              <i class="conum" data-value="6"></i><b>(6)</b>
+    <span class="tok-k">return</span> <span class="tok-n">cipher</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is where we make it more general and handle any printable character. Not just lower case <code>a</code> to <code>z</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>ciphertext</code> is initially empty.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>For each character in <code>cleartext</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Find the position of the character in the alphabet.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Compute the position of the ciphertext character.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Convert that position into a character.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Calling</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>print(encrypt("Attack at dawn!", 13))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>prints <code>NGGnpx7nG7qnJA.</code> (including the period).</p>
+</div>
+<div class="paragraph">
+<p>How do we write the function <code>decrypt</code>?  Recall that decrypting is just subtracting the shift rather than adding. So the line</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>cipherpos = (chpos + shift) % len(alphabet)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>would change to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>cipherpos = (chpos - shift) % len(alphabet)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or, rather than rewrite the entire function, we just notice that we could call encrypt with a negative shift.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>print(encrypt("NGGnpx7nG7qnJA.", -13))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and we get the original <code>Attack at dawn!</code> message.</p>
+</div>
+<div class="paragraph">
+<p>So what is wrong with the Caesar cipher? Just about everything. But the main problem is that there are only as many different shift possibilities as there are characters in the alphabet, and it would be pretty easy to write a program to try them all.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_substitution_cipher"><a class="anchor" href="#_substitution_cipher"></a>12.2. Substitution Cipher</h3>
+<div class="paragraph">
+<p>Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our <code>scramble</code> function on the alphabet to? For example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+<span class="tok-n">key</span> <span class="tok-o">=</span> <span class="tok-n">scramble</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">)</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">key</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Might print <code>thubrwfzqpcjeovkmsgdxailny</code>. In the <em>substitution cipher</em> an <code>a</code> would map to a <code>t</code> and a <code>b</code> would map to an <code>h</code>, and so on.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+t  h  u  b  r  w  f  z  q  p  c  j  e  o  v  k  m  s  g  d  x  a  i  l  n  y</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then to convert from a cleartext character to a ciphertext character it is as straightforward as finding the position of the cleartext character in the alphabet and returning the corresponding ciphertext character at that position. For example, using the key above, the expression <code>key[alphabet.find('h')]</code> would evaluate to the character <code>z</code>.   The inverse operation needed for decrypting is, given a ciphertext character, find the corresponding cleartext character.
+This is easy too. The expression <code>alphabet[key.find('z')]</code> would evaluate to <code>h</code>.</p>
+</div>
+<div class="paragraph">
+<p>The function <code>encrypt</code> now takes a cleartext message and a key (i.e., a scrambled alphabet) and returns
+the ciphertext. The function <code>decrypt</code> takes a ciphertext message <em>and the same key that was used to generate the ciphertext</em>, and returns the cleartext.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write the functions <code>encrypt</code> and <code>decrypt</code> for the substitution cipher. Assume you can call the <code>scramble</code> function to generate a key that can be shared between <code>encrypt</code> and <code>decrypt</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>Here is encrypt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">encrypt</span><span class="tok-p">(</span><span class="tok-n">cleartext</span><span class="tok-p">,</span> <span class="tok-n">key</span><span class="tok-p">):</span>
+
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>
+    <span class="tok-n">ciphertext</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">cleartext</span><span class="tok-p">:</span>
+        <span class="tok-n">ciphertext</span> <span class="tok-o">+=</span> <span class="tok-n">key</span><span class="tok-p">[</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">ch</span><span class="tok-p">)]</span>
+
+    <span class="tok-k">return</span> <span class="tok-n">ciphertext</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here is <code>decrypt</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">decrypt</span><span class="tok-p">(</span><span class="tok-n">ciphertext</span><span class="tok-p">,</span> <span class="tok-n">key</span><span class="tok-p">):</span>
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>
+
+    <span class="tok-n">cleartext</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">ch</span> <span class="tok-ow">in</span> <span class="tok-n">ciphertext</span><span class="tok-p">:</span>
+        <span class="tok-n">cleartext</span> <span class="tok-o">+=</span> <span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-n">key</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">ch</span><span class="tok-p">)]</span>
+
+    <span class="tok-k">return</span> <span class="tok-n">cleartext</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is a main program that can be used to test <code>encrypt</code> and <code>decrypt</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-kn">import</span> <span class="tok-nn">string</span>
+<span class="tok-n">key</span> <span class="tok-o">=</span> <span class="tok-n">scramble</span><span class="tok-p">(</span><span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span><span class="tok-p">)</span>           <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="tok-n">secret</span> <span class="tok-o">=</span> <span class="tok-n">encrypt</span><span class="tok-p">(</span><span class="tok-s2">&quot;Attack at dawn!&quot;</span><span class="tok-p">,</span> <span class="tok-n">key</span><span class="tok-p">)</span>   <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">decrypt</span><span class="tok-p">(</span><span class="tok-n">secret</span><span class="tok-p">,</span> <span class="tok-n">key</span><span class="tok-p">))</span>                <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Create the key by scrambling all of the printable characters in python.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Encrypt <em>Attack at dawn!</em>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Verify that what decrypt returns is indeed <em>Attack at dawn!</em>.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, once again, Alice and Bob must share the secret key, which this time is a little more difficult than sharing an integer shift.  How many possible keys are there? A lot! Lets assume our alphabet is just the 26 lower case characters. The first character of the key can be any one of the 26 characters. The second character of the key can be any one of the 25 remaining characters, and so on. The number of possible keys is then \(26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 \). In mathematics this is <em>26 factorial</em>, denoted as \(26!\).  This is a very large number.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a simple Python program to compute 26 factorial.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>There are lots of ways to do this. Here is one that matches the order of the operations
+\(26 \cdot 25 \cdot 24 \cdots 3 \cdot 2 \cdot 1 \)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">prod</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">26</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-o">-</span><span class="tok-mi">1</span><span class="tok-p">):</span>
+    <span class="tok-n">prod</span> <span class="tok-o">=</span> <span class="tok-n">prod</span> <span class="tok-o">*</span> <span class="tok-n">i</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">prod</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>You could also write <code>prod *= i</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Of course, since multiplication is commutative (<em>i.e.</em>, \(a \times b = b \times a\)) we do not have to start at 26 and count down. We could start at 1 and count up to 26.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">prod</span> <span class="tok-o">=</span> <span class="tok-mi">1</span>
+
+<span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">27</span><span class="tok-p">):</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="tok-n">prod</span> <span class="tok-o">=</span> <span class="tok-n">prod</span> <span class="tok-o">*</span> <span class="tok-n">i</span>
+
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">prod</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>What would happen if our loop header was <code>for i in range(27):</code></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Needless to say 26 factorial is <code>403291461126605635584000000</code>. This number is larger than <code>4e26</code>.
+Surely the massive number of possible keys must mean that the substitution cipher is impossible
+to break? Sadly, no. The substitution cipher is easy to break using a technique called <em>frequency
+analysis</em>. To illustrate, let us once again assume we are dealing with the lower case Latin
+alphabet and that Eve see&#8217;s the ciphertext <code>hcchtrhclhyu</code>.  With a standard table of letter frequencies  from <a href="https://en.wikipedia.org/wiki/Letter_frequency" class="bare">https://en.wikipedia.org/wiki/Letter_frequency</a> [Wikipedia] and a little patience a cryptanalyst could figure out that <code>hcchtrhclhyu</code> was <code>attackatdawn</code>.   The weakness in the substitution cipher (and the Caesar cipher, as well as many other ciphers) is that letters repeat.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_one_time_pad_an_unbreakable_cipher"><a class="anchor" href="#_the_one_time_pad_an_unbreakable_cipher"></a>12.3. The One Time Pad - an Unbreakable Cipher</h3>
+<div class="paragraph">
+<p>The One Time Pad combines the good idea of using addition modulo a random number with the randomness of a string of characters from the substitution cipher. The problem with the substitution cipher was that the key is only 26 characters long (or as long as the alphabet) and letters were reused thereby allowing a cryptanalyst to apply frequency analysis. What if we could generate a random string of characters that is as long as the message being encrypted? This random string of characters is the <em>One Time Pad</em>, which we will call the key. One again, for illustration, we will assume the lower case Latin alphabet.</p>
+</div>
+<div class="paragraph">
+<p>To encrypt a message using a one time pad we line up the cleartext and the key (<em>i.e.</em>, the one time pad) and add the positions of each character modulo 26.  For example, encrypting <code>apple</code> using the one time pad <code>lzksj</code> results in the ciphertext <code>lozdn</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/OTP_encrypt.png" alt="OTP encrypt" width="500">
+</div>
+<div class="title">Figure 34. One Time Pad Encryption</div>
+</div>
+<div class="paragraph">
+<p>The process of decrypting using a one time pad is exactly the opposite. We line up the ciphertext with the key and then <em>subtract</em> modulo 26. For example, given the ciphertext <code>lozdn</code> we subtract the one time pad <code>lzjsj</code> to get <code>apple</code> back.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/OTP_decrypt.png" alt="OTP decrypt" width="500">
+</div>
+<div class="title">Figure 35. One Time Pad Decryption</div>
+</div>
+<div class="paragraph">
+<p>The one tricky aspect is to remember how to compute mod using negative numbers. For example, <code>(14 - 25) % 26</code> is equal to <code>-11 % 26</code> which is <code>15</code>.</p>
+</div>
+<div class="paragraph">
+<p>Implementing the <code>encrypt</code> and <code>decrypt</code> functions is straightforward.</p>
+</div>
+<div class="listingblock">
+<div class="title">One Time Pad Encrypt</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">encrypt</span><span class="tok-p">(</span><span class="tok-n">cleartext</span><span class="tok-p">,</span> <span class="tok-n">otp</span><span class="tok-p">):</span>                                            <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>
+    <span class="tok-n">ciphertext</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">cleartext</span><span class="tok-p">)):</span>                                     <i class="conum" data-value="2"></i><b>(2)</b>
+        <span class="tok-n">ciphertext</span> <span class="tok-o">+=</span> <span class="tok-n">alphabet</span><span class="tok-p">[(</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">cleartext</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">])</span> <span class="tok-o">+</span>
+                                <span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">otp</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]))</span> <span class="tok-o">%</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">)]</span> <i class="conum" data-value="3"></i><b>(3)</b>
+
+    <span class="tok-k">return</span> <span class="tok-n">ciphertext</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The variable <code>otp</code> is the one time pad. Its length must be greater than or equal to the length of the cleartext.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>We are using this version of the for-loop because we need to get the i<sup>th</sup> character from <em>both</em> the cleartext and the one time pad.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>There is a lot packed in to this one line, but it simply looks up the position of a cleartext character and the corresponding one time pad character, adds them together mod the length of the alphabet to get the position of the ciphertext character, and extracts that character from the alphabet and concatenates it to the ciphertext. Note the use of the <code>+=</code> operator.</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">One Time Pad Decrypt</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">decrypt</span><span class="tok-p">(</span><span class="tok-n">ciphertext</span><span class="tok-p">,</span> <span class="tok-n">otp</span><span class="tok-p">):</span>
+
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>
+    <span class="tok-n">cleartext</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">ciphertext</span><span class="tok-p">)):</span>
+        <span class="tok-n">cleartext</span> <span class="tok-o">+=</span> <span class="tok-n">alphabet</span><span class="tok-p">[(</span><span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">ciphertext</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">])</span> <span class="tok-o">-</span>          <i class="conum" data-value="1"></i><b>(1)</b>
+                               <span class="tok-n">alphabet</span><span class="tok-o">.</span><span class="tok-n">find</span><span class="tok-p">(</span><span class="tok-n">otp</span><span class="tok-p">[</span><span class="tok-n">i</span><span class="tok-p">]))</span> <span class="tok-o">%</span> <span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">alphabet</span><span class="tok-p">)]</span>
+
+    <span class="tok-k">return</span> <span class="tok-n">cleartext</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The only real difference between <code>encrypt</code> and <code>decrypt</code> is the <code>-</code> on this line.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Why is the one time pad considered completely secure (unbreakable)? Recall that the pad must be as long as the cleartext being encrypted and that each character in the one time pad is truely random. Lets say we are presented with the ciphertext <code>lozdn</code>. In order to decrypt the first character <code>l</code> we would have to correctly guess the first character in the pad. We have a \(1/26 = .038\) chance of guessing correctly. To decrypt the first two characters we would have to correctly guess the first two characters of the pad, or \(1/26 \cdot 1/26 = .0015\) chance. To correctly guess the entire key of length five is \(1/26^5 = .000000084\). The message will be much longer than five characters so the
+the probability of guessing all of the characters correctly quickly approaches zero.</p>
+</div>
+<div class="paragraph">
+<p>If the One Time Pad is truly unbreakable then why aren&#8217;t all of our communications completely secure? Well, as you might expect the One Time Pad has a downside.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>as the name suggests, the pad <em>can only be used once</em>. If you ever reuse a pad on a different cleartext, then the message is no longer secure because an attacker can now use frequency analysis to break the pad.</p>
+</li>
+<li>
+<p>Since a one time pad must be as long as the cleartext message the pads could be really long. And since Alice and Bob both need to share a copy of the pad in advance then this could be cumbersome.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>How does one go about generating a one time pad? This is relatively easy. Keep randomly picking characters from the alphabet and appending them to the pad.</p>
+</div>
+<div class="paragraph">
+<div class="title">Check Yourself <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>Write a function <code>GenOneTimePad</code> that takes an integer <code>n</code> and returns a random string of characters of length <code>n</code>.</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-k">def</span> <span class="tok-nf">GenOneTimePad</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">):</span>
+    <span class="tok-n">pad</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;&#39;</span>
+    <span class="tok-n">alphabet</span> <span class="tok-o">=</span> <span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span>
+
+    <span class="tok-k">for</span> <span class="tok-n">i</span> <span class="tok-ow">in</span> <span class="tok-nb">range</span><span class="tok-p">(</span><span class="tok-n">n</span><span class="tok-p">):</span>
+        <span class="tok-n">pad</span> <span class="tok-o">+=</span> <span class="tok-n">alphabet</span><span class="tok-p">[</span><span class="tok-n">random</span><span class="tok-o">.</span><span class="tok-n">randrange</span><span class="tok-p">(</span><span class="tok-nb">len</span><span class="tok-p">(</span><span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">printable</span><span class="tok-p">))]</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+    <span class="tok-k">return</span> <span class="tok-n">pad</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>There is actually a fatal flaw in our use of the standard random number generators in the <code>random</code> module.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Random number generators found in programming languages are really <em>pseudorandom</em>. That is, the numbers generated are not really random but only appear to be random. They are fine for use in simulations such as Brownian motion or computer games, but their predictability make them unsuitable for cryptography or even games used in casinos. We say that they are not <em>cryptographically secure</em>. The acronyms we use for a <em>pseudo random number generator</em> is <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> and the tongue twister <em>cryptographically secure pseudo random number generator</em> is <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator">CSPRNG</a>.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately the Python module <a href="https://docs.python.org/3/library/secrets.html"><code>secrets</code></a> provides a CSPRNG. A CSPRNG works by using a pool of genuine randomness called <em>entropy</em>. Entropy is built up over time, for example, times between keyboard presses, mouse movements, or network activity. It is also possible for a computer to run out of entropy! On some systems trying to generate a random number from a CSPRNG could actually block and have to wait until sufficient entropy is built up.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises_11"><a class="anchor" href="#_exercises_11"></a>12.4. Exercises</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_terminology_12"><a class="anchor" href="#_terminology_12"></a>12.5. Terminology</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 21. Terminology</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Casear Cipher</p>
+</li>
+<li>
+<p>Substitution Cipher</p>
+</li>
+<li>
+<p>cleartext</p>
+</li>
+<li>
+<p>key</p>
+</li>
+<li>
+<p>encrypt</p>
+</li>
+<li>
+<p>Alice, Bob, Eve</p>
+</li>
+<li>
+<p>Entropy</p>
+</li>
+<li>
+<p>factorial</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Shift Cipher</p>
+</li>
+<li>
+<p>One Time Pad</p>
+</li>
+<li>
+<p>plaintext</p>
+</li>
+<li>
+<p>ciphertext</p>
+</li>
+<li>
+<p>decrypt</p>
+</li>
+<li>
+<p>PRNG</p>
+</li>
+<li>
+<p>CSPRNG</p>
+</li>
+<li>
+<p>Frequency Analysis</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_references_and_reading"><a class="anchor" href="#_references_and_reading"></a>References and Reading</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -14047,7 +14775,7 @@ are in the file we will have to keep a count of the number of grades.  We also n
 <div id="footer">
 <div id="footer-text">
 Version 0.3<br>
-Last updated 2018-11-26 13:05:56 -0500
+Last updated 2018-12-03 09:16:36 -0500
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

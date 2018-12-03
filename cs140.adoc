@@ -55,14 +55,17 @@ include::ch10-image-processing.adoc[]
 
 include::ch11-string-and-file-processing.adoc[]
 
-////
 
 include::ch12-cryptography.adoc[]
+
+////
 
 include::ch13-accessing-the-web.adoc[]
 
 include::ch14-tuples-and-lists.adoc[]
+
 ////
+
 [bibliography]
 == References and Reading
 
