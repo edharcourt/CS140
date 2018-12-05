@@ -62,9 +62,10 @@ include::ch12-cryptography.adoc[]
 
 include::ch13-accessing-the-web.adoc[]
 
-include::ch14-tuples-and-lists.adoc[]
 
+include::ch14-tuples-and-lists.adoc[]
 ////
+
 
 [bibliography]
 == References and Reading

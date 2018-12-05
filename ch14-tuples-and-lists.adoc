@@ -30,7 +30,7 @@ grades = (98, 78, 72, 100, 85, 76)
 
 Because tuples are a _sequence type_ we can iterate over them just like we can a string. To compute the average grade in `grades` ...
 
-[source,python]
+[source,python,numbered]
 ----
 total = 0
 for g in grades:
@@ -40,7 +40,7 @@ avg = total / len(grades)
 print("The average is", round(avg,2))
 ----
 
-Like strings, tuples are _immutable_. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we might want to try 
+Like strings, tuples are _immutable_. Once a tuple is defined it cannot be changed.  For example, using our `grades` tuple if we wanted to modify the first grade to be a 100 we might want to try ...
 
 [source,python]
 ----
@@ -84,12 +84,13 @@ print(len(grades)) <1>
 ----
 <1> prints `0`.
 
-
+////
 - find the median of a list of grades
 - replace the smallest grade with the largest grade.
 - count the number grades in the 80s
+////
 
-We can add a value on the end of the list using the `append` method.
+We can insert a value at the end of the list using the `append` method.
 
 [source,python]
 ----
@@ -98,7 +99,7 @@ grades.append(83) <1>
 ----
 <1> The list is now `[78,83]`
 
-This seems a little seeing that we could have just defined the list as
+This seems a little verbose since we could have just defined the list as
 
 [source,python]
 ----
@@ -135,13 +136,13 @@ else:                                   <3>
 print('Median:', round(median, 1))
 ----
 <1> Append each grade in the file to the list.
-<2> For an odd length list the median is in the middle.
+<2> For an odd length list, the median is in the middle.
 <3> Otherwise we need to compute the mean of the middle two elements.
 <4> Convince yourself that the grades at `len(grades)//2 - 1` and `len(grades)//2` are the middle two elements.
 
 === The Birthday Paradox
 
-The _Birthday Paradox_ (also called the _Birthday Problem_) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a https://en.wikipedia.org/wiki/Birthday_attack[_birthday attack_].  The popular radio show _This American Life_ did an https://www.thisamericanlife.org/630/things-i-mean-to-know[episode] where the results from the birthday paradox were used to debunk claims of voter 
+The _Birthday Paradox_ (also called the _Birthday Problem_) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a https://en.wikipedia.org/wiki/Birthday_attack[_birthday attack_].  The popular radio show _This American Life_ did an https://www.thisamericanlife.org/630/things-i-mean-to-know[episode] titled https://www.thisamericanlife.org/630/things-i-mean-to-know/act-one-0[_Fraud Complex_] where the results from the birthday paradox were used to debunk claims of voter
 fraud.footnote:[https://5harad.com/papers/1p1v.pdf[_One Person, One Vote:
 Estimating the Prevalence of Double Voting
 in U.S. Presidential Elections_]] 
@@ -159,15 +160,17 @@ for i in range(366):    <1>
 ----
 <1> Append 366 zeros to the `birthdays` list.
 
-Python has an even simpler notation for initializing a list to all of the same value. We can
-replicate all three line of code above with the one line ...
+Python has an even simpler notation for initializing a list to all
+of the same value. We can replicate all three line of code above
+with the one line ...
 
 [source,python]
 ----
 birthdays = [0]*366
 ----
 
-How can we simulate someone's birthday?  Generate a random number between 0 and 365 and increment the corresponding birthday in the `birthdays` list.
+How can we simulate someone's birthday?  Generate a random number between 0 and 365
+and increment the corresponding birthday in the `birthdays` list.
 
 [source,python,numbered]
 ----
@@ -185,7 +188,7 @@ for i in range(100):                <1>
 ----
 <1> Generate one hundred random birthdays.
 
-How do we know if two or more people share a birthday? One of the items in the `birthdays` list will be greater than 1. If nobody shared a birthday then all of the integers in `birthdays` are either 0 or 1. 
+How do we know if two or more people share a birthday? One of the items in the `birthdays` list will be greater than 1. If nobody shared a birthday then all of the integers in `birthdays` are either 0 or 1. By the https://en.wikipedia.org/wiki/Pigeonhole_principle[_pigeonhole principle_] if there are 367 people in the room then we are guaranteed that at least two people share a birthday. In practice though, it is much less than that.
 
 [source,python,numbered]
 ----
@@ -197,7 +200,7 @@ for count in birthdays:
 ----
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Rewrite the above loop so that it uses the other form a `for`-loop using the `range` function.
+Rewrite the above loop so that it uses the other form of a `for`-loop using the `range` function.
 
 [.result]
 ====
@@ -226,11 +229,11 @@ If we run this with 100 people in the room we see that lots of people share a bi
 2 birthdays on day 333
 ----
 
-In fact with 100 people, you are almost guaranteed to have people share a birthday. WIth a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. The Birthday Problem is sometime called the Birthday Paradox because that _seems_ like a surprisingly small number.
+In fact with 100 people, you are almost guaranteed to have people share a birthday. With a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. It is called the _Birthday Paradox_ because that 23 _seems_ like a surprisingly small number.
 
 === Particle Simulation: Take 2
 
-Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two partivles we need eight variables, and if we had six particles then we would need twenty-four variables. Also,our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
+Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two particles we need eight variables, and if we had six particles then we would need twenty-four variables. Also,our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
 and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we need 
 
 stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] 
