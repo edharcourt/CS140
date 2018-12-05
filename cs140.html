@@ -569,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
     resultNode.style.display = 'none';
     var viewLink = document.createElement('a');
     viewLink.className = 'view-result';
-    //viewLink.href = '#';
+//   viewLink.href = '#';
     viewLink.appendChild(document.createTextNode('[ view result ]'));
     resultNode.previousElementSibling.querySelector('.title').appendChild(viewLink);
     viewLink.addEventListener('click', toggle_result_block);
@@ -13211,7 +13211,7 @@ y       0    nhptoy
 <div class="sect2">
 <h3 id="_files"><a class="anchor" href="#_files"></a>11.2. Files</h3>
 <div class="paragraph">
-<p>Up until know all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named <code>words.txt</code>. We&#8217;ll keep it relative short for now, but file can be enormous and could have hundreds of thousands of lines it.</p>
+<p>Up until now all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named <code>words.txt</code>. We will keep it relatively short for now, but files can be enormous and could have hundreds of thousands of lines it.</p>
 </div>
 <div class="listingblock">
 <div class="title"><a href="python/words.txt"><code>words.txt</code></a></div>
@@ -13226,7 +13226,7 @@ incorrect</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. <em>newline</em> character. We often call spaces, tabs, andnelinw character <em>whitespace</em> characters.  In most programming languages the newline character is written <code>\n</code>.</p>
+<p>The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. <em>newline</em> character. We often call spaces, tabs, and newline characters <em>whitespace</em> characters.  In most programming languages the newline character is written <code>\n</code>.</p>
 </div>
 <div class="paragraph">
 <p>We tell Python the name of a file we want to read using the <a href="https://docs.python.org/3.6/library/functions.html#open"><code>open</code></a> function.<sup class="footnote">[<a id="_footnoteref_31" class="footnote" href="#_footnotedef_31" title="View footnote.">31</a>]</sup></p>
@@ -13342,7 +13342,7 @@ incorrect</code></pre>
 <div class="sect3">
 <h4 id="_counting_the_lines_in_a_file"><a class="anchor" href="#_counting_the_lines_in_a_file"></a>11.2.1. Counting the lines in a file</h4>
 <div class="paragraph">
-<p>How can we count the lines a file?</p>
+<p>How can we count the lines in a file?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -13565,7 +13565,7 @@ Bioinformatics is the computational branch of molucular biology.
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>For each line in the file. (It turns out there is only one in this example)</td>
+<td>For each line in the file. (It turns out there is only one in this example.)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -13590,7 +13590,7 @@ t: 1140824, 24.6%</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A few points.  The number of base pairs in the sequence is approximately 4.6 million \(4.6 \times 10^6\). The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For <em>E. coli</em> if we round these values then each base pair is about 25% of the total. Notice that <code>c</code> and <code>g</code> are both 25.4% and <code>a</code> and <code>t</code> are the same at 24.6%. This might indicate that there is some special relationship between <code>a/t</code> and <code>c/g</code>. Indeed there is.  If we had this sequence but we didn&#8217;t know that it came from <em>E. coli</em> we can use <em>GC Content</em> to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of <em>E. Coli</em> is 50.7% and that of humans is 41%.</p>
+<p>A few points.  The number of base pairs in the sequence is approximately 4.6 million \(4.6 \times 10^6\). The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For <em>E. coli</em> if we round these values then each base pair is about 25% of the total. Notice that <code>c</code> and <code>g</code> are both 25.4% and <code>a</code> and <code>t</code> are the same at 24.6%. This might indicate that there is some special relationship between <code>a/t</code> and <code>c/g</code>. Indeed there is.  If we had this sequence but we did not know that it came from <em>E. coli</em> we could use <em>GC Content</em> to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of <em>E. Coli</em> is 50.7% and that of humans is 41%.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -13627,7 +13627,7 @@ t: 1140824, 24.6%</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Start with the codon <code>ATG</code>, (sometimes called a <em>start codon</em>)</p>
+<p>Start with the codon <code>ATG</code>, (sometimes called a <em>start codon</em>).</p>
 </li>
 <li>
 <p>End with one of the <em>stop codons</em> <code>TAA</code>, <code>TAG</code>, or <code>TGA</code>.</p>
@@ -13695,7 +13695,7 @@ digram below shows that the first possible gene location starts at location 29 a
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Find the location of the start codon</td>
+<td>Find the location of the start codon.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -13888,8 +13888,9 @@ are in the file we will have to keep a count of the number of grades.  We also n
 <div class="sectionbody">
 <div class="paragraph">
 <p>Cryptography is the science and related mathematics of sending messages from a sender to a receiver
-<em>securely</em> such that someone listening in (an eavesdropper) cannot understand the message.
+<em>securely</em> such that someone listening in (an evesdropper) cannot understand the message.
 In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
+some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we will study one cryptographic system that is known to be completely secure and is relatively easy to understand and implement.
 some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we will study one cryptographic system that is known to be completely secure and is relatively easy to understand and implement.</p>
 </div>
 <div class="paragraph">
@@ -14236,7 +14237,7 @@ What would the following print?</p>
 <div class="sect2">
 <h3 id="_substitution_cipher"><a class="anchor" href="#_substitution_cipher"></a>12.2. Substitution Cipher</h3>
 <div class="paragraph">
-<p>Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our <code>scramble</code> function on the alphabet to? For example</p>
+<p>Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our <code>scramble</code> function on the alphabet? For example &#8230;&#8203;</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -14775,7 +14776,7 @@ the probability of guessing all of the characters correctly quickly approaches z
 <div id="footer">
 <div id="footer-text">
 Version 0.4<br>
-Last updated 2018-12-03 13:51:36 -0500
+Last updated 2018-12-03 14:29:15 -0500
 </div>
 </div>
 <script src="assets/js/tocbot.js"></script>

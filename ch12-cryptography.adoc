@@ -1,9 +1,10 @@
 == Cryptography
 
 Cryptography is the science and related mathematics of sending messages from a sender to a receiver 
-_securely_ such that someone listening in (an eavesdropper) cannot understand the message. 
+_securely_ such that someone listening in (an evesdropper) cannot understand the message.
 In real cryptographic systems, like that implemented in web browsers (when you navigate to a secure web site such as your bank), or that found in secure messaging apps (such as WhatsApp), requires some advanced mathematics and sophisticated computer science that is beyond an introductory course. But with
 some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we will study one cryptographic system that is known to be completely secure and is relatively easy to understand and implement. 
+some basic concepts we can go a long way to understand some of the fundamentals, terminology, and concepts of how messages can be transmitted secretly.  In fact we will study one cryptographic system that is known to be completely secure and is relatively easy to understand and implement.
 
 In cryptography we always use three actors. Alice and Bob are trying to communicate in secret with Eve the evesdropper listening in. The framework is outlined in the figure below.
 
@@ -164,7 +165,7 @@ So what is wrong with the Caesar cipher? Just about everything. But the main pro
 
 === Substitution Cipher
 
-Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet to? For example
+Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet? For example ...
 
 [source,python]
 ----
