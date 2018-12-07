@@ -66,7 +66,7 @@ for ch in s:
     # loop body
 ----
 
-The variable `ch` (for _character_) will take on each each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
+The variable `ch` (for _character_) will take on each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
 
 [source,python,nmbered]
 ----
@@ -559,7 +559,7 @@ Why is there a blank line between each word?
 
 [.result]
 ====
-Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.
+Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a newline character after every word in the file. So we end up printing two newline characters.
 
 We can fix this in two ways. The first way is to slice off the last character in the line (the newline character) before we print it.
 
@@ -756,10 +756,10 @@ if start > -1:                                        <2>
 ----
 <1> Find the location of the start codon.
 <2> Only look for a stop codon if we found a start codon.
-<3> Look for a stop codon starting from `start+3` being careful not to go off of then end of the DNA string and a potential index out of bounds error.
+<3> Look for a stop codon starting from `start+3` being careful not to go off of the end of the DNA string and a potential index out of bounds error.
 <4> This is a nice way to check for the stop codon instead of a complicated logical expression sch as `dna[i:i+3] == 'taa' or dna[i:i+3] == 'tag'` etc.
 <5> Make sure the length of the region is divisible by three.
-<6> As soon as we find a possible gene location stop looking bcause the rule is that there cannot be an intervening stop codon.
+<6> As soon as we find a possible gene location stop looking because the rule is that there cannot be an intervening stop codon.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 The above code only finds the first possible gene location. Modify the program to find all of the possible gene locations.
