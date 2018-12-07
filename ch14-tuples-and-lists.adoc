@@ -12,7 +12,7 @@ name = ("Harry", "Potter")
 print(name[1], name[0])
 ----
 
-prints `Potter Harry`.  Tuples have a length.
+prints `Potter Harry`.  Tuples have a length:
 
 [source,python]
 ----
@@ -82,7 +82,7 @@ The list `[]` is the empty list whose length is zero.
 grades = []
 print(len(grades)) <1>
 ----
-<1> prints `0`.
+<1> Prints `0`.
 
 ////
 - find the median of a list of grades
@@ -106,15 +106,16 @@ This seems a little verbose since we could have just defined the list as
 grades = [78,83]
 ----
 
-But we might not know the exact values in the list. What if they are coming from a file of grades? Or from the Internet? For example, lets compute the _median_ of a file of numbers? The _median_ is the middle number, where half of the numbers are above and below the median. If there is an even number of numbers then the median is the average of the middle two numbers. One way to compute the median is to sort the numbers and pick the middle element. We can't just read a number from the file, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
+But we might not know the exact values in the list. What if they are coming from a file of grades? Or from the internet? For example, lets compute the _median_ of a file of numbers? The _median_ is the middle number, where half of the numbers are above and below the median. If there is an even number of numbers then the median is the average of the middle two numbers. One way to compute the median is to sort the numbers and pick the middle element. We can't just read a number from the file, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
 
-To sort a list we can call the `sort` method on the list.
+To sort a list we can call the `sort` method on the list. The line
 
 [source,python]
 ----
-grades.sort() <1>
+grades.sort()
 ----
-<1> Sort the list of grades. The sort method returns `None` and has the side effect of modifying the list. 
+
+sorts the list of grades. The `sort` method returns `None` and has the side effect of modifying the list. 
 
 [source,python,numbered]
 ----
@@ -138,7 +139,7 @@ print('Median:', round(median, 1))
 <1> Append each grade in the file to the list.
 <2> For an odd length list, the median is in the middle.
 <3> Otherwise we need to compute the mean of the middle two elements.
-<4> Convince yourself that the grades at `len(grades)//2 - 1` and `len(grades)//2` are the middle two elements.
+<4> Convince yourself that the grades at index `len(grades)//2 - 1` and index  `len(grades)//2` are the middle two elements.
 
 === The Birthday Paradox
 
@@ -161,8 +162,8 @@ for i in range(366):    <1>
 <1> Append 366 zeros to the `birthdays` list.
 
 Python has an even simpler notation for initializing a list to all
-of the same value. We can replicate all three line of code above
-with the one line ...
+of the same value. The three lines of code above can be replaced with
+the one line ...
 
 [source,python]
 ----
@@ -229,11 +230,11 @@ If we run this with 100 people in the room we see that lots of people share a bi
 2 birthdays on day 333
 ----
 
-In fact with 100 people, you are almost guaranteed to have people share a birthday. With a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. It is called the _Birthday Paradox_ because that 23 _seems_ like a surprisingly small number.
+In fact with 100 people, you are almost guaranteed to have people share a birthday. With a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. It is called the _Birthday Paradox_ because 23 _seems_ like a surprisingly small number.
 
 === Particle Simulation: Take 2
 
-Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two particles we need eight variables, and if we had six particles then we would need twenty-four variables. Also,our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
+Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two particles we need eight variables, and if we had six particles then we would need twenty-four variables. Also, our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
 and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we need 
 
 stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] 
@@ -297,7 +298,7 @@ dy = []   # list of y-velocities. dy[i] is the y velocity for particle i
 
 We saw that in our discussion of the frame rate (<<_understanding_the_frame_rate>>) if the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second) assuming `side` is the width of the window. We want to give particles different velocities to make it look realistic. We can randomize the velocity of the particle between `side/2` and `side/4` seconds. For example, setting the x-velocity and y-velocity to `side / (random.random() * 2 + 2)`
 
-Why does this work? Well `random.random() * 2` gives a random value between 0 and 2` and adding 2 gives us a random value between 2 and 4.
+Why does this work? Well `random.random() * 2` gives a random value between 0 and 2 and adding 2 gives us a random value between 2 and 4.
 
 But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative, between -2 and -4. We have to be careful because we don't want to generate values near `0` such as `.001` because then `side/.001` would be far too fast.
 
@@ -478,7 +479,11 @@ while True:
 
 === Forest Fire Model
 
+TBD
+
 === Exercises
+
+TBD
 
 === Terminology 
 
@@ -487,9 +492,12 @@ while True:
 |===
 
 a|
- * tbd
+ * mutable
+ * The Birthday Problem
 
 a|
- * tbd 
+ * index
+ * indices
+ 
 
 |===
