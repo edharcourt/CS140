@@ -4,7 +4,7 @@ Recall that a _tuple_ is a value that contains a _collection of values_. For exa
 
 A tuple need not contain integers. Any time we want to think of several values as a single value we can use a tuple. For example, we can use a tuple to hold a name such as `("Harry", "Potter")` which might be more helpful than storing the name as a single string `"Harry Potter"`.
 
-Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first character as `s[0]` we can index tuples as well.
+Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first character as `s[0]`, we can index tuples as well.
 
 [source,python]
 ----
@@ -46,7 +46,7 @@ Like strings, tuples are _immutable_. Once a tuple is defined it cannot be chang
 ----
 grades[0] = 100
 ----
-causes a run-time error
+causes a run-time error.
 
 ----
 TypeError: 'tuple' object does not support item assignment
@@ -97,7 +97,7 @@ We can insert a value at the end of the list using the `append` method.
 grades.append(78)
 grades.append(83) <1>
 ----
-<1> The list is now `[78,83]`
+<1> The list is now `[78,83]`.
 
 This seems a little verbose since we could have just defined the list as
 
@@ -339,7 +339,7 @@ for row in range(r, side, 6*r):
 ----
 <1> Generate a random x-velocity value between `side/2` and `side/4`.
 <2> The same for the y-velocity.
-<3> Randomly negate the x-velocity
+<3> Randomly negate the x-velocity.
 <4> And the same for the y-velocity.
 
 ==== Moving the Particles
@@ -428,8 +428,8 @@ for i in range(len(x) - 1):          <1>
     for j in range(i+1, len(x)):     <2>
         # collide particle i and j
 ----  
-<1> for every particle `i` except the last
-<2> for every particle from `i+1` to the last
+<1> For every particle `i` except the last.
+<2> For every particle from `i+1` to the last.
 
 Now we just add the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.
 
@@ -451,9 +451,9 @@ for i in range(len(x) - 1):
             (dy[i], dy[j]) = (dy[j], dy[i])
 ----
 
-This goes in the main animation loop, which is now 
+This goes in the main animation loop, which is now ...
 
-[source,python,numbered,]
+[source,python,numbered]
 ----
 # main animation loop
 clock = pygame.time.Clock()
