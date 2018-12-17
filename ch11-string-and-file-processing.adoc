@@ -66,7 +66,7 @@ for ch in s:
     # loop body
 ----
 
-The variable `ch` (for _character_) will take on each each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
+The variable `ch` (for _character_) will take on each character in the string `s`. Lets say we wanted to count the number of times the character `'a'` appeared in a string. 
 
 [source,python,nmbered]
 ----
@@ -494,7 +494,7 @@ else:
 
 === Files
 
-Up until know all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named `words.txt`. We'll keep it relative short for now, but file can be enormous and could have hundreds of thousands of lines it.
+Up until now all of the input to our programs has come from the command line. It is common though that data come from a separate text file.  Revisiting our word scramble game, lets assume we have a text file of words, one word per line, and the file is named `words.txt`. We will keep it relatively short for now, but files can be enormous and could have hundreds of thousands of lines it.
 
 .link:python/words.txt[`words.txt`]
 [source,indent=0]
@@ -508,7 +508,7 @@ example
 incorrect
 ----
 
-The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. _newline_ character. We often call spaces, tabs, andnelinw character _whitespace_ characters.  In most programming languages the newline character is written `\n`.
+The first thing to know is that every line ends with a special character that you cannot see called the end-of-line character a.k.a. _newline_ character. We often call spaces, tabs, and newline characters _whitespace_ characters.  In most programming languages the newline character is written `\n`.
 
 We tell Python the name of a file we want to read using the https://docs.python.org/3.6/library/functions.html#open[`open`] function.footnote:[https://docs.python.org/3.6/library/functions.html#open]
 
@@ -559,7 +559,7 @@ Why is there a blank line between each word?
 
 [.result]
 ====
-Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a new line character after every word in the file. So we end up printing two newline characters.
+Recall that every time `print` is called the last character printed is a newline character `\n`. But also recall that there is a newline character after every word in the file. So we end up printing two newline characters.
 
 We can fix this in two ways. The first way is to slice off the last character in the line (the newline character) before we print it.
 
@@ -582,7 +582,7 @@ for line in f:
 
 ==== Counting the lines in a file
 
-How can we count the lines a file? 
+How can we count the lines in a file?
 
 [source,python,numbered]
 ----
@@ -691,7 +691,7 @@ print('g: ', g_count, ', ', round(g_count/total * 100, 1), '%', sep='')
 print('t: ', t_count, ', ', round(t_count/total * 100, 1), '%', sep='')
 ----
 <1> Download this file by clicking on the link above in the sequence.
-<2> For each line in the file. (It turns out there is only one in this example)
+<2> For each line in the file. (It turns out there is only one in this example.)
 <3> Count the base pairs in the current line.
 <4> We are controlling the spaces in the line manually by indicating that the separator should be the empty string. That is don't print a space after the comma separated items in the `print` statement.
 
@@ -706,7 +706,7 @@ g: 1176575, 25.4%
 t: 1140824, 24.6%
 ----
 
-A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This might indicate that there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we didn't know that it came from _E. coli_ we can use _GC Content_ to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of _E. Coli_ is 50.7% and that of humans is 41%.
+A few points.  The number of base pairs in the sequence is approximately 4.6 million stem:[4.6 \times 10^6]. The computer was able to process a huge string quickly, in under a second. The second thing to notice is that it looks like there is a relationship in the relative frequencies of base pairs. For _E. coli_ if we round these values then each base pair is about 25% of the total. Notice that `c` and `g` are both 25.4% and `a` and `t` are the same at 24.6%. This might indicate that there is some special relationship between `a/t` and `c/g`. Indeed there is.  If we had this sequence but we did not know that it came from _E. coli_ we could use _GC Content_ to help narrow down the organism a DNA sequence comes from.  For example it is known that the GC Content of _E. Coli_ is 50.7% and that of humans is 41%.
 
 NOTE: _GC Content_ is the ratio of the number `g` and `c` base pairs to the total number of pase pairs. GC Content is stem:[(g + c)/(a + c + g + t)]
 
@@ -718,7 +718,7 @@ NOTE: _Genomics_ is the branch of bioinformatics that uses string algorithms to 
 
 The _central dogma_ describes how DNA is converted to RNA to make proteins. A _gene_ is a special region (or substring) of a DNA sequence that forms a basic unit of heredity. DNA sequences contain genes and are sometimes referred to a _protein-coding_ genes. A _codon_ is three consective base-pairs such as `GCA` or `AAT`. Protein coding genes obey the following constraints.
 
- . Start with the codon `ATG`, (sometimes called a _start codon_)
+ . Start with the codon `ATG`, (sometimes called a _start codon_).
  . End with one of the _stop codons_ `TAA`, `TAG`, or `TGA`. 
  . The number of base-pairs (nucleotides) between the start and stop codons must be a multiple of three.
  . None of the intervening codons is one of the stop codons.
@@ -754,12 +754,12 @@ if start > -1:                                        <2>
 		    print(start, i)                
 		    break                                     <6>
 ----
-<1> Find the location of the start codon
+<1> Find the location of the start codon.
 <2> Only look for a stop codon if we found a start codon.
-<3> Look for a stop codon starting from `start+3` being careful not to go off of then end of the DNA string and a potential index out of bounds error.
+<3> Look for a stop codon starting from `start+3` being careful not to go off of the end of the DNA string and a potential index out of bounds error.
 <4> This is a nice way to check for the stop codon instead of a complicated logical expression sch as `dna[i:i+3] == 'taa' or dna[i:i+3] == 'tag'` etc.
 <5> Make sure the length of the region is divisible by three.
-<6> As soon as we find a possible gene location stop looking bcause the rule is that there cannot be an intervening stop codon.
+<6> As soon as we find a possible gene location stop looking because the rule is that there cannot be an intervening stop codon.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 The above code only finds the first possible gene location. Modify the program to find all of the possible gene locations.

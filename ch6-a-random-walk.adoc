@@ -26,7 +26,7 @@ else:
 <1> This is actually a syntax error because `heads` is not yet defined.
 <2> Same comment. `tails` is not yet defined.
 
-This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and `tails` variables, and use a counting loop to toss the die stem:[n] times.
+This is the loop body, all we need to do now is to get stem:[n] from the user, initialize the `heads` and `tails` variables, and use a counting loop to toss the coin stem:[n] times.
 
 TIP: Don't try and write the program all at once. Break into parts.
 
@@ -60,7 +60,7 @@ TIP: If you think you need a loop try and figure out what the process is that ne
 
 NOTE: A _computer simulation_ is a computer program that represents a simulation (or model) of some real-world process. 
 
-As you might expect when you run this program, the number of times heads and tails are rolled is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
+As you might expect when you run this program, the number of times heads and tails are tossed is roughly equal. But this only prints the final result. What is going on _during_ the simulation?
 
 .Check Yourself+++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Modify the coin toss program to count the number of times it takes to toss ten heads in a row. Run the program a few times. How big do you have to make stem:[n] in order to get ten heads in a row?

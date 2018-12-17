@@ -4,7 +4,7 @@ Recall that a _tuple_ is a value that contains a _collection of values_. For exa
 
 A tuple need not contain integers. Any time we want to think of several values as a single value we can use a tuple. For example, we can use a tuple to hold a name such as `("Harry", "Potter")` which might be more helpful than storing the name as a single string `"Harry Potter"`.
 
-Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first character as `s[0]` we can index tuples as well.
+Tuples are also _indexed_ like strings. Just like you can access the _i^th^_ character in a string `s` as `s[i]`, or the first character as `s[0]`, we can index tuples as well.
 
 [source,python]
 ----
@@ -12,7 +12,7 @@ name = ("Harry", "Potter")
 print(name[1], name[0])
 ----
 
-prints `Potter Harry`.  Tuples have a length.
+prints `Potter Harry`.  Tuples have a length:
 
 [source,python]
 ----
@@ -30,7 +30,7 @@ grades = (98, 78, 72, 100, 85, 76)
 
 Because tuples are a _sequence type_ we can iterate over them just like we can a string. To compute the average grade in `grades` ...
 
-[source,python]
+[source,python,numbered]
 ----
 total = 0
 for g in grades:
@@ -40,13 +40,13 @@ avg = total / len(grades)
 print("The average is", round(avg,2))
 ----
 
-Like strings, tuples are _immutable_. Once one is defined it cannot be changed. The following causes an error in Python. For example, using our grades tuple if we wanted to modify the first grade to be a 100 we might want to try 
+Like strings, tuples are _immutable_. Once a tuple is defined it cannot be changed.  For example, using our `grades` tuple if we wanted to modify the first grade to be a 100 we might want to try ...
 
 [source,python]
 ----
 grades[0] = 100
 ----
-causes a run-time error
+causes a run-time error.
 
 ----
 TypeError: 'tuple' object does not support item assignment
@@ -82,38 +82,40 @@ The list `[]` is the empty list whose length is zero.
 grades = []
 print(len(grades)) <1>
 ----
-<1> prints `0`.
+<1> Prints `0`.
 
-
+////
 - find the median of a list of grades
 - replace the smallest grade with the largest grade.
 - count the number grades in the 80s
+////
 
-We can add a value on the end of the list using the `append` method.
+We can insert a value at the end of the list using the `append` method.
 
 [source,python]
 ----
 grades.append(78)
 grades.append(83) <1>
 ----
-<1> The list is now `[78,83]`
+<1> The list is now `[78,83]`.
 
-This seems a little seeing that we could have just defined the list as
+This seems a little verbose since we could have just defined the list as
 
 [source,python]
 ----
 grades = [78,83]
 ----
 
-But we might not know the exact values in the list. What if they are coming from a file of grades? Or from the Internet? For example, lets compute the _median_ of a file of numbers? The _median_ is the middle number, where half of the numbers are above and below the median. If there is an even number of numbers then the median is the average of the middle two numbers. One way to compute the median is to sort the numbers and pick the middle element. We can't just read a number from the file, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
+But we might not know the exact values in the list. What if they are coming from a file of grades? Or from the internet? For example, lets compute the _median_ of a file of numbers? The _median_ is the middle number, where half of the numbers are above and below the median. If there is an even number of numbers then the median is the average of the middle two numbers. One way to compute the median is to sort the numbers and pick the middle element. We can't just read a number from the file, add it to an average, forgetting the previous number, like we did when we computed the average of a file of numbers in <<_example_files_of_numbers>>.
 
-To sort a list we can call the `sort` method on the list.
+To sort a list we can call the `sort` method on the list. The line
 
 [source,python]
 ----
-grades.sort() <1>
+grades.sort()
 ----
-<1> Sort the list of grades. The sort method returns `None` and has the side effect of modifying the list. 
+
+sorts the list of grades. The `sort` method returns `None` and has the side effect of modifying the list. 
 
 [source,python,numbered]
 ----
@@ -135,13 +137,13 @@ else:                                   <3>
 print('Median:', round(median, 1))
 ----
 <1> Append each grade in the file to the list.
-<2> For an odd length list the median is in the middle.
+<2> For an odd length list, the median is in the middle.
 <3> Otherwise we need to compute the mean of the middle two elements.
-<4> Convince yourself that the grades at `len(grades)//2 - 1` and `len(grades)//2` are the middle two elements.
+<4> Convince yourself that the grades at index `len(grades)//2 - 1` and index  `len(grades)//2` are the middle two elements.
 
 === The Birthday Paradox
 
-The _Birthday Paradox_ (also called the _Birthday Problem_) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a https://en.wikipedia.org/wiki/Birthday_attack[_birthday attack_].  The popular radio show _This American Life_ did an https://www.thisamericanlife.org/630/things-i-mean-to-know[episode] where the results from the birthday paradox were used to debunk claims of voter 
+The _Birthday Paradox_ (also called the _Birthday Problem_) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a https://en.wikipedia.org/wiki/Birthday_attack[_birthday attack_].  The popular radio show _This American Life_ did an https://www.thisamericanlife.org/630/things-i-mean-to-know[episode] titled https://www.thisamericanlife.org/630/things-i-mean-to-know/act-one-0[_Fraud Complex_] where the results from the birthday paradox were used to debunk claims of voter
 fraud.footnote:[https://5harad.com/papers/1p1v.pdf[_One Person, One Vote:
 Estimating the Prevalence of Double Voting
 in U.S. Presidential Elections_]] 
@@ -159,15 +161,17 @@ for i in range(366):    <1>
 ----
 <1> Append 366 zeros to the `birthdays` list.
 
-Python has an even simpler notation for initializing a list to all of the same value. We can
-replicate all three line of code above with the one line ...
+Python has an even simpler notation for initializing a list to all
+of the same value. The three lines of code above can be replaced with
+the one line ...
 
 [source,python]
 ----
 birthdays = [0]*366
 ----
 
-How can we simulate someone's birthday?  Generate a random number between 0 and 365 and increment the corresponding birthday in the `birthdays` list.
+How can we simulate someone's birthday?  Generate a random number between 0 and 365
+and increment the corresponding birthday in the `birthdays` list.
 
 [source,python,numbered]
 ----
@@ -185,7 +189,7 @@ for i in range(100):                <1>
 ----
 <1> Generate one hundred random birthdays.
 
-How do we know if two or more people share a birthday? One of the items in the `birthdays` list will be greater than 1. If nobody shared a birthday then all of the integers in `birthdays` are either 0 or 1. 
+How do we know if two or more people share a birthday? One of the items in the `birthdays` list will be greater than 1. If nobody shared a birthday then all of the integers in `birthdays` are either 0 or 1. By the https://en.wikipedia.org/wiki/Pigeonhole_principle[_pigeonhole principle_] if there are 367 people in the room then we are guaranteed that at least two people share a birthday. In practice though, it is much less than that.
 
 [source,python,numbered]
 ----
@@ -197,7 +201,7 @@ for count in birthdays:
 ----
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Rewrite the above loop so that it uses the other form a `for`-loop using the `range` function.
+Rewrite the above loop so that it uses the other form of a `for`-loop using the `range` function.
 
 [.result]
 ====
@@ -226,11 +230,11 @@ If we run this with 100 people in the room we see that lots of people share a bi
 2 birthdays on day 333
 ----
 
-In fact with 100 people, you are almost guaranteed to have people share a birthday. WIth a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. The Birthday Problem is sometime called the Birthday Paradox because that _seems_ like a surprisingly small number.
+In fact with 100 people, you are almost guaranteed to have people share a birthday. With a little experimenting you can see that at about 23 people there is a 50% chance of two or more people sharing a birthday. It is called the _Birthday Paradox_ because 23 _seems_ like a surprisingly small number.
 
 === Particle Simulation: Take 2
 
-Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two partivles we need eight variables, and if we had six particles then we would need twenty-four variables. Also,our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
+Recall our particle simulation in <<_case_study_particles_and_collision>> where we had two particles moving and colliding.  For each particle we defined four variables `x`, `y`, `dx`, and `dy`. For two particles we need eight variables, and if we had six particles then we would need twenty-four variables. Also, our condition for checking collisions gets very long. We would have to check particle 1 against particles 2 through 6, particle 2 against particles 3 through 6
 and so on. That would be stem:[5+4+3+2+1 = 15] conditions. In general if we had stem:[n] particles we need 
 
 stem:[n + (n-1) + (n-2) + \cdots + 3 + 2 + 1 = n(n-1)/2] 
@@ -294,7 +298,7 @@ dy = []   # list of y-velocities. dy[i] is the y velocity for particle i
 
 We saw that in our discussion of the frame rate (<<_understanding_the_frame_rate>>) if the width of the window was 600 pixels and we set a particle's x-velocity `dx` to 600 pixels per second, the particle would travel across the screen in one second. If we wanted the particle to travel across the screen in 2 seconds we would set `dx` to `side/2` (or 300 pixels per second) assuming `side` is the width of the window. We want to give particles different velocities to make it look realistic. We can randomize the velocity of the particle between `side/2` and `side/4` seconds. For example, setting the x-velocity and y-velocity to `side / (random.random() * 2 + 2)`
 
-Why does this work? Well `random.random() * 2` gives a random value between 0 and 2` and adding 2 gives us a random value between 2 and 4.
+Why does this work? Well `random.random() * 2` gives a random value between 0 and 2 and adding 2 gives us a random value between 2 and 4.
 
 But this means that all of the velocities are positive and all of the particles would be traveling to the right and down the display. We need some of the velocities to be negative, between -2 and -4. We have to be careful because we don't want to generate values near `0` such as `.001` because then `side/.001` would be far too fast.
 
@@ -335,7 +339,7 @@ for row in range(r, side, 6*r):
 ----
 <1> Generate a random x-velocity value between `side/2` and `side/4`.
 <2> The same for the y-velocity.
-<3> Randomly negate the x-velocity
+<3> Randomly negate the x-velocity.
 <4> And the same for the y-velocity.
 
 ==== Moving the Particles
@@ -424,8 +428,8 @@ for i in range(len(x) - 1):          <1>
     for j in range(i+1, len(x)):     <2>
         # collide particle i and j
 ----  
-<1> for every particle `i` except the last
-<2> for every particle from `i+1` to the last
+<1> For every particle `i` except the last.
+<2> For every particle from `i+1` to the last.
 
 Now we just add the conditional that if the distance between the centers of the two particles is less than two radii then they need to exchange velocities.
 
@@ -447,9 +451,9 @@ for i in range(len(x) - 1):
             (dy[i], dy[j]) = (dy[j], dy[i])
 ----
 
-This goes in the main animation loop, which is now 
+This goes in the main animation loop, which is now ...
 
-[source,python,numbered,]
+[source,python,numbered]
 ----
 # main animation loop
 clock = pygame.time.Clock()
@@ -475,7 +479,11 @@ while True:
 
 === Forest Fire Model
 
+TBD
+
 === Exercises
+
+TBD
 
 === Terminology 
 
@@ -484,9 +492,12 @@ while True:
 |===
 
 a|
- * tbd
+ * mutable
+ * The Birthday Problem
 
 a|
- * tbd 
+ * index
+ * indices
+ 
 
 |===
