@@ -14,7 +14,7 @@ Alice (the sender) _encrypts_ the message _attack at dawn_ using a special key (
 
 === The Caesar cipher
 
-The first cryptosystem we will study is really silly, and is easy to break. However, there are some good ideas in this system that we can use later to make a more secure cryptosystem.  For simplicity, assume that we are communicating using lower case characters from the Latin alphabet (_i.e.,_ a-z). We can relax those conditions later. The idea of the Caesar cipher is that for each character in the plaintext we _shift_ the character some distance down the alphabet. For example, if we used a shift of three, then an `a` in the plaintext would turn into a `d`. A `b` would become an `e`, etc., and a `w` becomes `z`. What about `x`, `y`, and `z`? These wrap around to `a`, `b`, and `c`. If we index each character in the alphabet by its position then shifting a character amounts to adding the position of the character to the shift mod 26.
+The first cryptosystem we will study is really silly, and is easy to break. However, there are some good ideas in this system that we can use later to make a more secure cryptosystem.  For simplicity, assume that we are communicating using lower case characters from the Latin alphabet (_i.e.,_ a-z). We can relax those conditions later. The idea of the Caesar cipher is that for each character in the cleartext we _shift_ the character some distance down the alphabet. For example, if we used a shift of three, then an `a` in the cleartext would turn into a `d`. A `b` would become an `e`, etc., and a `w` becomes `z`. What about `x`, `y`, and `z`? These wrap around to `a`, `b`, and `c`. If we index each character in the alphabet by its position then shifting a character amounts to adding the position of the character to the shift mod 26.
 
 Why 26? Well, 26 is the number of characters in our alphabet.
 
@@ -28,7 +28,7 @@ For example, to encrypt _attack_ by a shift of ten we take the position of `a`, 
 .Encrypting _"attack"_ with a shift of ten.
 [cols="20,10,50,20", width="60%", options="header"]
 |===
-| Plaintext | _i_ | `(i + 10) % 26` | Ciphertext
+| Cleartext | _i_ | `(i + 10) % 26` | Ciphertext
 | `a` | 0   | `(0 + 10) % 26 = 10` | `k` 
 | `t` | 19  | `(19 + 10) % 26 = 3` | `d`
 | `t` | 19  | `(19 + 10) % 26 = 3` | `d`
@@ -129,7 +129,7 @@ def encrypt(cleartext,shift):
         chpos = alphabet.find(ch)                      <4>
         cipherpos = (chpos + shift) % len(alphabet)    <5>
         ciphertext += alphabet[cipherpos]              <6>
-    return cipher
+    return ciphertext
 ----
 <1> This is where we make it more general and handle any printable character. Not just lower case `a` to `z`.
 <2> `ciphertext` is initially empty.
@@ -164,7 +164,7 @@ So what is wrong with the Caesar cipher? Just about everything. But the main pro
 
 === Substitution Cipher
 
-Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a plaintext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet to? For example
+Lets try and fix the problem of the limited number of possible keys (shifts) and allow arbitrary mappings from a cleartext character to a ciphertext character.  What if we were to use our `scramble` function on the alphabet to? For example
 
 [source,python]
 ----
