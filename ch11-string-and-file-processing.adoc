@@ -96,7 +96,7 @@ For example, lets say we wanted to count the number of double characters in a st
 
 ==== Strings are _immutable_
 
-Once a variable has been assigned a string value that string cannot be changed. For example, if `s` is a string we can't change the value of `s[0]`. 
+Once a variable has been assigned a string value, that string cannot be modified. For example, if `s` is a string we can't change the value of `s[0]`. 
 
 [source,python]
 ----
@@ -138,7 +138,7 @@ def reverse(s):
 <3> This is a little tricky. We will discuss below.
 <4> Return the reversed string.
 
-Why does this work? Lets take an example of the string `'abcd'` and lets follow the values of `ch` and `tmp` after each loop iteration.
+Why does this work? Take the example of the string `'abcd'` and follow the values of `ch` and `tmp` after each loop iteration.
 
 [source]
 ----
