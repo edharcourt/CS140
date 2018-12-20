@@ -18,7 +18,7 @@ win = pygame.display.set_mode((600,600)) <3>
 
 When we run the program above, a stem:[600 \times 600] pixel window will display on our monitor and then quickly vanish. The window disappears because the program finished executing. We probably don't want the window to disappear right away and we will fix this in a bit.
 
-NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example the tuple `(200,300)` represents a single value with two integer components.
+NOTE: A _tuple_ is an ordered pair (or triple, or quadruple, etc.). A tuple in Python is two or more values wrapped up into one value using parentheses with the component values separated by commas. For example, the tuple `(200,300)` represents a single value with two integer components.
 
 NOTE: A _pixel_, short for _picture element_, represents a single dot on the screen. A typical display has a _resolution_, which might be stem:[1024 \times 768] (stem:[1024] pixels wide by stem:[768] pixels high) or stem:[1472 \times 1193].  A pixel has a physical dimension that depends on the size of the display.  The word _pixel_ is sometimes abbreviated _px_.
 
@@ -29,7 +29,7 @@ image:references.png[width=500,align="center"]
 
 NOTE: An _object_ in Python is a value (not unlike an integer or a float) that contains functions for accessing the data in the object. Functions associated with objects are called _methods_.
 
-For example, the Pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example `win.get_height()`.
+For example, the Pygame window above has two methods `get_height()` and `get_width()` that return the height and width in pixels of the window. Methods are always called using a _dot notation_ of the object name followed by the methods. For example, `win.get_height()`.
 
 .Check Yourself +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 Can you think of a way we might be able to pause the program to keep the Pygame display window from disappearing until the user hits a key on the keyboard?
@@ -209,7 +209,7 @@ What is the coordinate of the bottom right pixel in the Pygame window?
 .Proportional Graphics
 The yellow square is _proportional_ and relative to the size of the main Pygame display surface. That is, if we change the size of the main display surface the yellow square will resize accordingly. Most often this is the kind of graphics that we want and is one of the powerful features of doing graphics using geometric shapes. The name for this kind of graphics, using geometric shapes, is _vector graphics_.
 
-TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example the head might be 
+TIP: Try and always use _proportional graphics_. In proportional graphics a shape is drawn relative to some enclosing shape. For example, the head might be 
 drawn relative to the window and an eye would be drawn relative to a head. A pupil would be drawn relative to the eye. If we were drawing a house, a door's dimensions would be relative to the house's dimensions.  
 
 Contrast this with using _absolute dimensions_ and _absolute pixel coordinates_. For example, if we draw a yellow rectangle at coordinate `(100,200)` with a width of 300px and a height of 200px.
@@ -462,7 +462,7 @@ pygame.draw.line(win, color.white,
 There are other Pygame drawing functions that we will introduce as needed. You can make an astonishing number of drawing from rectangles, circles, ellipses, and lines. 
 
 .Our Complete Blockhead +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
-Variables have been renamed to be more meaningful. For example `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
+Variables have been renamed to be more meaningful. For example, `ul_c_x` which stood for (_upper left circle x coordinate_) is now `left_eye_x` and so on.
 
 [.result]
 ====
