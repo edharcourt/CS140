@@ -1,4 +1,4 @@
-== Pygame Intro
+== Introduction to Pygame
 
 A fun way to learn to program is through graphics, images, and animation.  https://www.pygame.org/news[Pygame] is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.
 

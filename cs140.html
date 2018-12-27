@@ -609,10 +609,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_kinds_of_program_errors">1.14. Kinds of Program Errors</a></li>
 <li><a href="#_bits_cpus_interpreters_and_compilers">1.15. Bits, CPUs, Interpreters, and Compilers</a></li>
 <li><a href="#_exercises">1.16. Exercises</a></li>
-<li><a href="#_terminology">1.17. Terminology</a></li>
+<li><a href="#_programming_exercises">1.17. Programming Exercises</a></li>
+<li><a href="#_terminology">1.18. Terminology</a></li>
 </ul>
 </li>
-<li><a href="#_pygame_intro">2. Pygame Intro</a>
+<li><a href="#_introduction_to_pygame">2. Introduction to Pygame</a>
 <ul class="sectlevel2">
 <li><a href="#_colors">2.1. Colors</a></li>
 <li><a href="#_shapes">2.2. Shapes</a></li>
@@ -2316,128 +2317,91 @@ Python is actually a bit more complicated. The Python interpreter actually compi
 </div>
 <div class="sect2">
 <h3 id="_exercises"><a class="anchor" href="#_exercises"></a>1.16. Exercises</h3>
-<div class="paragraph">
-<div class="title">Exercise 1</div>
-<p>Suppose <code>x</code> and <code>y</code> are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to <code>x</code> and <code>y</code> and follow the code).</p>
-</div>
 <div class="listingblock">
+<div class="title">Exercise 1. Suppose <code>x</code> and <code>y</code> are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to <code>x</code> and <code>y</code> and follow the code).</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">t</span> <span class="tok-o">=</span> <span class="tok-n">x</span>
 <span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-n">y</span>
 <span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">t</span></code></pre>
 </div>
 </div>
+<div class="exampleblock result">
+<div class="content">
 <div class="paragraph">
-<div class="title">Exercise 2 (Multiple choice questions)</div>
-<p>Consider the following code fragment.</p>
+<p>It switches the values of <code>x</code> and <code>y</code> using the intermediate variable <code>t</code>.
+For example, if <code>x</code> contained the value <code>3</code> and <code>y</code> contained the value <code>4</code> then after the code executed <code>x</code> would be <code>4</code> and <code>y</code> would be <code>3</code>.</p>
+</div>
+</div>
 </div>
 <div class="listingblock">
+<div class="title">Answer questions related to the following code fragment.</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="python"><span></span><span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mf">2.0</span>
-<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">math</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span></code></pre>
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2</div></td><td class="code"><span></span><span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mf">2.0</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">math</span><span class="tok-o">.</span><span class="tok-n">sqrt</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
 </div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><code>math</code> is a &#8230;&#8203;</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>function</p>
-</li>
-<li>
-<p>module</p>
-</li>
-<li>
-<p>variable</p>
-</li>
-<li>
-<p>literal</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p><code>sqrt</code> is a &#8230;&#8203;</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>function</p>
-</li>
-<li>
-<p>module</p>
-</li>
-<li>
-<p>variable</p>
-</li>
-<li>
-<p>literal</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>The line <code>x = 2.0</code> is an example of a/an</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>variable</p>
-</li>
-<li>
-<p>floating-point literal</p>
-</li>
-<li>
-<p>function call</p>
-</li>
-<li>
-<p>assignment statement</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>The line <code>math.sqrt(x)</code> in the second line is an example of</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>function composition</p>
-</li>
-<li>
-<p>a function call</p>
-</li>
-<li>
-<p>an argument</p>
-</li>
-<li>
-<p>a module call</p>
-</li>
-</ol>
-</div>
-</li>
-<li>
-<p>The line <code>y = math.sqrt(x)</code> in the second line <code>x</code> is an example of a</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>variable</p>
-</li>
-<li>
-<p>module</p>
-</li>
-<li>
-<p>argument</p>
-</li>
-<li>
-<p>floating-point literal</p>
-</li>
-</ol>
-</div>
-</li>
-</ol>
 </div>
 <div class="paragraph">
-<div class="title">C2F</div>
+<div class="title">Exercise 2 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><code>math</code> is a (a) function (b) module (c) variable (d) literal</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(b) <code>math</code> is a <em>module</em>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p><code>sqrt</code> is a (a) function (b) module (c) variable (d) literal</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(a) <code>sqrt</code> is a <em>function</em>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 4 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The line <code>x = 2.0</code> is an example of a/an (a) variable (b) floating-point literal (c) function call (d) assignment statement</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(d) assignment statement, because <code>x</code> is assigned the value <code>2.0</code>.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 5 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The line <code>math.sqrt(x)</code> in the second line is an example of (a) function composition (b) a function call (c) an argument (d) a module call</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>(b) function call. In choice (d), the term <em>module call</em> is nonsense.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 6 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>In the line <code>y = math.sqrt(x)</code>, <code>x</code> is an example of a (a) variable (b) module (c) argument (d) floating-point literal</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p>This is a little tricky. If we had to choose only one answer, choice (a) <em>variable</em> is correct, but choice (c) <em>argument</em> is more precise, so it is a better answer.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programming_exercises"><a class="anchor" href="#_programming_exercises"></a>1.17. Programming Exercises</h3>
+<div class="paragraph">
+<div class="title">Celsius to Fahrenheit</div>
 <p>Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.</p>
 </div>
 <div class="paragraph">
@@ -2510,7 +2474,7 @@ Your change is...
 </div>
 </div>
 <div class="sect2">
-<h3 id="_terminology"><a class="anchor" href="#_terminology"></a>1.17. Terminology</h3>
+<h3 id="_terminology"><a class="anchor" href="#_terminology"></a>1.18. Terminology</h3>
 <div class="paragraph">
 <p>Every discipline has its own terminology (or <em>nomenclature</em>). Terminology is what allows us to <em>communicate intelligently with accuracy and precision</em> about a discipline both amongst other programmers and to the lay-person.</p>
 </div>
@@ -2717,7 +2681,7 @@ If <code>x</code> is an integer then convert it to a float. If <code>x</code> is
 </div>
 </div>
 <div class="sect1">
-<h2 id="_pygame_intro"><a class="anchor" href="#_pygame_intro"></a>2. Pygame Intro</h2>
+<h2 id="_introduction_to_pygame"><a class="anchor" href="#_introduction_to_pygame"></a>2. Introduction to Pygame</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A fun way to learn to program is through graphics, images, and animation.  <a href="https://www.pygame.org/news">Pygame</a> is a popular Python library (module) for implementing graphics in Python programs. As the name suggests, Pygame can be used for programming computer games, but we can also use its graphics capabilities to explore programming in Python and various topics in computer science.</p>

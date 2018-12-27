@@ -866,8 +866,7 @@ _byte code_. It is the Python program's byte code that is then executed the Pyth
 
 === Exercises
 
-.Exercise 1
-Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
+.Exercise 1. Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
 [source,python]
 ----
 t = x
@@ -875,46 +874,59 @@ x = y
 y = t
 ----
 
-.Exercise 2 (Multiple choice questions)
-Consider the following code fragment.
-[source,python]
+[.result]
+====
+It switches the values of `x` and `y` using the intermediate variable `t`.
+For example, if `x` contained the value `3` and `y` contained the value `4` then after the code executed `x` would be `4` and `y` would be `3`.
+====
+
+.Answer questions related to the following code fragment.
+[source,python,numbered]
 ----
 x = 2.0
 y = math.sqrt(x)
 ----
 
-. `math` is a ...
-.. function
-.. module
-.. variable
-.. literal
+.Exercise 2 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+`math` is a (a) function (b) module (c) variable (d) literal
 
-. `sqrt` is a ...
-.. function
-.. module
-.. variable
-.. literal
+[.result]
+====
+(b) `math` is a _module_.
+====
 
-. The line `x = 2.0` is an example of a/an
-.. variable
-.. floating-point literal
-.. function call
-.. assignment statement
+.Exercise 3 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+`sqrt` is a (a) function (b) module (c) variable (d) literal
+[.result]
+====
+(a) `sqrt` is a _function_.
+====
 
-. The line `math.sqrt(x)` in the second line is an example of
-.. function composition
-.. a function call
-.. an argument
-.. a module call 
+.Exercise 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The line `x = 2.0` is an example of a/an (a) variable (b) floating-point literal (c) function call (d) assignment statement
+[.result]
+====
+(d) assignment statement, because `x` is assigned the value `2.0`.
+====
 
-. The line `y = math.sqrt(x)` in the second line `x` is an example of a
-.. variable
-.. module
-.. argument
-.. floating-point literal
+.Exercise 5 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The line `math.sqrt(x)` in the second line is an example of (a) function composition (b) a function call (c) an argument (d) a module call 
+[.result]
+====
+(b) function call. In choice (d), the term _module call_ is nonsense.
+====
 
+.Exercise 6 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+In the line `y = math.sqrt(x)`, `x` is an example of a (a) variable (b) module (c) argument (d) floating-point literal
 
-.C2F 
+[.result]
+====
+This is a little tricky. If we had to choose only one answer, choice (a) _variable_ is correct, but choice (c) _argument_ is more precise, so it is a better answer.
+====
+
+=== Programming Exercises
+
+.Celsius to Fahrenheit 
 Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
 
 .Windchill
