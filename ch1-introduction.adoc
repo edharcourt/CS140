@@ -106,6 +106,8 @@ Floating-point literals include a decimal place, and include numbers such as `0.
 
 Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write Avagadro's number as `6.022140857e23`.
 
+NOTE: Typically if we use scientific notation we write the number so that there is one non-zero digit to the left of the decimal point.  In this case we say that the number is _normalized_.
+
 We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is not helpful. We should instead write `9.10938356e-31`.
 
 TIP: We will often also use the term _constant_ instead of _literal_. An integer literal is also called an _integer constant_. A floating-point literal is also called a _floating-point constant_. A string literal is also called a _string constant_.
@@ -776,7 +778,7 @@ https://docs.python.org/3/library/math.html[Python math module documentation]
 
 We have already discussed _syntax errors_ and _run-time errors_. 
 
-Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
+Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
 
 A _run-time_ error is an error that cannot be detected _before_ program execution but only while the program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple program:
 
@@ -924,6 +926,45 @@ In the line `y = math.sqrt(x)`, `x` is an example of a (a) variable (b) module (
 This is a little tricky. If we had to choose only one answer, choice (a) _variable_ is correct, but choice (c) _argument_ is more precise, so it is a better answer.
 ====
 
+.Exercise 7. What is the output of the code below?
+[source,python,numbered]
+----
+z = 3
+x = 2
+y = z ** x // x * z
+print(y)
+----
+
+[.result]
+====
+`12`
+====
+
+.Exercise 8 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The output of `print(27 % 12)` is?
+
+[.result]
+====
+`3`
+====
+
+.Exercise 9 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The output of `print(-12 % 10)` is?
+
+[.result]
+====
+`8`
+====
+
+.Exercise 10 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The value 0.00023 can be written as a normalized number in Python's scientific notation as ...
+
+[.result]
+====
+`2.3e-4`
+====
+
+
 === Programming Exercises
 
 .Celsius to Fahrenheit 
@@ -1001,6 +1042,7 @@ a|
 * variable
 * _Hello World_ program
 * scientific notation
+* normalized number
 * programming language
 * comment
 * crash

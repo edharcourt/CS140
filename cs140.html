@@ -978,6 +978,18 @@ Don&#8217;t start an integer literal with a leading <code>0</code>, such as <cod
 <div class="paragraph">
 <p>Python (as do most programming languages) supports specifying numbers using <em>scientific notation</em>. For example, in Chemistry and Physics, Avagadro&#8217;s number is \(6.022140857 \times 10^{23}\). Writing this out as <code>602214085700000000000000</code> is not very readable. In Python we can instead write Avagadro&#8217;s number as <code>6.022140857e23</code>.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Typically if we use scientific notation we write the number so that there is one non-zero digit to the left of the decimal point.  In this case we say that the number is <em>normalized</em>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>We can also use scientific notation for very small numbers.  The mass of an electron is \(9.10938356 \times 10^{-31}\) kg.  Again, writing this as <code>0.000000000000000000000000000000910938356</code> is not helpful. We should instead write <code>9.10938356e-31</code>.</p>
 </div>
@@ -2179,7 +2191,7 @@ To reference functions and definitions in a module use <em>dot notation</em>. Fo
 <p>We have already discussed <em>syntax errors</em> and <em>run-time errors</em>.</p>
 </div>
 <div class="paragraph">
-<p>Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected <em>before</em> you run the program and are often highlighted in whatever IDE.<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> you are using.</p>
+<p>Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected <em>before</em> you run the program and are often highlighted in whatever IDE <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> you are using.</p>
 </div>
 <div class="paragraph">
 <p>A <em>run-time</em> error is an error that cannot be detected <em>before</em> program execution but only while the program is executing. Common run-time errors include dividing by zero or trying to convert the word <code>hello</code> to an integer. For example, consider the following simple program:</p>
@@ -2397,6 +2409,59 @@ For example, if <code>x</code> contained the value <code>3</code> and <code>y</c
 </div>
 </div>
 </div>
+<div class="listingblock">
+<div class="title">Exercise 7. What is the output of the code below?</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv">1
+2
+3
+4</div></td><td class="code"><span></span><span class="tok-n">z</span> <span class="tok-o">=</span> <span class="tok-mi">3</span>
+<span class="tok-n">x</span> <span class="tok-o">=</span> <span class="tok-mi">2</span>
+<span class="tok-n">y</span> <span class="tok-o">=</span> <span class="tok-n">z</span> <span class="tok-o">**</span> <span class="tok-n">x</span> <span class="tok-o">//</span> <span class="tok-n">x</span> <span class="tok-o">*</span> <span class="tok-n">z</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">)</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p><code>12</code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 8 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The output of <code>print(27 % 12)</code> is?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p><code>3</code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 9 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The output of <code>print(-12 % 10)</code> is?</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p><code>8</code></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 10 <span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span></div>
+<p>The value 0.00023 can be written as a normalized number in Python&#8217;s scientific notation as &#8230;&#8203;</p>
+</div>
+<div class="exampleblock result">
+<div class="content">
+<div class="paragraph">
+<p><code>2.3e-4</code></p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_programming_exercises"><a class="anchor" href="#_programming_exercises"></a>1.17. Programming Exercises</h3>
@@ -2526,6 +2591,9 @@ Master the terminology. Every term below is defined somewhere in this text. Just
 </li>
 <li>
 <p>scientific notation</p>
+</li>
+<li>
+<p>normalized number</p>
 </li>
 <li>
 <p>programming language</p>
