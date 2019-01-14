@@ -850,7 +850,7 @@ Here is a high level layout of a computer.
 .Computer Organization
 image::comp_org.png[width=500]
 
-The basic operations of the CPU are called _instructions_, and the binary representation of instructions is called _machine code_. Many programming languages are compiled languages are translated to machine code by a _compiler_, C being the most common compiled language, where the program is converted straight to machine code that is then directly executed by the CPU.
+The basic operations of the CPU are called _instructions_, and the binary representation of instructions is called _machine code_. Many programming languages are compiled languages that are translated to machine code by a _compiler_, C being the most common compiled language, where the program is converted straight to machine code that is then directly executed by the CPU.
 
 .C Program Compilation
 image::compiler.png[width=400]
@@ -1046,7 +1046,7 @@ We have encountered several functions this chapter.
 +
 * `int(x)`
 +
-If `x` is a float then return the integer part of `x` by truncating the decimal part. If `x` is a string then attempt to convert the string to an integer. If it can't then error.
+If `x` is a float then return the integer part of `x` by truncating the decimal part. If `x` is a string then attempt to convert the string to an integer. If it can't, then error.
 * `float(x)`
 If `x` is an integer then convert it to a float. If `x` is a string then attempt to convert it to a float. If it can't then error.
 * `input(prompt)` + 
