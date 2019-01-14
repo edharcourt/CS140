@@ -293,7 +293,7 @@ while i <= n:                    <3>
 
 print("The sum from 1 to", n, "is", total)
 ----
-<1> The loop counter. This could have started at 0 but including 0 in the total doesn't change it.
+<1> The loop counter. This could have started at 0, however, including 0 in the total doesn't change the final value.
 <2> Keep track of the running total in `total`. I have purposefully avoided
 usng the variable named `sum` because `sum` is also the name of a built-in function.
 <3> Make sure to include `n`
@@ -463,7 +463,7 @@ The population growth rate is not constant. It fluctuates and has increased and 
 
 image:pop-decreasing-growth.png[align"center"]
 
-If the growth rate decreases long enough it will eventually become negative. Correspondingly the population will start shrinking. 
+If the growth rate decreases long enough it will eventually become negative. Correspondingly, the population will start shrinking. 
 
 .Answer  +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++

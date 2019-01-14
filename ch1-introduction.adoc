@@ -106,6 +106,8 @@ Floating-point literals include a decimal place, and include numbers such as `0.
 
 Python (as do most programming languages) supports specifying numbers using _scientific notation_. For example, in Chemistry and Physics, Avagadro's number is stem:[6.022140857 \times 10^{23}]. Writing this out as `602214085700000000000000` is not very readable. In Python we can instead write Avagadro's number as `6.022140857e23`.
 
+NOTE: Typically if we use scientific notation we write the number so that there is one non-zero digit to the left of the decimal point.  In this case we say that the number is _normalized_.
+
 We can also use scientific notation for very small numbers.  The mass of an electron is stem:[9.10938356 \times 10^{-31}] kg.  Again, writing this as `0.000000000000000000000000000000910938356` is not helpful. We should instead write `9.10938356e-31`.
 
 TIP: We will often also use the term _constant_ instead of _literal_. An integer literal is also called an _integer constant_. A floating-point literal is also called a _floating-point constant_. A string literal is also called a _string constant_.
@@ -776,7 +778,7 @@ https://docs.python.org/3/library/math.html[Python math module documentation]
 
 We have already discussed _syntax errors_ and _run-time errors_. 
 
-Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE.footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
+Recall that a syntax error is an error in how you put together the words and characters of your program. For example, a missing parentheses, or quote in a string literal.  Syntax errors can be detected _before_ you run the program and are often highlighted in whatever IDE footnote:[Integrated Development Environment. An IDE integrates into one tool an editor in which you edit, run,and debug your Python programs.] you are using. 
 
 A _run-time_ error is an error that cannot be detected _before_ program execution but only while the program is executing. Common run-time errors include dividing by zero or trying to convert the word `hello` to an integer. For example, consider the following simple program:
 
@@ -866,8 +868,7 @@ _byte code_. It is the Python program's byte code that is then executed the Pyth
 
 === Exercises
 
-.Exercise 1
-Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
+.Exercise 1. Suppose `x` and `y` are variables that have been assigned values. What does the following code fragment do? (Hint: give sample values to `x` and `y` and follow the code).
 [source,python]
 ----
 t = x
@@ -875,46 +876,98 @@ x = y
 y = t
 ----
 
-.Exercise 2 (Multiple choice questions)
-Consider the following code fragment.
-[source,python]
+[.result]
+====
+It switches the values of `x` and `y` using the intermediate variable `t`.
+For example, if `x` contained the value `3` and `y` contained the value `4` then after the code executed `x` would be `4` and `y` would be `3`.
+====
+
+.Answer questions related to the following code fragment.
+[source,python,numbered]
 ----
 x = 2.0
 y = math.sqrt(x)
 ----
 
-. `math` is a ...
-.. function
-.. module
-.. variable
-.. literal
+.Exercise 2 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+`math` is a (a) function (b) module (c) variable (d) literal
 
-. `sqrt` is a ...
-.. function
-.. module
-.. variable
-.. literal
+[.result]
+====
+(b) `math` is a _module_.
+====
 
-. The line `x = 2.0` is an example of a/an
-.. variable
-.. floating-point literal
-.. function call
-.. assignment statement
+.Exercise 3 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+`sqrt` is a (a) function (b) module (c) variable (d) literal
+[.result]
+====
+(a) `sqrt` is a _function_.
+====
 
-. The line `math.sqrt(x)` in the second line is an example of
-.. function composition
-.. a function call
-.. an argument
-.. a module call 
+.Exercise 4 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The line `x = 2.0` is an example of a/an (a) variable (b) floating-point literal (c) function call (d) assignment statement
+[.result]
+====
+(d) assignment statement, because `x` is assigned the value `2.0`.
+====
 
-. The line `y = math.sqrt(x)` in the second line `x` is an example of a
-.. variable
-.. module
-.. argument
-.. floating-point literal
+.Exercise 5 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The line `math.sqrt(x)` in the second line is an example of (a) function composition (b) a function call (c) an argument (d) a module call 
+[.result]
+====
+(b) function call. In choice (d), the term _module call_ is nonsense.
+====
+
+.Exercise 6 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+In the line `y = math.sqrt(x)`, `x` is an example of a (a) variable (b) module (c) argument (d) floating-point literal
+
+[.result]
+====
+This is a little tricky. If we had to choose only one answer, choice (a) _variable_ is correct, but choice (c) _argument_ is more precise, so it is a better answer.
+====
+
+.Exercise 7. What is the output of the code below?
+[source,python,numbered]
+----
+z = 3
+x = 2
+y = z ** x // x * z
+print(y)
+----
+
+[.result]
+====
+`12`
+====
+
+.Exercise 8 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The output of `print(27 % 12)` is?
+
+[.result]
+====
+`3`
+====
+
+.Exercise 9 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The output of `print(-12 % 10)` is?
+
+[.result]
+====
+`8`
+====
+
+.Exercise 10 +++<span style='color:red;margin-right:1.25em; display:inline-block;'>&nbsp;&nbsp;&nbsp;</span>+++
+The value 0.00023 can be written as a normalized number in Python's scientific notation as ...
+
+[.result]
+====
+`2.3e-4`
+====
 
 
-.C2F 
+=== Programming Exercises
+
+.Celsius to Fahrenheit 
 Write a program that converts a temperature in Celsius to Fahrenheit. Prompt the user for the temperature and print the conversion rounded to two decimal places.  Make the output neat and descriptive.
 
 .Windchill
@@ -989,6 +1042,7 @@ a|
 * variable
 * _Hello World_ program
 * scientific notation
+* normalized number
 * programming language
 * comment
 * crash
