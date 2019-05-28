@@ -483,7 +483,104 @@ TBD
 
 === Exercises
 
-TBD
+.Exercise 1: Compare The Triplets (https://www.hackerrank.com/challenges/compare-the-triplets/problem[HackerRank])
+
+Suppose Alice creates a programming problem for HackerRank and a reviewer rates the question based on clarity, originality, and difficulty where each value is between 1 and 100. For example the tuple `(90, 10, 50)` means the problem is clear (90), not very original (10), and is of medium difficulty (50).
+
+Suppose Bob also creates a problem for HackerRank with a rating of `(75,50,60)`.  We would like to compare Alice's and Bob's problems awarding a point for each criteria that is greater than the other's. For example, in this case Alice's score is `1` because her score on clarity is greater than Bob's.  Bob's score is `2` because his problem is more original and harder. No point is allotted for values that are the same.
+
+Complete the function `compareTheTriplets` below. It must return a tuple of two integers, the first being Alice's score and second being Bob's. The two paramaters are `a`, a tuple or list of three integers that represent Alice's rating, and `b`, a tuple or list of three integers that represents Bob's rating.
+
+The input consists of two lines of three space separated integers. The first line is for Alice, and the second line is for Bob.
+
+*Sample Input 0*
+
+----
+5 6 7
+3 6 10
+----
+
+*Sample Output 0*
+
+----
+1 1
+----
+
+*Sample Input 1*
+
+----
+17 28 30
+99 16 8
+----
+
+*Sample Output 1*
+
+----
+2 1
+----
+
+[source,python,numbered]
+----
+def compreTheTriplets(a,b):
+    # student, fill in function body here
+
+
+# M a i n   P r o g r a m
+
+# Don't worry about how the main program works
+
+# Test Sample Input 0
+if compreTheTriplets([5,6,7],[3,6,10]) == (1,1):
+    print("Sample Input 0 Passed")
+else:
+    print("Sample Input 0 Failed")
+
+# Test Sample Input 1
+if compreTheTriplets((17,28,30),(99,16,8)) == (2,1):
+    print("Sample Input 1 Passed")
+else:
+    print("Sample Input 1 Failed")
+
+# Try your own inputs
+a = [int(x) for x in input("Alice:").split()]
+b = [int(x) for x in input("Bob:").split()]
+print(' '.join([str(x) for x in compreTheTriplets(a,b)]))
+
+----
+
+.Exercise 2: Mini-Max Sum https://www.hackerrank.com/challenges/mini-max-sum/problem[Hackerank]
+
+Given a list of five integers find the minimum and maximum value that can be calculated by summing exactly four of the five values. For example, if the list was `[7,9,3,1,5]` the maximum would be stem:[7 + 9 + 3 + 5 = 24] and the minimum would be stem:[7 + 3 + 1 + 5 = 16].
+
+Complete the `miniMaxSum` function below, where `arr` is a list of five integers. The function should return a tuple where the first item is the minimum sum and the second item is the maximum sum.
+
+*Sample Input 0*
+----
+1 2 3 4 5
+----
+
+*Sample Output 0*
+----
+10 14
+----
+
+[source,python,numbered]
+----
+def miniMaxSum(arr):
+    # fill in function body
+
+
+# M a i n   P r o g r a m
+
+if miniMaxSum([7,9,3,1,5]) == (16,24):
+    print("Sample Test 0 Passed")
+else:
+    print("Sample Test 0 Failed")
+
+# Try your own list of numbers
+v = [int(x) for x in input("numbers: ").split()]
+print(' '.join([str(x) for x in miniMaxSum(v)]))
+----
 
 === Terminology 
 

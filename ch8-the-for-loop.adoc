@@ -183,7 +183,45 @@ will print each character in the string literal `"Tom Marvolo Riddle"` on a sepa
 
 === Exercises
 
-TBD
+.Exercise 1: Staircase https://www.hackerrank.com/challenges/staircase/problem[Hackerrank]
+
+Conside a staircase of size stem:[n = 4].
+
+----
+   #
+  ##
+ ###
+####
+----
+
+The height and width are equal to stem:[n]. The image is drawn using `#`  symbols and spaces. The last line does not have any spaces in it.
+
+Complete the function `staircase` below. It should print a staircase as defined above. The input `n` is the size of the staircase (its width and height). Assume `n` is greater than 0.
+
+*Sample Input 0*
+----
+6
+----
+
+*Sample Output 0*
+----
+     #
+    ##
+   ###
+  ####
+ #####
+######
+----
+
+[source,python,numbered]
+----
+def staircase(n):
+    # fill in function body
+
+# M a i n    P r o g r a m
+staircase(int(input('n: ')))
+----
+
 
 === Terminology 
 
