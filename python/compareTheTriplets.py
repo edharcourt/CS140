@@ -1,4 +1,4 @@
-def compreTheTriplets(a, b):
+def compareTheTriplets(a, b):
     pass  # student fill in function here
     a_score = 0
     b_score = 0
@@ -30,4 +30,4 @@ else:
 #a = list(map(int,input("Alice:").split()))
 a = [int(x) for x in input("Alice:").split()]
 b = [int(x) for x in input("Bob:").split()]
-print(' '.join([str(x) for x in compreTheTriplets(a,b)]))
+print(' '.join([str(x) for x in compareTheTriplets(a,b)]))

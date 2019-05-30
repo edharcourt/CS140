@@ -521,8 +521,8 @@ The input consists of two lines of three space separated integers. The first lin
 
 [source,python,numbered]
 ----
-def compreTheTriplets(a,b):
-    # student, fill in function body here
+def compareTheTriplets(a,b):
+    # fill in function body
 
 
 # M a i n   P r o g r a m
@@ -530,13 +530,13 @@ def compreTheTriplets(a,b):
 # Don't worry about how the main program works
 
 # Test Sample Input 0
-if compreTheTriplets([5,6,7],[3,6,10]) == (1,1):
+if compareTheTriplets([5,6,7],[3,6,10]) == (1,1):
     print("Sample Input 0 Passed")
 else:
     print("Sample Input 0 Failed")
 
 # Test Sample Input 1
-if compreTheTriplets((17,28,30),(99,16,8)) == (2,1):
+if compareTheTriplets((17,28,30),(99,16,8)) == (2,1):
     print("Sample Input 1 Passed")
 else:
     print("Sample Input 1 Failed")
@@ -544,7 +544,7 @@ else:
 # Try your own inputs
 a = [int(x) for x in input("Alice:").split()]
 b = [int(x) for x in input("Bob:").split()]
-print(' '.join([str(x) for x in compreTheTriplets(a,b)]))
+print(' '.join([str(x) for x in compareTheTriplets(a,b)]))
 
 ----
 
@@ -581,6 +581,51 @@ else:
 v = [int(x) for x in input("numbers: ").split()]
 print(' '.join([str(x) for x in miniMaxSum(v)]))
 ----
+
+.Exercise 3: Two Sum
+
+Given a `k` on one line and a list of integers on the second, complete the function `twoSum` below that returns `true` if two of the integers from `nums` add up to `k`.
+
+*Sample Input 0*
+----
+25
+4 9 33 2 16
+----
+
+*Sample Output 0*
+----
+True
+----
+
+because stem:[9+16=25].
+
+*Sample Input 1*
+----
+14
+4 9 33 2 16
+----
+
+*Sample Output 1*
+----
+False
+----
+
+[source,python,numbered]
+----
+def twoSum(nums, k):
+    # fill in function body
+
+
+# Try your own inputs
+print(twoSum([4,9,33,2,16], 25))  # True
+print(twoSum([4,9,33,2,16], 14))  # False
+
+# Try your own k and list of integers
+k = int(input("k: "))
+nums = [int(x) for x in input("Numbers:").split()]
+print(twoSum(nums,k))
+----
+
 
 === Terminology 
 

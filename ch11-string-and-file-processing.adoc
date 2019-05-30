@@ -813,7 +813,44 @@ print("The average is", round(total/count, 1))
 
 === Exercises
 
+.Exercise 1: Unique Characters (Take 1)
+Complete the function `uniqueChars` below that takes a string `s` as a parameter and
+returns a string of the characters used in `s` such that the result should not contain any duplicate characters.footnote:[This problem is based on exercise 1.1 of _Cracking the Coding Interview_, 6th ed. Gayle Laakmann McDowell. 2019. CareerCup.]  For example, for the string `"abcdbba"`, `uniqueChars` might return `abcd`, and for the string `dabbacdae` then `uniqueChars` might return `dabc`.  The order of the characters in the resulting string does not matter.
 
+If you happen to already know other Python data structures such as lists, dictionaries, or sets, do not use them.
+
+[source,python,numbered]
+----
+def uniqueChars(s):
+    # fill in function body
+
+# M a i n   P r o g r a m
+if set(uniqueChars("antidisestablishmentarianism")) == set("antidseblhmr"):
+    print("Test passed")
+else:
+    print("Test failed")
+
+if set(uniqueChars("hippopotomonstrosesquippedaliophobia")) == set("hipotmnsrequdalb"):
+    print("Test passed")
+else:
+    print("Test failed")
+----
+
+
+.Exercise 2: Unique Characters (Take 2)
+A slight variation of the previous problem, complete the function `uniqueChars` below that returns `True` if the string passed it has all unique characters. For example the string `"abcd"` `uniqueChars` would return `True`, but for the string `abcdae` then `uniqueChars` would return `False`.
+
+If you happen to already know other Python data structures such as lists, dictionaries, or sets, do not use them.
+
+[source,python,numbered]
+----
+def uniqueChars(s):
+    # fill in function body
+
+# M a i n   P r o g r a m
+print(uniqueChars('abcdefg'))    # should print True
+print(uniqueChars('babcdefg'))   # should print False
+----
 
 === Terminology 
 

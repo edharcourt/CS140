@@ -13841,7 +13841,67 @@ are in the file we will have to keep a count of the number of grades.  We also n
 </div>
 <div class="sect2">
 <h3 id="_exercises_10"><a class="anchor" href="#_exercises_10"></a>11.5. Exercises</h3>
+<div class="paragraph">
+<div class="title">Exercise 1: Unique Characters (Take 1)</div>
+<p>Complete the function <code>uniqueChars</code> below that takes a string <code>s</code> as a parameter and
+returns a string of the characters used in <code>s</code> such that the result should not contain any duplicate characters.<sup class="footnote">[<a id="_footnoteref_35" class="footnote" href="#_footnotedef_35" title="View footnote.">35</a>]</sup>  For example, for the string <code>"abcdbba"</code>, <code>uniqueChars</code> might return <code>abcd</code>, and for the string <code>dabbacdae</code> then <code>uniqueChars</code> might return <code>dabc</code>.  The order of the characters in the resulting string does not matter.</p>
+</div>
+<div class="paragraph">
+<p>If you happen to already know other Python data structures such as lists, dictionaries, or sets, do not use them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><pre><span></span><span class="tok-k">def</span> <span class="tok-nf">uniqueChars</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+    <span class="tok-c1"># fill in function body</span>
 
+<span class="tok-c1"># M a i n   P r o g r a m</span>
+<span class="tok-k">if</span> <span class="tok-nb">set</span><span class="tok-p">(</span><span class="tok-n">uniqueChars</span><span class="tok-p">(</span><span class="tok-s2">&quot;antidisestablishmentarianism&quot;</span><span class="tok-p">))</span> <span class="tok-o">==</span> <span class="tok-nb">set</span><span class="tok-p">(</span><span class="tok-s2">&quot;antidseblhmr&quot;</span><span class="tok-p">):</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Test passed&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Test failed&quot;</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-nb">set</span><span class="tok-p">(</span><span class="tok-n">uniqueChars</span><span class="tok-p">(</span><span class="tok-s2">&quot;hippopotomonstrosesquippedaliophobia&quot;</span><span class="tok-p">))</span> <span class="tok-o">==</span> <span class="tok-nb">set</span><span class="tok-p">(</span><span class="tok-s2">&quot;hipotmnsrequdalb&quot;</span><span class="tok-p">):</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Test passed&quot;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Test failed&quot;</span><span class="tok-p">)</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 2: Unique Characters (Take 2)</div>
+<p>A slight variation of the previous problem, complete the function <code>uniqueChars</code> below that returns <code>True</code> if the string passed it has all unique characters. For example the string <code>"abcd"</code> <code>uniqueChars</code> would return <code>True</code>, but for the string <code>abcdae</code> then <code>uniqueChars</code> would return <code>False</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you happen to already know other Python data structures such as lists, dictionaries, or sets, do not use them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><pre><span></span><span class="tok-k">def</span> <span class="tok-nf">uniqueChars</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+    <span class="tok-c1"># fill in function body</span>
+
+<span class="tok-c1"># M a i n   P r o g r a m</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">uniqueChars</span><span class="tok-p">(</span><span class="tok-s1">&#39;abcdefg&#39;</span><span class="tok-p">))</span>    <span class="tok-c1"># should print True</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">uniqueChars</span><span class="tok-p">(</span><span class="tok-s1">&#39;babcdefg&#39;</span><span class="tok-p">))</span>   <span class="tok-c1"># should print False</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_terminology_11"><a class="anchor" href="#_terminology_11"></a>11.6. Terminology</h3>
@@ -14866,7 +14926,7 @@ A <em>mutable</em> value can be modified.
 <h3 id="_the_birthday_paradox"><a class="anchor" href="#_the_birthday_paradox"></a>13.2. The Birthday Paradox</h3>
 <div class="paragraph">
 <p>The <em>Birthday Paradox</em> (also called the <em>Birthday Problem</em>) is a counterintuitive result in probability that asks how many people need to be in a room for there to be a 50% chance that two people share a birthday. As is often the case, many of our examples seem silly, but have real applications. In the area of computer security there is a particular type of attack called a <a href="https://en.wikipedia.org/wiki/Birthday_attack"><em>birthday attack</em></a>.  The popular radio show <em>This American Life</em> did an <a href="https://www.thisamericanlife.org/630/things-i-mean-to-know">episode</a> titled <a href="https://www.thisamericanlife.org/630/things-i-mean-to-know/act-one-0"><em>Fraud Complex</em></a> where the results from the birthday paradox were used to debunk claims of voter
-fraud.<sup class="footnote">[<a id="_footnoteref_35" class="footnote" href="#_footnotedef_35" title="View footnote.">35</a>]</sup></p>
+fraud.<sup class="footnote">[<a id="_footnoteref_36" class="footnote" href="#_footnotedef_36" title="View footnote.">36</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>The mathematics for solving the birthday problem, while not all that complicated, is beyond the scope of this text. However, writing a program to simulate the birthday problem is fairly straightforward.</p>
@@ -15495,8 +15555,8 @@ we have not already checked.</p>
 21
 22
 23
-24</pre></div></td><td class="code"><pre><span></span><span class="tok-k">def</span> <span class="tok-nf">compreTheTriplets</span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">):</span>
-    <span class="tok-c1"># student, fill in function body here</span>
+24</pre></div></td><td class="code"><pre><span></span><span class="tok-k">def</span> <span class="tok-nf">compareTheTriplets</span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">):</span>
+    <span class="tok-c1"># fill in function body</span>
 
 
 <span class="tok-c1"># M a i n   P r o g r a m</span>
@@ -15504,13 +15564,13 @@ we have not already checked.</p>
 <span class="tok-c1"># Don&#39;t worry about how the main program works</span>
 
 <span class="tok-c1"># Test Sample Input 0</span>
-<span class="tok-k">if</span> <span class="tok-n">compreTheTriplets</span><span class="tok-p">([</span><span class="tok-mi">5</span><span class="tok-p">,</span><span class="tok-mi">6</span><span class="tok-p">,</span><span class="tok-mi">7</span><span class="tok-p">],[</span><span class="tok-mi">3</span><span class="tok-p">,</span><span class="tok-mi">6</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">):</span>
+<span class="tok-k">if</span> <span class="tok-n">compareTheTriplets</span><span class="tok-p">([</span><span class="tok-mi">5</span><span class="tok-p">,</span><span class="tok-mi">6</span><span class="tok-p">,</span><span class="tok-mi">7</span><span class="tok-p">],[</span><span class="tok-mi">3</span><span class="tok-p">,</span><span class="tok-mi">6</span><span class="tok-p">,</span><span class="tok-mi">10</span><span class="tok-p">])</span> <span class="tok-o">==</span> <span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">):</span>
     <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Sample Input 0 Passed&quot;</span><span class="tok-p">)</span>
 <span class="tok-k">else</span><span class="tok-p">:</span>
     <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Sample Input 0 Failed&quot;</span><span class="tok-p">)</span>
 
 <span class="tok-c1"># Test Sample Input 1</span>
-<span class="tok-k">if</span> <span class="tok-n">compreTheTriplets</span><span class="tok-p">((</span><span class="tok-mi">17</span><span class="tok-p">,</span><span class="tok-mi">28</span><span class="tok-p">,</span><span class="tok-mi">30</span><span class="tok-p">),(</span><span class="tok-mi">99</span><span class="tok-p">,</span><span class="tok-mi">16</span><span class="tok-p">,</span><span class="tok-mi">8</span><span class="tok-p">))</span> <span class="tok-o">==</span> <span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">):</span>
+<span class="tok-k">if</span> <span class="tok-n">compareTheTriplets</span><span class="tok-p">((</span><span class="tok-mi">17</span><span class="tok-p">,</span><span class="tok-mi">28</span><span class="tok-p">,</span><span class="tok-mi">30</span><span class="tok-p">),(</span><span class="tok-mi">99</span><span class="tok-p">,</span><span class="tok-mi">16</span><span class="tok-p">,</span><span class="tok-mi">8</span><span class="tok-p">))</span> <span class="tok-o">==</span> <span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">1</span><span class="tok-p">):</span>
     <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Sample Input 1 Passed&quot;</span><span class="tok-p">)</span>
 <span class="tok-k">else</span><span class="tok-p">:</span>
     <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s2">&quot;Sample Input 1 Failed&quot;</span><span class="tok-p">)</span>
@@ -15518,13 +15578,13 @@ we have not already checked.</p>
 <span class="tok-c1"># Try your own inputs</span>
 <span class="tok-n">a</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Alice:&quot;</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">()]</span>
 <span class="tok-n">b</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Bob:&quot;</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">()]</span>
-<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39; &#39;</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">([</span><span class="tok-nb">str</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-n">compreTheTriplets</span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)]))</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39; &#39;</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">([</span><span class="tok-nb">str</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-n">compareTheTriplets</span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-n">b</span><span class="tok-p">)]))</span>
 </pre></td></tr></table></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <div class="title">Exercise 2: Mini-Max Sum <a href="https://www.hackerrank.com/challenges/mini-max-sum/problem">Hackerank</a></div>
-<p>Given a list of five integers find the minimum and maximum value that can be calculated by summing axactly four of the five values. For example, if the list was <code>[7,9,3,1,5]</code> the maximum would be \(7 + 9 + 3 + 5 = 24\) and the minimum would be \(7 + 3 + 1 + 5 = 16\).</p>
+<p>Given a list of five integers find the minimum and maximum value that can be calculated by summing exactly four of the five values. For example, if the list was <code>[7,9,3,1,5]</code> the maximum would be \(7 + 9 + 3 + 5 = 24\) and the minimum would be \(7 + 3 + 1 + 5 = 16\).</p>
 </div>
 <div class="paragraph">
 <p>Complete the <code>miniMaxSum</code> function below, where <code>arr</code> is a list of five integers. The function should return a tuple where the first item is the minimum sum and the second item is the maximum sum.</p>
@@ -15574,6 +15634,75 @@ we have not already checked.</p>
 <span class="tok-c1"># Try your own list of numbers</span>
 <span class="tok-n">v</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;numbers: &quot;</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">()]</span>
 <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39; &#39;</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">([</span><span class="tok-nb">str</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-n">miniMaxSum</span><span class="tok-p">(</span><span class="tok-n">v</span><span class="tok-p">)]))</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 3: Two Sum</div>
+<p>Given a <code>k</code> on one line and a list of integers on the second, complete the function <code>twoSum</code> below that returns <code>true</code> if two of the integers from <code>nums</code> add up to <code>k</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Sample Input 0</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>25
+4 9 33 2 16</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Output 0</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>True</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>because \(9+16=25\).</p>
+</div>
+<div class="paragraph">
+<p><strong>Sample Input 1</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>14
+4 9 33 2 16</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Output 1</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>False</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><pre><span></span><span class="tok-k">def</span> <span class="tok-nf">twoSum</span><span class="tok-p">(</span><span class="tok-n">nums</span><span class="tok-p">,</span> <span class="tok-n">k</span><span class="tok-p">):</span>
+    <span class="tok-c1"># fill in function body</span>
+
+
+<span class="tok-c1"># Try your own inputs</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">twoSum</span><span class="tok-p">([</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">9</span><span class="tok-p">,</span><span class="tok-mi">33</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">16</span><span class="tok-p">],</span> <span class="tok-mi">25</span><span class="tok-p">))</span>  <span class="tok-c1"># True</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">twoSum</span><span class="tok-p">([</span><span class="tok-mi">4</span><span class="tok-p">,</span><span class="tok-mi">9</span><span class="tok-p">,</span><span class="tok-mi">33</span><span class="tok-p">,</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">16</span><span class="tok-p">],</span> <span class="tok-mi">14</span><span class="tok-p">))</span>  <span class="tok-c1"># False</span>
+
+<span class="tok-c1"># Try your own k and list of integers</span>
+<span class="tok-n">k</span> <span class="tok-o">=</span> <span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;k: &quot;</span><span class="tok-p">))</span>
+<span class="tok-n">nums</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-nb">int</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">)</span> <span class="tok-k">for</span> <span class="tok-n">x</span> <span class="tok-ow">in</span> <span class="tok-nb">input</span><span class="tok-p">(</span><span class="tok-s2">&quot;Numbers:&quot;</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">split</span><span class="tok-p">()]</span>
+<span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">twoSum</span><span class="tok-p">(</span><span class="tok-n">nums</span><span class="tok-p">,</span><span class="tok-n">k</span><span class="tok-p">))</span>
 </pre></td></tr></table></code></pre>
 </div>
 </div>
@@ -15780,7 +15909,10 @@ we have not already checked.</p>
 <a href="#_footnoteref_34">34</a>. <a href="https://commons.wikimedia.org/wiki/File%3ADna-split.png" class="bare">https://commons.wikimedia.org/wiki/File%3ADna-split.png</a>, By US Department of Energy (DOE Human Genome project) Public domain, via Wikimedia Commons
 </div>
 <div class="footnote" id="_footnotedef_35">
-<a href="#_footnoteref_35">35</a>. <a href="https://5harad.com/papers/1p1v.pdf"><em>One Person, One Vote: Estimating the Prevalence of Double Voting in U.S. Presidential Elections</em></a>
+<a href="#_footnoteref_35">35</a>. This problem is based on exercise 1.1 of <em>Cracking the Coding Interview</em>, 6th ed. Gayle Laakmann McDowell. 2019. CareerCup.
+</div>
+<div class="footnote" id="_footnotedef_36">
+<a href="#_footnoteref_36">36</a>. <a href="https://5harad.com/papers/1p1v.pdf"><em>One Person, One Vote: Estimating the Prevalence of Double Voting in U.S. Presidential Elections</em></a>
 </div>
 </div>
 <div id="footer">
