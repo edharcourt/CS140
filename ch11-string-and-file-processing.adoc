@@ -852,6 +852,65 @@ print(uniqueChars('abcdefg'))    # should print True
 print(uniqueChars('babcdefg'))   # should print False
 ----
 
+.Exercise 3: Run Length Encoding String Compression
+Some strings such as DNA sequences, might have long runs of repeated characters. One way to compress the data is called _run length encoding_ where we record the counts of the repeated characters. For example, the encoding of `aaaaaa` would be `a6`. If a character is not repeated then we don't record the count because that would actually make the string longer. For example, `cccaagtaaa` encoded would be `c3a2gta3`. For the sequence `gggctttttttttcgacccaaa`  Run length encoding would turn this in to `g3c1t9c1g1a1c3a3`. Fill in the function `run_length_encode` below so that it returns the run length encoded string passed to it.
+
+*Sample Test 0 Input*
+----
+aaaaaa
+----
+
+*Sample Test 0 Output*
+----
+a6
+----
+
+*Sample Test 1 Input*
+----
+cccaagtaaa
+----
+
+*Sample Test 1 Output*
+----
+c3a2gta3
+----
+
+*Sample Test 2 Input*
+----
+gggctttttttttcgacccaaa
+----
+
+*Sample Test 2 Output*
+----
+g3c1t9c1g1a1c3a3
+----
+
+[source,python,numbered]
+----
+# run length encode a string s
+def run_length_encode(s):
+    # fill in function body
+
+
+# M a i n    P r o g r a m
+
+if run_length_encode("aaaaaa") == 'a6':
+    print('Test 0 Passed')
+else:
+    print('Test 0 Failed')
+
+if run_length_encode("cccaagtaaa") == 'c3a2gta3':
+    print('Test 1 Passed')
+else:
+    print('Test 1 Failed')
+
+if run_length_encode("gggctttttttttcgacccaaa") == 'g3c1t9c1g1a1c3a3':
+    print('Test 2 Passed')
+else:
+    print('Test 2 Failed')
+----
+
+
 === Terminology 
 
 .Terminology
