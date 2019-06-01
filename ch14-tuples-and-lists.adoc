@@ -584,7 +584,7 @@ print(' '.join([str(x) for x in miniMaxSum(v)]))
 
 .Exercise 3: Two Sum
 
-Given a `k` on one line and a list of integers on the second, complete the function `twoSum` below that returns `true` if two of the integers from `nums` add up to `k`.
+Given a value `k` on one line and a list of integers on the second, complete the function `twoSum` below that returns `true` if two of the integers from `nums` add up to `k`.
 
 *Sample Input 0*
 ----
@@ -625,6 +625,18 @@ k = int(input("k: "))
 nums = [int(x) for x in input("Numbers:").split()]
 print(twoSum(nums,k))
 ----
+
+.Exercise 4: Multiply Everybody But Me
+
+This comes from the https://www.dailycodingproblem.com/[Daily Coding Problem] email list. 
+
+Given a list of integers, return a new list such that each element at index stem:[i] of the new list is the product of all the numbers in the original list except the one at stem:[i].
+
+For example, if our input was `[1, 2, 3, 4, 5]`, the expected output would be `[120, 60, 40, 30, 24]`. If our input was `[3, 2, 1]`, the expected output would be `[2, 3, 6]`.
+
+Follow-up: what if you can't use division?
+
+
 
 
 === Terminology 
