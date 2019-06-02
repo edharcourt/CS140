@@ -626,7 +626,7 @@ nums = [int(x) for x in input("Numbers:").split()]
 print(twoSum(nums,k))
 ----
 
-.Exercise 4: Multiply Everybody But Me
+.Exercise 4
 
 This comes from the https://www.dailycodingproblem.com/[Daily Coding Problem] email list. 
 
