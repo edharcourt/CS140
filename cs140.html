@@ -13902,6 +13902,104 @@ returns a string of the characters used in <code>s</code> such that the result s
 </pre></td></tr></table></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<div class="title">Exercise 3: Run Length Encoding String Compression</div>
+<p>Some strings such as DNA sequences, might have long runs of repeated characters. One way to compress the data is called <em>run length encoding</em> where we record the counts of the repeated characters. For example, the encoding of <code>aaaaaa</code> would be <code>a6</code>. If a character is not repeated then we don&#8217;t record the count because that would actually make the string longer. For example, <code>cccaagtaaa</code> encoded would be <code>c3a2gta3</code>. For the sequence <code>gggctttttttttcgacccaaa</code>  Run length encoding would turn this in to <code>g3c1t9c1g1a1c3a3</code>. Fill in the function <code>run_length_encode</code> below so that it returns the run length encoded string passed to it.</p>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 0 Input</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>aaaaaa</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 0 Output</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>a6</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 1 Input</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cccaagtaaa</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 1 Output</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>c3a2gta3</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 2 Input</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>gggctttttttttcgacccaaa</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Sample Test 2 Output</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>g3c1t9c1g1a1c3a3</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><pre><span></span><span class="tok-c1"># run length encode a string s</span>
+<span class="tok-k">def</span> <span class="tok-nf">run_length_encode</span><span class="tok-p">(</span><span class="tok-n">s</span><span class="tok-p">):</span>
+    <span class="tok-c1"># fill in function body</span>
+
+
+<span class="tok-c1"># M a i n    P r o g r a m</span>
+
+<span class="tok-k">if</span> <span class="tok-n">run_length_encode</span><span class="tok-p">(</span><span class="tok-s2">&quot;aaaaaa&quot;</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;a6&#39;</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 0 Passed&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 0 Failed&#39;</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">run_length_encode</span><span class="tok-p">(</span><span class="tok-s2">&quot;cccaagtaaa&quot;</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;c3a2gta3&#39;</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 1 Passed&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 1 Failed&#39;</span><span class="tok-p">)</span>
+
+<span class="tok-k">if</span> <span class="tok-n">run_length_encode</span><span class="tok-p">(</span><span class="tok-s2">&quot;gggctttttttttcgacccaaa&quot;</span><span class="tok-p">)</span> <span class="tok-o">==</span> <span class="tok-s1">&#39;g3c1t9c1g1a1c3a3&#39;</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 2 Passed&#39;</span><span class="tok-p">)</span>
+<span class="tok-k">else</span><span class="tok-p">:</span>
+    <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-s1">&#39;Test 2 Failed&#39;</span><span class="tok-p">)</span>
+</pre></td></tr></table></code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_terminology_11"><a class="anchor" href="#_terminology_11"></a>11.6. Terminology</h3>
@@ -15639,7 +15737,7 @@ we have not already checked.</p>
 </div>
 <div class="paragraph">
 <div class="title">Exercise 3: Two Sum</div>
-<p>Given a <code>k</code> on one line and a list of integers on the second, complete the function <code>twoSum</code> below that returns <code>true</code> if two of the integers from <code>nums</code> add up to <code>k</code>.</p>
+<p>Given a value <code>k</code> on one line and a list of integers on the second, complete the function <code>twoSum</code> below that returns <code>true</code> if two of the integers from <code>nums</code> add up to <code>k</code>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Sample Input 0</strong></p>
@@ -15705,6 +15803,19 @@ we have not already checked.</p>
 <span class="tok-k">print</span><span class="tok-p">(</span><span class="tok-n">twoSum</span><span class="tok-p">(</span><span class="tok-n">nums</span><span class="tok-p">,</span><span class="tok-n">k</span><span class="tok-p">))</span>
 </pre></td></tr></table></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<div class="title">Exercise 4</div>
+<p>This comes from the <a href="https://www.dailycodingproblem.com/">Daily Coding Problem</a> email list.</p>
+</div>
+<div class="paragraph">
+<p>Given a list of integers, return a new list such that each element at index \(i\) of the new list is the product of all the numbers in the original list except the one at \(i\).</p>
+</div>
+<div class="paragraph">
+<p>For example, if our input was <code>[1, 2, 3, 4, 5]</code>, the expected output would be <code>[120, 60, 40, 30, 24]</code>. If our input was <code>[3, 2, 1]</code>, the expected output would be <code>[2, 3, 6]</code>.</p>
+</div>
+<div class="paragraph">
+<p>Follow-up: what if you can&#8217;t use division?</p>
 </div>
 </div>
 <div class="sect2">
