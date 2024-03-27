@@ -524,7 +524,7 @@ WARNING: The moral of the story is that image file formats that use lossy compre
 As an exercise lets go through every pixel in the image of the red panda below, and if the red component of the pixel is odd, then color the pixel black. If it is even then color the pixel white. 
 
 .Red Panda (Ailurus Fulgens) `https://commons.wikimedia.org/wiki/File:Panda_minore_(Ailurus_fulgens).JPG`
-image::png/red_panda_secret.png[width=450]
+image::png/red_panda.png[width=450]
 
 CAUTION: When you right click on the image and save it, note that it is a PNG file. Make sure to save it as a PNG file.
 
