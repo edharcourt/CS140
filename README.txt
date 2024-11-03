@@ -7,3 +7,5 @@ sudo gem install pygments.rb
 
 For generating a dynamic TOC!
 https://github.com/asciidoctor/asciidoctor/issues/699
+
+https://edharcourt.github.io/CS140/intro_python.html
